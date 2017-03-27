@@ -10,12 +10,14 @@ import android.widget.Button;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+    private UserDialog dialog = new UserDialog();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        dialog.setContext(this);
         Button login = (Button) findViewById(R.id.buttonLogin);
         Button register = (Button) findViewById(R.id.buttonRegister);
 
@@ -25,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Implementar aqui parte da verificação do login
                 Log.d(TAG,"Button Login clicado");
+
+                dialog.alertDialog("Usuario ou senha corretos");
+
             }
         });
 
