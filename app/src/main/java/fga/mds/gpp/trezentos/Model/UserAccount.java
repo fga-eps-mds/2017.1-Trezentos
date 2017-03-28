@@ -6,7 +6,12 @@ public class UserAccount {
     private String user;
     private String password;
 
-    public void UserAccount(Integer idUserAccount, String user, String password){
+
+    public UserAccount(){
+        
+    }
+
+    public UserAccount(Integer idUserAccount, String user, String password){
         this.idUserAccount = idUserAccount;
         this.user = user;
         this.password = password;
