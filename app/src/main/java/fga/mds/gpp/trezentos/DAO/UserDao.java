@@ -34,6 +34,12 @@ public class UserDao {
 
     }
 
+    public void insert(UserAccount userAccount){
+        //This method  will insert the register in BD
+
+
+    }
+
     public UserAccount findById(Integer idUserAccount){
         //Get the cursor in database
         //sends this cursor to
