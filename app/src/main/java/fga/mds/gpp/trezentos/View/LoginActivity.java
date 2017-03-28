@@ -1,14 +1,13 @@
-package fga.mds.gpp.trezentos;
+package fga.mds.gpp.trezentos.View;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import fga.mds.gpp.trezentos.R;
 
 
 public class LoginActivity extends AppCompatActivity {

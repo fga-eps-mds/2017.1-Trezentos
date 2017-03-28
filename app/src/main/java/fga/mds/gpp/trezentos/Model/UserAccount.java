@@ -1,8 +1,4 @@
-package fga.mds.gpp.trezentos;
-
-/**
- * Created by guilherme on 27/03/17.
- */
+package fga.mds.gpp.trezentos.Model;
 
 public class UserAccount {
 
@@ -34,7 +30,7 @@ public class UserAccount {
         this.user = user;
 
     }
-    
+
     public String getPassword(){
         return password;
     }
