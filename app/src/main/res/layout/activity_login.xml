@@ -37,6 +37,7 @@
         android:background="@drawable/selector_button"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0" />
 
 
@@ -67,7 +68,6 @@
         android:textSize="13sp"
         android:textColor="#6000"
         android:background="@android:color/transparent"
-
 
         android:layout_marginTop="0dp"
         android:layout_marginStart="11dp"
@@ -103,12 +103,14 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0" />
 
+
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:hint="Senha"
         android:inputType="textPassword"
+
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
