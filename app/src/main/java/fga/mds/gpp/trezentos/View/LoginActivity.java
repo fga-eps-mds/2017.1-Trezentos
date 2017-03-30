@@ -1,5 +1,6 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setContext(this);
 
         Button login = (Button) findViewById(R.id.buttonLogin);
-        Button loginFacebook = (Button) findViewById(R.id.buttonSingInFacebook);
+        Button loginFacebook = (Button) findViewById(R.id.buttonSignInFacebook);
         Button register = (Button) findViewById(R.id.buttonRegister);
         Button forgotPass = (Button) findViewById(R.id.buttonForgotPassword);
 
@@ -85,9 +86,9 @@ public class LoginActivity extends AppCompatActivity {
         forgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Levar o usuario para a tela de forgotPass
-//              Intent intent = new Intent(LoginActivityActivity.this, RegisterActivity.class);
-//              startActivity(intent);
+                Intent forgotIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(forgotIntent);
+
                 Log.d(TAG, "Button Forgot Password clicado");
                 //dialog.alert("Falha na Autenticação", "Tente novamente...");
 
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();

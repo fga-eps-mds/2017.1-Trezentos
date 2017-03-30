@@ -34,11 +34,11 @@
         android:layout_marginEnd="8dp"
 
         android:background="@drawable/selector_button"
-        app:layout_constraintRight_toLeftOf="@+id/buttonSingInFacebook"
+        app:layout_constraintRight_toLeftOf="@+id/buttonSignInFacebook"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonSingInFacebook"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonSignInFacebook"
         android:layout_marginBottom="-1dp"
         app:layout_constraintHorizontal_bias="0.0" />
 
@@ -57,7 +57,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSingInFacebook" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSignInFacebook" />
 
     <Button
         android:layout_width="366dp"
@@ -82,8 +82,8 @@
 
     <Button
         android:layout_width="157dp"
-        android:layout_height="41dp"
-        android:id="@+id/buttonSingInFacebook"
+        android:layout_height="40dp"
+        android:id="@+id/buttonSignInFacebook"
 
         android:text="Entre com Facebook"
         android:textSize="13sp"
