@@ -1,7 +1,11 @@
 package fga.mds.gpp.trezentos.Model;
 
+import fga.mds.gpp.trezentos.DAO.UserDao;
+
 public class UserAccount {
 
+
+    private static UserDao userDao = new UserDao();
     private Integer idUserAccount;
     private String user;
     private String password;
@@ -42,6 +46,16 @@ public class UserAccount {
 
     public void setPassword(String password){
         this.password = password;
+
+    }
+
+
+    public static void authenticateLogin(UserAccount userAccount){
+
+        userDao.authenticate(userAccount);
+
+
+
 
     }
 }

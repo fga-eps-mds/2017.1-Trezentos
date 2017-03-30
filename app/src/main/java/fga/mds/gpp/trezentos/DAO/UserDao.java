@@ -1,6 +1,11 @@
 package fga.mds.gpp.trezentos.DAO;
 
 import android.content.Context;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +21,26 @@ public class UserDao {
     Context context;
     UserAccount userAccount;
 
+    //Contructor
     public UserDao(){
 
 
     }
-
 
     public UserDao(Context context){
             this.context = context;
 
     }
 
-
+    //Methods
     public void update(UserAccount userAccount){
         //This method will update the register in DB
 
+
+    }
+
+    public void authenticate(UserAccount userAccount){
+        //Http requisition
 
     }
 
@@ -55,20 +65,26 @@ public class UserDao {
         return userAccount;
     }
 
-    public List<UserAccount> findAll() throws Exception {
-        List<UserAccount> retorno = new ArrayList<UserAccount>();
 
-        return retorno;
-    }
+    public void createFormactJSON(){
 
-    private UserAccount montaUsuario() {
+        JSONObject parent = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
 
-        Integer idUserAccount = null;
-        String user = null;
-        String password = null;
 
-        return new UserAccount(idUserAccount, user, password);
+        jsonArray.put("lv1");
+        jsonArray.put("lv2");
 
+        try {
+
+            jsonObject.put("mk2", jsonArray);
+            jsonObject.put("mk1", "mv1");
+            parent.put("k2", jsonObject);
+            Log.d("output", parent.toString(2));
+        }catch (JSONException e1){
+            e1.printStackTrace();
+        }
     }
 
 }
