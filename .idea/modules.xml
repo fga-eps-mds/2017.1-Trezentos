@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///shared_data/Climaco/Documentos/UnB/program/6_semestre/gpp/projeto/Trezentos/Trezentos.iml" filepath="/shared_data/Climaco/Documentos/UnB/program/6_semestre/gpp/projeto/Trezentos/Trezentos.iml" />
-      <module fileurl="file:///shared_data/Climaco/Documentos/UnB/program/6_semestre/gpp/projeto/Trezentos/app/app.iml" filepath="/shared_data/Climaco/Documentos/UnB/program/6_semestre/gpp/projeto/Trezentos/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2017.1-Trezentos.iml" filepath="$PROJECT_DIR$/2017.1-Trezentos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2017.1-Trezentos.iml" filepath="$PROJECT_DIR$/2017.1-Trezentos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook-android-sdk-4.20.0/facebook-android-sdk-4.20.0.iml" filepath="$PROJECT_DIR$/facebook-android-sdk-4.20.0/facebook-android-sdk-4.20.0.iml" />
     </modules>
   </component>
 </project>
