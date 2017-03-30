@@ -72,16 +72,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /*loginFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent forgotIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(forgotIntent);
-                Log.d(TAG, "Button Login facebook clicado");
-                //dialog.alert("Falha na Autenticação", "Tente novamente...");
-
-            }
-        });*/
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
