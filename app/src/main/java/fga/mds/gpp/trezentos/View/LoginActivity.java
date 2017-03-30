@@ -1,20 +1,27 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import java.util.Arrays;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
-import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
-
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     private String activityName = this.getClass().getSimpleName();
     private Handler mHandler = new Handler();
 
+    //LoginButton loginFacebook;
+    //CallbackManager callbackManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setContext(this);
 
         Button login = (Button) findViewById(R.id.buttonLogin);
-        Button loginFacebook = (Button) findViewById(R.id.buttonSignInFacebook);
         Button register = (Button) findViewById(R.id.buttonRegister);
         Button forgotPass = (Button) findViewById(R.id.buttonForgotPassword);
-
+        LoginButton loginFacebook = (LoginButton) findViewById(R.id.buttonSignInFacebook);;
         final EditText email = (EditText) findViewById(R.id.editTextEmail);
         final EditText password = (EditText) findViewById(R.id.editTextPassword);
 
+        //loginFacebook.setPublishPermissions(Arrays.asList("email", "public_profile", "user_friends"));
 
 
 
@@ -61,15 +72,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginFacebook.setOnClickListener(new View.OnClickListener() {
+        /*loginFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent forgotIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(forgotIntent);
                 Log.d(TAG, "Button Login facebook clicado");
                 //dialog.alert("Falha na Autenticação", "Tente novamente...");
 
             }
-        });
+        });*/
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,8 +107,37 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
+        //FacebookSdk.sdkInitialize(getApplicationContext());
+        //initializeControls();
+        //loginWithFB();
     }
+
+    /*private void initializeControls(){
+        loginFacebook = (LoginButton) findViewById(R.id.buttonSignInFacebook);
+    }
+
+    private void loginWithFB(){
+        LoginManager.getInstance().registerCallback(callbackManager,new FacebookCallback<LoginResult>(){
+            @Override
+            public void onSuccess(LoginResult loginResult){
+                dialog.alert("Falha na Autenticação", "Tente novamente...");
+            }
+
+            public void onCancel(){
+
+            }
+
+            public void onError(FacebookException error){
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }*/
 
     @Override
     protected void onResume() {
