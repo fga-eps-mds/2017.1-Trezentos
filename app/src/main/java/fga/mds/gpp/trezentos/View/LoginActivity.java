@@ -33,7 +33,10 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setContext(this);
 
         Button login = (Button) findViewById(R.id.buttonLogin);
+        Button loginFacebook = (Button) findViewById(R.id.buttonSingInFacebook);
         Button register = (Button) findViewById(R.id.buttonRegister);
+        Button forgotPass = (Button) findViewById(R.id.buttonForgotPassword);
+
         final EditText email = (EditText) findViewById(R.id.editTextEmail);
         final EditText password = (EditText) findViewById(R.id.editTextPassword);
 
@@ -53,14 +56,16 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, email.getText().toString());
                 Log.d(TAG, password.getText().toString());
 
-                Log.d(TAG, userAccountControl.getUserAccountId().toString());
-                Log.d(TAG, userAccountControl.getUserAccountEmail());
-                Log.d(TAG, userAccountControl.getUserAccountPassword());
 
-                //Insert in DAO that cominicates with API
-                //userAccountControl.insert();
+            }
+        });
 
+        loginFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Log.d(TAG, "Button Login facebook clicado");
+                //dialog.alert("Falha na Autenticação", "Tente novamente...");
 
             }
         });
@@ -74,14 +79,24 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "Button Registar clicado");
                 //dialog.alert("Falha na Autenticação", "Tente novamente...");
 
+            }
+        });
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Levar o usuario para a tela de forgotPass
+//              Intent intent = new Intent(LoginActivityActivity.this, RegisterActivity.class);
+//              startActivity(intent);
+                Log.d(TAG, "Button Forgot Password clicado");
+                //dialog.alert("Falha na Autenticação", "Tente novamente...");
 
 
             }
         });
 
     }
-
-
+    
     @Override
     protected void onResume() {
         super.onResume();
