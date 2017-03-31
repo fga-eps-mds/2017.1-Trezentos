@@ -54,10 +54,15 @@ public class UserAccountControl {
     }
 
     public void insertModelUser(Integer idUser, String user, String password){
-
         userAccount = new UserAccount(idUser, user, password);
         UserAccount.authenticateLogin(userAccount);
     }
+
+    public void insertModelUserRegister(Integer idUser, String user, String password){
+        userAccount = new UserAccount(idUser, user, password);
+        UserAccount.authenticateLogin(userAccount);
+    }
+
 
     public void updateModelUser(Integer idUser, String user, String password){
 
@@ -76,6 +81,11 @@ public class UserAccountControl {
     }
     public String getUserAccountPassword(){
         return userAccount.getPassword();
+
+    }
+
+    public String getUserAccountName(){
+        return userAccount.getName();
 
     }
 

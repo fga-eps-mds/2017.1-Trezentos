@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -52,8 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         final EditText password = (EditText) findViewById(R.id.editTextPassword);
 
         //loginFacebook.setPublishPermissions(Arrays.asList("email", "public_profile", "user_friends"));
-
-
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,11 +85,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Levar o usuario para a tela de cadastro
-//              Intent intent = new Intent(LoginActivityActivity.this, RegisterActivity.class);
-//              startActivity(intent);
-                Log.d(TAG, "Button Registar clicado");
-                //dialog.alert("Falha na Autenticação", "Tente novamente...");
-
+              Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+              startActivity(intent);
+                Log.d(TAG, "Button Registrar clicado");
+                dialog.alert("Falha na Autenticação", "Tente novamente...");
             }
         });
 
