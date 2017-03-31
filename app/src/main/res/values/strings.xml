@@ -2,4 +2,6 @@
     <string name="app_name">Trezentos</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="facebook_app_id">1840540606200745</string>
+    <string name="error_login">Ocorreu um erro ao entrar</string>
+    <string name="cancel_login">Login cancelado</string>
 </resources>

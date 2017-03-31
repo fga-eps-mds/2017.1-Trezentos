@@ -1,15 +1,23 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.telecom.Call;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -33,13 +41,13 @@ public class LoginActivity extends AppCompatActivity {
     private String activityName = this.getClass().getSimpleName();
     private Handler mHandler = new Handler();
 
-    //LoginButton loginFacebook;
-    //CallbackManager callbackManager;
-
+    private LoginButton loginFacebook;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
         dialog.setContext(this);
@@ -47,13 +55,32 @@ public class LoginActivity extends AppCompatActivity {
         Button login = (Button) findViewById(R.id.buttonLogin);
         Button register = (Button) findViewById(R.id.buttonRegister);
         Button forgotPass = (Button) findViewById(R.id.buttonForgotPassword);
-        LoginButton loginFacebook = (LoginButton) findViewById(R.id.buttonSignInFacebook);;
         final EditText email = (EditText) findViewById(R.id.editTextEmail);
         final EditText password = (EditText) findViewById(R.id.editTextPassword);
 
-        //loginFacebook.setPublishPermissions(Arrays.asList("email", "public_profile", "user_friends"));
+        callbackManager = CallbackManager.Factory.create();
 
+        loginFacebook = (LoginButton) findViewById(R.id.buttonSignInFacebook);
+        loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
 
+        loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                goMainScreen();
+                Log.d(TAG, "Button Login facebook clicado");
+
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), R.string.cancel_login, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Toast.makeText(getApplicationContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,37 +124,20 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        //FacebookSdk.sdkInitialize(getApplicationContext());
-        //initializeControls();
-        //loginWithFB();
     }
 
-    /*private void initializeControls(){
-        loginFacebook = (LoginButton) findViewById(R.id.buttonSignInFacebook);
-    }
-
-    private void loginWithFB(){
-        LoginManager.getInstance().registerCallback(callbackManager,new FacebookCallback<LoginResult>(){
-            @Override
-            public void onSuccess(LoginResult loginResult){
-                dialog.alert("Falha na Autenticação", "Tente novamente...");
-            }
-
-            public void onCancel(){
-
-            }
-
-            public void onError(FacebookException error){
-
-            }
-        });
+    private void goMainScreen() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+        Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-    }*/
+    }
 
     @Override
     protected void onResume() {
@@ -138,4 +148,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
     }
+
 }
+
