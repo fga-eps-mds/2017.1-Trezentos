@@ -7,6 +7,7 @@ public class UserAccount {
 
     private static UserDao userDao = new UserDao();
     private Integer idUserAccount;
+    private String name;
     private String user;
     private String password;
 
@@ -49,6 +50,12 @@ public class UserAccount {
 
     }
 
+    public String getName() { return name;}
+
+    public void setName(String name) {
+        this.name = name;
+
+    }
 
     public static void authenticateLogin(UserAccount userAccount){
 
