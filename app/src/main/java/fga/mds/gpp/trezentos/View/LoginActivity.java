@@ -29,6 +29,7 @@ import com.facebook.login.widget.LoginButton;
 import java.util.Arrays;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
+import fga.mds.gpp.trezentos.Model.UserException;
 import fga.mds.gpp.trezentos.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
         dialog.setContext(this);
 
-        Button login = (Button) findViewById(R.id.buttonLogin);
+        final Button login = (Button) findViewById(R.id.buttonLogin);
         Button register = (Button) findViewById(R.id.buttonRegister);
         Button forgotPass = (Button) findViewById(R.id.buttonForgotPassword);
         final EditText email = (EditText) findViewById(R.id.editTextEmail);
@@ -82,18 +83,48 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
                 //Implementar aqui parte da verificação do login
                 Log.d(TAG,"Button Login clicado");
                 //dialog.setProgressMessage("Carregando...");
                 //dialog.execute();
-                userAccountControl.insertModelUser(0, email.getText().toString(), password.getText().toString());
 
                 //LOG
                 Log.d(TAG, email.getText().toString());
                 Log.d(TAG, password.getText().toString());
+
+                try{
+                    userAccountControl.insertModelUser(0, email.getText().toString(), password.getText().toString());
+
+                }
+                catch(UserException userException){
+                    String errorMessage = userException.getMessage();
+
+
+                    if(errorMessage.equals("O nome não pode ser vazio")){
+                        email.requestFocus();
+                        email.setError("O nome não pode ser vazio");
+                    }
+
+                    if(errorMessage.equals("Digite um nome de até 20 caracteres")){
+                        email.requestFocus();
+                        email.setError("Digite um nome de até 20 caracteres");
+                    }
+
+                    if(errorMessage.equals("A senha não pode ser vazia")){
+                        password.requestFocus();
+                        password.setError("A senha não pode ser vazia");
+                    }
+
+                    if(errorMessage.equals("Digite uma senha de até 20 caracteres")){
+                        password.requestFocus();
+                        password.setError("Digite uma senha de até 20 caracteres");
+                    }
+
+
+                }
 
 
             }
