@@ -6,6 +6,7 @@ import java.util.List;
 
 import fga.mds.gpp.trezentos.DAO.UserDao;
 import fga.mds.gpp.trezentos.Model.UserAccount;
+import fga.mds.gpp.trezentos.Exception.UserException;
 
 public class UserAccountControl {
 
@@ -51,6 +52,40 @@ public class UserAccountControl {
         }
 
         return true;
+    }
+
+    public void validateInformation(String name, String email, String password,
+                                    String passwordConfirmation) throws UserException {
+
+        Integer MIN_PASSWORD_LENGTH = 6;
+        Integer MIN_NAME_LENGTH = 3;
+        Integer MAX_PASSWORD_LENGTH = 16;
+        Integer MAX_NAME_LENGTH = 50;
+
+        if(name == null || email == null || password == null || passwordConfirmation == null){
+
+            throw new UserException("Preencha todos os campos!");
+        }
+
+        if(name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH){
+
+            throw new UserException("O nome deve ter de 3 a 50 caracteres.");
+        }
+
+        if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
+
+            throw new UserException("A senha deve ter de 6 a 16 caracteres.");
+        }
+
+
+
+        if(password != passwordConfirmation){
+            throw new UserException("Senhas não Coincidem. Tente novamente.");
+        }
+
+
+
+
     }
 
     public void insertModelUser(Integer idUser, String user, String password){
