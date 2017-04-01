@@ -103,19 +103,19 @@ public class LoginActivity extends AppCompatActivity {
                     String errorMessage = userException.getMessage();
 
 
-                    if(errorMessage.equals("O nome não pode ser vazio")){
+                    if(errorMessage.equals("O email não pode estar vazio")){
                         email.requestFocus();
-                        email.setError("O nome não pode ser vazio");
+                        email.setError("O email não pode estar vazio");
                     }
 
-                    if(errorMessage.equals("Digite um nome de até 20 caracteres")){
+                    if(errorMessage.equals("Digite um email de até 30 caracteres")){
                         email.requestFocus();
-                        email.setError("Digite um nome de até 20 caracteres");
+                        email.setError("Digite um email de até 30 caracteres");
                     }
 
-                    if(errorMessage.equals("A senha não pode ser vazia")){
+                    if(errorMessage.equals("A senha não pode estar vazia")){
                         password.requestFocus();
-                        password.setError("A senha não pode ser vazia");
+                        password.setError("A senha não pode estar vazia");
                     }
 
                     if(errorMessage.equals("Digite uma senha de até 20 caracteres")){

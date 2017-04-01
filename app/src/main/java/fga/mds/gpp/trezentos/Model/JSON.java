@@ -8,9 +8,7 @@ import org.json.JSONObject;
 
 import static java.lang.Integer.parseInt;
 
-/**
- * Created by arthur on 30/03/17.
- */
+
 
 public class JSON {
 
@@ -18,40 +16,29 @@ public class JSON {
     String in;
     JSONObject reader = new JSONObject(in);
 
-    public JSON() throws JSONException {
-
-
-    }
+    public JSON() throws JSONException {}
 
     public JSONObject parsingJSON(UserAccount userAccount) throws JSONException {
 
-
         JSONObject json = new JSONObject();
+
         json.put("idUser", userAccount.getIdUserAccount());
-        json.put("email", userAccount.getUser());
+        json.put("email", userAccount.getEmail());
+        json.put("email", userAccount.getEmail());
         json.put("password", userAccount.getPassword());
 
         return json;
     }
 
-    public UserAccount readingJSON() throws JSONException {
-
-
+    public UserAccount readingJSON() throws JSONException, UserException {
 
         JSONObject sys  = reader.getJSONObject("sys");
+
         userAccount.setIdUserAccount(parseInt(sys.getString("idUser")));
-
-        JSONObject email  = reader.getJSONObject("email");
-        userAccount.setUser(email.getString("email"));
-
-        JSONObject pass  = reader.getJSONObject("pass");
-        userAccount.setUser(pass.getString("pass"));
-
+        userAccount.setName(sys.getString("name"));
+        userAccount.setEmail(sys.getString("email"));
+        userAccount.setPassword(sys.getString("password"));
 
         return userAccount;
     }
-
-
-
-
 }

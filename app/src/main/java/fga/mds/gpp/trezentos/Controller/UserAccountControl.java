@@ -6,6 +6,7 @@ import java.util.List;
 
 import fga.mds.gpp.trezentos.DAO.UserDao;
 import fga.mds.gpp.trezentos.Model.UserAccount;
+import fga.mds.gpp.trezentos.Model.UserException;
 
 public class UserAccountControl {
 
@@ -46,23 +47,55 @@ public class UserAccountControl {
 
     public boolean loginValidate(String user, String password){
         UserAccount userAccount = new UserAccount();
-        if(userAccount == null || userAccount.getUser() == null || userAccount.getPassword() == null){
+        if(userAccount == null || userAccount.getEmail() == null || userAccount.getPassword() == null){
             return false;
         }
 
         return true;
     }
 
-    public void insertModelUser(Integer idUser, String user, String password){
+    public void insertModelUser(Integer idUser, String email, String password) throws UserException {
+        userAccount = new UserAccount();
 
-        userAccount = new UserAccount(idUser, user, password);
+        //Id
+        userAccount.setIdUserAccount(idUser);
+
+        //Verify email
+        if (email != null && !email.isEmpty()) {
+            Integer MAX_NAME_LENGTH = 30;
+
+            if (email.length() <= MAX_NAME_LENGTH) {
+                userAccount.setEmail(email);
+            } else  {
+                throw new UserException("Digite um email de até 30 caracteres");
+            }
+        } else {
+            throw new UserException("O email não pode estar vazio");
+        }
+
+        //Verify the password
+        if (password != null && !password.isEmpty()) {
+            Integer MAX_PASS_LENGTH = 20;
+
+            if (password.length() <= MAX_PASS_LENGTH) {
+                userAccount.setPassword(password);
+            } else  {
+                throw new UserException("Digite uma senha de até 20 caracteres");
+            }
+        } else {
+            throw new UserException("A senha não pode estar vazia");
+        }
+
         UserAccount.authenticateLogin(userAccount);
+
+
     }
 
-    public void updateModelUser(Integer idUser, String user, String password){
+    public void updateModelUser(Integer idUser,String name, String email, String password) throws UserException {
 
         userAccount.setIdUserAccount(idUser);
-        userAccount.setUser(user);
+        userAccount.setName(name);
+        userAccount.setEmail(email);
         userAccount.setPassword(password);
     }
 
@@ -71,7 +104,7 @@ public class UserAccountControl {
 
     }
     public String getUserAccountEmail(){
-        return userAccount.getUser();
+        return userAccount.getEmail();
 
     }
     public String getUserAccountPassword(){
