@@ -2,6 +2,7 @@ package fga.mds.gpp.trezentos.Controller;
 
 import android.content.Context;
 
+import java.nio.charset.CharacterCodingException;
 import java.util.List;
 
 import fga.mds.gpp.trezentos.DAO.UserDao;
@@ -77,14 +78,29 @@ public class UserAccountControl {
             throw new UserException("A senha deve ter de 6 a 16 caracteres.");
         }
 
-
-
         if(password != passwordConfirmation){
             throw new UserException("Senhas não Coincidem. Tente novamente.");
         }
 
+        // Confirm UpperCase in password
 
+        boolean upperCaseConfirmation = false;
+        char letter;
 
+        for(int i = 0; i < password.length(); i++){
+
+            letter = password.charAt(i);
+
+            if (letter == Character.toUpperCase(letter)){
+                upperCaseConfirmation = true;
+            }
+
+        }
+
+        if(upperCaseConfirmation == false){
+
+            throw new UserException("A senha deve ter ao menos um caracter maiusculo!");
+        }
 
     }
 

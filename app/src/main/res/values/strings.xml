@@ -1,4 +1,12 @@
 <resources>
+
+    <string name="lenNameErrorMessage">O nome deve ter de 3 a 50 caracteres.</string>
+    <string name="lenPasswordErrorMessage">A senha deve ter de 6 a 16 caracteres.</string>
+    <string name="emptySpaceErrorMessage">Preencha todos os campos!</string>
+    <string name="passwordConfErrorMessage">Senhas não Coincidem. Tente novamente.</string>
+    <string name="upperCaseErrorMessage">A senha deve ter ao menos um caracter maiusculo.</string>
+
+
     <string name="app_name">Trezentos</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="facebook_app_id">1840540606200745</string>

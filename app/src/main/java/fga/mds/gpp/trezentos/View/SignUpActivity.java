@@ -9,11 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
 
 import com.facebook.login.widget.LoginButton;
 
 import fga.mds.gpp.trezentos.R;
+
+import static fga.mds.gpp.trezentos.R.id.editTextEmailRegister;
+import static fga.mds.gpp.trezentos.R.id.editTextNameRegister;
+import static fga.mds.gpp.trezentos.R.id.editTextPasswordConfirmation;
+import static fga.mds.gpp.trezentos.R.id.editTextPasswordRegister;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -30,21 +36,16 @@ public class SignUpActivity extends AppCompatActivity {
 
         Button signUp = (Button) findViewById(R.id.buttonSignUp);
 
-        final EditText name = (EditText) findViewById(R.id.editTextNameRegister);
-        final EditText email = (EditText) findViewById(R.id.editTextEmailRegister);
-        final EditText password = (EditText) findViewById(R.id.editTextPasswordRegister);
-        final EditText passwordConfirmation = (EditText) findViewById(R.id.editTextPasswordConfirmation);
+        final EditText name = (EditText) findViewById(editTextNameRegister);
+        final EditText email = (EditText) findViewById(editTextEmailRegister);
+        final EditText password = (EditText) findViewById(editTextPasswordRegister);
+        final EditText passwordConfirmation = (EditText) findViewById(editTextPasswordConfirmation);
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-            //    try {
-            //        userAccountControl.validateInformation(name.getText().toString(), email.getText().toString(),
-            //                password.getText().toString(), passwordConfirmation.getText().toString());
-            //    } catch (UserException userException) {
-            //        e.printStackTrace();
-            //    }
+                confirmInformation(userAccountControl, name, email, password, passwordConfirmation);
 
                 //Confirma dados usuário
                 userAccountControl.insertModelUser(0, email.getText().toString(), password.getText().toString());
@@ -56,6 +57,45 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // Method for confirmation
+
+    public void confirmInformation(UserAccountControl userAccountControl, EditText name, EditText email,
+                                   EditText password, EditText passwordConfirmation){
+
+        try {
+            userAccountControl.validateInformation(name.getText().toString(), email.getText().toString(),
+                    password.getText().toString(), passwordConfirmation.getText().toString());
+        }catch (UserException userException) {
+
+            String errorMessage = userException.getMessage();
+
+            if(errorMessage.equals("O nome deve ter de 3 a 50 caracteres.")){
+                name.requestFocus();
+                name.setError("O nome deve ter de 3 a 50 caracteres.");
+            }
+
+            if(errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")){
+                password.requestFocus();
+                password.setError("A senha deve ter de 6 a 16 caracteres.");
+            }
+
+            if(errorMessage.equals("Preencha todos os campos!")){
+
+                name.setError("Preencha todos os campos!");
+            }
+
+            if(errorMessage.equals("Senhas não Coincidem. Tente novamente.")){
+                passwordConfirmation.requestFocus();
+                passwordConfirmation.setError("Senhas não Coincidem. Tente novamente.");
+            }
+
+            if(errorMessage.equals("A senha deve ter ao menos um caracter maiusculo.")){
+                password.requestFocus();
+                password.setError("A senha deve ter ao menos um caracter maiusculo.");
+            }
+        }
 
 
     }
