@@ -61,8 +61,12 @@ public class UserAccount {
 
         userDao.authenticate(userAccount);
 
+    }
 
+    public static void insertData(UserAccount userAccount){
 
+        userDao.insert(userAccount);
 
     }
+
 }

@@ -109,9 +109,11 @@ public class UserAccountControl {
         UserAccount.authenticateLogin(userAccount);
     }
 
-    public void insertModelUserRegister(Integer idUser, String user, String password){
+    public void insertModelUserRegister(Integer idUser,String name, String user, String password){
         userAccount = new UserAccount(idUser, user, password);
+        userAccount.setName(name);
         UserAccount.authenticateLogin(userAccount);
+        UserAccount.insertData(userAccount);
     }
 
 

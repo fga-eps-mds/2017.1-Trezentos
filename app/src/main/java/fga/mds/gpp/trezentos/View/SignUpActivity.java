@@ -48,7 +48,8 @@ public class SignUpActivity extends AppCompatActivity {
                 confirmInformation(userAccountControl, name, email, password, passwordConfirmation);
 
                 //Confirma dados usuário
-                userAccountControl.insertModelUser(0, email.getText().toString(), password.getText().toString());
+                userAccountControl.insertModelUserRegister(0, name.getText().toString()
+                        ,email.getText().toString(), password.getText().toString());
 
                 Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(intent);
