@@ -10,4 +10,6 @@
     <string name="app_name">Trezentos</string>
     <string name="cadastrar">Cadastrar</string>
     <string name="facebook_app_id">1840540606200745</string>
+    <string name="sign_up_text">Cadastrar</string>
+    <string name="already_sign_up"> <u> Já sou cadastrado </u></string>
 </resources>

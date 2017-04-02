@@ -20,45 +20,41 @@ import static fga.mds.gpp.trezentos.R.id.editTextEmailRegister;
 import static fga.mds.gpp.trezentos.R.id.editTextNameRegister;
 import static fga.mds.gpp.trezentos.R.id.editTextPasswordConfirmation;
 import static fga.mds.gpp.trezentos.R.id.editTextPasswordRegister;
+import static fga.mds.gpp.trezentos.R.id.sign_up_button;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private UserAccountControl userAccountControl = new UserAccountControl(this);
     private static final String TAG = "SignUpActivity";
     private UserDialog dialog = new UserDialog();
 
-    @Override
+    private EditText name;
+    private EditText email;
+    private EditText password;
+    private EditText passwordConfirmation;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Button signUp = (Button) findViewById(R.id.buttonSignUp);
+        Button signUp = (Button) findViewById(R.id.sign_up_button);
 
-        final EditText name = (EditText) findViewById(editTextNameRegister);
-        final EditText email = (EditText) findViewById(editTextEmailRegister);
-        final EditText password = (EditText) findViewById(editTextPasswordRegister);
-        final EditText passwordConfirmation = (EditText) findViewById(editTextPasswordConfirmation);
+        name = (EditText) findViewById(editTextNameRegister);
+        email = (EditText) findViewById(editTextEmailRegister);
+        password = (EditText) findViewById(editTextPasswordRegister);
+        passwordConfirmation = (EditText) findViewById(editTextPasswordConfirmation);
 
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                confirmInformation(userAccountControl, name, email, password, passwordConfirmation);
+        signUp.setOnClickListener(this);
 
-                //Confirma dados usuário
-                userAccountControl.insertModelUserRegister(0, name.getText().toString()
-                        ,email.getText().toString(), password.getText().toString());
-
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
-                Log.d(TAG, "Button Registrar clicado");
-                dialog.alert("Falha na Autenticação", "Dados inválidos");
-            }
-        });
+        Button alreadySignUp = (Button) findViewById(R.id.already_sign_up);
+        alreadySignUp.setOnClickListener(this);
 
     }
+
+
 
     // Method for confirmation
 
@@ -113,4 +109,30 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.already_sign_up:{
+                Intent returnToLogin = new Intent(SignUpActivity.this,LoginActivity.class);
+                startActivity(returnToLogin);
+                finish();
+                break;
+
+            }
+
+            case R.id.sign_up_button:{
+                confirmInformation(userAccountControl, name, email, password, passwordConfirmation);
+
+                //Confirma dados usuário
+                userAccountControl.insertModelUserRegister(0, name.getText().toString()
+                        ,email.getText().toString(), password.getText().toString());
+
+                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(intent);
+                Log.d(TAG, "Button Registrar clicado");
+                dialog.alert("Falha na Autenticação", "Dados inválidos");
+            }
+        }
+    }
 }
