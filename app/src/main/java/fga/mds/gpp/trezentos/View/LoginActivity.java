@@ -59,15 +59,15 @@ public class LoginActivity extends AppCompatActivity {
 
         dialog.setContext(this);
 
-        final Button login = (Button) findViewById(R.id.buttonLogin);
-        Button register = (Button) findViewById(R.id.buttonRegister);
-        Button forgotPass = (Button) findViewById(R.id.buttonForgotPassword);
-        final EditText email = (EditText) findViewById(R.id.editTextEmail);
-        final EditText password = (EditText) findViewById(R.id.editTextPassword);
+        final Button login = (Button) findViewById(R.id.button_login);
+        Button register = (Button) findViewById(R.id.button_register);
+        Button forgotPass = (Button) findViewById(R.id.button_forgot_password);
+        final EditText email = (EditText) findViewById(R.id.edit_text_email);
+        final EditText password = (EditText) findViewById(R.id.edit_text_password);
 
         callbackManager = CallbackManager.Factory.create();
 
-        loginFacebook = (LoginButton) findViewById(R.id.buttonSignInFacebook);
+        loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
         loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
 
         loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
