@@ -2,6 +2,8 @@ package fga.mds.gpp.trezentos.Controller;
 
 import android.content.Context;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import fga.mds.gpp.trezentos.DAO.UserDao;
@@ -52,6 +54,10 @@ public class UserAccountControl {
         }
 
         return true;
+    }
+
+    public void insertModelUserFacebook(JSONObject object){
+        
     }
 
     public void insertModelUser(Integer idUser, String email, String password) throws UserException {
