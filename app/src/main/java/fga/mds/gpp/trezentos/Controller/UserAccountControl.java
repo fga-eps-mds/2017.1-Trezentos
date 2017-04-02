@@ -2,7 +2,8 @@ package fga.mds.gpp.trezentos.Controller;
 
 import android.content.Context;
 
-import java.nio.charset.CharacterCodingException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import fga.mds.gpp.trezentos.DAO.UserDao;
@@ -48,11 +49,73 @@ public class UserAccountControl {
 
     public boolean loginValidate(String user, String password){
         UserAccount userAccount = new UserAccount();
-        if(userAccount == null || userAccount.getUser() == null || userAccount.getPassword() == null){
+        if(userAccount == null || userAccount.getEmail() == null || userAccount.getPassword() == null){
             return false;
         }
 
         return true;
+    }
+
+    public void insertModelUserFacebook(JSONObject object){
+
+    }
+
+    public void insertModelUser(Integer idUser, String email, String password) throws UserException {
+        userAccount = new UserAccount();
+
+        //Id
+        userAccount.setIdUserAccount(idUser);
+
+        //Verify email
+        if (email != null && !email.isEmpty()) {
+            Integer MAX_NAME_LENGTH = 30;
+
+            if (email.length() <= MAX_NAME_LENGTH) {
+                userAccount.setEmail(email);
+            } else  {
+                throw new UserException("Digite um email de até 30 caracteres");
+            }
+        } else {
+            throw new UserException("O email não pode estar vazio");
+        }
+
+        //Verify the password
+        if (password != null && !password.isEmpty()) {
+            Integer MAX_PASS_LENGTH = 20;
+
+            if (password.length() <= MAX_PASS_LENGTH) {
+                userAccount.setPassword(password);
+            } else  {
+                throw new UserException("Digite uma senha de até 20 caracteres");
+            }
+        } else {
+            throw new UserException("A senha não pode estar vazia");
+        }
+
+        UserAccount.authenticateLogin(userAccount);
+
+
+    }
+
+    public void updateModelUser(Integer idUser,String name, String email, String password) throws UserException {
+
+        userAccount.setIdUserAccount(idUser);
+        userAccount.setName(name);
+        userAccount.setEmail(email);
+        userAccount.setPassword(password);
+    }
+
+    public Integer getUserAccountId(){
+        return userAccount.getIdUserAccount();
+
+    }
+    public String getUserAccountEmail(){
+        return userAccount.getEmail();
+
+    }
+    public String getUserAccountPassword(){
+        return userAccount.getPassword();
+
     }
 
     public void validateInformation(String name, String email, String password,
@@ -104,44 +167,11 @@ public class UserAccountControl {
 
     }
 
-    public void insertModelUser(Integer idUser, String user, String password){
-        userAccount = new UserAccount(idUser, user, password);
-        UserAccount.authenticateLogin(userAccount);
-    }
-
-    public void insertModelUserRegister(Integer idUser,String name, String user, String password){
+    public void insertModelUserRegister(Integer idUser,String name, String user, String password) throws UserException {
         userAccount = new UserAccount(idUser, user, password);
         userAccount.setName(name);
         UserAccount.authenticateLogin(userAccount);
         UserAccount.insertData(userAccount);
     }
-
-
-    public void updateModelUser(Integer idUser, String user, String password){
-
-        userAccount.setIdUserAccount(idUser);
-        userAccount.setUser(user);
-        userAccount.setPassword(password);
-    }
-
-    public Integer getUserAccountId(){
-        return userAccount.getIdUserAccount();
-
-    }
-    public String getUserAccountEmail(){
-        return userAccount.getUser();
-
-    }
-    public String getUserAccountPassword(){
-        return userAccount.getPassword();
-
-    }
-
-    public String getUserAccountName(){
-        return userAccount.getName();
-
-    }
-
-
 
 }

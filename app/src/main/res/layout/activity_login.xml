@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:facebook="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="230dp"
         android:layout_height="230dp"
-        android:id="@+id/logoImage"
+        android:id="@+id/logo_image"
         android:src="@drawable/trezentoslogo"
 
         android:layout_alignParentTop="true"
@@ -25,116 +25,95 @@
         android:layout_marginTop="6dp" />
 
     <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="180dp"
+        android:id="@+id/button_login"
+        android:layout_width="352dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="11dp"
+
+        android:background="@drawable/selector_button"
         android:text="Login"
         android:textColor="#FFFFFF"
 
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-
-        android:background="@drawable/selector_button"
-        app:layout_constraintRight_toLeftOf="@+id/buttonSignInFacebook"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonSignInFacebook"
-        android:layout_marginBottom="-1dp"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-
-    <Button
-        android:id="@+id/buttonRegister"
-        android:text="Cadastrar"
-
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/selector_button"
-
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSignInFacebook" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
 
     <Button
-        android:layout_width="366dp"
-        android:layout_height="33dp"
-        android:id="@+id/buttonForgotPassword"
-        android:text="Esqueceu a senha"
-        android:textSize="13sp"
-        android:textColor="#6000"
+        android:id="@+id/button_register"
         android:background="@android:color/transparent"
-
-        android:layout_marginStart="11dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="7dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRegister" />
-
-    <com.facebook.login.widget.LoginButton
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:paddingTop="11dp"
-        android:paddingBottom="11dp"
-        android:id="@+id/buttonSignInFacebook"
-
-        android:text="Entre com Facebook"
+        android:text="Cadastrar"
+        android:textColor="#6000"
         android:textSize="13sp"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/selector_button"
 
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/button_forgot_password"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteX="219dp"
-        tools:layout_editor_absoluteY="349dp"/>
+        app:layout_constraintHorizontal_bias="0.944"/>
+
+    <Button
+        android:id="@+id/button_forgot_password"
+        android:layout_width="126dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="11dp"
+
+        android:background="@android:color/transparent"
+        android:text="Esqueceu a senha"
+        android:textColor="#6000"
+
+        android:textSize="13sp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+   <com.facebook.login.widget.LoginButton
+       android:id="@+id/button_sign_in_facebook"
+       android:layout_width="355dp"
+       android:layout_height="40dp"
+
+       android:layout_marginTop="11dp"
+       android:background="@drawable/selector_button"
+       android:paddingBottom="11dp"
+       android:paddingTop="11dp"
+       android:text="Entre com Facebook"
+       android:textColor="#FFFFFF"
+       android:textSize="13sp"
+       app:layout_constraintTop_toBottomOf="@+id/button_login"
+       android:layout_marginRight="8dp"
+       app:layout_constraintRight_toRightOf="parent"
+       android:layout_marginLeft="8dp"
+       app:layout_constraintLeft_toLeftOf="parent" />
 
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/edit_text_password"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:hint="Senha"
         android:inputType="textPassword"
 
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
 
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_email"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/edit_text_email"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
 
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/logoImage" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_image" />
 
 </android.support.constraint.ConstraintLayout>

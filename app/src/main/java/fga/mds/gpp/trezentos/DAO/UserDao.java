@@ -41,6 +41,7 @@ public class UserDao {
 
     public void authenticate(UserAccount userAccount){
         //Http requisition
+        //parse to JSON the userAccount
 
     }
 
@@ -66,25 +67,6 @@ public class UserDao {
     }
 
 
-    public void createFormactJSON(){
 
-        JSONObject parent = new JSONObject();
-        JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-
-
-        jsonArray.put("lv1");
-        jsonArray.put("lv2");
-
-        try {
-
-            jsonObject.put("mk2", jsonArray);
-            jsonObject.put("mk1", "mv1");
-            parent.put("k2", jsonObject);
-            Log.d("output", parent.toString(2));
-        }catch (JSONException e1){
-            e1.printStackTrace();
-        }
-    }
 
 }

@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public boolean confirmInformation(UserAccountControl userAccountControl, EditText name, EditText email,
                                    EditText password, EditText passwordConfirmation) {
 
-        boolean isValid = false;
+        boolean isValid;
 
         try {
             userAccountControl.validateInformation(name.getText().toString(), email.getText().toString(),
@@ -115,12 +115,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.sign_up_button: {
                 //Confirma dados usuário
-                if (confirmInformation(userAccountControl, name, email, password, passwordConfirmation)) {
-                    userAccountControl.insertModelUserRegister(0, name.getText().toString(),
-                            email.getText().toString(), password.getText().toString());
-                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    break;
+                try {
+                    if (confirmInformation(userAccountControl, name, email, password, passwordConfirmation)) {
+                        userAccountControl.insertModelUserRegister(0, name.getText().toString(),
+                                email.getText().toString(), password.getText().toString());
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    }
+                } catch (UserException exception) {
+                    exception.printStackTrace();
                 }
             }
         }

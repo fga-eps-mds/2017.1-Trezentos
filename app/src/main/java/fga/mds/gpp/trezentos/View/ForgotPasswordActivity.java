@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import fga.mds.gpp.trezentos.R;
 
-import static fga.mds.gpp.trezentos.R.id.buttonForgotPassEmail;
+import static fga.mds.gpp.trezentos.R.id.button_forgot_pass_email;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -26,9 +26,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgotpassword);
         dialog.setContext(this);
 
-        EditText forgotPassText = (EditText) findViewById(R.id.forgotPassTextEmail);
-        Button buttonForgotPass = (Button) findViewById(buttonForgotPassEmail);
-        Button buttonReturn = (Button) findViewById(R.id.buttonReturnLogin);
+        EditText forgotPassText = (EditText) findViewById(R.id.forgot_pass_text_email);
+        Button buttonForgotPass = (Button) findViewById(R.id.button_forgot_pass_email);
+        Button buttonReturn = (Button) findViewById(R.id.button_return_login);
 
         buttonForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
