@@ -78,7 +78,7 @@ public class UserAccountControl {
             throw new UserException("A senha deve ter de 6 a 16 caracteres.");
         }
 
-        if(password != passwordConfirmation){
+        if(!password.equals(passwordConfirmation)){
             throw new UserException("Senhas não Coincidem. Tente novamente.");
         }
 

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.UserAccount;
@@ -54,84 +55,73 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-
-
     // Method for confirmation
+    public boolean confirmInformation(UserAccountControl userAccountControl, EditText name, EditText email,
+                                   EditText password, EditText passwordConfirmation) {
 
-    public void confirmInformation(UserAccountControl userAccountControl, EditText name, EditText email,
-                                   EditText password, EditText passwordConfirmation){
+        boolean isValid = false;
 
         try {
             userAccountControl.validateInformation(name.getText().toString(), email.getText().toString(),
                     password.getText().toString(), passwordConfirmation.getText().toString());
-        }catch (UserException userException) {
+
+            isValid = true;
+        } catch (UserException userException) {
 
             String errorMessage = userException.getMessage();
 
-            if(errorMessage.equals("O nome deve ter de 3 a 50 caracteres.")){
+            if (errorMessage.equals("O nome deve ter de 3 a 50 caracteres.")) {
                 name.requestFocus();
                 name.setError("O nome deve ter de 3 a 50 caracteres.");
             }
 
-            if(errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")){
+            if (errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")) {
                 password.requestFocus();
                 password.setError("A senha deve ter de 6 a 16 caracteres.");
             }
 
-            if(errorMessage.equals("Preencha todos os campos!")){
+            if (errorMessage.equals("Preencha todos os campos!")) {
 
                 name.setError("Preencha todos os campos!");
             }
 
-            if(errorMessage.equals("Senhas não Coincidem. Tente novamente.")){
+            if (errorMessage.equals("Senhas não Coincidem. Tente novamente.")) {
                 passwordConfirmation.requestFocus();
                 passwordConfirmation.setError("Senhas não Coincidem. Tente novamente.");
             }
 
-            if(errorMessage.equals("A senha deve ter ao menos um caracter maiusculo.")){
+            if (errorMessage.equals("A senha deve ter ao menos um caracter maiusculo.")) {
                 password.requestFocus();
                 password.setError("A senha deve ter ao menos um caracter maiusculo.");
             }
+
+            isValid = false;
         }
 
-
+        return isValid;
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
 
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.already_sign_up:{
-                Intent returnToLogin = new Intent(SignUpActivity.this,LoginActivity.class);
+            case R.id.already_sign_up: {
+                Intent returnToLogin = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(returnToLogin);
                 finish();
                 break;
 
             }
 
-            case R.id.sign_up_button:{
-                confirmInformation(userAccountControl, name, email, password, passwordConfirmation);
-
+            case R.id.sign_up_button: {
                 //Confirma dados usuário
-                userAccountControl.insertModelUserRegister(0, name.getText().toString()
-                        ,email.getText().toString(), password.getText().toString());
-
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
-                Log.d(TAG, "Button Registrar clicado");
-                dialog.alert("Falha na Autenticação", "Dados inválidos");
+                if (confirmInformation(userAccountControl, name, email, password, passwordConfirmation)) {
+                    userAccountControl.insertModelUserRegister(0, name.getText().toString(),
+                            email.getText().toString(), password.getText().toString());
+                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
+                }
             }
         }
     }
