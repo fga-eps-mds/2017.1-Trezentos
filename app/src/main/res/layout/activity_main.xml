@@ -3,9 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="@drawable/backgroundtrezentos"
+
     tools:context="fga.mds.gpp.trezentos.View.MainActivity">
 
     <FrameLayout
@@ -13,16 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:onClick="logout"
-            android:text="Sair"
-
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
@@ -37,7 +30,15 @@
         app:itemIconTint = "@drawable/selector"
         app:itemTextColor = "@drawable/selector"
 
-        app:menu="@menu/menu_navigation"
-        />
+        app:menu="@menu/menu_navigation"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sair"
+        android:onClick="logout"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
+
 
 </RelativeLayout>

@@ -19,8 +19,10 @@ import fga.mds.gpp.trezentos.R;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+
     private  ClassFragment fragment;
     private FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,11 @@ public class MainActivity extends AppCompatActivity {
 //            goLoginScreen();
 //        }
 
+
         ClassFragment classFragment = new ClassFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,classFragment, "fragmentclass" );
         fragmentTransaction.commit();
-
-
 
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_nav);
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.salas_item:
                         Toast.makeText(MainActivity.this,"Button Salas", Toast.LENGTH_SHORT).show();
+
 
                         ClassFragment classFragment = new ClassFragment();
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame,evaluationFragment, "fragment_evaluation" );
                         fragmentTransaction.commit();
+
                         return true;
                 }
                 return true;
