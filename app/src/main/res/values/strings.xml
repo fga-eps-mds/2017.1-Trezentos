@@ -14,4 +14,8 @@
     <string name="already_sign_up"> <u> Já sou cadastrado </u></string>
     <string name="error_login">Ocorreu um erro ao entrar</string>
     <string name="cancel_login">Login cancelado</string>
+    <string name="salas">Salas</string>
+    <string name="perfil">Perfil</string>
+    <string name="avaliacao">Avaliação</string>
+    <string name="sobre">Sobre</string>
 </resources>
