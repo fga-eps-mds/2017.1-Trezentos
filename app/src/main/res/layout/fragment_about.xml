@@ -2,15 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.AboutFragment">
+    tools:context="fga.mds.gpp.trezentos.View.ClassFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="About Fragment"
-        android:textSize="40dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="50dp"
-        />
+        android:id="@+id/about_list_view"
+        android:background="@color/text_list_color"/>
 
 </FrameLayout>
