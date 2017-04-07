@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -57,23 +59,34 @@ public class AboutFragment extends Fragment {
         about = new ArrayList<>();
 
         try {
-            about.add(new About("Trezentos", "TEDx"));
-            about.add(new About("nome2","descrição2"));
+            about.add(new About("Site","Método Trezentos"));
+            about.add(new About("Trezentos", "TEDx Universidade de Brasilia"));
+            about.add(new About("Metodologia Trezentos", "Entenda o método em 3 minutos"));
+            about.add(new About("Trezentos para professores", "Detalhes técnicos"));
+            about.add(new About("Artigo sobre o Trezentos",""));
+            about.add(new About("Record", "Reportagem sobre o Trezentos"));
+            about.add(new About("UnBTV","Reportagem sobre o Trezentos"));
 
         } catch (UserException e) {
             e.printStackTrace();
         }
+
+        /*final WebView webView = (WebView) view.findViewById(R.id.about_web_view);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setSupportZoom(false);*/
 
         adapter = new AboutAdapter(about,getActivity().getApplicationContext());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*switch (position){
+                    case 0:
+                        webView.loadUrl("http://www.google.com");
 
-                //UserClass userClasses= userClasses.get(position);
+                }*/
 
-                //Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-                //        .setAction("No action", null).show();
             }
         });
         return view;

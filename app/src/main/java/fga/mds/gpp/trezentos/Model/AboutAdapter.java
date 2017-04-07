@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -63,14 +64,15 @@ public class AboutAdapter extends ArrayAdapter{
             result=convertView;
         }
 
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.down_from_top : R.anim.down_from_top);
         result.startAnimation(animation);
         lastPosition = position;
 
         viewHolder.title.setText(about.getTitle());
         viewHolder.subTitle.setText(about.getSubTitle());
-        //viewHolder.cutOff.setText(userClass.getCutOff());
 
+        ImageView item_about = (ImageView) convertView.findViewById(R.id.item_about);
+        item_about.setImageResource(about.getAboutImage(position));
         // Return the completed view to render on screen
         return convertView;
     }

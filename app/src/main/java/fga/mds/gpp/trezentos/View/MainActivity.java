@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.sobre_item:
-                        Toast.makeText(MainActivity.this,"Button Sobre", Toast.LENGTH_SHORT).show();
 
                         AboutFragment aboutFragment = new AboutFragment();
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
