@@ -28,7 +28,7 @@ public class UserAccountControlUnitTest {
         try{
 
             testUser = new UserAccountControl();
-            testUser.validateInformation(null,"aluno@email.com","Senha1", "Senha1");
+            testUser.validateSignUp(null,"aluno@email.com","Senha1", "Senha1");
             isValid = true;
 
         } catch (UserException userException) {
@@ -51,7 +51,7 @@ public class UserAccountControlUnitTest {
         try{
 
             testUser = new UserAccountControl();
-            testUser.validateInformation("Carla",null,"Senha1", "Senha1");
+            testUser.validateSignUp("Carla",null,"Senha1", "Senha1");
             isValid = true;
 
         } catch (UserException userException) {
@@ -74,7 +74,7 @@ public class UserAccountControlUnitTest {
         try{
 
             testUser = new UserAccountControl();
-            testUser.validateInformation("Carla","aluno@email.com",null, "Senha1");
+            testUser.validateSignUp("Carla","aluno@email.com",null, "Senha1");
             isValid = true;
 
         } catch (UserException userException) {
@@ -96,7 +96,7 @@ public class UserAccountControlUnitTest {
         try{
 
             testUser = new UserAccountControl();
-            testUser.validateInformation("Carla", "aluno@email.com", "Senha1", null);
+            testUser.validateSignUp("Carla", "aluno@email.com", "Senha1", null);
             isValid = true;
 
         } catch (UserException userException) {
@@ -120,7 +120,7 @@ public class UserAccountControlUnitTest {
         try{
 
             testUser = new UserAccountControl();
-            testUser.validateInformation("Ei","aluno@email.com","Senha1", "Senha1");
+            testUser.validateSignUp("Ei","aluno@email.com","Senha1", "Senha1");
             isValid = true;
 
         } catch (UserException userException) {
@@ -144,7 +144,7 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser.validateInformation("O trezentos é metodo de aprendizagem ativa e colaborativa"
+            testUser.validateSignUp("O trezentos é metodo de aprendizagem ativa e colaborativa"
                     ,"aluno@email.com","Senha1", "Senha1");
             isValid = true;
 
@@ -168,7 +168,7 @@ public class UserAccountControlUnitTest {
         try{
 
             testUser = new UserAccountControl();
-            testUser.validateInformation("Carla","aluno@email.com","Senha", "Senha");
+            testUser.validateSignUp("Carla","aluno@email.com","Senha", "Senha");
             isValid = true;
 
         } catch (UserException userException) {
@@ -190,7 +190,7 @@ public class UserAccountControlUnitTest {
         try{
 
             testUser = new UserAccountControl();
-            testUser.validateInformation("Carla"
+            testUser.validateSignUp("Carla"
                     ,"aluno@email.com","Vintecaracteresusados", "Vintecaracteresusados");
             isValid = true;
 
@@ -213,7 +213,7 @@ public class UserAccountControlUnitTest {
         try{
 
             testUser = new UserAccountControl();
-            testUser.validateInformation("Carla"
+            testUser.validateSignUp("Carla"
                     ,"aluno@email.com","Senha1", "Senha");
             isValid = true;
 
@@ -236,7 +236,7 @@ public class UserAccountControlUnitTest {
 
         try{
             testUser = new UserAccountControl();
-            testUser.validateInformation("Carla"
+            testUser.validateSignUp("Carla"
                     ,"aluno@email.com","senha1", "senha");
             isValid = true;
 

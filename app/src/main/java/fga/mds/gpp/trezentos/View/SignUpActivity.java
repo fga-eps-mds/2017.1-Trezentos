@@ -1,6 +1,7 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +26,7 @@ import static fga.mds.gpp.trezentos.R.id.sign_up_button;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private UserAccountControl userAccountControl = new UserAccountControl(this);
+    private UserAccountControl userAccountControl = new UserAccountControl();
     private static final String TAG = "SignUpActivity";
     private UserDialog dialog = new UserDialog();
 
@@ -42,11 +43,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         Button signUp = (Button) findViewById(R.id.sign_up_button);
 
-        name = (EditText) findViewById(editTextNameRegister);
-        email = (EditText) findViewById(editTextEmailRegister);
-        password = (EditText) findViewById(editTextPasswordRegister);
-        passwordConfirmation = (EditText) findViewById(editTextPasswordConfirmation);
-
 
         signUp.setOnClickListener(this);
 
@@ -56,49 +52,52 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     // Method for confirmation
-    public boolean confirmInformation(UserAccountControl userAccountControl, EditText name, EditText email,
-                                   EditText password, EditText passwordConfirmation) {
+    public void confirmInformation(){
 
-        boolean isValid;
+        EditText nameEdit = (EditText) findViewById(editTextNameRegister);
+        EditText emailEdit = (EditText) findViewById(editTextEmailRegister);
+        EditText passwordEdit = (EditText) findViewById(editTextPasswordRegister);
+        EditText passwordConfirmationEdit = (EditText) findViewById(editTextPasswordConfirmation);
+
+        String name  = nameEdit.getText().toString();
+        String email = emailEdit.getText().toString();
+        String password = passwordEdit.getText().toString();
+        String passwordConfirmation = passwordConfirmationEdit.getText().toString();
+
+        String errorMessage;
 
         try {
-            userAccountControl.validateInformation(name.getText().toString(), email.getText().toString(),
-                    password.getText().toString(), passwordConfirmation.getText().toString());
-
-            isValid = true;
+            UserAccountControl userAccountControl = new UserAccountControl();
+            userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
         } catch (UserException userException) {
 
-            String errorMessage = userException.getMessage();
+            errorMessage = userException.getMessage();
 
-            if (errorMessage.equals("O nome deve ter de 3 a 50 caracteres.")) {
-                name.requestFocus();
-                name.setError("O nome deve ter de 3 a 50 caracteres.");
+            if (errorMessage.equals(R.string.msg_null_name_error_message)) {
+                nameEdit.requestFocus();
+                nameEdit.setError(getString(R.string.msg_null_name_error_message));
             }
 
-            if (errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")) {
-                password.requestFocus();
-                password.setError("A senha deve ter de 6 a 16 caracteres.");
+            if (errorMessage.equals(R.string.msg_len_password_error_message)) {
+                passwordEdit.requestFocus();
+                passwordEdit.setError(getString(R.string.msg_len_password_error_message));
             }
 
-            if (errorMessage.equals("Preencha todos os campos!")) {
-
-                name.setError("Preencha todos os campos!");
+            if (errorMessage.equals(R.string.msg_password_conf_error_message)) {
+                passwordConfirmationEdit.requestFocus();
+                passwordConfirmationEdit.setError(getString(R.string.msg_password_conf_error_message));
             }
 
-            if (errorMessage.equals("Senhas não Coincidem. Tente novamente.")) {
-                passwordConfirmation.requestFocus();
-                passwordConfirmation.setError("Senhas não Coincidem. Tente novamente.");
+            if (errorMessage.equals(R.string.msg_upper_case_error_message)) {
+                passwordEdit.requestFocus();
+                passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
             }
+            if (errorMessage.equals(R.string.msg_error_null_email_error_message)){
+                emailEdit.requestFocus();
+                emailEdit.setError(getString(R.string.msg_error_null_email_error_message));
 
-            if (errorMessage.equals("A senha deve ter ao menos um caracter maiusculo.")) {
-                password.requestFocus();
-                password.setError("A senha deve ter ao menos um caracter maiusculo.");
             }
-
-            isValid = false;
         }
-
-        return isValid;
     }
 
     @Override
@@ -115,18 +114,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.sign_up_button: {
                 //Confirma dados usuário
-                try {
-                    if (confirmInformation(userAccountControl, name, email, password, passwordConfirmation)) {
-                        userAccountControl.insertModelUserRegister(0, name.getText().toString(),
-                                email.getText().toString(), password.getText().toString());
-                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        break;
-                    }
-                } catch (UserException exception) {
-                    exception.printStackTrace();
+                        confirmInformation();
+                    //        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                      //      startActivity(intent);
                 }
             }
         }
     }
-}
+

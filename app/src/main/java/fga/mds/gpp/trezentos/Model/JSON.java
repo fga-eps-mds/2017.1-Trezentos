@@ -22,7 +22,6 @@ public class JSON {
 
         JSONObject json = new JSONObject();
 
-        json.put("idUser", userAccount.getIdUserAccount());
         json.put("email", userAccount.getEmail());
         json.put("email", userAccount.getEmail());
         json.put("password", userAccount.getPassword());
@@ -34,7 +33,6 @@ public class JSON {
 
         JSONObject sys  = reader.getJSONObject("sys");
 
-        userAccount.setIdUserAccount(parseInt(sys.getString("idUser")));
         userAccount.setName(sys.getString("name"));
         userAccount.setEmail(sys.getString("email"));
         userAccount.setPassword(sys.getString("password"));
