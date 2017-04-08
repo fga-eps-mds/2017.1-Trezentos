@@ -11,6 +11,7 @@ public class UserClass {
     private Integer idUserAccount;
     private String password;
     private float addition;
+    private int sizeGroups;
 
     public UserClass(){
 
@@ -29,8 +30,18 @@ public class UserClass {
 
     }
 
+
     public void setClassName(String className) {
         this.className = className;
+    }
+
+
+    public int getSizeGroups() {
+        return sizeGroups;
+    }
+
+    public void setSizeGroups(int sizeGroups) {
+        this.sizeGroups = sizeGroups;
     }
 
     public float getAddition() {

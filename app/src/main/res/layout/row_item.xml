@@ -44,7 +44,6 @@
             android:id="@+id/version_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="API: "
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
@@ -52,7 +51,6 @@
             android:id="@+id/version_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="23"
             android:textAppearance="?android:attr/textAppearanceButton"
             android:textColor="@android:color/black"
             android:textStyle="bold" />

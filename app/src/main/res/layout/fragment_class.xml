@@ -26,6 +26,7 @@
         android:layout_margin="30dp"
         android:contentDescription="@string/criar_sala"
         android:src="@drawable/ic_criar_sala"
+        android:onClick="onClickCreate"
         app:backgroundTint="@android:color/background_dark" />
 
 

@@ -20,5 +20,12 @@
     <string name="sobre">Sobre</string>
 
     <string name="criar_sala">Criar sala</string>
+    <string name="ok">Criar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="classname">Nome da sala</string>
+    <string name="password">Senha da sala</string>
+    <string name="cutoff">Nota de corte</string>
+    <string name="sizegroups">Tamanho dos grupos</string>
+    <string name="addition">Acréscimo</string>
 
 </resources>
