@@ -78,6 +78,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 nameEdit.setError(getString(R.string.msg_null_name_error_message));
             }
 
+            if (errorMessage.equals(getString(R.string.msg_len_name_error_message))) {
+                nameEdit.requestFocus();
+                nameEdit.setError(getString(R.string.msg_len_name_error_message));
+            }
+
             if (errorMessage.equals(getString(R.string.msg_len_password_error_message))) {
                 passwordEdit.requestFocus();
                 passwordEdit.setError(getString(R.string.msg_len_password_error_message));
@@ -92,9 +97,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 passwordEdit.requestFocus();
                 passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
             }
-            if (errorMessage.equals(getString(R.string.msg_error_null_email_error_message))){
+            if (errorMessage.equals(getString(R.string.msg_null_email_error_message))){
                 emailEdit.requestFocus();
-                emailEdit.setError(getString(R.string.msg_error_null_email_error_message));
+                emailEdit.setError(getString(R.string.msg_null_email_error_message));
+
+            }
+            if (errorMessage.equals(getString(R.string.msg_len_email_error_message))){
+                emailEdit.requestFocus();
+                emailEdit.setError(getString(R.string.msg_len_email_error_message));
+
+            }
+            if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))){
+                emailEdit.requestFocus();
+                emailEdit.setError(getString(R.string.msg_special_characters_email_error_message));
+
+            }
+            if (errorMessage.equals(getString(R.string.msg_null_password_error_message))){
+                passwordEdit.requestFocus();
+                passwordEdit.setError(getString(R.string.msg_null_password_error_message));
 
             }
         }

@@ -27,10 +27,10 @@ public class UserAccount {
     }
 
     public UserAccount(String name, String email, String password, String passwordConfirmation) throws UserException {
-            setEmail(email);
             setName(name);
-            setPassword(password);
+            setEmail(email);
             setPasswordConfirmation(passwordConfirmation);
+            setPassword(password);
     }
 
     public void setName(String name) throws UserException {
@@ -39,12 +39,12 @@ public class UserAccount {
 
         if (name != null && !name.isEmpty()) {
             if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-                throw new UserException("O nome deve ter de 3 a 50 caracteres.");
+                throw new UserException("O nome deve ter de 3 a 50 caracteres");
             }else{
                 this.name = name;
             }
         } else {
-            throw new UserException("O nome não pode estar vazio.");
+            throw new UserException("O nome não pode estar vazio");
         }
     }
 
@@ -54,7 +54,7 @@ public class UserAccount {
             Integer MIN_EMAIL_LENGTH = 5;
 
             if (email.length() < MIN_EMAIL_LENGTH || email.length() > MAX_EMAIL_LENGTH) {
-                throw new UserException("O email deve ter entre 5 e 50 caracteres válidos.");
+                throw new UserException("O email deve ter entre 5 e 50 caracteres válidos");
             }
             /*validaçao caracteres*/
             else {
@@ -66,7 +66,7 @@ public class UserAccount {
                         this.email = email;
                     }
                     else
-                        throw new UserException("Email com caracteres inválidos. Tente novamente.");
+                        throw new UserException("Email com caracteres inválidos. Tente novamente");
             }
         }else {
             throw new UserException("O email não pode estar vazio");
@@ -74,25 +74,26 @@ public class UserAccount {
     }
 
     public void setPassword(String password) throws UserException {
-            ValidatePassword(password, passwordConfirmation);
+            ValidatePassword(password);
     }
 
-    public void ValidatePassword (String password, String passwordConfirmation) throws UserException{
-        if (password != null && !password.isEmpty() && passwordConfirmation != null && !passwordConfirmation.isEmpty()) {
+    public void ValidatePassword (String password) throws UserException{
+        if (password != null && !password.isEmpty()) {
             Integer MIN_PASSWORD_LENGTH = 6;
             Integer MAX_PASSWORD_LENGTH = 16;
-            if(!password.equals(passwordConfirmation)){
-                throw new UserException("Senhas não coincidem. Tente novamente.");
-            }
 
             if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {
                 throw new UserException("A senha deve ter entre 6 e 16 caracteres");
-            }else{
-                this.password = password;
-                setPasswordConfirmation(passwordConfirmation);
+            }else {
+                if (!password.equals(passwordConfirmation)) {
+                    throw new UserException("Senhas não coincidem, tente novamente");
+                } else {
+                    this.password = password;
+                    //setPasswordConfirmation(passwordConfirmation);
+                }
             }
         } else {
-            throw new UserException("Os campos não podem estar vazios");
+            throw new UserException("A senha não pode estar vazia");
         }
 
     }

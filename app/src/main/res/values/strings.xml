@@ -3,11 +3,15 @@
 <!-- Avisos -->
     <string name="msg_len_name_error_message">O nome deve ter de 3 a 50 caracteres</string>
     <string name="msg_null_name_error_message">O nome não pode estar vazio</string>
-    <string name="msg_len_password_error_message">A senha deve ter de 6 a 16 caracteres</string>
-    <string name="msg_password_conf_error_message">Senhas não coincidem. Tente novamente</string>
+    <string name="msg_len_password_error_message">A senha deve ter entre 6 e 16 caracteres</string>
+    <string name="msg_null_password_error_message">A senha não pode estar vazia</string>
+    <string name="msg_password_conf_error_message">Senhas não coincidem, tente novamente</string>
     <string name="msg_upper_case_error_message">A senha deve ter ao menos um caracter maiusculo</string>
     <string name="msg_error_login">Ocorreu um erro ao entrar</string>
-    <string name="msg_error_null_email_error_message">"O email não pode estar vazio"</string>
+    <string name="msg_null_email_error_message">"O email não pode estar vazio"</string>
+    <string name="msg_len_email_error_message">"O email deve ter entre 5 e 50 caracteres válidos"</string>
+    <string name="msg_special_characters_email_error_message">"Email com caracteres inválidos. Tente novamente"</string>
+
 <!-- Login -->
     <string name="btn_login_to_sign_up">Cadastrar</string>
     <string name="facebook_app_id">1840540606200745</string>

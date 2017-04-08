@@ -26,30 +26,11 @@ public class UserAccountControl {
         userAccount = new UserAccount();
 
         //Verify email
-        if (email != null && !email.isEmpty()) {
-            Integer MAX_NAME_LENGTH = 30;
-
-            if (email.length() <= MAX_NAME_LENGTH) {
-                userAccount.setEmail(email);
-            } else {
-                throw new UserException("Digite um email de até 30 caracteres");
-            }
-        } else {
-            throw new UserException("O email não pode estar vazio");
-        }
+        userAccount.setEmail(email);
 
         //Verify the password
-        if (password != null && !password.isEmpty()) {
-            Integer MAX_PASS_LENGTH = 20;
-
-            if (password.length() <= MAX_PASS_LENGTH) {
-                userAccount.setPassword(password);
-            } else {
-                throw new UserException("Digite uma senha de até 20 caracteres");
-            }
-        } else {
-            throw new UserException("A senha não pode estar vazia");
-        }
+        userAccount.setPasswordConfirmation(password);
+        userAccount.setPassword(password);
 
         UserAccount.authenticateLogin(userAccount);
     }
@@ -59,6 +40,7 @@ public class UserAccountControl {
 
         userAccount.setName(name);
         userAccount.setEmail(email);
+        userAccount.setPasswordConfirmation(password);
         userAccount.setPassword(password);
     }
 
