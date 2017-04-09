@@ -3,7 +3,6 @@
     package="fga.mds.gpp.trezentos">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:hardwareAccelerated="false"
         android:largeHeap="true"

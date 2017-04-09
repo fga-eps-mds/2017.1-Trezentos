@@ -1,13 +1,12 @@
 package fga.mds.gpp.trezentos.View;
 
-import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,6 +23,7 @@ public class AboutFragment extends Fragment {
 
     public ArrayList<About> about;
     private static AboutAdapter adapter;
+    public WebView mWebView;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -56,43 +56,19 @@ public class AboutFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_about, container, false);
         final ListView listView = (ListView) view.findViewById(R.id.about_list_view);
 
-        about = new ArrayList<>();
+        aboutItem();
 
-        try {
-            about.add(new About("Site","Método Trezentos"));
-            about.add(new About("Trezentos", "TEDx Universidade de Brasilia"));
-            about.add(new About("Metodologia Trezentos", "Entenda o método em 3 minutos"));
-            about.add(new About("Trezentos para professores", "Detalhes técnicos"));
-            about.add(new About("Artigo sobre o Trezentos",""));
-            about.add(new About("Record", "Reportagem sobre o Trezentos"));
-            about.add(new About("UnBTV","Reportagem sobre o Trezentos"));
-
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
-
-        /*final WebView webView = (WebView) view.findViewById(R.id.about_web_view);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(false);*/
-
-        adapter = new AboutAdapter(about,getActivity().getApplicationContext());
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*switch (position){
-                    case 0:
-                        webView.loadUrl("http://www.google.com");
-
-                }*/
-
+                openUrl(position);
             }
         });
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -101,7 +77,58 @@ public class AboutFragment extends Fragment {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void aboutItem(){
+        about = new ArrayList<>();
+
+        try {
+            about.add(new About("Site","Método Trezentos"));
+            about.add(new About("Trezentos", "TEDx Universidade de Brasilia"));
+            about.add(new About("Metodologia Trezentos", "Entenda o método em 3 minutos"));
+            about.add(new About("Trezentos para professores", "Detalhes técnicos"));
+            about.add(new About("Artigo sobre o Trezentos","PDF Download"));
+            about.add(new About("Record", "Reportagem sobre o Trezentos"));
+            about.add(new About("UnBTV","Reportagem sobre o Trezentos"));
+
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+
+        adapter = new AboutAdapter(about,getActivity().getApplicationContext());
+    }
+
+    public void openUrl(int position){
+        Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+
+        if(position == 0){
+            myWebLink.setData(Uri.parse("http://metodo300.com"));
+            startActivity(myWebLink);
+        }
+        else if(position == 1) {
+            myWebLink.setData(Uri.parse("https://youtu.be/gay6TYwVwf4"));
+            startActivity(myWebLink);
+        }
+        else if(position == 2) {
+            myWebLink.setData(Uri.parse("https://youtu.be/s0g1AgGFP5k"));
+            startActivity(myWebLink);
+        }
+        else if(position == 3) {
+            myWebLink.setData(Uri.parse("https://youtu.be/QLJtwsX8NqU"));
+            startActivity(myWebLink);
+        }
+        else if(position == 4) {
+            myWebLink.setData(Uri.parse("http://www.scielo.br/pdf/er/n63/1984-0411-er-63-00253.pdf"));
+            startActivity(myWebLink);
+        }
+        else if(position == 5) {
+            myWebLink.setData(Uri.parse("https://youtu.be/zQsaUjWw330"));
+            startActivity(myWebLink);
+        }
+        else {
+            myWebLink.setData(Uri.parse("https://youtu.be/7cfNcn-zge0"));
+            startActivity(myWebLink);
+        }
     }
 }
