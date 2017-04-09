@@ -1,3 +1,31 @@
 <resources>
+
+    <string name="lenNameErrorMessage">O nome deve ter de 3 a 50 caracteres.</string>
+    <string name="lenPasswordErrorMessage">A senha deve ter de 6 a 16 caracteres.</string>
+    <string name="emptySpaceErrorMessage">Preencha todos os campos!</string>
+    <string name="passwordConfErrorMessage">Senhas não Coincidem. Tente novamente.</string>
+    <string name="upperCaseErrorMessage">A senha deve ter ao menos um caracter maiusculo.</string>
+
+
     <string name="app_name">Trezentos</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="facebook_app_id">1840540606200745</string>
+    <string name="sign_up_text">Cadastrar</string>
+    <string name="already_sign_up"> <u> Já sou cadastrado </u></string>
+    <string name="error_login">Ocorreu um erro ao entrar</string>
+    <string name="cancel_login">Login cancelado</string>
+    <string name="salas">Salas</string>
+    <string name="perfil">Perfil</string>
+    <string name="avaliacao">Avaliação</string>
+    <string name="sobre">Sobre</string>
+
+    <string name="criar_sala">Criar sala</string>
+    <string name="ok">Criar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="classname">Nome da sala</string>
+    <string name="password">Senha da sala</string>
+    <string name="cutoff">Nota de corte</string>
+    <string name="sizegroups">Tamanho dos grupos</string>
+    <string name="addition">Acréscimo</string>
+
 </resources>

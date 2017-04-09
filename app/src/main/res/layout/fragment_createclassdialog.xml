@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="100dp"
+    android:layout_marginBottom="100dp"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
+    >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:id="@+id/classname"
+        android:hint="@string/classname"
+        />
+
+    <!-- Vários TextView para identificação -->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:id="@+id/password"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="120dp"
+        android:hint="@string/cutoff"
+        android:id="@+id/cutoff"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:id="@+id/sizegroups"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="120dp"
+        android:hint="@string/sizegroups"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:id="@+id/addition"
+        android:layout_marginTop="1dp"
+        android:hint="@string/addition"
+        android:layout_marginLeft="120dp"
+        />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/cancel_create_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="Cancel"
+            />
+
+
+        <Button
+            android:id="@+id/ok_create_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="Criar"
+            />
+
+
+        ></LinearLayout>
+
+</LinearLayout>

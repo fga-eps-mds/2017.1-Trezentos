@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fga.mds.gpp.trezentos.View.SignUpActivity"
+    android:background="@drawable/backgroundtrezentos"
+    >
+
+
+        <ImageView
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:id="@+id/logoImage"
+            android:src="@drawable/trezentoslogo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="6dp" />
+
+        <EditText
+            android:id="@+id/editTextNameRegister"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:inputType="textPersonName"
+            app:layout_constraintTop_toBottomOf="@+id/logoImage"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+        <EditText
+            android:id="@+id/editTextEmailRegister"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameRegister"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextPasswordRegister"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:ems="6"
+            android:hint="Senha"
+            android:inputType="textPassword"
+
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegister"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextPasswordConfirmation"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:ems="6"
+            android:hint="Confirme a Senha"
+            android:inputType="textPassword"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegister"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPasswordConfirmation"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="@string/sign_up_text"
+            android:textColor="#fff"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/selector_button"
+            android:id="@+id/sign_up_button"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/already_sign_up"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="13sp"
+        android:textColor="#6000"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_button"
+        android:id="@+id/already_sign_up"/>
+
+</android.support.constraint.ConstraintLayout>
