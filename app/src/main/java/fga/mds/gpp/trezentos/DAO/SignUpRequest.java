@@ -15,40 +15,30 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class PostRequest extends AsyncTask<String, String, String>{
+public class SignUpRequest extends AsyncTask<String, String, String>{
 
 
     private UserAccount user;
-    private String url;
-    private Context context;
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private String responseCode;
+    private String url = "https://trezentos-api.herokuapp.com/api/user/register";
 
-    public PostRequest(UserAccount user, String url, Context context){
+    public SignUpRequest(UserAccount user){
         this.user = user;
-        this.url = url;
-        this.context = context;
     }
 
     @Override
     protected String doInBackground(String... params) {
         OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-        builder.addQueryParameter("email", user.getEmail());
-        builder.addQueryParameter("password", user.getPassword());
-        builder.addQueryParameter("name", user.getName());
-        String urlWithParams = builder.build().toString();
+        String urlWithParameters = getUrlWithParameters();
 
         RequestBody body = RequestBody.create(null, "");
         Request request = new Request.Builder()
-                .url(urlWithParams)
+                .url(urlWithParameters)
                 .post(body)
                 .build();
 
         try {
             Response response = client.newCall(request).execute();
-            responseCode = String.valueOf(response.code());
             return response.body().toString();
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,9 +47,16 @@ public class PostRequest extends AsyncTask<String, String, String>{
         return null;
     }
 
+    private String getUrlWithParameters() {
+        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+        builder.addQueryParameter("email", user.getEmail());
+        builder.addQueryParameter("password", user.getPassword());
+        builder.addQueryParameter("name", user.getName());
+        return builder.build().toString();
+    }
+
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        Toast.makeText(context, responseCode, Toast.LENGTH_SHORT).show();
     }
 }

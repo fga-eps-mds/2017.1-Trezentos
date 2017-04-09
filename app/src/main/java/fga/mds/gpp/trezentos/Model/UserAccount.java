@@ -50,7 +50,7 @@ public class UserAccount {
 
     public void setEmail(String email) throws UserException {
         if (email != null && !email.isEmpty()) {
-            Integer MAX_EMAIL_LENGTH = 30;
+            Integer MAX_EMAIL_LENGTH = 50;
             Integer MIN_EMAIL_LENGTH = 5;
 
             if (email.length() < MIN_EMAIL_LENGTH || email.length() > MAX_EMAIL_LENGTH) {
@@ -101,22 +101,6 @@ public class UserAccount {
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
     }
-
-
-    /*Dao*/
-
-    public static void authenticateLogin(UserAccount userAccount) {
-
-        userDao.authenticate(userAccount);
-
-    }
-
-    public static void insertData(UserAccount userAccount) {
-
-        userDao.insert(userAccount);
-
-    }
-
 
     public String getName() {
         return name;

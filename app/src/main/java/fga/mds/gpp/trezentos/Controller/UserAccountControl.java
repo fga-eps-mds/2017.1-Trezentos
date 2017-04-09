@@ -1,21 +1,30 @@
 package fga.mds.gpp.trezentos.Controller;
 
+import android.content.Context;
+
 import org.json.JSONObject;
+
+import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.View.UserDialog;
 
 public class UserAccountControl {
 
     private static UserAccountControl instance;
 
     public UserAccount userAccount;
-
     public UserAccountControl() {
 
     }
 
-    public void validateSignUp(String name, String email, String password, String passwordConfirmation) throws UserException {
-            userAccount = new UserAccount(name, email, password, passwordConfirmation);
+    public void validateSignUp(String name, String email, String password,
+                               String passwordConfirmation) throws UserException {
+
+        userAccount = new UserAccount(name, email, password, passwordConfirmation);
+
+        SignUpRequest signUpRequest = new SignUpRequest(userAccount);
+        signUpRequest.execute();
     }
 
     public void insertModelUserFacebook(JSONObject object) {
@@ -31,8 +40,6 @@ public class UserAccountControl {
         //Verify the password
         userAccount.setPasswordConfirmation(password);
         userAccount.setPassword(password);
-
-        UserAccount.authenticateLogin(userAccount);
     }
 
 
@@ -53,12 +60,12 @@ public class UserAccountControl {
         return userAccount.getPassword();
 
     }
-        public void insert(UserAccount userAccount) {
+
+    public void insert(UserAccount userAccount) {
 
     }
 
     public void authenticateLogin() {
-        UserAccount.authenticateLogin(userAccount);
 
     }
 
