@@ -20,7 +20,7 @@
             android:layout_marginTop="6dp" />
 
         <EditText
-            android:id="@+id/editTextNameRegister"
+            android:id="@+id/edit_text_name_register"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:hint="@string/txt_name"
@@ -31,17 +31,17 @@
             />
 
         <EditText
-            android:id="@+id/editTextEmailRegister"
+            android:id="@+id/edit_text_email_register"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:hint="@string/txt_email"
             android:inputType="textEmailAddress"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNameRegister"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_name_register"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <EditText
-            android:id="@+id/editTextPasswordRegister"
+            android:id="@+id/edit_text_password_register"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:ems="6"
@@ -49,24 +49,24 @@
             android:inputType="textPassword"
 
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegister"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_email_register"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <EditText
-            android:id="@+id/editTextPasswordConfirmation"
+            android:id="@+id/edit_text_password_confirmation"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:ems="6"
             android:hint="@string/txt_confirm_password"
             android:inputType="textPassword"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegister"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_password_register"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPasswordConfirmation"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_password_confirmation"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:text="@string/btn_signup"
