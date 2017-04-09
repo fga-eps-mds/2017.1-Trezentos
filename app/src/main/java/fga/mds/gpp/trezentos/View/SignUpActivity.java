@@ -26,24 +26,14 @@ import static fga.mds.gpp.trezentos.R.id.sign_up_button;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private UserAccountControl userAccountControl = new UserAccountControl();
     private static final String TAG = "SignUpActivity";
-    private UserDialog dialog = new UserDialog();
-
-    private EditText name;
-    private EditText email;
-    private EditText password;
-    private EditText passwordConfirmation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         Button signUp = (Button) findViewById(R.id.sign_up_button);
-
-
         signUp.setOnClickListener(this);
 
         Button alreadySignUp = (Button) findViewById(R.id.already_sign_up);
@@ -52,20 +42,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     // Method for confirmation
-    public void confirmInformation(){
+    public boolean confirmInformation() {
 
         EditText nameEdit = (EditText) findViewById(editTextNameRegister);
         EditText emailEdit = (EditText) findViewById(editTextEmailRegister);
         EditText passwordEdit = (EditText) findViewById(editTextPasswordRegister);
         EditText passwordConfirmationEdit = (EditText) findViewById(editTextPasswordConfirmation);
 
-        String name  = nameEdit.getText().toString();
+        String name = nameEdit.getText().toString();
         String email = emailEdit.getText().toString();
         String password = passwordEdit.getText().toString();
         String passwordConfirmation = passwordConfirmationEdit.getText().toString();
 
         String errorMessage;
-
+        boolean isValid = true;
         try {
             UserAccountControl userAccountControl = new UserAccountControl();
             userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
@@ -97,27 +87,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 passwordEdit.requestFocus();
                 passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
             }
-            if (errorMessage.equals(getString(R.string.msg_null_email_error_message))){
+            if (errorMessage.equals(getString(R.string.msg_null_email_error_message))) {
                 emailEdit.requestFocus();
                 emailEdit.setError(getString(R.string.msg_null_email_error_message));
 
             }
-            if (errorMessage.equals(getString(R.string.msg_len_email_error_message))){
+            if (errorMessage.equals(getString(R.string.msg_len_email_error_message))) {
                 emailEdit.requestFocus();
                 emailEdit.setError(getString(R.string.msg_len_email_error_message));
 
             }
-            if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))){
+            if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))) {
                 emailEdit.requestFocus();
                 emailEdit.setError(getString(R.string.msg_special_characters_email_error_message));
 
             }
-            if (errorMessage.equals(getString(R.string.msg_null_password_error_message))){
+            if (errorMessage.equals(getString(R.string.msg_null_password_error_message))) {
                 passwordEdit.requestFocus();
                 passwordEdit.setError(getString(R.string.msg_null_password_error_message));
 
             }
+            isValid = false;
         }
+    return isValid;
     }
 
     @Override
@@ -133,10 +125,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             case R.id.sign_up_button: {
-                //Confirma dados usuário
-                        confirmInformation();
-                    //        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                      //      startActivity(intent);
+                if (confirmInformation()){
+                  //  Intent goToMain = new Intent(SignUpActivity.this, MainActivity.class);
+                  //  startActivity(goToMain);
+                  //  finish();
+                   // break;
+                }
+
                 }
             }
         }

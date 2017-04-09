@@ -63,6 +63,7 @@ public class UserAccount {
                 Matcher matcher = pattern.matcher(email);
 
                     if (matcher.matches()){
+                        email.toLowerCase();
                         this.email = email;
                     }
                     else
@@ -89,7 +90,6 @@ public class UserAccount {
                     throw new UserException("Senhas não coincidem, tente novamente");
                 } else {
                     this.password = password;
-                    //setPasswordConfirmation(passwordConfirmation);
                 }
             }
         } else {
