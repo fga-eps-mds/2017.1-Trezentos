@@ -2,6 +2,9 @@ package fga.mds.gpp.trezentos;
 
 import android.support.test.rule.ActivityTestRule;
 
+import junit.framework.Assert;
+
+import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +17,8 @@ import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;
@@ -38,6 +43,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.button_login))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_email)).check(matches(hasErrorText("O email não pode estar vazio")));
     }
 
 
@@ -52,6 +58,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.button_login))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_password)).check(matches(hasErrorText("A senha não pode estar vazia")));
     }
 
 
@@ -75,6 +82,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                     .perform(click());
 
+        onView(withId(R.id.edit_text_name_register)).check(matches(hasErrorText("O nome não pode estar vazio")));
         }
 
     @Test
@@ -96,6 +104,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_name_register)).check(matches(hasErrorText("O nome deve ter de 3 a 50 caracteres")));
     }
 
     @Test
@@ -117,6 +126,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_name_register)).check(matches(hasErrorText("O nome deve ter de 3 a 50 caracteres")));
     }
 
     @Test
@@ -138,6 +148,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_email_register)).check(matches(hasErrorText("O email não pode estar vazio")));
     }
 
     @Test
@@ -159,6 +170,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_email_register)).check(matches(hasErrorText("Email com caracteres inválidos. Tente novamente")));
     }
 
     @Test
@@ -180,6 +192,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_password_register)).check(matches(hasErrorText("A senha não pode estar vazia")));
     }
 
 
@@ -202,6 +215,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_password_register)).check(matches(hasErrorText("A senha deve ter entre 6 e 16 caracteres")));
     }
 
     @Test
@@ -223,6 +237,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_password_confirmation)).check(matches(hasErrorText("Senhas não coincidem, tente novamente")));
     }
 
 
@@ -245,6 +260,7 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
+        onView(withId(R.id.edit_text_password_confirmation)).check(matches(hasErrorText("Senhas não coincidem, tente novamente")));
     }
 
 }
