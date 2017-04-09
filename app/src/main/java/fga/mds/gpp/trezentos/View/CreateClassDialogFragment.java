@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,8 +39,11 @@ public class CreateClassDialogFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.fragment_createclassdialog, container);
 
+        getDialog().setTitle("Criar salas");
+
         Button buttonOk = (Button) view.findViewById(R.id.ok_create_button);
         Button buttonCancel = (Button) view.findViewById(R.id.cancel_create_button);
+
 
         final EditText classNameField = (EditText) view.findViewById(R.id.classname);
         final EditText passwordField = (EditText) view.findViewById(R.id.password);
@@ -63,12 +67,24 @@ public class CreateClassDialogFragment extends DialogFragment {
                     userClass.setAddition(Float.parseFloat(additionField.getText().toString()));
                 }
                 catch (Exception e){
-                    Toast.makeText(getActivity(), "Informe todos os dados validos.", Toast.LENGTH_LONG).show();
+                    confirmInformation(userClassControl, classNameField, passwordField, cutOffField,
+                            sizeGroupsField, additionField);
                     return;
                 }
 
-                confirmInformation(userClassControl, classNameField, passwordField, cutOffField,
+                boolean isValid;
+
+                isValid = confirmInformation(userClassControl, classNameField, passwordField, cutOffField,
                         sizeGroupsField, additionField);
+
+
+                if(isValid){
+
+                    
+
+                    dismiss();
+                }
+
             }
         });
 
@@ -106,13 +122,16 @@ public class CreateClassDialogFragment extends DialogFragment {
         super.onCancel(dialog);
     }
 
-    public void confirmInformation(UserClassControl userClassControl, EditText className,
+    public boolean confirmInformation(UserClassControl userClassControl, EditText className,
                                       EditText password, EditText cutOff,
                                       EditText sizeGroups, EditText addition){
+
+        boolean isValid;
 
         try {
             userClassControl.validateInformation(userClass);
 
+            isValid = true;
 
         } catch (UserException userException) {
 
@@ -123,9 +142,9 @@ public class CreateClassDialogFragment extends DialogFragment {
 
             }
 
-            if(errorMessage.equals("O nome da sala deve ter entre 3 a 20 caracteres.")){
+            if(errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")){
                 className.requestFocus();
-                className.setError("O nome da sala deve ter entre 3 a 20 caracteres.");
+                className.setError("O nome da sala deve ter de 3 a 20 caracteres.");
             }
 
             if(errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")){
@@ -140,8 +159,11 @@ public class CreateClassDialogFragment extends DialogFragment {
 
             }
 
+            isValid = false;
+
         }
 
+        return isValid;
     }
 
 

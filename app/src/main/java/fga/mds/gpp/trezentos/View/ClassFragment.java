@@ -74,7 +74,6 @@ public class ClassFragment extends Fragment {
         final ListView listView = (ListView) view.findViewById(R.id.class_list_view);
 
 
-
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
 
 
@@ -103,6 +102,19 @@ public class ClassFragment extends Fragment {
 
 
             userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+
+
 
         } catch (UserException e) {
             e.printStackTrace();
