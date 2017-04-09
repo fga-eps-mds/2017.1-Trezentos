@@ -13,7 +13,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -60,6 +62,9 @@ public class ClassFragment extends Fragment {
 
 
 
+
+
+
     // Here, the program will show all classes registreds into classe.json
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -67,6 +72,8 @@ public class ClassFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
         final ListView listView = (ListView) view.findViewById(R.id.class_list_view);
+
+
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
 
@@ -154,6 +161,8 @@ public class ClassFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+
 
 
     public interface OnFragmentInteractionListener {

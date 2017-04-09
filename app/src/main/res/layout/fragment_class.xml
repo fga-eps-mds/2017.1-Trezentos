@@ -8,9 +8,12 @@
 
     >
 
+
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
 
         android:id="@+id/class_list_view"
 
@@ -27,8 +30,8 @@
         android:contentDescription="@string/criar_sala"
         android:src="@drawable/ic_criar_sala"
         android:onClick="onClickCreate"
-        app:backgroundTint="@android:color/background_dark" />
 
+        app:backgroundTint="@color/colorBottomMenu" />
 
     <!-- tools:showIn="@layout/activity_main" -->
 
