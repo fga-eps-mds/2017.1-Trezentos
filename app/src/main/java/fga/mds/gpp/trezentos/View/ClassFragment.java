@@ -61,10 +61,6 @@ public class ClassFragment extends Fragment {
     }
 
 
-
-
-
-
     // Here, the program will show all classes registreds into classe.json
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -77,8 +73,8 @@ public class ClassFragment extends Fragment {
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
 
 
-        UserClass userClass = new UserClass();
-        UserAccount userAccount = new UserAccount();
+        final UserClass userClass = new UserClass();
+        final UserAccount userAccount = new UserAccount();
 
 
         String className;
@@ -99,27 +95,13 @@ public class ClassFragment extends Fragment {
 
         try {
 
-
-
             userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
             userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
             userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-
-
 
         } catch (UserException e) {
             e.printStackTrace();
         }
-
 
 
         adapter= new CustomAdapter(userClasses,getActivity().getApplicationContext());
@@ -128,6 +110,12 @@ public class ClassFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent goClass = new  Intent(getActivity(), ClassActivity.class);
+                UserClass userClassCalled = (UserClass) listView.getItemAtPosition(position);
+                goClass.putExtra("Class", userClassCalled);
+
+                startActivity(goClass);
 
                 //UserClass userClasses= userClasses.get(position);
 

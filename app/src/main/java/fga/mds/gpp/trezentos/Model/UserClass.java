@@ -1,9 +1,11 @@
 package fga.mds.gpp.trezentos.Model;
 
 
+import java.io.Serializable;
+
 import fga.mds.gpp.trezentos.Exception.UserException;
 
-public class UserClass {
+public class UserClass implements Serializable {
 
     private String className;
     private String institution;
