@@ -27,5 +27,6 @@
     <string name="cutoff">Nota de corte</string>
     <string name="sizegroups">Tamanho dos grupos</string>
     <string name="addition">Acréscimo</string>
+    <string name="configuracoes">Configuracoes</string>
 
 </resources>
