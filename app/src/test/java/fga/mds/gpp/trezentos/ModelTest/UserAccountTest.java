@@ -19,6 +19,29 @@ public class UserAccountTest {
         assertEquals(integer,userAccount.getIdUserAccount());
     }
 
+    @Test
+    public void UserAccount_nameTest (){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setName("nome");
+        assertEquals("nome",userAccount.getName());
+    }
 
+    @Test
+    public void TestForException (){
+        try {
+            UserAccount userAccount = new UserAccount();
+            userAccount.setEmail("email");
+            assertEquals("email", userAccount.getEmail());
+        } catch (Exception c){
+
+        }
+    }
+
+    @Test
+    public void UserAccount_passwordTest (){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setPassword("password");
+        assertEquals("password",userAccount.getPassword());
+    }
 
 }

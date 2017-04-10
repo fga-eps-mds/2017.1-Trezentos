@@ -34,6 +34,7 @@ public class UserClass implements Serializable {
 
 
     public void setClassName(String className) {
+
         this.className = className;
     }
 
