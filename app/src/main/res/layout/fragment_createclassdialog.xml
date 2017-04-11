@@ -10,19 +10,6 @@
     android:background="@color/colorDialogFragmentClass"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:id="@+id/text_name"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="38dp"
-        android:text="Criador de Salas"
-        android:textSize="30dp"
-
-
-        />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +17,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:id="@+id/classname"
+        android:inputType="textPersonName"
         android:hint="@string/classname"
         android:textColor="@color/white"
         />
@@ -56,6 +44,7 @@
         android:layout_marginTop="1dp"
         android:hint="@string/cutoff"
         android:id="@+id/cutoff"
+        android:textColor="@color/white"
         />
 
     <EditText
@@ -67,6 +56,7 @@
         android:id="@+id/sizegroups"
         android:layout_marginTop="1dp"
         android:hint="@string/sizegroups"
+        android:textColor="@color/white"
         />
 
     <EditText
@@ -78,13 +68,15 @@
         android:id="@+id/addition"
         android:layout_marginTop="1dp"
         android:hint="@string/addition"
-
+        android:textColor="@color/white"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:weightSum="1">
 
         <Button
@@ -92,7 +84,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Cancel"
+            android:textColor="@color/white"
+            android:background="#30000000"
 
             />
 
@@ -103,6 +99,11 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:text="Criar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:background="#30000000"
+
             />
 
 
