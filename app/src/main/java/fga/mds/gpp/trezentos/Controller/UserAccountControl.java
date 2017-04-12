@@ -1,9 +1,14 @@
 package fga.mds.gpp.trezentos.Controller;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.json.JSONObject;
 
+import java.util.concurrent.ExecutionException;
+
+import fga.mds.gpp.trezentos.DAO.SignInRequest;
 import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
@@ -12,10 +17,19 @@ import fga.mds.gpp.trezentos.View.UserDialog;
 public class UserAccountControl {
 
     private static UserAccountControl instance;
-
+    private final Context context;
     public UserAccount userAccount;
-    public UserAccountControl() {
 
+
+    private UserAccountControl(final Context context) {
+        this.context = context;
+    }
+
+    public static UserAccountControl getInstance(final Context context){
+        if (instance == null){
+            instance = new UserAccountControl(context);
+        }
+        return instance;
     }
 
     public void validateSignUp(String name, String email, String password,
@@ -31,7 +45,7 @@ public class UserAccountControl {
 
     }
 
-    public void insertModelUser(String email, String password) throws UserException {
+    public String insertModelUser(String email, String password) throws UserException {
         userAccount = new UserAccount();
 
         //Verify email
@@ -40,6 +54,32 @@ public class UserAccountControl {
         //Verify the password
         userAccount.setPasswordConfirmation(password);
         userAccount.setPassword(password);
+
+        SignInRequest signInRequest = new SignInRequest(userAccount);
+
+        String serverResponse = "404";
+
+        try {
+            serverResponse = signInRequest.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if (serverResponse.equals("200")){
+            SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+            session.edit()
+                    .putBoolean("IsUserLogged", true)
+                    .putString("userEmail", userAccount.getEmail())
+                    .putString("userName", userAccount.getName())
+                    .apply();
+        }
+        else{
+
+        }
+
+        return serverResponse;
     }
 
 
