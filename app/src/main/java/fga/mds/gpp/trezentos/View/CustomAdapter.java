@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.Model;
+package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnClickListener{
