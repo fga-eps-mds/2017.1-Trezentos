@@ -1,6 +1,8 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,10 +19,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        //startActivity(intent);
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        if (AccessToken.getCurrentAccessToken() == null){
+        if (AccessToken.getCurrentAccessToken() == null && !session.getBoolean("IsUserLogged", false)){
             goLoginScreen();
         }
     }
