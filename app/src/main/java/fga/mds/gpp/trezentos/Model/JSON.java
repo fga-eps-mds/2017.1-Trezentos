@@ -23,7 +23,7 @@ public class JSON {
         JSONObject json = new JSONObject();
 
         json.put("idUser", userAccount.getIdUserAccount());
-        json.put("email", userAccount.getEmail());
+        json.put("name", userAccount.getName());
         json.put("email", userAccount.getEmail());
         json.put("password", userAccount.getPassword());
 
