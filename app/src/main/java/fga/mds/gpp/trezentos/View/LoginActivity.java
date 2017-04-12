@@ -36,6 +36,7 @@ import java.util.Arrays;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private UserDialog dialog = new UserDialog();
-    private UserAccountControl userAccountControl = new UserAccountControl();
+
 
     private String activityName = this.getClass().getSimpleName();
     private Handler mHandler = new Handler();
@@ -90,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                                 try {
                                     String Name = object.getString("name");
                                     String FEmail = object.getString("email");
-                                    userAccountControl.insertModelUserFacebook(object);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -127,8 +127,18 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, email.getText().toString());
                 Log.d(TAG, password.getText().toString());
 
+                UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+
                 try{
-                    userAccountControl.insertModelUser(email.getText().toString(), password.getText().toString());
+                    String responseCode = userAccountControl.insertModelUser(email.getText().toString(), password.getText().toString());
+                    if (responseCode.equals("200")){
+                        Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(goToMain);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Email ou Senha inválidos, por favor " +
+                                "tente novamente", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 catch(UserException userException){
                     String errorMessage = userException.getMessage();

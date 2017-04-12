@@ -49,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String errorMessage;
         boolean isValid = true;
         try {
-            UserAccountControl userAccountControl = new UserAccountControl();
+            UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
             userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
         } catch (UserException userException) {
 
