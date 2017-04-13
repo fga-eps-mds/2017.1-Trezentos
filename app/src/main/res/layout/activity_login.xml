@@ -71,6 +71,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <Button
+        android:id="@+id/button_about"
+        android:background="@android:color/transparent"
+        android:text="Sobre"
+        android:textColor="#6000"
+        android:textSize="13sp"
+
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="8dp"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        android:layout_marginTop="6dp"/>
 
 
    <com.facebook.login.widget.LoginButton
