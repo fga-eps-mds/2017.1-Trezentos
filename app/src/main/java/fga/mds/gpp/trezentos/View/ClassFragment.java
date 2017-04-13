@@ -95,9 +95,10 @@ public class ClassFragment extends Fragment {
 
         try {
 
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
+
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f, 5));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f, 5));
+            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f, 5));
 
         } catch (UserException e) {
             e.printStackTrace();

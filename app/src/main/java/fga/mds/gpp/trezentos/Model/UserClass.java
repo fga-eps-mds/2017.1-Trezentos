@@ -21,7 +21,7 @@ public class UserClass implements Serializable {
     }
 
     public UserClass(String className, String institution, float cutOff, String password,
-                     Integer idUserAccount, float addition) throws UserException{
+                     Integer idUserAccount, float addition, Integer sizeGroups) throws UserException{
 
         this.className = className;
         this.institution = institution;
@@ -29,6 +29,7 @@ public class UserClass implements Serializable {
         this.password = password;
         this.idUserAccount = idUserAccount;
         this.addition = addition;
+        this.sizeGroups = sizeGroups;
 
     }
 

@@ -80,7 +80,12 @@ public class CreateClassDialogFragment extends DialogFragment {
 
                 if(isValid){
 
-                    
+                    try {
+                        userClassControl.validateCreateClass(userClass.getClassName() ,userClass.getInstitution(),userClass.getCutOff(), userClass.getPassword(),
+                                                                userClass.getIdUserAccount(), userClass.getAddition(), userClass.getSizeGroups());
+                    } catch (UserException e) {
+                        e.printStackTrace();
+                    }
 
                     dismiss();
                 }

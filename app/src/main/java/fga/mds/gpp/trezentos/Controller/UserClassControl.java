@@ -3,7 +3,10 @@ package fga.mds.gpp.trezentos.Controller;
 
 import android.widget.EditText;
 
+import fga.mds.gpp.trezentos.DAO.CreateClassPost;
+import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 
 public class UserClassControl {
@@ -13,6 +16,18 @@ public class UserClassControl {
     public UserClassControl(){
 
     }
+
+    public void validateCreateClass(String className, String institution, float cutOff, String password,
+                                    Integer idUserAccount, float addition, Integer sizeGroups) throws UserException {
+
+        userClass = new UserClass(className, institution, cutOff, password, idUserAccount, addition, sizeGroups);
+
+
+
+        CreateClassPost createClassPost = new CreateClassPost(userClass);
+        createClassPost.execute();
+    }
+
 
     public void validateInformation(UserClass user) throws UserException{
 
