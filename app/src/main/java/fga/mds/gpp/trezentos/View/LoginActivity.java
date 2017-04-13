@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.telecom.Call;
 import android.util.AttributeSet;
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button login = (Button) findViewById(R.id.button_login);
         Button register = (Button) findViewById(R.id.button_register);
         Button forgotPass = (Button) findViewById(R.id.button_forgot_password);
+        Button about = (Button) findViewById(R.id.button_about);
         final EditText email = (EditText) findViewById(R.id.edit_text_email);
         final EditText password = (EditText) findViewById(R.id.edit_text_password);
 
@@ -180,6 +182,18 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(forgotIntent);
             }
         });
+
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction;
+                AboutFragment aboutFragment = new AboutFragment();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame,aboutFragment, "fragment_about" );
+                fragmentTransaction.commit();
+            }
+        });
+
     }
 
     private void goMainScreen() {
