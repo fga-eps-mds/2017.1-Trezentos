@@ -1,8 +1,5 @@
-package fga.mds.gpp.trezentos.ModelTest;
+package fga.mds.gpp.trezentos.Model;
 
-import fga.mds.gpp.trezentos.Model.UserAccount;
-
-import org.junit.Before;
 import org.junit.Test;
 
 import static java.lang.Double.valueOf;
