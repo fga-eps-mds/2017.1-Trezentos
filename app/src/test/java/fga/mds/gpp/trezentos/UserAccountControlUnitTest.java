@@ -21,7 +21,7 @@ public class UserAccountControlUnitTest {
     UserAccountControl testUser;
 
     @Test
-    public void ShouldValitadeNullName()throws UserException{
+    public void ShouldValidateNullName()throws UserException{
 
         boolean isValid = false;
 
@@ -44,7 +44,7 @@ public class UserAccountControlUnitTest {
 
 
     @Test
-    public void ShouldValitadeNullEmail()throws UserException{
+    public void ShouldValidateNullEmail()throws UserException{
 
         boolean isValid = false;
 
@@ -67,7 +67,7 @@ public class UserAccountControlUnitTest {
 
 
     @Test
-    public void ShouldValitadeNullPassword()throws UserException{
+    public void ShouldValidateNullPassword()throws UserException{
 
         boolean isValid = false;
 
@@ -89,7 +89,7 @@ public class UserAccountControlUnitTest {
     }
 
     @Test
-    public void ShouldValitadeNullPasswordConfirmation()throws UserException{
+    public void ShouldValidateNullPasswordConfirmation()throws UserException{
 
         boolean isValid = false;
 
@@ -113,7 +113,7 @@ public class UserAccountControlUnitTest {
 
 
     @Test
-    public void ShouldValitadeNameMinLength()throws UserException{
+    public void ShouldValidateNameMinLength()throws UserException{
 
         boolean isValid = false;
 
@@ -137,7 +137,7 @@ public class UserAccountControlUnitTest {
 
 
     @Test
-    public void ShouldValitadeNameMaxLength()throws UserException{
+    public void ShouldValidateNameMaxLength()throws UserException{
 
         boolean isValid = false;
         testUser = new UserAccountControl();
@@ -161,7 +161,7 @@ public class UserAccountControlUnitTest {
 
 
     @Test
-    public void ShouldValitadePasswordMinLength()throws UserException{
+    public void ShouldValidatePasswordMinLength()throws UserException{
 
         boolean isValid = false;
 
@@ -183,7 +183,7 @@ public class UserAccountControlUnitTest {
     }
 
     @Test
-    public void ShouldValitadePasswordMaxLength()throws UserException{
+    public void ShouldValidatePasswordMaxLength()throws UserException{
 
         boolean isValid = false;
 
@@ -206,7 +206,7 @@ public class UserAccountControlUnitTest {
     }
 
     @Test
-    public void ShouldValitadePasswordMatchs()throws UserException{
+    public void ShouldValidatePasswordMatches()throws UserException{
 
         boolean isValid = false;
 
@@ -230,7 +230,7 @@ public class UserAccountControlUnitTest {
 
 
     @Test
-    public void ShouldValitadeUpperCasePassword()throws UserException{
+    public void ShouldValidateUpperCasePassword()throws UserException{
 
         boolean isValid = false;
 
