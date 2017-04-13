@@ -45,11 +45,9 @@ public class SignInRequest extends AsyncTask<String, String, String> {
     }
 
     private String getUrlWithParameters() {
-        Gson gson = new Gson();
-        String userJson = gson.toJson(user);
-
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-        builder.addQueryParameter("user", userJson);
+        builder.addQueryParameter("email", user.getEmail());
+        builder.addQueryParameter("password", user.getPassword());
 
         return builder.build().toString();
     }

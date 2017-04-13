@@ -11,14 +11,22 @@ import org.robolectric.annotation.Config;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.View.LoginActivity;
 
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertFalse;
 
-
-public class UserAccountUnitTest {
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class)
+public class UserAccountControlTest {
 
     UserAccountControl testUser;
+    private LoginActivity activity;
+
+    @Before
+    public void setUp(){
+        activity = Robolectric.buildActivity(LoginActivity.class).get();
+    }
 
     @Test
     public void ShouldValitadeNullName()throws UserException{
@@ -27,7 +35,7 @@ public class UserAccountUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp(null,"aluno@email.com","Senha1", "Senha1");
             isValid = true;
 
@@ -50,7 +58,7 @@ public class UserAccountUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp("Carla",null,"Senha1", "Senha1");
             isValid = true;
 
@@ -73,7 +81,7 @@ public class UserAccountUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp("Carla","aluno@email.com",null, "Senha1");
             isValid = true;
 
@@ -95,7 +103,7 @@ public class UserAccountUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp("Carla", "aluno@email.com", "Senha1", null);
             isValid = true;
 
@@ -119,7 +127,7 @@ public class UserAccountUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp("Ei","aluno@email.com","Senha1", "Senha1");
             isValid = true;
 
@@ -140,7 +148,7 @@ public class UserAccountUnitTest {
     public void ShouldValitadeNameMaxLength()throws UserException{
 
         boolean isValid = false;
-        testUser = new UserAccountControl();
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
 
         try{
 
@@ -167,7 +175,7 @@ public class UserAccountUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp("Carla","aluno@email.com","Senha", "Senha");
             isValid = true;
 
@@ -189,7 +197,7 @@ public class UserAccountUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp("Carla"
                     ,"aluno@email.com","Vintecaracteresusados", "Vintecaracteresusados");
             isValid = true;
@@ -212,7 +220,7 @@ public class UserAccountUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp("Carla"
                     ,"aluno@email.com","Senha1", "Senha");
             isValid = true;
@@ -235,7 +243,7 @@ public class UserAccountUnitTest {
         boolean isValid = false;
 
         try{
-            testUser = new UserAccountControl();
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
             testUser.validateSignUp("Carla"
                     ,"aluno@email.com","senha1", "senha");
             isValid = true;
