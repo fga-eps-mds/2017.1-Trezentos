@@ -21,6 +21,18 @@
         android:hint="@string/classname"
         android:textColor="@color/white"
         />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:id="@+id/institution"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:inputType="textPassword"
+        android:hint="@string/institution"
+        android:textColor="@color/white"
+
+        />
 
     <EditText
         android:layout_width="match_parent"
