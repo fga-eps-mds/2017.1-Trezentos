@@ -92,6 +92,10 @@ public class LoginActivity extends AppCompatActivity {
                                     String Name = object.getString("name");
                                     String FEmail = object.getString("email");
 
+                                    UserAccountControl userAccountControl = UserAccountControl
+                                            .getInstance(getApplicationContext());
+                                    userAccountControl.insertModelUserFacebook(FEmail, Name);
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -130,8 +134,8 @@ public class LoginActivity extends AppCompatActivity {
                 UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
 
                 try{
-                    String responseCode = userAccountControl.insertModelUser(email.getText().toString(), password.getText().toString());
-                    if (responseCode.equals("200")){
+                    String response = userAccountControl.insertModelUser(email.getText().toString(), password.getText().toString());
+                    if (response.contains("true")){
                         Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(goToMain);
                     }

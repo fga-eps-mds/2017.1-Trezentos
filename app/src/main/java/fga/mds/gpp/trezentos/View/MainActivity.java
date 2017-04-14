@@ -10,6 +10,7 @@ import android.view.View;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout(View view){
         LoginManager.getInstance().logOut();
+
+        UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+        userAccountControl.logOutUser();
+
         goLoginScreen();
     }
 }

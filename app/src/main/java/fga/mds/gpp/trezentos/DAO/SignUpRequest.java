@@ -20,9 +20,11 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
 
     private UserAccount user;
     private String url = "https://trezentos-api.herokuapp.com/api/user/register";
+    private Boolean isFromFacebook;
 
-    public SignUpRequest(UserAccount user){
+    public SignUpRequest(UserAccount user, Boolean isFromFacebook){
         this.user = user;
+        this.isFromFacebook = isFromFacebook;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
 
         try {
             Response response = client.newCall(request).execute();
-            return response.body().toString();
+            return response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,6 +54,7 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
         builder.addQueryParameter("email", user.getEmail());
         builder.addQueryParameter("password", user.getPassword());
         builder.addQueryParameter("name", user.getName());
+        builder.addQueryParameter("facebook", isFromFacebook.toString());
         return builder.build().toString();
     }
 

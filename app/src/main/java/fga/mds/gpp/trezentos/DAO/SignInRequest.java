@@ -36,7 +36,7 @@ public class SignInRequest extends AsyncTask<String, String, String> {
 
         try {
             Response response = client.newCall(request).execute();
-            return String.valueOf(response.code());
+            return response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
         }

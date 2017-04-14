@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
 
 import static fga.mds.gpp.trezentos.R.id.edit_text_email_register;
@@ -50,7 +52,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         boolean isValid = true;
         try {
             UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
-            userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
+            String response = userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
+            goToMain(response);
         } catch (UserException userException) {
 
             errorMessage = userException.getMessage();
@@ -104,6 +107,19 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     return isValid;
     }
 
+    public void goToMain(String response){
+        if (response.contains("\"code\":\"200\"")){
+            UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+            userAccountControl.logInUser();
+            Intent goToMain = new Intent(this, MainActivity.class);
+            startActivity(goToMain);
+        } else if (response.contains("\"code\":11000")){
+            Toast.makeText(getApplicationContext(), "Email inválido, tente novamente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onClick(View view) {
 
@@ -117,15 +133,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             case R.id.sign_up_button: {
-                if (confirmInformation()){
-                  //  Intent goToMain = new Intent(SignUpActivity.this, MainActivity.class);
-                  //  startActivity(goToMain);
-                  //  finish();
-                   // break;
-                }
+                confirmInformation();
 
-                }
             }
         }
     }
+}
 
