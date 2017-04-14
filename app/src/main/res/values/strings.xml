@@ -5,6 +5,10 @@
     <string name="emptySpaceErrorMessage">Preencha todos os campos!</string>
     <string name="passwordConfErrorMessage">Senhas não Coincidem. Tente novamente.</string>
     <string name="upperCaseErrorMessage">A senha deve ter ao menos um caracter maiusculo.</string>
+    <string name="classNameCaseErrorMessage">O nome da sala deve ter de 3 a 20 caracteres.</string>
+    <string name="lenSizeGroupErrorMessage">O tamanho do grupo nao pode ser zero.</string>
+    <string name="lenAdditionErrorMessage">O acrescimo nao pode ser zero.</string>
+    <string name="lenCutOffErrorMessage">A nota de corte nao pode ser zero.</string>
 
 
     <string name="app_name">Trezentos</string>
@@ -23,6 +27,7 @@
     <string name="ok">Criar</string>
     <string name="cancel">Cancelar</string>
     <string name="classname">Nome da sala</string>
+    <string name="institution">Instituiçao (opcional)</string>
     <string name="password">Senha da sala</string>
     <string name="cutoff">Nota de corte</string>
     <string name="sizegroups">Tamanho dos grupos</string>
