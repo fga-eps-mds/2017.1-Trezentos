@@ -20,10 +20,10 @@
             android:layout_marginTop="6dp" />
 
         <EditText
-            android:id="@+id/editTextNameRegister"
+            android:id="@+id/edit_text_name_register"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:hint="Nome"
+            android:hint="@string/txt_name"
             android:inputType="textPersonName"
             app:layout_constraintTop_toBottomOf="@+id/logoImage"
             app:layout_constraintRight_toRightOf="parent"
@@ -31,53 +31,45 @@
             />
 
         <EditText
-            android:id="@+id/editTextEmailRegister"
+            android:id="@+id/edit_text_email_register"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/txt_email"
             android:inputType="textEmailAddress"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNameRegister"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_name_register"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <EditText
-            android:id="@+id/editTextPasswordRegister"
+            android:id="@+id/edit_text_password_register"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:ems="6"
-            android:hint="Senha"
+            android:hint="@string/txt_password"
             android:inputType="textPassword"
 
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegister"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_email_register"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <EditText
-            android:id="@+id/editTextPasswordConfirmation"
+            android:id="@+id/edit_text_password_confirmation"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:ems="6"
-            android:hint="Confirme a Senha"
+            android:hint="@string/txt_confirm_password"
             android:inputType="textPassword"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegister"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_password_register"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPasswordConfirmation"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_password_confirmation"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="@string/sign_up_text"
+            android:text="@string/btn_signup"
             android:textColor="#fff"
             android:layout_marginTop="32dp"
             android:background="@drawable/selector_button"
@@ -90,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/already_sign_up"
+        android:text="@string/btn_already_signed_up"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:textSize="13sp"

@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private UserDialog dialog = new UserDialog();
-    private UserAccountControl userAccountControl = new UserAccountControl(this);
+    private UserAccountControl userAccountControl = new UserAccountControl();
 
     private String activityName = this.getClass().getSimpleName();
     private Handler mHandler = new Handler();
@@ -106,12 +106,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(), R.string.cancel_login, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.msg_cancel_login, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException e) {
-                Toast.makeText(getApplicationContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.msg_error_login, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -128,33 +128,34 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, password.getText().toString());
 
                 try{
-                    userAccountControl.insertModelUser(0, email.getText().toString(), password.getText().toString());
-
+                    userAccountControl.insertModelUser(email.getText().toString(), password.getText().toString());
                 }
                 catch(UserException userException){
                     String errorMessage = userException.getMessage();
 
+                    if(errorMessage.equals("O email deve ter entre 5 e 50 caracteres válidos")){
+                        email.requestFocus();
+                        email.setError("Email inválido. Tente novamente");
+                    }
+
+                    if(errorMessage.equals("Email com caracteres inválidos. Tente novamente")){
+                        email.requestFocus();
+                        email.setError("Email inválido. Tente novamente");
+                    }
 
                     if(errorMessage.equals("O email não pode estar vazio")){
                         email.requestFocus();
                         email.setError("O email não pode estar vazio");
                     }
 
-                    if(errorMessage.equals("Digite um email de até 30 caracteres")){
-                        email.requestFocus();
-                        email.setError("Digite um email de até 30 caracteres");
+                    if(errorMessage.equals(getString(R.string.msg_len_password_error_message))){
+                        password.requestFocus();
+                        password.setError("Senha inválida. Tente Novamente");
                     }
-
                     if(errorMessage.equals("A senha não pode estar vazia")){
                         password.requestFocus();
                         password.setError("A senha não pode estar vazia");
                     }
-
-                    if(errorMessage.equals("Digite uma senha de até 20 caracteres")){
-                        password.requestFocus();
-                        password.setError("Digite uma senha de até 20 caracteres");
-                    }
-
 
                 }
 

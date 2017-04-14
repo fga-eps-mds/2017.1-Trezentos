@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.DAO.getClassRequest;
+import fga.mds.gpp.trezentos.DAO.CreateClassPost;
+import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -42,6 +44,16 @@ public class UserClassControl {
         return instance;
     }
 
+    public void validateCreateClass(String className, String institution, float cutOff, String password,
+                                    Integer idUserAccount, float addition, Integer sizeGroups) throws UserException {
+
+        UserClass userClass = new UserClass(className, institution, cutOff, password, idUserAccount, addition, sizeGroups);
+
+        CreateClassPost createClassPost = new CreateClassPost(userClass);
+        createClassPost.execute();
+    }
+
+
     public void validateInformation(UserClass user) throws UserException{
 
         int MIN_CLASSNAME_LENGHT = 3;
@@ -64,7 +76,7 @@ public class UserClassControl {
 
             }
 
-            if(user.getPassword().length() < MIN_PASSWORD_LENGHT ||
+                if(user.getPassword().length() < MIN_PASSWORD_LENGHT ||
                     user.getPassword().length() > MAX_PASSWORD_LENGHT){
 
                 throw new UserException("A senha deve ter de 6 a 16 caracteres.");
