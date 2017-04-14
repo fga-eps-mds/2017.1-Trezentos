@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.Controller;
+package fga.mds.gpp.trezentos;
 
 
 
@@ -16,7 +16,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertFalse;
 
 
-public class UserAccountControlUnitTest {
+public class UserAccountUnitTest {
 
     UserAccountControl testUser;
 

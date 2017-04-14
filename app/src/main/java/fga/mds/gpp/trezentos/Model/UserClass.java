@@ -27,7 +27,6 @@ public class UserClass implements Serializable {
         setInstitution(institution);
         setCutOff(cutOff);
         setPassword(password);
-        setIdUserAccount(idUserAccount);
         setAddition(addition);
         setSizeGroups(sizeGroups);
 

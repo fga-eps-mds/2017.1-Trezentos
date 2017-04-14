@@ -59,10 +59,13 @@ public class CreateClassDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
 
+
                     confirmInformation(userAccount,classNameField, institutionField, passwordField, cutOffField,
                             sizeGroupsField, additionField);
 
-            }
+                    dismiss();
+                }
+
         });
 
         buttonCancel.setOnClickListener(new Button.OnClickListener() {
@@ -117,7 +120,7 @@ public class CreateClassDialogFragment extends DialogFragment {
         try {
 
             UserClassControl userClassControl = new UserClassControl();
-            userClassControl.validateInformation(className, institution, cutOff, password,
+            userClassControl.validateCreatsClass(className, institution, cutOff, password,
                     userAccount.getIdUserAccount(), addition, sizeGroups);
 
         } catch (UserException userException) {
