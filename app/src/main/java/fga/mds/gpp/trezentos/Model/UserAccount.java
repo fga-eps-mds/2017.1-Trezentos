@@ -1,12 +1,9 @@
 package fga.mds.gpp.trezentos.Model;
 
-import fga.mds.gpp.trezentos.DAO.UserDao;
 import fga.mds.gpp.trezentos.Exception.UserException;
 
 public class UserAccount {
 
-
-    private static UserDao userDao = new UserDao();
 
     private Integer idUserAccount;
     private String email;
@@ -61,15 +58,4 @@ public class UserAccount {
 
     }
 
-    public static void authenticateLogin(UserAccount userAccount){
-
-        userDao.authenticate(userAccount);
-
-    }
-
-    public static void insertData(UserAccount userAccount){
-
-        userDao.insert(userAccount);
-
-    }
 }

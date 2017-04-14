@@ -2,6 +2,7 @@ package fga.mds.gpp.trezentos.Model;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 
@@ -90,4 +91,6 @@ public class UserClass implements Serializable {
     public float getCutOff() {
         return cutOff;
     }
+
+
 }

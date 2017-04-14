@@ -4,9 +4,6 @@ import android.content.Context;
 
 import org.json.JSONObject;
 
-import java.util.List;
-
-import fga.mds.gpp.trezentos.DAO.UserDao;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
 
@@ -40,12 +37,6 @@ public class UserAccountControl {
 
 
     }
-
-    public void authenticateLogin(){
-        UserAccount.authenticateLogin(userAccount);
-
-    }
-
 
     public boolean loginValidate(String user, String password){
         UserAccount userAccount = new UserAccount();
@@ -91,9 +82,6 @@ public class UserAccountControl {
         } else {
             throw new UserException("A senha não pode estar vazia");
         }
-
-        UserAccount.authenticateLogin(userAccount);
-
 
     }
 
@@ -170,8 +158,6 @@ public class UserAccountControl {
     public void insertModelUserRegister(Integer idUser,String name, String user, String password) throws UserException {
         userAccount = new UserAccount(idUser, user, password);
         userAccount.setName(name);
-        UserAccount.authenticateLogin(userAccount);
-        UserAccount.insertData(userAccount);
     }
 
 }

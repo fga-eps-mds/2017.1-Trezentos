@@ -1,8 +1,10 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -47,11 +50,30 @@ public class ClassFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
 
-    // Here, the program will show all classes registreds into classe.json
+        loadClasses();
 
+    }
+
+    private void loadClasses() {
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        String email = session.getString("userEmail","");
+
+        email = "teste@teste.com";
+
+        UserClassControl userClassControl = UserClassControl.getInstance(getActivity());
+
+        userClasses = userClassControl.getClassesFromUser(email);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
+        loadClasses();
 
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
         final ListView listView = (ListView) view.findViewById(R.id.class_list_view);
@@ -63,35 +85,7 @@ public class ClassFragment extends Fragment {
         final UserClass userClass = new UserClass();
         final UserAccount userAccount = new UserAccount();
 
-
-        String className;
-        String teacherName;
-        String password;
-        int sizeGroups;
-        float cutOff;
-        float addition;
-
-        //className = userClass.getClassName();
-        //teacherName = userAccount.getName();
-        //password = userClass.getPassword();
-        //sizeGroups = Integer.parseInt(userClass.getPassword());
-        //cutOff = Float.parseFloat(String.valueOf(userClass.getCutOff()));
-        //addition = Float.parseFloat(String.valueOf(userClass.getAddition()));
-
-        userClasses = new ArrayList<>();
-
-        try {
-
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-            userClasses.add(new UserClass("nome1","Fragellão", 4.5f, "123", 1, 1.5f));
-
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
-
-
-        adapter= new CustomAdapter(userClasses,getActivity().getApplicationContext());
+        adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

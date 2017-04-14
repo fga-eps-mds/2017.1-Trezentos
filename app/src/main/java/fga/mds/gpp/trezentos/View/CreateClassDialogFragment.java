@@ -56,9 +56,10 @@ public class CreateClassDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 //Criar sala aqui
 
-                UserClassControl userClassControl = new UserClassControl();
+                UserClassControl userClassControl = UserClassControl.getInstance(getActivity());
 
                 userClass = new UserClass();
+
                 try{
                     userClass.setClassName(classNameField.getText().toString());
                     userClass.setPassword(passwordField.getText().toString());
@@ -80,7 +81,7 @@ public class CreateClassDialogFragment extends DialogFragment {
 
                 if(isValid){
 
-                    
+
 
                     dismiss();
                 }
