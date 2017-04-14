@@ -26,6 +26,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
+        android:id="@+id/instituition"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:inputType="textPersonName"
+        android:hint="@string/instituition"
+        android:textColor="@color/white"
+
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
         android:id="@+id/password"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"

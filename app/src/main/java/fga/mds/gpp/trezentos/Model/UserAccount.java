@@ -72,7 +72,9 @@ public class UserAccount {
     }
 
     public void setPassword(String password) throws UserException {
-            ValidatePassword(password);
+
+        ValidatePassword(password);
+
     }
 
     public void ValidatePassword (String password) throws UserException{
@@ -115,4 +117,7 @@ public class UserAccount {
         return passwordConfirmation;
     }
 
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
 }

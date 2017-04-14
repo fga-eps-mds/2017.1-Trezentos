@@ -45,9 +45,9 @@ public class UserClassControl {
     }
 
     public void validateCreateClass(String className, String institution, float cutOff, String password,
-                                    Integer idUserAccount, float addition, Integer sizeGroups) throws UserException {
+                                     float addition, Integer sizeGroups) throws UserException {
 
-        UserClass userClass = new UserClass(className, institution, cutOff, password, idUserAccount, addition, sizeGroups);
+        UserClass userClass = new UserClass(className, institution, cutOff, password, addition, sizeGroups);
 
         CreateClassPost createClassPost = new CreateClassPost(userClass);
         createClassPost.execute();
@@ -60,15 +60,25 @@ public class UserClassControl {
         int MAX_CLASSNAME_LENGHT = 20;
         int MIN_PASSWORD_LENGHT = 6;
         int MAX_PASSWORD_LENGHT = 16;
-
+        int MIN_INSTITUITION_LENGHT = 2;
+        int MAX_INSTITUITION_LENGHT = 30;
 
         if(user.getClassName() == null || user.getPassword() == null ||
-                user.getCutOff() <= 0 || user.getSizeGroups() <= 0 || user.getAddition() <= 0){
+                user.getCutOff() <= 0 || user.getSizeGroups() <= 0 ||
+                user.getAddition() <= 0 || user.getInstitution() == null){
 
             throw new UserException("Preencha todos os campos.");
 
         }
         else{
+
+            if(user.getInstitution().length() < MIN_INSTITUITION_LENGHT ||
+                    user.getInstitution().length() > MAX_INSTITUITION_LENGHT){
+
+                throw new UserException("A instituição deve ter de 2 a 30 caracteres.");
+
+            }
+
             if(user.getClassName().length() < MIN_CLASSNAME_LENGHT ||
                     user.getClassName().length() > MAX_CLASSNAME_LENGHT){
 

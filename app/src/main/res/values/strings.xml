@@ -30,11 +30,11 @@
     <string name="cancel">Cancelar</string>
     <string name="classname">Nome da sala</string>
     <string name="password">Senha da sala</string>
+    <string name="instituition">Instituição</string>
     <string name="cutoff">Nota de corte</string>
     <string name="sizegroups">Tamanho dos grupos</string>
     <string name="addition">Acréscimo</string>
     <string name="configuracoes">Configuracoes</string>
-
 
     <string name="msg_cancel_login">Login cancelado</string>
 <!-- Cadastro -->
@@ -49,6 +49,8 @@
     <string name="btn_send_to_email">ENVIAR</string>
     <string name="btn_return_to_login">Retornar</string>
     <string name="txt_name">Nome</string>
-    <string name="txt_confirm_password">Confime a senha</string>
->>>>>>> 93f0aa0d8d50430127bd683d3e737c1c31578a11
+    <string name="txt_confirm_password">Confirme a senha</string>
+
+
+
 </resources>

@@ -51,7 +51,6 @@ public class CreateClassPost extends AsyncTask<String, String, String>{
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
         builder.addQueryParameter("name", userClass.getClassName());
-        builder.addQueryParameter("ownerEmail", String.valueOf(userClass.getIdUserAccount()));
         builder.addQueryParameter("institution", userClass.getInstitution());
         builder.addQueryParameter("passingScore", String.valueOf(userClass.getCutOff()));
         builder.addQueryParameter("additionScore", String.valueOf(userClass.getAddition()));

@@ -45,6 +45,7 @@ public class CreateClassDialogFragment extends DialogFragment {
 
         final EditText classNameField = (EditText) view.findViewById(R.id.classname);
         final EditText passwordField = (EditText) view.findViewById(R.id.password);
+        final EditText instituitionField = (EditText) view.findViewById(R.id.instituition);
         final EditText cutOffField = (EditText) view.findViewById(R.id.cutoff);
         final EditText sizeGroupsField = (EditText) view.findViewById(R.id.sizegroups);
         final EditText additionField = (EditText) view.findViewById(R.id.addition);
@@ -61,27 +62,28 @@ public class CreateClassDialogFragment extends DialogFragment {
                 try{
                     userClass.setClassName(classNameField.getText().toString());
                     userClass.setPassword(passwordField.getText().toString());
+                    userClass.setInstitution(instituitionField.getText().toString());
                     userClass.setCutOff(Float.parseFloat(cutOffField.getText().toString()));
                     userClass.setSizeGroups(Integer.parseInt(sizeGroupsField.getText().toString()));
                     userClass.setAddition(Float.parseFloat(additionField.getText().toString()));
                 }
                 catch (Exception e){
-                    confirmInformation(userClassControl, classNameField, passwordField, cutOffField,
-                            sizeGroupsField, additionField);
+                    confirmInformation(userClassControl, classNameField, passwordField,
+                            instituitionField, cutOffField, sizeGroupsField, additionField);
                     return;
                 }
 
                 boolean isValid;
 
-                isValid = confirmInformation(userClassControl, classNameField, passwordField, cutOffField,
-                        sizeGroupsField, additionField);
+                isValid = confirmInformation(userClassControl, classNameField, passwordField,
+                        instituitionField, cutOffField, sizeGroupsField, additionField);
 
 
                 if(isValid){
 
                     try {
                         userClassControl.validateCreateClass(userClass.getClassName() ,userClass.getInstitution(),userClass.getCutOff(), userClass.getPassword(),
-                                                                userClass.getIdUserAccount(), userClass.getAddition(), userClass.getSizeGroups());
+                                                                 userClass.getAddition(), userClass.getSizeGroups());
                     } catch (UserException e) {
                         e.printStackTrace();
                     }
@@ -127,7 +129,7 @@ public class CreateClassDialogFragment extends DialogFragment {
     }
 
     public boolean confirmInformation(UserClassControl userClassControl, EditText className,
-                                      EditText password, EditText cutOff,
+                                      EditText password, EditText instituition, EditText cutOff,
                                       EditText sizeGroups, EditText addition){
 
         boolean isValid;
@@ -161,6 +163,11 @@ public class CreateClassDialogFragment extends DialogFragment {
                 addition.requestFocus();
                 addition.setError("O acréscimo deve ser maior que 0.");
 
+            }
+
+            if(errorMessage.equals("A instituição deve ter de 2 a 30 caracteres.")){
+                instituition.requestFocus();
+                instituition.setError("A instituição deve ter de 2 a 30 caracteres.");
             }
 
             isValid = false;

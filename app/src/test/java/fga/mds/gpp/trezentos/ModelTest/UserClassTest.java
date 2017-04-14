@@ -40,14 +40,6 @@ public class UserClassTest {
     }
 
     @Test
-    public void UserClass_idUserAccountTest (){
-        UserClass userClass = new UserClass();
-        Integer integer = new Integer(10);
-        userClass.setIdUserAccount(integer);
-        assertEquals(integer,userClass.getIdUserAccount());
-    }
-
-    @Test
     public void UserClass_passwordTest (){
         UserClass userClass = new UserClass();
         userClass.setPassword("password");

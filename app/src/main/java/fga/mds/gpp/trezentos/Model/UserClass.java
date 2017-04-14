@@ -11,7 +11,6 @@ public class UserClass implements Serializable {
     private String className;
     private String institution;
     private float cutOff;
-    private Integer idUserAccount;
     private String password;
     private float addition;
     private int sizeGroups;
@@ -22,17 +21,18 @@ public class UserClass implements Serializable {
     }
 
     public UserClass(String className, String institution, float cutOff, String password,
-                     Integer idUserAccount, float addition, Integer sizeGroups) throws UserException{
+                      float addition, Integer sizeGroups) throws UserException{
 
         this.className = className;
         this.institution = institution;
         this.cutOff = cutOff;
         this.password = password;
-        this.idUserAccount = idUserAccount;
         this.addition = addition;
         this.sizeGroups = sizeGroups;
 
     }
+
+
 
 
     public void setClassName(String className) {
@@ -57,10 +57,6 @@ public class UserClass implements Serializable {
         this.institution = institution;
     }
 
-    public void setIdUserAccount(Integer idUserAccount) {
-        this.idUserAccount = idUserAccount;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -75,10 +71,6 @@ public class UserClass implements Serializable {
 
     public String getClassName() {
         return className;
-    }
-
-    public Integer getIdUserAccount() {
-        return idUserAccount;
     }
 
     public String getPassword() {
