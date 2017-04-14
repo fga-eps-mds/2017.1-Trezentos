@@ -12,10 +12,6 @@ import java.util.List;
 
 import fga.mds.gpp.trezentos.Model.UserAccount;
 
-/**
- * Created by arthur on 28/03/17.
- */
-
 public class UserDao {
 
     Context context;

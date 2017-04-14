@@ -129,12 +129,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 //LOG
                 Log.d(TAG, email.getText().toString());
-                Log.d(TAG, password.getText().toString());
+             //   Log.d(TAG, password.getText().toString());
 
                 UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
 
                 try{
                     String response = userAccountControl.insertModelUser(email.getText().toString(), password.getText().toString());
+                    Log.d(TAG, password.getText().toString());
+
                     if (response.contains("true")){
                         Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(goToMain);

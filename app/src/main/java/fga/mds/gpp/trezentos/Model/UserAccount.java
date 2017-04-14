@@ -2,11 +2,15 @@ package fga.mds.gpp.trezentos.Model;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
+
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fga.mds.gpp.trezentos.DAO.UserDao;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
 import fga.mds.gpp.trezentos.R;
 
 public class UserAccount {
@@ -14,9 +18,10 @@ public class UserAccount {
     private static UserDao userDao = new UserDao();
     private String email;
     private String name;
-
+    private PasswordUtil passwordUtil;
     private String password;
     private String passwordConfirmation;
+    private String salt;
 
     public Context context;
 
@@ -31,6 +36,10 @@ public class UserAccount {
             setEmail(email);
             setPasswordConfirmation(passwordConfirmation);
             setPassword(password);
+    }
+
+    public void setSalt(String salt){
+        this.salt = salt;
     }
 
     public void setName(String name) throws UserException {
@@ -89,7 +98,9 @@ public class UserAccount {
                 if (!password.equals(passwordConfirmation)) {
                     throw new UserException("Senhas não coincidem, tente novamente");
                 } else {
-                    this.password = password;
+                    String saltpass = passwordUtil.stringToMD5(password);
+                  //  setSalt(Calendar.getInstance().getTime().toString() + "@#!");
+                    this.password = saltpass;
                 }
             }
         } else {
@@ -118,6 +129,9 @@ public class UserAccount {
         return passwordConfirmation;
     }
 
+    public String getSalt() {
+        return salt;
+    }
 }
 
 

@@ -263,4 +263,38 @@ public class UserAccountInstrumentedTest {
         onView(withId(R.id.edit_text_password_confirmation)).check(matches(hasErrorText("Senhas não coincidem, tente novamente")));
     }
 
-}
+/* funçoes pra teste de criptogrfia
+    @Test
+    public void funcionapfvr() throws UserException{
+        onView(withId(R.id.button_register))
+                .perform(click());
+        onView(withId(R.id.edit_text_name_register))
+                .perform(typeText("Icaro"));
+        closeSoftKeyboard();
+        onView(withId(R.id.edit_text_email_register))
+                .perform(typeText("testedologin3@teste.com"));
+        closeSoftKeyboard();
+        onView(withId(R.id.edit_text_password_register))
+                .perform(typeText("123123"));
+        closeSoftKeyboard();
+        onView(withId(R.id.edit_text_password_confirmation))
+                .perform(typeText("123123"));
+        closeSoftKeyboard();
+        onView(withId(R.id.sign_up_button))
+                .perform(click());
+    }
+
+        @Test
+        public void funcionaaaa() throws UserException{
+            onView(withId(R.id.edit_text_email))
+                    .perform(typeText("testedologin@teste.com"));
+            closeSoftKeyboard();
+            onView(withId(R.id.edit_text_password))
+                    .perform(typeText("123123"));
+            closeSoftKeyboard();
+            onView(withId(R.id.button_login))
+                    .perform(click());
+        }
+  */
+    }
+

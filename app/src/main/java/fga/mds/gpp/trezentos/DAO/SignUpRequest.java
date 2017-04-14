@@ -2,6 +2,7 @@ package fga.mds.gpp.trezentos.DAO;
 
 
 import android.content.Context;
+import android.location.Criteria;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
         builder.addQueryParameter("facebook", isFromFacebook.toString());
         return builder.build().toString();
     }
+
 
     @Override
     protected void onPostExecute(String result) {
