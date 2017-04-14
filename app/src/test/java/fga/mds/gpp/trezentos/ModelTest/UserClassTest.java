@@ -68,4 +68,7 @@ public class UserClassTest {
         userClass.setSizeGroups(10);
         assertEquals(10, userClass.getSizeGroups());
     }
+
 }
+
+
