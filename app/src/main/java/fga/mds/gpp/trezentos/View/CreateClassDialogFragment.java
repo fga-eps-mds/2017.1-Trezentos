@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +66,8 @@ public class CreateClassDialogFragment extends DialogFragment {
 
                 try {
                     userClass.setClassName(classNameField.getText().toString());
-                    userClass.setPassword(passwordField.getText().toString());
                     userClass.setInstitution(institutionField.getText().toString());
+                    userClass.setPassword(passwordField.getText().toString());
                     userClass.setCutOff(Float.parseFloat(cutOffField.getText().toString()));
                     userClass.setSizeGroups(Integer.parseInt(sizeGroupsField.getText().toString()));
                     userClass.setAddition(Float.parseFloat(additionField.getText().toString()));
@@ -84,8 +85,11 @@ public class CreateClassDialogFragment extends DialogFragment {
 
                 if (isValid) {
 
+                    //userClass.setInstitution(institutionField.getText().toString());
+
                     try {
-                        userClassControl.validateCreateClass(userClass.getClassName(), userClass.getInstitution(), userClass.getCutOff(), userClass.getPassword(),
+                        userClassControl.validateCreateClass(userClass.getClassName(),
+                                userClass.getInstitution(), userClass.getCutOff(), userClass.getPassword(),
                                 userClass.getAddition(), userClass.getSizeGroups());
                     } catch (UserException e) {
                         e.printStackTrace();
@@ -139,7 +143,16 @@ public class CreateClassDialogFragment extends DialogFragment {
 
         try {
 
-            userClassControl.validateInformation(userClass);
+            userClass.setClassName(classNameField.getText().toString());
+            userClass.setInstitution(institutionField.getText().toString());
+            userClass.setPassword(passwordField.getText().toString());
+            userClass.setCutOff(Float.parseFloat(cutOffField.getText().toString()));
+            userClass.setSizeGroups(Integer.parseInt(sizeGroupsField.getText().toString()));
+            userClass.setAddition(Float.parseFloat(additionField.getText().toString()));
+
+            //userClassControl.validateInformation(userClass);
+
+            isValid = true;
 
         } catch (UserException userException) {
 
@@ -150,9 +163,14 @@ public class CreateClassDialogFragment extends DialogFragment {
                 classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
             }
 
-            if (errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")) {
+            if(errorMessage.equals("A instituição deve ter de 2 a 30 caracteres.")){
                 passwordField.requestFocus();
-                passwordField.setError("A senha deve ter de 6 a 16 caracteres.");
+                passwordField.setError("A instituição deve ter de 2 a 30 caracteres.");
+            }
+
+            if (errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")) {
+                institutionField.requestFocus();
+                institutionField.setError("A senha deve ter de 6 a 16 caracteres.");
             }
 
             if (errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
@@ -160,9 +178,9 @@ public class CreateClassDialogFragment extends DialogFragment {
                 sizeGroupsField.setError("O tamanho do grupo nao pode ser zero.");
             }
 
-            if (errorMessage.equals("O acrescimo nao pode ser zero.")) {
+            if (errorMessage.equals("O acrescimo não pode ser zero.")) {
                 additionField.requestFocus();
-                additionField.setError("O acrescimo nao pode ser zero.");
+                additionField.setError("O acrescimo não pode ser zero.");
             }
             if (errorMessage.equals("A nota de corte nao pode ser zero.")) {
                 cutOffField.requestFocus();
@@ -171,11 +189,6 @@ public class CreateClassDialogFragment extends DialogFragment {
             }
             if (errorMessage.equals("Preencha todos os campos!")) {
                 classNameField.setError("Preencha todos os campos!");
-
-                if (errorMessage.equals("A instituição deve ter de 2 a 30 caracteres.")) {
-                    institutionField.requestFocus();
-                    institutionField.setError("A instituição deve ter de 2 a 30 caracteres.");
-                }
 
             }
 

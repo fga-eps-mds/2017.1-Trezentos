@@ -62,38 +62,54 @@ public class UserClassControl {
         int MIN_INSTITUITION_LENGHT = 2;
         int MAX_INSTITUITION_LENGHT = 30;
 
-        if(user.getClassName() == null || user.getPassword() == null ||
-                user.getCutOff() <= 0 || user.getSizeGroups() <= 0 ||
-                user.getAddition() <= 0 || user.getInstitution() == null){
+        if(user.getClassName().isEmpty() || user.getPassword().isEmpty() ||
+                user.getCutOff() < 0 || user.getSizeGroups() < 0 ||
+                user.getAddition() < 0){
 
-            throw new UserException("Preencha todos os campos.");
+                throw new UserException("Preencha todos os campos!");
 
-        }
-        else{
+        }else {
 
-            if(user.getInstitution().length() < MIN_INSTITUITION_LENGHT ||
-                    user.getInstitution().length() > MAX_INSTITUITION_LENGHT){
 
-                throw new UserException("A instituição deve ter de 2 a 30 caracteres.");
-
-            }
-
-            if(user.getClassName().length() < MIN_CLASSNAME_LENGHT ||
-                    user.getClassName().length() > MAX_CLASSNAME_LENGHT){
+            if (user.getClassName().length() < MIN_CLASSNAME_LENGHT ||
+                    user.getClassName().length() > MAX_CLASSNAME_LENGHT) {
 
                 throw new UserException("O nome da sala deve ter de 3 a 20 caracteres.");
 
             }
 
-                if(user.getPassword().length() < MIN_PASSWORD_LENGHT ||
-                    user.getPassword().length() > MAX_PASSWORD_LENGHT){
+            if (user.getPassword().length() < MIN_PASSWORD_LENGHT ||
+                    user.getPassword().length() > MAX_PASSWORD_LENGHT) {
 
                 throw new UserException("A senha deve ter de 6 a 16 caracteres.");
+            }
+
+            if (!user.getInstitution().isEmpty() && user.getInstitution().length() <
+                    MIN_INSTITUITION_LENGHT || user.getInstitution().length() >
+                    MAX_INSTITUITION_LENGHT && !user.getInstitution().isEmpty()) {
+
+                throw new UserException("A instituição deve ter de 2 a 30 caracteres.");
+            }
+
+            if(user.getAddition() == 0){
+
+                throw new UserException("O acrescimo não pode ser zero.");
+            }
+
+            if(user.getCutOff() == 0){
+
+                throw new UserException("A nota de corte nao pode ser zero.");
+            }
+
+            if(user.getSizeGroups() == 0){
+
+                throw new UserException("O tamanho do grupo nao pode ser zero.");
             }
 
         }
 
     }
+
 
 
     public ArrayList<UserClass> getClassesFromUser(String email) {
@@ -160,6 +176,8 @@ public class UserClassControl {
             userClass.setSizeGroups(Integer.parseInt(jsonObject.getString("numberOfStudentsPerGroup")));
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UserException e) {
             e.printStackTrace();
         }
 
