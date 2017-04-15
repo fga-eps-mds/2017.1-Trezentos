@@ -87,12 +87,21 @@ public class UserAccount {
             ValidatePassword(password);
     }
 
+    public void authenticatePassword(String password) throws UserException{
+        if (password != null && !password.isEmpty()) {
+            this.password = password;
+        }
+        else {
+            throw new UserException("A senha não pode estar vazia");
+        }
+    }
+
     public void ValidatePassword (String password) throws UserException{
         if (password != null && !password.isEmpty()) {
             Integer MIN_PASSWORD_LENGTH = 6;
             Integer MAX_PASSWORD_LENGTH = 16;
 
-            if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {
+            if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
                 throw new UserException("A senha deve ter entre 6 e 16 caracteres");
             }else {
                 if (!password.equals(passwordConfirmation)) {

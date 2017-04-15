@@ -1,6 +1,8 @@
 package fga.mds.gpp.trezentos;
 
+import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
+import android.widget.Toast;
 
 import junit.framework.Assert;
 
@@ -10,15 +12,24 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Random;
+
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
 import fga.mds.gpp.trezentos.View.LoginActivity;
+import fga.mds.gpp.trezentos.View.MainActivity;
+import fga.mds.gpp.trezentos.View.SignUpActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;
@@ -30,7 +41,6 @@ public class UserAccountInstrumentedTest {
 
     @Rule
     public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class);
-
 
     @Test
     public void shouldValidateNullEmailLogin() throws UserException{
@@ -264,35 +274,41 @@ public class UserAccountInstrumentedTest {
     }
 
     @Test
-    public void funcionapfvr() throws UserException{
+    public void ShouldValidateRegister() throws UserException{
         onView(withId(R.id.button_register))
                 .perform(click());
         onView(withId(R.id.edit_text_name_register))
-                .perform(typeText("asdgsgwe"));
+                .perform(typeText("Teste"));
         closeSoftKeyboard();
         onView(withId(R.id.edit_text_email_register))
-                .perform(typeText("salt2@teste.com"));
+                .perform(typeText((PasswordUtil.nextSalt()+"@email.com")));
         closeSoftKeyboard();
         onView(withId(R.id.edit_text_password_register))
-                .perform(typeText("123123"));
+                .perform(typeText("testeFinal12"));
         closeSoftKeyboard();
         onView(withId(R.id.edit_text_password_confirmation))
-                .perform(typeText("123123"));
+                .perform(typeText("testeFinal12"));
         closeSoftKeyboard();
         onView(withId(R.id.sign_up_button))
                 .perform(click());
+
+        LoginActivity activity = rule.getActivity();
+        onView(withText("Usuário cadastrado com sucesso!")).inRoot(withDecorView(not(is(activity.getWindow().getDecorView()))))
+                .check(matches(isDisplayed()));
+
     }
 
         @Test
-        public void funcionaaaa() throws UserException{
+        public void shouldValidateValidLogin() throws UserException, InterruptedException {
             onView(withId(R.id.edit_text_email))
-                    .perform(typeText("testedologin@teste.com"));
+                    .perform(typeText(("teste@email.com")));
             closeSoftKeyboard();
             onView(withId(R.id.edit_text_password))
-                    .perform(typeText("123123"));
+                    .perform(typeText("testeFinal12"));
             closeSoftKeyboard();
             onView(withId(R.id.button_login))
                     .perform(click());
+
         }
 
     }

@@ -3,8 +3,10 @@ package fga.mds.gpp.trezentos.Controller;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
@@ -13,6 +15,7 @@ import fga.mds.gpp.trezentos.DAO.SignInRequest;
 import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
 import fga.mds.gpp.trezentos.View.UserDialog;
 
 public class UserAccountControl {
@@ -52,11 +55,9 @@ public class UserAccountControl {
 
         return serverResponse;
 
-
-
     }
 
-    public void insertModelUserFacebook(String email, String name) {
+    public void authenticateLoginFb(String email, String name) {
 
         UserAccount userAccount = getUserWithInfo(email, name);
 
@@ -78,15 +79,12 @@ public class UserAccountControl {
         return userAccount;
     }
 
-    public String insertModelUser(String email, String password) throws UserException {
+    public String authenticateLogin(String email, String password) throws UserException {
         userAccount = new UserAccount();
-
         //Verify email
         userAccount.setEmail(email);
-
         //Verify the password
-        userAccount.setPasswordConfirmation(password);
-        userAccount.setPassword(password);
+        userAccount.authenticatePassword(password);
 
         SignInRequest signInRequest = new SignInRequest(userAccount);
 
@@ -100,7 +98,20 @@ public class UserAccountControl {
             e.printStackTrace();
         }
 
-        if (serverResponse.contains("true")){
+        JSONObject object = getObjectFromServerResponse(serverResponse);
+        String hashedPassword = null;
+        String salt = null;
+
+        try {
+             hashedPassword = object.getString("password");
+            Log.d("Password", hashedPassword);
+             salt = object.getString("salt");
+            Log.d("Password", salt);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (PasswordUtil.decryptPass(hashedPassword, salt, password)) {
             logInUser();
         }
         else{
@@ -109,6 +120,20 @@ public class UserAccountControl {
 
         return serverResponse;
     }
+
+
+    private JSONObject getObjectFromServerResponse(String serverResponse) {
+        JSONObject object = null;
+
+        try {
+            object = new JSONObject(serverResponse);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return object;
+    }
+
 
     public void logInUser() {
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);

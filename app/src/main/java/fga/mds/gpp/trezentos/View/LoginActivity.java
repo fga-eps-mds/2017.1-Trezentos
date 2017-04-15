@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     UserAccountControl userAccountControl = UserAccountControl
                                             .getInstance(getApplicationContext());
-                                    userAccountControl.insertModelUserFacebook(FEmail, Name);
+                                    userAccountControl.authenticateLoginFb(FEmail, Name);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                 UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
 
                 try{
-                    String response = userAccountControl.insertModelUser(email.getText().toString(), password.getText().toString());
+                    String response = userAccountControl.authenticateLogin(email.getText().toString(), password.getText().toString());
                     Log.d(TAG, password.getText().toString());
 
                     if (response.contains("true")){

@@ -60,7 +60,6 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
         return builder.build().toString();
     }
 
-
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);

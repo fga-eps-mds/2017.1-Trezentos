@@ -112,6 +112,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
             userAccountControl.logInUser();
             Intent goToMain = new Intent(this, MainActivity.class);
+            Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
             startActivity(goToMain);
         } else if (response.contains("\"code\":11000")){
             Toast.makeText(getApplicationContext(), "Email inválido, tente novamente", Toast.LENGTH_SHORT).show();

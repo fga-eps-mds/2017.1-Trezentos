@@ -43,5 +43,14 @@ public class PasswordUtil {
         return md5;
     }
 
-    //incompleto, falta o salt
+    public static boolean decryptPass(String hashedPassword, String salt, String password){
+        boolean isValid = false;
+
+        String compare = stringToMD5(salt+password);
+
+        if(compare.equals(hashedPassword)){
+            isValid = true;
+        }
+        return isValid;
+    }
 }
