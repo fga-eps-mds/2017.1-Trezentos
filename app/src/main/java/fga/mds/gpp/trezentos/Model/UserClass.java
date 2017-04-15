@@ -81,25 +81,19 @@ public class UserClass implements Serializable {
         return institution;
     }
 
-    public void setInstitution(String institution)throws UserException {
-        int MIN_PASSWORD_LENGTH = 6;
-        int MAX_PASSWORD_LENGTH = 16;
+    public void setInstitution(String institution) throws UserException{
+        int MIN_INSTITUTION_LENGTH = 2;
+        int MAX_INSTITUTION_LENGTH = 20;
 
-        if(institution != null && !institution.isEmpty()){
+        if(institution.length() < MIN_INSTITUTION_LENGTH || institution.length() > MAX_INSTITUTION_LENGTH){
 
-            if(institution.length() < MIN_PASSWORD_LENGTH ||
-                    institution.length() > MAX_PASSWORD_LENGTH){
+            throw new UserException("A instituição deve ter de 2 a 30 caracteres.");
 
-                throw new UserException("A senha deve ter de 6 a 16 caracteres.");
+        }else{
 
-            }else{
-
-                this.institution = institution;
-            }
-        }else {
-
-            throw new UserException("Preencha todos os campos!");
+            this.institution = institution;
         }
+
     }
 
     public String getPassword() {
@@ -112,18 +106,23 @@ public class UserClass implements Serializable {
 
     public void setPassword(String password) throws UserException {
 
-        int MIN_PASSWORD_LENGTH = 2;
-        int MAX_PASSWORD_LENGTH = 20;
+        int MIN_PASSWORD_LENGTH = 6;
+        int MAX_PASSWORD_LENGTH = 16;
+
+        if(password != null && !password.isEmpty()){
 
             if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
 
-                throw new UserException("A instituição deve ter de 2 a 30 caracteres.");
+                throw new UserException("A senha deve ter de 6 a 16 caracteres.");
 
             }else{
 
                 this.password = password;
             }
+        }else {
 
+            throw new UserException("Preencha todos os campos!");
+        }
 
     }
 

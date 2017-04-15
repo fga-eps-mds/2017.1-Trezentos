@@ -133,7 +133,7 @@ public class CreateClassDialogFragment extends DialogFragment {
     }
 
     public boolean confirmInformation(UserClassControl userClassControl, EditText classNameField,
-                                      EditText institutionField, EditText passwordField,
+                                      EditText passwordField, EditText institutionField,
                                       EditText cutOffField, EditText sizeGroupsField,
                                       EditText additionField) {
 
@@ -164,13 +164,13 @@ public class CreateClassDialogFragment extends DialogFragment {
             }
 
             if(errorMessage.equals("A instituição deve ter de 2 a 30 caracteres.")){
-                passwordField.requestFocus();
-                passwordField.setError("A instituição deve ter de 2 a 30 caracteres.");
+                institutionField.requestFocus();
+                institutionField.setError("A instituição deve ter de 2 a 30 caracteres.");
             }
 
             if (errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")) {
-                institutionField.requestFocus();
-                institutionField.setError("A senha deve ter de 6 a 16 caracteres.");
+                passwordField.requestFocus();
+                passwordField.setError("A senha deve ter de 6 a 16 caracteres.");
             }
 
             if (errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
