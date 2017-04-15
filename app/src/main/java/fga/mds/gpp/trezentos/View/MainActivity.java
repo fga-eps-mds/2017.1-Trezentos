@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,12 +30,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        //startActivity(intent);
-
-//        if (AccessToken.getCurrentAccessToken() == null){
-//            goLoginScreen();
-//        }
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (AccessToken.getCurrentAccessToken() == null && !session.getBoolean("IsUserLogged", false)){
+            goLoginScreen();
+        }
 
         ClassFragment classFragment = new ClassFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -100,10 +101,5 @@ public class MainActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-    }
-
-    public void logout(View view){
-        LoginManager.getInstance().logOut();
-        goLoginScreen();
     }
 }

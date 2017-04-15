@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     tools:context="fga.mds.gpp.trezentos.View.UserFragment">
 
+
+    <Button
+        android:id="@+id/button_loggout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Sair"
+
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

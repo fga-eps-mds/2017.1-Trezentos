@@ -1,177 +1,157 @@
 package fga.mds.gpp.trezentos.Controller;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-import fga.mds.gpp.trezentos.DAO.UserDao;
+import fga.mds.gpp.trezentos.DAO.SignInRequest;
+import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
+import fga.mds.gpp.trezentos.View.UserDialog;
 
 public class UserAccountControl {
 
     private static UserAccountControl instance;
+    private final Context context;
+    public UserAccount userAccount;
 
-    private static UserAccount userAccount;
 
-    private Context context;
-
-    public UserAccountControl(){
-
-    }
-
-    public UserAccountControl(Context context){
+    private UserAccountControl(final Context context) {
         this.context = context;
     }
 
-
-    public static UserAccountControl getInstance(Context context) {
-        if (instance == null) {
-            instance = new UserAccountControl();
-
+    public static UserAccountControl getInstance(final Context context){
+        if (instance == null){
+            instance = new UserAccountControl(context);
         }
-
         return instance;
     }
 
-    public void insert(UserAccount userAccount){
+    public String validateSignUp(String name, String email, String password,
+                               String passwordConfirmation) throws UserException {
 
+        userAccount = new UserAccount(name, email, password, passwordConfirmation);
+
+        SignUpRequest signUpRequest = new SignUpRequest(userAccount, false);
+
+        String serverResponse = "404";
+
+        try {
+            serverResponse = signUpRequest.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return serverResponse;
 
     }
 
-    public void authenticateLogin(){
-        UserAccount.authenticateLogin(userAccount);
+    public void authenticateLoginFb(String email, String name) {
+
+        UserAccount userAccount = getUserWithInfo(email, name);
+
+        SignUpRequest signUprequest = new SignUpRequest(userAccount, true);
+        signUprequest.execute();
 
     }
 
-
-    public boolean loginValidate(String user, String password){
+    private UserAccount getUserWithInfo(String email, String name) {
         UserAccount userAccount = new UserAccount();
-        if(userAccount == null || userAccount.getEmail() == null || userAccount.getPassword() == null){
-            return false;
+
+        try {
+            userAccount.setEmail(email);
+            userAccount.setName(name);
+        } catch (UserException e) {
+            e.printStackTrace();
         }
 
-        return true;
+        return userAccount;
     }
 
-    public void insertModelUserFacebook(JSONObject object){
-
-    }
-
-    public void insertModelUser(Integer idUser, String email, String password) throws UserException {
+    public String authenticateLogin(String email, String password) throws UserException {
         userAccount = new UserAccount();
-
-        //Id
-        userAccount.setIdUserAccount(idUser);
-
         //Verify email
-        if (email != null && !email.isEmpty()) {
-            Integer MAX_NAME_LENGTH = 30;
-
-            if (email.length() <= MAX_NAME_LENGTH) {
-                userAccount.setEmail(email);
-            } else  {
-                throw new UserException("Digite um email de até 30 caracteres");
-            }
-        } else {
-            throw new UserException("O email não pode estar vazio");
-        }
-
-        //Verify the password
-        if (password != null && !password.isEmpty()) {
-            Integer MAX_PASS_LENGTH = 20;
-
-            if (password.length() <= MAX_PASS_LENGTH) {
-                userAccount.setPassword(password);
-            } else  {
-                throw new UserException("Digite uma senha de até 20 caracteres");
-            }
-        } else {
-            throw new UserException("A senha não pode estar vazia");
-        }
-
-        UserAccount.authenticateLogin(userAccount);
-
-
-    }
-
-    public void updateModelUser(Integer idUser,String name, String email, String password) throws UserException {
-
-        userAccount.setIdUserAccount(idUser);
-        userAccount.setName(name);
         userAccount.setEmail(email);
-        userAccount.setPassword(password);
-    }
+        //Verify the password
+        userAccount.authenticatePassword(password);
 
-    public Integer getUserAccountId(){
-        return userAccount.getIdUserAccount();
+        SignInRequest signInRequest = new SignInRequest(userAccount);
 
-    }
-    public String getUserAccountEmail(){
-        return userAccount.getEmail();
+        String serverResponse = "404";
 
-    }
-    public String getUserAccountPassword(){
-        return userAccount.getPassword();
-
-    }
-
-    public void validateInformation(String name, String email, String password,
-                                    String passwordConfirmation) throws UserException {
-
-        Integer MIN_PASSWORD_LENGTH = 6;
-        Integer MIN_NAME_LENGTH = 3;
-        Integer MAX_PASSWORD_LENGTH = 16;
-        Integer MAX_NAME_LENGTH = 50;
-
-        if(name == null || email == null || password == null || passwordConfirmation == null){
-
-            throw new UserException("Preencha todos os campos!");
+        try {
+            serverResponse = signInRequest.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
-        if(name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH){
+        JSONObject object = getObjectFromServerResponse(serverResponse);
+        String hashedPassword = null;
+        String salt = null;
 
-            throw new UserException("O nome deve ter de 3 a 50 caracteres.");
+        try {
+             hashedPassword = object.getString("password");
+            Log.d("Password", hashedPassword);
+             salt = object.getString("salt");
+            Log.d("Password", salt);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
-
-            throw new UserException("A senha deve ter de 6 a 16 caracteres.");
+        if (PasswordUtil.decryptPass(hashedPassword, salt, password)) {
+            logInUser();
+        }
+        else{
+            logOutUser();
         }
 
-        if(!password.equals(passwordConfirmation)){
-            throw new UserException("Senhas não Coincidem. Tente novamente.");
-        }
-
-        // Confirm UpperCase in password
-
-        boolean upperCaseConfirmation = false;
-        char letter;
-
-        for(int i = 0; i < password.length(); i++){
-
-            letter = password.charAt(i);
-
-            if (letter == Character.toUpperCase(letter)){
-                upperCaseConfirmation = true;
-            }
-
-        }
-
-        if(upperCaseConfirmation == false){
-
-            throw new UserException("A senha deve ter ao menos um caracter maiusculo!");
-        }
-
+        return serverResponse;
     }
 
-    public void insertModelUserRegister(Integer idUser,String name, String user, String password) throws UserException {
-        userAccount = new UserAccount(idUser, user, password);
-        userAccount.setName(name);
-        UserAccount.authenticateLogin(userAccount);
-        UserAccount.insertData(userAccount);
+
+    private JSONObject getObjectFromServerResponse(String serverResponse) {
+        JSONObject object = null;
+
+        try {
+            object = new JSONObject(serverResponse);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return object;
     }
 
+
+    public void logInUser() {
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+        session.edit()
+                .putBoolean("IsUserLogged", true)
+                .putString("userEmail", userAccount.getEmail())
+                .putString("userName", userAccount.getName())
+                .apply();
+    }
+
+
+    public void logOutUser(){
+
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+        session.edit()
+                .putBoolean("IsUserLogged", false)
+                .putString("userName", "")
+                .apply();
+
+    }
 }
