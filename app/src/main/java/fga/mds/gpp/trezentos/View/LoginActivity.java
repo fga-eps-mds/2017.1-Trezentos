@@ -1,0 +1,235 @@
+package fga.mds.gpp.trezentos.View;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.telecom.Call;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
+import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.UserAccount;
+import fga.mds.gpp.trezentos.R;
+
+public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity";
+
+    private UserDialog dialog = new UserDialog();
+
+
+    private String activityName = this.getClass().getSimpleName();
+    private Handler mHandler = new Handler();
+
+    private LoginButton loginFacebook;
+    private CallbackManager callbackManager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_login);
+
+        dialog.setContext(this);
+
+        final Button login = (Button) findViewById(R.id.button_login);
+        Button register = (Button) findViewById(R.id.button_register);
+        Button forgotPass = (Button) findViewById(R.id.button_forgot_password);
+        Button about = (Button) findViewById(R.id.button_about);
+        final EditText email = (EditText) findViewById(R.id.edit_text_email);
+        final EditText password = (EditText) findViewById(R.id.edit_text_password);
+
+        callbackManager = CallbackManager.Factory.create();
+
+        loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
+        loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
+
+        loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                goMainScreen();
+                /*Log.d(TAG, "Button Login facebook clicado");
+                userAccountControl.insertModelUser(0, loginResult.);*/
+
+                AccessToken accessToken = loginResult.getAccessToken();
+                Profile profile = Profile.getCurrentProfile();
+
+                // Facebook Email address
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                                try {
+                                    String Name = object.getString("name");
+                                    String FEmail = object.getString("email");
+
+                                    UserAccountControl userAccountControl = UserAccountControl
+                                            .getInstance(getApplicationContext());
+                                    userAccountControl.authenticateLoginFb(FEmail, Name);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), R.string.msg_cancel_login, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Toast.makeText(getApplicationContext(), R.string.msg_error_login, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View v) {
+                //Implementar aqui parte da verificação do login
+                Log.d(TAG,"Button Login clicado");
+                //dialog.setProgressMessage("Carregando...");
+                //dialog.execute();
+
+                //LOG
+                Log.d(TAG, email.getText().toString());
+             //   Log.d(TAG, password.getText().toString());
+
+                UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+
+                try{
+                    String response = userAccountControl.authenticateLogin(email.getText().toString(), password.getText().toString());
+                    Log.d(TAG, password.getText().toString());
+
+                    if (response.contains("true")){
+                        Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(goToMain);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Email ou Senha inválidos, por favor " +
+                                "tente novamente", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch(UserException userException){
+                    String errorMessage = userException.getMessage();
+
+                    if(errorMessage.equals("O email deve ter entre 5 e 50 caracteres válidos")){
+                        email.requestFocus();
+                        email.setError("Email inválido. Tente novamente");
+                    }
+
+                    if(errorMessage.equals("Email com caracteres inválidos. Tente novamente")){
+                        email.requestFocus();
+                        email.setError("Email inválido. Tente novamente");
+                    }
+
+                    if(errorMessage.equals("O email não pode estar vazio")){
+                        email.requestFocus();
+                        email.setError("O email não pode estar vazio");
+                    }
+
+                    if(errorMessage.equals(getString(R.string.msg_len_password_error_message))){
+                        password.requestFocus();
+                        password.setError("Senha inválida. Tente Novamente");
+                    }
+                    if(errorMessage.equals("A senha não pode estar vazia")){
+                        password.requestFocus();
+                        password.setError("A senha não pode estar vazia");
+                    }
+
+                }
+
+
+            }
+        });
+
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Levar o usuario para a tela de cadastro
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgotIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(forgotIntent);
+            }
+        });
+
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showAbout = new Intent(getApplicationContext(), AboutOnLogin.class);
+                startActivity(showAbout);
+            }
+        });
+
+    }
+
+    private void goMainScreen() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+}
