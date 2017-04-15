@@ -43,26 +43,43 @@ public class UserClassControl {
         return instance;
     }
 
-    public void validateCreateClass(String className, String institution, float cutOff, String password,
-                                     float addition, Integer sizeGroups) throws UserException {
+    public void validateCreateClass(String className, String institution, Float cutOff, String password,
+                                     Float addition, Integer sizeGroups) throws UserException {
 
-        UserClass userClass = new UserClass(className, institution, cutOff, password, addition, sizeGroups);
+        try {
+            UserClass userClass = new UserClass(className, institution, cutOff, password, addition, sizeGroups);
 
-        CreateClassPost createClassPost = new CreateClassPost(userClass);
-        createClassPost.execute();
+            CreateClassPost createClassPost = new CreateClassPost(userClass);
+            createClassPost.execute();
+
+        }catch (UserException userException){
+            userException.printStackTrace();
+        }
+
+
     }
 
 
-    public void validateInformation(UserClass user) throws UserException{
+    public String validateInformation(String className, String institution, String cutOff, String password,
+                                         String addition, String sizeGroups) throws UserException{
 
-        int MIN_CLASSNAME_LENGHT = 3;
-        int MAX_CLASSNAME_LENGHT = 20;
-        int MIN_PASSWORD_LENGHT = 6;
-        int MAX_PASSWORD_LENGHT = 16;
-        int MIN_INSTITUITION_LENGHT = 2;
-        int MAX_INSTITUITION_LENGHT = 30;
+            String erro;
+             try{
+                 UserClass userClass = new UserClass(className, institution, Float.parseFloat(cutOff),
+                  password, Float.parseFloat(addition), Integer.parseInt(sizeGroups));
 
-        if(user.getClassName().isEmpty() || user.getPassword().isEmpty() ||
+                 erro = "Sucesso";
+                 return erro;
+             }catch (UserException userException){
+
+                 erro = userException.getMessage();
+                 return erro;
+             }
+        }
+
+
+
+      /*  if(user.getClassName().isEmpty() || user.getPassword().isEmpty() ||
                 user.getCutOff() < 0 || user.getSizeGroups() < 0 ||
                 user.getAddition() < 0){
 
@@ -107,8 +124,8 @@ public class UserClassControl {
             }
 
         }
+*/
 
-    }
 
 
 
