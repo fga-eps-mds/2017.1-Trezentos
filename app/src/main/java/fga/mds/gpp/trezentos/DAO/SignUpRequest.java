@@ -53,6 +53,7 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
     private String getUrlWithParameters() {
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
         builder.addQueryParameter("email", user.getEmail());
+        builder.addQueryParameter("salt", user.getSalt());
         builder.addQueryParameter("password", user.getPassword());
         builder.addQueryParameter("name", user.getName());
         builder.addQueryParameter("facebook", isFromFacebook.toString());

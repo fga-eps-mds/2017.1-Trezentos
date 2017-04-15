@@ -17,7 +17,6 @@ public class SignInRequest extends AsyncTask<String, String, String> {
 
     private UserAccount user;
     private String url = "https://trezentos-api.herokuapp.com/api/user/login";
-
     public SignInRequest(UserAccount user){
         this.user = user;
     }

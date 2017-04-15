@@ -63,7 +63,7 @@ public class UserAccount {
             Integer MIN_EMAIL_LENGTH = 5;
 
             if (email.length() < MIN_EMAIL_LENGTH || email.length() > MAX_EMAIL_LENGTH) {
-                throw new UserException("O email deve ter entre 5 e 50 caracteres válidos");
+
             }
             /*validaçao caracteres*/
             else {
@@ -98,9 +98,12 @@ public class UserAccount {
                 if (!password.equals(passwordConfirmation)) {
                     throw new UserException("Senhas não coincidem, tente novamente");
                 } else {
-                    String saltpass = passwordUtil.stringToMD5(password);
-                  //  setSalt(Calendar.getInstance().getTime().toString() + "@#!");
-                    this.password = saltpass;
+                    String salt = PasswordUtil.nextSalt();
+                    this.salt = salt;
+                    String toBeHashed = (salt+password);
+                    String hashedPass = passwordUtil.stringToMD5(toBeHashed);
+                    Log.d("TAG", salt);
+                    this.password = hashedPass;
                 }
             }
         } else {

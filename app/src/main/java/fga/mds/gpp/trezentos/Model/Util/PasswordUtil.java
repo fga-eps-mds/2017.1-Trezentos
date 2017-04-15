@@ -15,8 +15,20 @@ import javax.crypto.spec.PBEKeySpec;
 
 public class PasswordUtil {
 
-    public static String stringToMD5(String string) {
+    public static String nextSalt() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
 
+    }
+
+    public static String stringToMD5(String string) {
         String md5 = null;
 
         MessageDigest digest = null;
@@ -30,5 +42,6 @@ public class PasswordUtil {
 
         return md5;
     }
+
     //incompleto, falta o salt
 }
