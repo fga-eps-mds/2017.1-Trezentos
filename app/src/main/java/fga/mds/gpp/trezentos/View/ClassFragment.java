@@ -143,7 +143,6 @@ public class ClassFragment extends Fragment {
 
 
 
-
     public interface OnFragmentInteractionListener {
 
         void onFragmentInteraction(Uri uri);

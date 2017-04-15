@@ -3,6 +3,7 @@ package fga.mds.gpp.trezentos.Controller;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.widget.EditText;
 
 import org.json.JSONArray;
@@ -24,8 +25,6 @@ public class UserClassControl {
 
     private static UserClassControl instance;
     private final Context context;
-
-
 
     private UserClassControl(final Context context){
 
@@ -121,6 +120,7 @@ public class UserClassControl {
         }
 
         return userClasses;
+
     }
 
     private ArrayList<UserClass> getArrayList(String serverResponse) throws JSONException {

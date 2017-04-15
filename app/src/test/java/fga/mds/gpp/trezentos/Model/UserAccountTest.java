@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.ModelTest;
+package fga.mds.gpp.trezentos.Model;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.UserAccount;

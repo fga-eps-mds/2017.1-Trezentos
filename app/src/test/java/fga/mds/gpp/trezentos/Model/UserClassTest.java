@@ -1,11 +1,9 @@
-package fga.mds.gpp.trezentos.ModelTest;
+package fga.mds.gpp.trezentos.Model;
 
 import static java.lang.Double.valueOf;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
 
-import fga.mds.gpp.trezentos.Model.UserClass;
+import org.junit.Test;
 
 public class UserClassTest {
 
