@@ -76,13 +76,15 @@ public class UserClass implements Serializable {
         return institution;
     }
 
+
     public void setInstitution(String institution)throws UserException {
 
         int MIN_INSTITUTION_LENGTH = 3;
         int MAX_INSTITUTION_LENGTH = 20;
 
-        if(institution != null
-        && (institution.length() < MIN_INSTITUTION_LENGTH || institution.length() > MAX_INSTITUTION_LENGTH)){
+        if(institution != null &&
+                (institution.length() < MIN_INSTITUTION_LENGTH
+                        || institution.length() > MAX_INSTITUTION_LENGTH)){
 
             throw new UserException("A instituicao deve ter de 3 a 20 caracteres.");
 
@@ -90,7 +92,6 @@ public class UserClass implements Serializable {
 
             this.institution = institution;
         }
-
 
     }
 
@@ -111,22 +112,22 @@ public class UserClass implements Serializable {
 
                 throw new UserException("A senha deve ter de 6 a 16 caracteres.");
 
-            }else{
+            }else if(password == null){
+                throw new UserException("Preencha todos os campos!");
 
-                this.password = password;
             }
-        }else {
+        }else{
 
-            throw new UserException("Preencha todos os campos!");
+            this.password = password;
         }
 
     }
 
-    public float getAddition() {
+    public float getAddition(){
         return addition;
     }
 
-    public void setAddition(float addition) throws UserException {
+    public void setAddition(float addition) throws UserException{
 
         if(addition != 0){
 
@@ -143,7 +144,7 @@ public class UserClass implements Serializable {
         return cutOff;
     }
 
-    public void setCutOff(Float cutOff) throws UserException {
+    public void setCutOff(float cutOff) throws UserException {
 
         if(cutOff != 0){
 

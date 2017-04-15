@@ -71,12 +71,7 @@ public class CreateClassDialogFragment extends DialogFragment {
                             classNameField, institutionField, passwordField,
                             cutOffField, sizeGroupsField,
                             additionField);
-/*                    userClass.setClassName(classNameField.getText().toString());
-                    userClass.setInstitution(institutionField.getText().toString());
-                    userClass.setPassword(passwordField.getText().toString());
-                    userClass.setCutOff(Float.parseFloat(cutOffField.getText().toString()));
-                    userClass.setSizeGroups(Integer.parseInt(sizeGroupsField.getText().toString()));
-                    userClass.setAddition(Float.parseFloat(additionField.getText().toString()));*/
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     return;
@@ -91,7 +86,7 @@ public class CreateClassDialogFragment extends DialogFragment {
                     String password = passwordField.getText().toString();
                     String addition = additionField.getText().toString();
                     String sizeGroups = sizeGroupsField.getText().toString();
-                    //userClass.setInstitution(institutionField.getText().toString());
+
 
                     try {
                         userClass = new UserClass(className, institution, Float.parseFloat(cutOff),
@@ -140,9 +135,9 @@ public class CreateClassDialogFragment extends DialogFragment {
         super.onCancel(dialog);
     }
 
-    public boolean confirmInformation(UserClassControl userClassControl,
-                                         EditText classNameField,
-                                      EditText institutionField, EditText passwordField,
+
+    public boolean confirmInformation(UserClassControl userClassControl, EditText classNameField,
+                                      EditText passwordField, EditText institutionField,
                                       EditText cutOffField, EditText sizeGroupsField,
                                       EditText additionField) throws UserException {
 
