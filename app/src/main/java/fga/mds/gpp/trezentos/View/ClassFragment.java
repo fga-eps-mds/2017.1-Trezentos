@@ -63,8 +63,7 @@ public class ClassFragment extends Fragment {
 
         String email = session.getString("userEmail","");
 
-        email = "teste@teste.com";
-
+//        email = "teste@teste.com";
         UserClassControl userClassControl = UserClassControl.getInstance(getActivity());
 
         userClasses = userClassControl.getClassesFromUser(email);
@@ -73,7 +72,6 @@ public class ClassFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-        loadClasses();
 
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
         final ListView listView = (ListView) view.findViewById(R.id.class_list_view);
@@ -82,6 +80,8 @@ public class ClassFragment extends Fragment {
 
         final UserClass userClass = new UserClass();
         final UserAccount userAccount = new UserAccount();
+
+        loadClasses();
 
         adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
 

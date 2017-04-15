@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
+import android.util.FloatProperty;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,8 +70,7 @@ public class CreateClassDialogFragment extends DialogFragment {
 
                     isValid = confirmInformation(userClassControl,
                             classNameField, institutionField, passwordField,
-                            cutOffField, sizeGroupsField,
-                            additionField);
+                                cutOffField, sizeGroupsField, additionField);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -89,14 +89,15 @@ public class CreateClassDialogFragment extends DialogFragment {
 
 
                     try {
-                        userClass = new UserClass(className, institution, Float.parseFloat(cutOff),
-                                password, Float.parseFloat(addition), Integer.parseInt(sizeGroups));
-                        userClassControl.validateCreateClass(userClass.getClassName(),
-                                userClass.getInstitution(), userClass.getCutOff(), userClass.getPassword(),
-                                userClass.getAddition(), userClass.getSizeGroups());
+
+                        userClassControl.validateCreateClass(className,
+                                institution, Float.parseFloat(cutOff), password,
+                                    Float.parseFloat(addition), Integer.parseInt(sizeGroups));
                     } catch (UserException e) {
                         e.printStackTrace();
                     }
+
+
 
                     dismiss();
                 }
@@ -120,16 +121,6 @@ public class CreateClassDialogFragment extends DialogFragment {
 
     }
 
-    /*
-    @Override
-    public onAttach(Activity activity){
-        super.onAttach(activity);
-
-
-
-    }*/
-
-
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
@@ -137,9 +128,9 @@ public class CreateClassDialogFragment extends DialogFragment {
 
 
     public boolean confirmInformation(UserClassControl userClassControl, EditText classNameField,
-                                      EditText passwordField, EditText institutionField,
-                                      EditText cutOffField, EditText sizeGroupsField,
-                                      EditText additionField) throws UserException {
+                                        EditText passwordField, EditText institutionField,
+                                            EditText cutOffField, EditText sizeGroupsField,
+                                                EditText additionField) throws UserException {
 
         String className = classNameField.getText().toString();
         String institution = institutionField.getText().toString();
@@ -193,6 +184,10 @@ public class CreateClassDialogFragment extends DialogFragment {
                 cutOffField.requestFocus();
                 cutOffField.setError("A nota de corte nao pode ser zero.");
                 isValid = false;
+            }
+            if (errorMessage.equals("Sucesso")) {
+
+                isValid = true;
             }
 
 
