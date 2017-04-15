@@ -2,7 +2,9 @@ package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import fga.mds.gpp.trezentos.R;
 public class ClassActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButton;
+    private UserClass userClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +32,25 @@ public class ClassActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        setupViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
+
         Intent intent = getIntent();
-        UserClass userClass = (UserClass) intent.getSerializableExtra("Class");
+        userClass = (UserClass) intent.getSerializableExtra("Class");
+
         if(userClass != null){
             TextView textView = (TextView) findViewById(R.id.testClass);
             textView.setText(userClass.getClassName());
             setTitle(userClass.getClassName());
         }
+
+
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn_add_test);
 
@@ -49,10 +61,19 @@ public class ClassActivity extends AppCompatActivity {
                 //openDialogFragment(v);
                 Toast.makeText(ClassActivity.this,"Criar Prova", Toast.LENGTH_SHORT).show();
 
-
-
             }
         });
+
+
+
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ExamsFragment(), "EXAMS");
+        adapter.addFragment(new StudensFragment(), "STUDENTS");
+        //adapter.addFragment(new ThreeFragment(), "THREE");
+        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -75,15 +96,23 @@ public class ClassActivity extends AppCompatActivity {
 
 
         if (id == R.id.action_settings) {
-            Toast.makeText(ClassActivity.this,"Configurações", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ClassActivity.this,"Configurações", Toast.LENGTH_SHORT).show();
             return true;
         }else if(id == R.id.action_edit_class){
-            Toast.makeText(ClassActivity.this,"Editar Sala", Toast.LENGTH_SHORT).show();
+
+            Intent intentEditClass = new  Intent(getApplicationContext(), EditClassActivity.class);
+            UserClass userClassCalled = (UserClass) userClass;
+            intentEditClass.putExtra("Class", userClassCalled);
+
+            startActivity(intentEditClass);
+            //Toast.makeText(ClassActivity.this,"Editar Sala", Toast.LENGTH_SHORT).show();
 
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 //    public void openDialogFragment (View view){
 //

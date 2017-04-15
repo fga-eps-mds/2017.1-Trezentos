@@ -1,8 +1,24 @@
 package fga.mds.gpp.trezentos.Model;
 
-/**
- * Created by arthur on 15/04/17.
- */
 
 public class Exam {
+
+
+    private String nameExam;
+
+    public Exam(){
+
+
+    }
+
+    public Exam(String nameExam){
+
+        this.nameExam = nameExam;
+    }
+
+
+    @Override
+    public String toString() {
+        return "\n"+"Prova: "+ nameExam+ "\n";
+    }
 }

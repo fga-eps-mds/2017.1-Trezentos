@@ -1,28 +1,32 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.Student;
 import fga.mds.gpp.trezentos.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ExamsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ExamsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ExamsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -34,14 +38,7 @@ public class ExamsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExamsFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static ExamsFragment newInstance(String param1, String param2) {
         ExamsFragment fragment = new ExamsFragment();
@@ -64,9 +61,53 @@ public class ExamsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_exams, container, false);
+
+        final View view = inflater.inflate(R.layout.fragment_exams, container, false);
+
+
+
+        final ArrayList<Exam> exams = new ArrayList<Exam>();
+        //friends.clear();
+
+        final ListView listView = (ListView) view.findViewById(R.id.list);
+
+        exams.add(new Exam("P1"));
+        exams.add(new Exam("P2"));
+        exams.add(new Exam("P3"));
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, exams);
+
+
+        listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+                Snackbar.make(view, "Click List", Snackbar.LENGTH_LONG).setAction("No action", null).show();
+            }
+        });
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_btn_add_exams);
+        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //openDialogFragment(v);
+                Toast.makeText(getActivity(),"Criar Prova", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        return view;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -75,33 +116,7 @@ public class ExamsFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
