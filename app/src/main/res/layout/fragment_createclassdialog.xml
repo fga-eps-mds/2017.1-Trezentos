@@ -30,7 +30,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:inputType="textPersonName"
-        android:hint="@string/instituition"
+        android:hint="@string/institution"
         android:textColor="@color/white"
 
         />

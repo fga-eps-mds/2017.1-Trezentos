@@ -5,12 +5,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import fga.mds.gpp.trezentos.Exception.UserException;
+
 public class UserClassTest {
 
     @Test
     public void UserClass_ClassName() {
         UserClass userClass = new UserClass();
-        userClass.setClassName("nome");
+        try {
+            userClass.setClassName("nome");
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         assertEquals("nome", userClass.getClassName());
 
     }
@@ -26,21 +32,33 @@ public class UserClassTest {
     public void UserClass_CutOff() {
         UserClass userClass = new UserClass();
         Float floatCutOff = new Float(10.0);
-        userClass.setCutOff(floatCutOff);
+        try {
+            userClass.setCutOff(floatCutOff);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         floatCutOff.equals(userClass.getCutOff());
     }
 
     @Test
     public void UserClass_Password(){
         UserClass userClass = new UserClass();
-        userClass.setPassword("nome");
+        try {
+            userClass.setPassword("nome");
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         assertEquals("nome", userClass.getPassword());
     }
 
     @Test
     public void UserClass_passwordTest (){
         UserClass userClass = new UserClass();
-        userClass.setPassword("password");
+        try {
+            userClass.setPassword("password");
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         assertEquals("password",userClass.getPassword());
     }
 
@@ -48,14 +66,22 @@ public class UserClassTest {
     public void UserClass_Addition() {
         UserClass userClass = new UserClass();
         Float floatAdd = new Float(10.0);
-        userClass.setAddition(floatAdd);
+        try {
+            userClass.setAddition(floatAdd);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         floatAdd.equals(userClass.getAddition());
     }
 
     @Test
     public void UserClass_SizeGroups() {
         UserClass userClass = new UserClass();
-        userClass.setSizeGroups(10);
+        try {
+            userClass.setSizeGroups(10);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
         assertEquals(10, userClass.getSizeGroups());
     }
 
