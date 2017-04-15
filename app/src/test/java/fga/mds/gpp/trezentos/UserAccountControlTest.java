@@ -11,14 +11,22 @@ import org.robolectric.annotation.Config;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.View.LoginActivity;
 
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertFalse;
 
-
-public class UserAccountControlUnitTest {
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class)
+public class UserAccountControlTest {
 
     UserAccountControl testUser;
+    private LoginActivity activity;
+
+    @Before
+    public void setUp(){
+        activity = Robolectric.buildActivity(LoginActivity.class).get();
+    }
 
     @Test
     public void ShouldValitadeNullName()throws UserException{
@@ -27,8 +35,8 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
-            testUser.validateInformation(null,"aluno@email.com","Senha1", "Senha1");
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp(null,"aluno@email.com","Senha1", "Senha1");
             isValid = true;
 
         } catch (UserException userException) {
@@ -50,8 +58,8 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
-            testUser.validateInformation("Carla",null,"Senha1", "Senha1");
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp("Carla",null,"Senha1", "Senha1");
             isValid = true;
 
         } catch (UserException userException) {
@@ -73,8 +81,8 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
-            testUser.validateInformation("Carla","aluno@email.com",null, "Senha1");
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp("Carla","aluno@email.com",null, "Senha1");
             isValid = true;
 
         } catch (UserException userException) {
@@ -95,8 +103,8 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
-            testUser.validateInformation("Carla", "aluno@email.com", "Senha1", null);
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp("Carla", "aluno@email.com", "Senha1", null);
             isValid = true;
 
         } catch (UserException userException) {
@@ -119,8 +127,8 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
-            testUser.validateInformation("Ei","aluno@email.com","Senha1", "Senha1");
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp("Ei","aluno@email.com","Senha1", "Senha1");
             isValid = true;
 
         } catch (UserException userException) {
@@ -140,11 +148,11 @@ public class UserAccountControlUnitTest {
     public void ShouldValitadeNameMaxLength()throws UserException{
 
         boolean isValid = false;
-        testUser = new UserAccountControl();
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
 
         try{
 
-            testUser.validateInformation("O trezentos é metodo de aprendizagem ativa e colaborativa"
+            testUser.validateSignUp("O trezentos é metodo de aprendizagem ativa e colaborativa"
                     ,"aluno@email.com","Senha1", "Senha1");
             isValid = true;
 
@@ -167,8 +175,8 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
-            testUser.validateInformation("Carla","aluno@email.com","Senha", "Senha");
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp("Carla","aluno@email.com","Senha", "Senha");
             isValid = true;
 
         } catch (UserException userException) {
@@ -189,8 +197,8 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
-            testUser.validateInformation("Carla"
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp("Carla"
                     ,"aluno@email.com","Vintecaracteresusados", "Vintecaracteresusados");
             isValid = true;
 
@@ -212,8 +220,8 @@ public class UserAccountControlUnitTest {
 
         try{
 
-            testUser = new UserAccountControl();
-            testUser.validateInformation("Carla"
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp("Carla"
                     ,"aluno@email.com","Senha1", "Senha");
             isValid = true;
 
@@ -235,8 +243,8 @@ public class UserAccountControlUnitTest {
         boolean isValid = false;
 
         try{
-            testUser = new UserAccountControl();
-            testUser.validateInformation("Carla"
+            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+            testUser.validateSignUp("Carla"
                     ,"aluno@email.com","senha1", "senha");
             isValid = true;
 

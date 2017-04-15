@@ -3,51 +3,31 @@ package fga.mds.gpp.trezentos.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
 
-import com.facebook.login.widget.LoginButton;
-
-import fga.mds.gpp.trezentos.R;
-
-import static fga.mds.gpp.trezentos.R.id.editTextEmailRegister;
-import static fga.mds.gpp.trezentos.R.id.editTextNameRegister;
-import static fga.mds.gpp.trezentos.R.id.editTextPasswordConfirmation;
-import static fga.mds.gpp.trezentos.R.id.editTextPasswordRegister;
-import static fga.mds.gpp.trezentos.R.id.sign_up_button;
+import static fga.mds.gpp.trezentos.R.id.edit_text_email_register;
+import static fga.mds.gpp.trezentos.R.id.edit_text_name_register;
+import static fga.mds.gpp.trezentos.R.id.edit_text_password_confirmation;
+import static fga.mds.gpp.trezentos.R.id.edit_text_password_register;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private UserAccountControl userAccountControl = new UserAccountControl(this);
     private static final String TAG = "SignUpActivity";
-    private UserDialog dialog = new UserDialog();
-
-    private EditText name;
-    private EditText email;
-    private EditText password;
-    private EditText passwordConfirmation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         Button signUp = (Button) findViewById(R.id.sign_up_button);
-
-        name = (EditText) findViewById(editTextNameRegister);
-        email = (EditText) findViewById(editTextEmailRegister);
-        password = (EditText) findViewById(editTextPasswordRegister);
-        passwordConfirmation = (EditText) findViewById(editTextPasswordConfirmation);
-
-
         signUp.setOnClickListener(this);
 
         Button alreadySignUp = (Button) findViewById(R.id.already_sign_up);
@@ -56,49 +36,89 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     // Method for confirmation
-    public boolean confirmInformation(UserAccountControl userAccountControl, EditText name, EditText email,
-                                   EditText password, EditText passwordConfirmation) {
+    public boolean confirmInformation() {
 
-        boolean isValid;
+        EditText nameEdit = (EditText) findViewById(edit_text_name_register);
+        EditText emailEdit = (EditText) findViewById(edit_text_email_register);
+        EditText passwordEdit = (EditText) findViewById(edit_text_password_register);
+        EditText passwordConfirmationEdit = (EditText) findViewById(edit_text_password_confirmation);
 
+        String name = nameEdit.getText().toString();
+        String email = emailEdit.getText().toString();
+        String password = passwordEdit.getText().toString();
+        String passwordConfirmation = passwordConfirmationEdit.getText().toString();
+
+        String errorMessage;
+        boolean isValid = true;
         try {
-            userAccountControl.validateInformation(name.getText().toString(), email.getText().toString(),
-                    password.getText().toString(), passwordConfirmation.getText().toString());
-
-            isValid = true;
+            UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+            String response = userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
+            goToMain(response);
         } catch (UserException userException) {
 
-            String errorMessage = userException.getMessage();
+            errorMessage = userException.getMessage();
 
-            if (errorMessage.equals("O nome deve ter de 3 a 50 caracteres.")) {
-                name.requestFocus();
-                name.setError("O nome deve ter de 3 a 50 caracteres.");
+            if (errorMessage.equals(getString(R.string.msg_null_name_error_message))) {
+                nameEdit.requestFocus();
+                nameEdit.setError(getString(R.string.msg_null_name_error_message));
             }
 
-            if (errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")) {
-                password.requestFocus();
-                password.setError("A senha deve ter de 6 a 16 caracteres.");
+            if (errorMessage.equals(getString(R.string.msg_len_name_error_message))) {
+                nameEdit.requestFocus();
+                nameEdit.setError(getString(R.string.msg_len_name_error_message));
             }
 
-            if (errorMessage.equals("Preencha todos os campos!")) {
-
-                name.setError("Preencha todos os campos!");
+            if (errorMessage.equals(getString(R.string.msg_len_password_error_message))) {
+                passwordEdit.requestFocus();
+                passwordEdit.setError(getString(R.string.msg_len_password_error_message));
             }
 
-            if (errorMessage.equals("Senhas não Coincidem. Tente novamente.")) {
-                passwordConfirmation.requestFocus();
-                passwordConfirmation.setError("Senhas não Coincidem. Tente novamente.");
+            if (errorMessage.equals(getString(R.string.msg_password_conf_error_message))) {
+                passwordConfirmationEdit.requestFocus();
+                passwordConfirmationEdit.setError(getString(R.string.msg_password_conf_error_message));
             }
 
-            if (errorMessage.equals("A senha deve ter ao menos um caracter maiusculo.")) {
-                password.requestFocus();
-                password.setError("A senha deve ter ao menos um caracter maiusculo.");
+            if (errorMessage.equals(getString(R.string.msg_upper_case_error_message))) {
+                passwordEdit.requestFocus();
+                passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
             }
+            if (errorMessage.equals(getString(R.string.msg_null_email_error_message))) {
+                emailEdit.requestFocus();
+                emailEdit.setError(getString(R.string.msg_null_email_error_message));
 
+            }
+            if (errorMessage.equals(getString(R.string.msg_len_email_error_message))) {
+                emailEdit.requestFocus();
+                emailEdit.setError(getString(R.string.msg_len_email_error_message));
+
+            }
+            if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))) {
+                emailEdit.requestFocus();
+                emailEdit.setError(getString(R.string.msg_special_characters_email_error_message));
+
+            }
+            if (errorMessage.equals(getString(R.string.msg_null_password_error_message))) {
+                passwordEdit.requestFocus();
+                passwordEdit.setError(getString(R.string.msg_null_password_error_message));
+
+            }
             isValid = false;
         }
+    return isValid;
+    }
 
-        return isValid;
+    public void goToMain(String response){
+        if (response.contains("\"code\":\"200\"")){
+            UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+            userAccountControl.logInUser();
+            Intent goToMain = new Intent(this, MainActivity.class);
+            Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+            startActivity(goToMain);
+        } else if (response.contains("\"code\":11000")){
+            Toast.makeText(getApplicationContext(), "Email inválido, tente novamente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -114,19 +134,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             case R.id.sign_up_button: {
-                //Confirma dados usuário
-                try {
-                    if (confirmInformation(userAccountControl, name, email, password, passwordConfirmation)) {
-                        userAccountControl.insertModelUserRegister(0, name.getText().toString(),
-                                email.getText().toString(), password.getText().toString());
-                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        break;
-                    }
-                } catch (UserException exception) {
-                    exception.printStackTrace();
-                }
+                confirmInformation();
+
             }
         }
     }
 }
+

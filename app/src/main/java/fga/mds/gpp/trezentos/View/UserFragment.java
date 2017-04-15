@@ -1,20 +1,27 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.facebook.login.LoginManager;
+
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
 
-public class UserFragment extends Fragment {
+import static com.facebook.FacebookSdk.getApplicationContext;
+
+public class UserFragment extends Fragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private Button logoutButton;
 
     private String mParam1;
     private String mParam2;
@@ -47,17 +54,37 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        logoutButton = (Button) view.findViewById(R.id.button_loggout);
+        logoutButton.setOnClickListener(this);
+
+        return view;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_loggout: {
+                LoginManager.getInstance().logOut();
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+                UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+                userAccountControl.logOutUser();
+
+                goLoginScreen();
+
+                break;
+            }
         }
     }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void goLoginScreen() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

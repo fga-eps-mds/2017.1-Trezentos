@@ -33,8 +33,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         buttonForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent forgotIntent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
-                //startActivity(forgotIntent);
+  //              Intent forgotIntent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+//                startActivity(forgotIntent);
 
                 //Log.d(TAG, "Button Forgot Password clicado");
                 //dialog.alert("Email enviado!", "Caso demore mais de 10 minutos, tente novamente");
