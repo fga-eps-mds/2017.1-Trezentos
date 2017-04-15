@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.ClassActivity">
+    tools:context="fga.mds.gpp.trezentos.View.ClassActivity"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,4 +29,23 @@
         android:id="@+id/testClass"/>
 
 
-</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_btn_add_test"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="400dp"
+
+
+
+        android:contentDescription="@string/criar_sala"
+        android:onClick="onClickCreate"
+        android:src="@drawable/ic_criar_sala"
+
+        app:backgroundTint="@color/colorBottomMenu" />
+
+
+
+
+</LinearLayout>

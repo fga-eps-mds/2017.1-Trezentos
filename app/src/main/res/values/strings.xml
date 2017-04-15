@@ -40,7 +40,7 @@
     <string name="cutoff">Nota de corte</string>
     <string name="sizegroups">Tamanho dos grupos</string>
     <string name="addition">Acréscimo</string>
-    <string name="configuracoes">Configuracoes</string>
+
 
     <string name="msg_cancel_login">Login cancelado</string>
 <!-- Cadastro -->
@@ -58,5 +58,7 @@
     <string name="txt_confirm_password">Confirme a senha</string>
 
 
-
+    <!--Menu-->
+    <string name="configuracoes">Configuracoes</string>
+    <string name="edit_class">Editar Sala</string>
 </resources>
