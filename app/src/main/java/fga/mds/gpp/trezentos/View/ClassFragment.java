@@ -56,7 +56,7 @@ public class ClassFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
         final ListView listView = (ListView) view.findViewById(R.id.class_list_view);
 
-        final ImageButton imageButton = (ImageButton) getView().findViewById(R.id.class_image_button);
+        final ImageButton imageButton = (ImageButton) view.findViewById(R.id.class_image_button);
 
         userClasses = new ArrayList<>();
 
