@@ -41,18 +41,17 @@ public class UserClass implements Serializable {
         int MIN_CLASSNAME_LENGTH = 3;
         int MAX_CLASSNAME_LENGTH = 20;
 
-        if(className != null && !className.isEmpty()){
-
-            if(className.length() < MIN_CLASSNAME_LENGTH || className.length() > MAX_CLASSNAME_LENGTH){
+        if((className != null && !className.isEmpty())
+                &&(className.length() < MIN_CLASSNAME_LENGTH
+                                    || className.length() > MAX_CLASSNAME_LENGTH)){
 
                 throw new UserException("O nome da sala deve ter de 3 a 20 caracteres.");
-            }else{
+        }else if(className == null){
+                throw new UserException("Preencha todos os campos!");
 
-                this.className = className;
-            }
         }else {
 
-            throw new UserException("Preencha todos os campos!");
+            this.className = className;
         }
     }
 
@@ -86,7 +85,7 @@ public class UserClass implements Serializable {
                 (institution.length() < MIN_INSTITUTION_LENGTH
                         || institution.length() > MAX_INSTITUTION_LENGTH)){
 
-            throw new UserException("A instituicao deve ter de 3 a 20 caracteres.");
+            throw new UserException("O nome da instituicao deve ter de 3 a 20 caracteres.");
 
         }else{
 
@@ -105,17 +104,15 @@ public class UserClass implements Serializable {
         int MIN_PASSWORD_LENGTH = 6;
         int MAX_PASSWORD_LENGTH = 16;
 
-        if(password != null && !password.isEmpty()){
+        if((password != null && !password.isEmpty()) &&
+                (password.length() < MIN_PASSWORD_LENGTH ||
+                        password.length() > MAX_PASSWORD_LENGTH)){
 
-            if(password.length() < MIN_PASSWORD_LENGTH ||
-                    password.length() > MAX_PASSWORD_LENGTH){
+                throw new UserException("A senha deve ter entre 6 e 16 caracteres");
 
-                throw new UserException("A senha deve ter de 6 a 16 caracteres.");
+        }else if(password == null){
+            throw new UserException("Preencha todos os campos!");
 
-            }else if(password == null){
-                throw new UserException("Preencha todos os campos!");
-
-            }
         }else{
 
             this.password = password;

@@ -26,11 +26,12 @@ public class UserClassControl {
     private static UserClassControl instance;
     private final Context context;
 
-    private UserClassControl(final Context context){
+    UserClassControl(final Context context){
 
         this.context = context;
 
     }
+
 
     public static UserClassControl getInstance(final Context context){
 

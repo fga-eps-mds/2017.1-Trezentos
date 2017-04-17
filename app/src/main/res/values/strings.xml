@@ -13,7 +13,7 @@
     <string name="msg_special_characters_email_error_message">"Email com caracteres inválidos. Tente novamente"</string>
     <string name="msg_empty_space_error_message">Preencha todos os campos!</string>
     <string name="msg_class_name_case_error_message">O nome da sala deve ter de 3 a 20 caracteres.</string>
-    <string name="msg_institution_case_error_message">A instituicao deve ter de 3 a 20 caracteres.</string>
+    <string name="msg_institution_case_error_message">O nome da instituicao deve ter de 3 a 20 caracteres.</string>
     <string name="msg_len_size_group_error_message">O tamanho do grupo nao pode ser zero.</string>
     <string name="msg_len_addition_error_message">O acrescimo nao pode ser zero.</string>
     <string name="msg_len_cut_off_error_message">A nota de corte nao pode ser zero.</string>
