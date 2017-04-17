@@ -13,7 +13,7 @@ import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.View.LoginActivity;
 
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 
 @RunWith(RobolectricTestRunner.class)
@@ -24,242 +24,99 @@ public class UserAccountControlTest {
     private LoginActivity activity;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         activity = Robolectric.buildActivity(LoginActivity.class).get();
     }
 
     @Test
-    public void ShouldValitadeNullName()throws UserException{
+    public void ShouldValitadeNullName() throws UserException {
 
-        boolean isValid = false;
-
-        try{
-
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp(null,"aluno@email.com","Senha1", "Senha1");
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            //if(userException.getMessage().equals("Preencha todos os campos!")) {
-
-                isValid = false;
-           // }
-        }
-
-        assertFalse(isValid);
-    }
-
-
-    @Test
-    public void ShouldValitadeNullEmail()throws UserException{
-
-        boolean isValid = false;
-
-        try{
-
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp("Carla",null,"Senha1", "Senha1");
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("Preencha todos os campos!")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-
-    @Test
-    public void ShouldValitadeNullPassword()throws UserException{
-
-        boolean isValid = false;
-
-        try{
-
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp("Carla","aluno@email.com",null, "Senha1");
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("Preencha todos os campos!")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void ShouldValitadeNullPasswordConfirmation()throws UserException{
-
-        boolean isValid = false;
-
-        try{
-
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp("Carla", "aluno@email.com", "Senha1", null);
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("Preencha todos os campos!")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-
-
-    @Test
-    public void ShouldValitadeNameMinLength()throws UserException{
-
-        boolean isValid = false;
-
-        try{
-
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp("Ei","aluno@email.com","Senha1", "Senha1");
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("O nome deve ter de 3 a 50 caracteres.")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-
-
-    @Test
-    public void ShouldValitadeNameMaxLength()throws UserException{
-
-        boolean isValid = false;
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp(null, "aluno@email.com", "Senha1", "Senha1");
 
-        try{
-
-            testUser.validateSignUp("O trezentos é metodo de aprendizagem ativa e colaborativa"
-                    ,"aluno@email.com","Senha1", "Senha1");
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("O nome deve ter de 3 a 50 caracteres.")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
+        assertEquals(errorMessage, "O nome não pode estar vazio");
     }
 
 
     @Test
-    public void ShouldValitadePasswordMinLength()throws UserException{
+    public void ShouldValitadeNullEmail() throws UserException {
 
-        boolean isValid = false;
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp("Carla", null, "Senha1", "Senha1");
 
-        try{
-
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp("Carla","aluno@email.com","Senha", "Senha");
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("A senha deve ter de 6 a 16 caracteres.")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void ShouldValitadePasswordMaxLength()throws UserException{
-
-        boolean isValid = false;
-
-        try{
-
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp("Carla"
-                    ,"aluno@email.com","Vintecaracteresusados", "Vintecaracteresusados");
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("A senha deve ter de 6 a 16 caracteres.")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void ShouldValitadePasswordMatchs()throws UserException{
-
-        boolean isValid = false;
-
-        try{
-
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp("Carla"
-                    ,"aluno@email.com","Senha1", "Senha");
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("Senhas não Coincidem. Tente novamente.")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
+        assertEquals(errorMessage, "O email não pode estar vazio");
     }
 
 
     @Test
-    public void ShouldValitadeUpperCasePassword()throws UserException{
+    public void ShouldValitadeNullPassword() throws UserException {
 
-        boolean isValid = false;
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", null, "Senha1");
 
-        try{
-            testUser = UserAccountControl.getInstance(activity.getApplicationContext());
-            testUser.validateSignUp("Carla"
-                    ,"aluno@email.com","senha1", "senha");
-            isValid = true;
+        assertEquals(errorMessage, "A senha não pode estar vazia");
+    }
 
-        } catch (UserException userException) {
+    @Test
+    public void ShouldValitadeNullPasswordConfirmation() throws UserException {
 
-            if(userException.getMessage().equals("A senha deve ter ao menos um caracter maiusculo!")) {
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", "Senha1", null);
 
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
+        assertEquals(errorMessage, "Senhas não coincidem, tente novamente");
     }
 
 
+    @Test
+    public void ShouldValitadeNameMinLength() throws UserException {
+
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp("Ei", "aluno@email.com", "Senha1", "Senha1");
+
+        assertEquals(errorMessage, "O nome deve ter de 3 a 50 caracteres");
+    }
+
+
+    @Test
+    public void ShouldValitadeNameMaxLength() throws UserException {
+
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp(
+                "O trezentos é metodo de aprendizagem ativa e colaborativa"
+                , "aluno@email.com", "Senha1", "Senha1");
+
+        assertEquals(errorMessage, "O nome deve ter de 3 a 50 caracteres");
+    }
+
+
+    @Test
+    public void ShouldValitadePasswordMinLength() throws UserException {
+
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", "Senha", "Senha");
+
+        assertEquals(errorMessage, "A senha deve ter entre 6 e 16 caracteres");
+    }
+
+    @Test
+    public void ShouldValitadePasswordMaxLength() throws UserException {
+
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp("Carla"
+                , "aluno@email.com", "Vintecaracteresusados", "Vintecaracteresusados");
+
+        assertEquals(errorMessage, "A senha deve ter entre 6 e 16 caracteres");
+    }
+
+    @Test
+    public void ShouldValitadePasswordMatchs() throws UserException {
+
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        String errorMessage = testUser.validateSignUp("Carla"
+                , "aluno@email.com", "Senha1", "Senha");
+
+        assertEquals(errorMessage, "Senhas não coincidem, tente novamente");
+    }
 }
 
 
