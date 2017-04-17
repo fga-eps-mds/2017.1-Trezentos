@@ -141,31 +141,41 @@ public class CreateClassDialogFragment extends DialogFragment {
 
         boolean isValid = false;
 
+
+        if(cutOff.isEmpty() == true || addition.isEmpty() == true || sizeGroups.isEmpty() == true){
+
+            classNameField.setError("Preencha todos os campos!");
+            isValid = false;
+        }
+
+
+
         String errorMessage;
 
 
             errorMessage = userClassControl.validateInformation(className, institution, cutOff, password,
                     addition, sizeGroups);
 
-              if (errorMessage.equals("Preencha todos os campos!")) {
+            if (errorMessage.equals("Preencha todos os campos!")) {
                   classNameField.setError("Preencha todos os campos!");
                 isValid = false;
             }
+
             if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
                 classNameField.requestFocus();
                 classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
                 isValid = false;
             }
 
-            if(errorMessage.equals("A instituição deve ter de 2 a 30 caracteres.")){
+            if(errorMessage.equals("O nome da instituicao deve ter de 3 a 20 caracteres.")){
                 institutionField.requestFocus();
-                passwordField.setError("A instituição deve ter de 2 a 30 caracteres.");
+                passwordField.setError("O nome da instituicao deve ter de 3 a 20 caracteres.");
                 isValid = false;
             }
 
-            if (errorMessage.equals("A senha deve ter de 6 a 16 caracteres.")) {
+            if (errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {
                 passwordField.requestFocus();
-                institutionField.setError("A senha deve ter de 6 a 16 caracteres.");
+                institutionField.setError("A senha deve ter entre 6 e 16 caracteres");
                 isValid = false;
             }
 
@@ -175,9 +185,9 @@ public class CreateClassDialogFragment extends DialogFragment {
                 isValid = false;
             }
 
-            if (errorMessage.equals("O acrescimo não pode ser zero.")) {
+            if (errorMessage.equals("O acrescimo nao pode ser zero.")) {
                 additionField.requestFocus();
-                additionField.setError("O acrescimo não pode ser zero.");
+                additionField.setError("O acrescimo nao pode ser zero.");
                 isValid = false;
             }
             if (errorMessage.equals("A nota de corte nao pode ser zero.")) {
