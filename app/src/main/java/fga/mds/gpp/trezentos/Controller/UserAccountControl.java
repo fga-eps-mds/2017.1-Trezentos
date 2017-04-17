@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -16,7 +17,13 @@ import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
+import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.UserDialog;
+
+import static fga.mds.gpp.trezentos.R.id.edit_text_email_register;
+import static fga.mds.gpp.trezentos.R.id.edit_text_name_register;
+import static fga.mds.gpp.trezentos.R.id.edit_text_password_confirmation;
+import static fga.mds.gpp.trezentos.R.id.edit_text_password_register;
 
 public class UserAccountControl {
 
@@ -37,9 +44,20 @@ public class UserAccountControl {
     }
 
     public String validateSignUp(String name, String email, String password,
-                               String passwordConfirmation) throws UserException {
+                                  String passwordConfirmation) {
 
-        userAccount = new UserAccount(name, email, password, passwordConfirmation);
+        String errorMessage = "";
+
+        try {
+            userAccount = new UserAccount(name, email, password, passwordConfirmation);
+        } catch (UserException userException) {
+            errorMessage = userException.getMessage();
+        }
+
+        return errorMessage;
+    }
+
+    public String validateResponse (){
 
         SignUpRequest signUpRequest = new SignUpRequest(userAccount, false);
 
@@ -56,6 +74,7 @@ public class UserAccountControl {
         return serverResponse;
 
     }
+
 
     public void authenticateLoginFb(String email, String name) {
 

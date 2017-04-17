@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     // Method for confirmation
-    public boolean confirmInformation() {
+    public void confirmInformation() {
 
         EditText nameEdit = (EditText) findViewById(edit_text_name_register);
         EditText emailEdit = (EditText) findViewById(edit_text_email_register);
@@ -48,16 +48,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String password = passwordEdit.getText().toString();
         String passwordConfirmation = passwordConfirmationEdit.getText().toString();
 
-        String errorMessage;
-        boolean isValid = true;
-        try {
-            UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
-            String response = userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
+        UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+        String errorMessage = userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
+
+        if (errorMessage.equals("")){
+            String response = userAccountControl.validateResponse();
             goToMain(response);
-        } catch (UserException userException) {
-
-            errorMessage = userException.getMessage();
-
+        } else {
             if (errorMessage.equals(getString(R.string.msg_null_name_error_message))) {
                 nameEdit.requestFocus();
                 nameEdit.setError(getString(R.string.msg_null_name_error_message));
@@ -100,11 +97,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             if (errorMessage.equals(getString(R.string.msg_null_password_error_message))) {
                 passwordEdit.requestFocus();
                 passwordEdit.setError(getString(R.string.msg_null_password_error_message));
-
             }
-            isValid = false;
         }
-    return isValid;
     }
 
     public void goToMain(String response){
