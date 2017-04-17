@@ -128,7 +128,7 @@ public class CreateClassDialogFragment extends DialogFragment {
 
 
     public boolean confirmInformation(UserClassControl userClassControl, EditText classNameField,
-                                        EditText passwordField, EditText institutionField,
+                                      EditText institutionField, EditText passwordField,
                                             EditText cutOffField, EditText sizeGroupsField,
                                                 EditText additionField) throws UserException {
 
@@ -153,49 +153,37 @@ public class CreateClassDialogFragment extends DialogFragment {
         String errorMessage;
 
 
-            errorMessage = userClassControl.validateInformation(className, institution, cutOff, password,
-                    addition, sizeGroups);
+            errorMessage = userClassControl.validateInformation(className, institution,
+                    cutOff, password, addition, sizeGroups);
 
             if (errorMessage.equals("Preencha todos os campos!")) {
                   classNameField.setError("Preencha todos os campos!");
                 isValid = false;
-            }
-
-            if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
+            }else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
                 classNameField.requestFocus();
                 classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
                 isValid = false;
-            }
-
-            if(errorMessage.equals("O nome da instituicao deve ter de 3 a 20 caracteres.")){
-                institutionField.requestFocus();
-                passwordField.setError("O nome da instituicao deve ter de 3 a 20 caracteres.");
-                isValid = false;
-            }
-
-            if (errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {
+            }else if (errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {
                 passwordField.requestFocus();
-                institutionField.setError("A senha deve ter entre 6 e 16 caracteres");
+                passwordField.setError("A senha deve ter entre 6 e 16 caracteres");
                 isValid = false;
-            }
-
-            if (errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
+            }else if (errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
                 sizeGroupsField.requestFocus();
                 sizeGroupsField.setError("O tamanho do grupo nao pode ser zero.");
                 isValid = false;
-            }
-
-            if (errorMessage.equals("O acrescimo nao pode ser zero.")) {
+            }else if (errorMessage.equals("O acrescimo nao pode ser zero.")) {
                 additionField.requestFocus();
                 additionField.setError("O acrescimo nao pode ser zero.");
                 isValid = false;
-            }
-            if (errorMessage.equals("A nota de corte nao pode ser zero.")) {
+            }else if (errorMessage.equals("A nota de corte nao pode ser zero.")) {
                 cutOffField.requestFocus();
                 cutOffField.setError("A nota de corte nao pode ser zero.");
                 isValid = false;
-            }
-            if (errorMessage.equals("Sucesso")) {
+            }else if(errorMessage.equals("O nome da instituicao deve ter de 3 a 20 caracteres.")){
+                institutionField.requestFocus();
+                institutionField.setError("O nome da instituicao deve ter de 3 a 20 caracteres.");
+                isValid = false;
+            }else if (errorMessage.equals("Sucesso")) {
 
                 isValid = true;
             }

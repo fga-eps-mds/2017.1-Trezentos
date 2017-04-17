@@ -46,7 +46,7 @@ public class UserClass implements Serializable {
                                     || className.length() > MAX_CLASSNAME_LENGTH)){
 
                 throw new UserException("O nome da sala deve ter de 3 a 20 caracteres.");
-        }else if(className == null){
+        }else if(className == null || className.isEmpty()){
                 throw new UserException("Preencha todos os campos!");
 
         }else {
@@ -81,7 +81,7 @@ public class UserClass implements Serializable {
         int MIN_INSTITUTION_LENGTH = 3;
         int MAX_INSTITUTION_LENGTH = 20;
 
-        if(institution != null &&
+        if((institution != null && !institution.isEmpty()) &&
                 (institution.length() < MIN_INSTITUTION_LENGTH
                         || institution.length() > MAX_INSTITUTION_LENGTH)){
 
@@ -110,7 +110,7 @@ public class UserClass implements Serializable {
 
                 throw new UserException("A senha deve ter entre 6 e 16 caracteres");
 
-        }else if(password == null){
+        }else if(password == null || password.isEmpty()){
             throw new UserException("Preencha todos os campos!");
 
         }else{
