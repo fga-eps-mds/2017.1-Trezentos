@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class UserClassUnitTest {
 
     @Test
-    public void UserClass_AdditionTest() {
+    public void userClassAdditionTest() {
         UserClass userClass = new UserClass();
         Float floatAddition = new Float(10.0);
         userClass.setAddition(floatAddition);
@@ -20,15 +20,14 @@ public class UserClassUnitTest {
     }
 
     @Test
-    public void UserClass_ClassNameTest() {
+    public void userClassClassNameTest() {
         UserClass userClass = new UserClass();
         userClass.setClassName("nome");
         assertEquals("nome", userClass.getClassName());
-
     }
 
     @Test
-    public void UserClass_IdUserAccountTest(){
+    public void userClassIdUserAccountTest(){
         UserClass userClass = new UserClass();
         Integer integer = new Integer(10);
         userClass.setIdUserAccount(integer);
@@ -36,27 +35,24 @@ public class UserClassUnitTest {
     }
 
     @Test
-    public void UserClass_PasswordTest(){
+    public void userClassPasswordTest(){
         UserClass userClass = new UserClass();
         userClass.setPassword("password");
         assertEquals("password",userClass.getPassword());
     }
 
     @Test
-    public void UserClass_InstitutionTest(){
+    public void userClassInstitutionTest(){
         UserClass userClass = new UserClass();
         userClass.setInstitution("Institution");
         assertEquals("Institution",userClass.getInstitution());
     }
 
     @Test
-    public void UserClass_CutOffTest(){
+    public void userClassCutOffTest(){
         UserClass userClass = new UserClass();
         Float floatCutOff = new Float(10.0);
         userClass.setCutOff(floatCutOff);
         floatCutOff.equals(userClass.getCutOff());
     }
-
-
-
 }
