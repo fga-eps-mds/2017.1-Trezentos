@@ -10,6 +10,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.widget.ListView;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,7 @@ import java.util.Set;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.View.AboutFragment;
+import fga.mds.gpp.trezentos.View.AboutOnLogin;
 import fga.mds.gpp.trezentos.View.LoginActivity;
 import fga.mds.gpp.trezentos.View.MainActivity;
 
@@ -28,6 +31,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static fga.mds.gpp.trezentos.R.id.about_on_login;
 import static fga.mds.gpp.trezentos.R.id.frame;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.hasEntry;
@@ -47,12 +51,12 @@ public class AboutFragmentInstrumentedTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mainRule = new ActivityTestRule<>(MainActivity.class);
-
+    public ActivityTestRule<AboutOnLogin> aboutRule = new ActivityTestRule<>(AboutOnLogin.class);
 
     // AboutFragment test in Main Activity
     @Test
     public void shouldValidateFragmentInicialization() throws UserException {
-        onView(withId(R.id.avaliacao_item))
+        onView(withId(R.id.sobre_item))
                 .perform(click());
         assertNotNull(mainRule);
 
@@ -69,5 +73,7 @@ public class AboutFragmentInstrumentedTest {
         assertThat(listview.getAdapter().getCount(), is(NUMBER_OF_ITENS_LISTVIEW));
 
     }
+
+
 
 }
