@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String errorMessage = userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
 
         if (errorMessage.equals("")){
-            String response = userAccountControl.validateResponse();
+            String response = userAccountControl.validateSignUpResponse();
             goToMain(response);
         } else {
             if (errorMessage.equals(getString(R.string.msg_null_name_error_message))) {

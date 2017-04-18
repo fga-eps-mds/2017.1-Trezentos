@@ -90,17 +90,9 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
 
-                                try {
-                                    String Name = object.getString("name");
-                                    String FEmail = object.getString("email");
-
-                                    UserAccountControl userAccountControl = UserAccountControl
-                                            .getInstance(getApplicationContext());
-                                    userAccountControl.authenticateLoginFb(FEmail, Name);
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                UserAccountControl userAccountControl = UserAccountControl
+                                        .getInstance(getApplicationContext());
+                                userAccountControl.authenticateLoginFb(object);
                             }
                         });
 
@@ -121,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener()  {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Implementar aqui parte da verificação do login
@@ -132,25 +124,16 @@ public class LoginActivity extends AppCompatActivity {
                 //LOG
                 Log.d(TAG, email.getText().toString());
              //   Log.d(TAG, password.getText().toString());
+                Log.d(TAG, password.getText().toString());
 
                 UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+                String errorMessage = userAccountControl.authenticateLogin(email.getText().toString(), password.getText().toString());
 
-                try{
-                    String response = userAccountControl.authenticateLogin(email.getText().toString(), password.getText().toString());
-                    Log.d(TAG, password.getText().toString());
-
-                    if (response.contains("true")){
-                        Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(goToMain);
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), "Email ou Senha inválidos, por favor " +
-                                "tente novamente", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch(UserException userException){
-                    String errorMessage = userException.getMessage();
-
+                if (errorMessage.equals("")){
+                    String serverResponse = userAccountControl.validateSignInResponse();
+                    userAccountControl.validatePassword(serverResponse, password.getText().toString());
+                    goToMain(serverResponse);
+                } else {
                     if(errorMessage.equals("O email deve ter entre 5 e 50 caracteres válidos")){
                         email.requestFocus();
                         email.setError("Email inválido. Tente novamente");
@@ -174,9 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                         password.requestFocus();
                         password.setError("A senha não pode estar vazia");
                     }
-
                 }
-
 
             }
         });
@@ -208,6 +189,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void goToMain(String response) {
+        if (response.contains("true")){
+            Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(goToMain);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Email ou Senha inválidos, por favor " +
+                    "tente novamente", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void goMainScreen() {
