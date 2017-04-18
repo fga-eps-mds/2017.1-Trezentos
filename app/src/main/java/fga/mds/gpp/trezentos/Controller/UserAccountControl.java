@@ -45,7 +45,6 @@ public class UserAccountControl {
 
     public String validateSignUp(String name, String email, String password,
                                   String passwordConfirmation) {
-
         String errorMessage = "";
 
         try {
@@ -53,12 +52,10 @@ public class UserAccountControl {
         } catch (UserException userException) {
             errorMessage = userException.getMessage();
         }
-
         return errorMessage;
     }
 
-    public String validateResponse (){
-
+    public String validateSignUpResponse (){
         SignUpRequest signUpRequest = new SignUpRequest(userAccount, false);
 
         String serverResponse = "404";
@@ -72,17 +69,20 @@ public class UserAccountControl {
         }
 
         return serverResponse;
-
     }
 
+    public void authenticateLoginFb(JSONObject object) {
+        try {
+            String Name = object.getString("name");
+            String FEmail = object.getString("email");
 
-    public void authenticateLoginFb(String email, String name) {
+            UserAccount userAccount = getUserWithInfo(FEmail, Name);
 
-        UserAccount userAccount = getUserWithInfo(email, name);
-
-        SignUpRequest signUprequest = new SignUpRequest(userAccount, true);
-        signUprequest.execute();
-
+            SignUpRequest signUprequest = new SignUpRequest(userAccount, true);
+            signUprequest.execute();
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
     }
 
     private UserAccount getUserWithInfo(String email, String name) {
@@ -98,13 +98,24 @@ public class UserAccountControl {
         return userAccount;
     }
 
-    public String authenticateLogin(String email, String password) throws UserException {
-        userAccount = new UserAccount();
-        //Verify email
-        userAccount.setEmail(email);
-        //Verify the password
-        userAccount.authenticatePassword(password);
+    public String authenticateLogin(String email, String password) {
 
+        String errorMessage = "";
+
+        try {
+            userAccount = new UserAccount();
+            //Verify email
+            userAccount.setEmail(email);
+            //Verify the password
+            userAccount.authenticatePassword(password);
+        } catch (UserException userException){
+            errorMessage = userException.getMessage();
+        }
+
+        return errorMessage;
+    }
+
+    public String validateSignInResponse() {
         SignInRequest signInRequest = new SignInRequest(userAccount);
 
         String serverResponse = "404";
@@ -117,14 +128,18 @@ public class UserAccountControl {
             e.printStackTrace();
         }
 
+        return serverResponse;
+    }
+
+    public void validatePassword(String serverResponse, String password) {
         JSONObject object = getObjectFromServerResponse(serverResponse);
         String hashedPassword = null;
         String salt = null;
 
         try {
-             hashedPassword = object.getString("password");
+            hashedPassword = object.getString("password");
             Log.d("Password", hashedPassword);
-             salt = object.getString("salt");
+            salt = object.getString("salt");
             Log.d("Password", salt);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -136,10 +151,7 @@ public class UserAccountControl {
         else{
             logOutUser();
         }
-
-        return serverResponse;
     }
-
 
     private JSONObject getObjectFromServerResponse(String serverResponse) {
         JSONObject object = null;
@@ -165,7 +177,6 @@ public class UserAccountControl {
 
 
     public void logOutUser(){
-
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
         session.edit()
                 .putBoolean("IsUserLogged", false)
