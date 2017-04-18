@@ -59,6 +59,7 @@ public class ClassActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //openDialogFragment(v);
+                //openDialogFragment(v);
                 Toast.makeText(ClassActivity.this,"Criar Prova", Toast.LENGTH_SHORT).show();
 
             }
@@ -111,6 +112,8 @@ public class ClassActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
 

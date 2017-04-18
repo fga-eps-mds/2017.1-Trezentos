@@ -65,9 +65,12 @@
     <!--Tab-->
     <string name="tab_text_students">Alunos</string>
     <string name="tab_text_tests">Salas</string>
+    
+    <!--ExamFragment-->
+    <string name="name_exam">Nome da Prova</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 
 
 </resources>

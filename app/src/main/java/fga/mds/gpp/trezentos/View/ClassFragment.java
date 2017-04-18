@@ -76,7 +76,6 @@ public class ClassFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
         final ListView listView = (ListView) view.findViewById(R.id.class_list_view);
 
-        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
 
         final UserClass userClass = new UserClass();
         final UserAccount userAccount = new UserAccount();
@@ -103,6 +102,7 @@ public class ClassFragment extends Fragment {
             }
         });
 
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {

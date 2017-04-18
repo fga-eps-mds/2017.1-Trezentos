@@ -2,11 +2,14 @@ package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,45 +20,55 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Controller.UserClassControl;
+import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.Student;
 import fga.mds.gpp.trezentos.R;
 
 public class ExamsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public ArrayList<Exam> userExams;
+
 
     private OnFragmentInteractionListener mListener;
 
     public ExamsFragment() {
-        // Required empty public constructor
+
     }
 
 
-    // TODO: Rename and change types and number of parameters
     public static ExamsFragment newInstance(String param1, String param2) {
         ExamsFragment fragment = new ExamsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        loadClasses();
+
+    }
+
+    private void loadClasses() {
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        String email = session.getString("userEmail","");
+
+//        email = "teste@teste.com";
+        UserExamControl userExamControl = UserExamControl.getInstance(getActivity());
+
+        userExams = userExamControl.getExamsFromUser(email);
     }
 
     @Override
@@ -69,16 +82,14 @@ public class ExamsFragment extends Fragment {
 
 
 
-        final ArrayList<Exam> exams = new ArrayList<Exam>();
+        userExams = new ArrayList<Exam>();
         //friends.clear();
 
         final ListView listView = (ListView) view.findViewById(R.id.list);
 
-        exams.add(new Exam("P1"));
-        exams.add(new Exam("P2"));
-        exams.add(new Exam("P3"));
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, exams);
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, userExams);
 
 
         listView.setAdapter(arrayAdapter);
@@ -98,14 +109,37 @@ public class ExamsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //openDialogFragment(v);
-                Toast.makeText(getActivity(),"Criar Prova", Toast.LENGTH_SHORT).show();
+                openDialogFragment(v);
+                //Toast.makeText(getActivity(),"Criar Prova", Toast.LENGTH_SHORT).show();
 
             }
         });
 
         return view;
     }
+
+
+
+    public void openDialogFragment (View view){
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        CreateExamDialogFragment ccdf = new CreateExamDialogFragment();
+        ccdf.show(fragmentTransaction, "dialog");
+
+    }
+
+    public void turnOffDialogFragment(){
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        CreateExamDialogFragment ccdf = (CreateExamDialogFragment) getFragmentManager()
+                .findFragmentByTag("dialog");
+        if(ccdf != null){
+            ccdf.dismiss();
+            fragmentTransaction.remove(ccdf);
+        }
+    }
+
+
+
 
 
 
