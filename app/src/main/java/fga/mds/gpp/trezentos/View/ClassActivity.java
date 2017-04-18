@@ -60,7 +60,7 @@ public class ClassActivity extends AppCompatActivity {
 
                 //openDialogFragment(v);
                 //openDialogFragment(v);
-                Toast.makeText(ClassActivity.this,"Criar Prova", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ClassActivity.this,"Criar Prova", Toast.LENGTH_SHORT).show();
 
             }
         });

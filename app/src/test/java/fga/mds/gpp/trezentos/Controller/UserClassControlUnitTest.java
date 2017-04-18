@@ -1,371 +1,172 @@
+
 package fga.mds.gpp.trezentos.Controller;
 
 
-import org.apache.tools.ant.Main;
-import org.junit.Before;
+import android.content.Context;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
-import fga.mds.gpp.trezentos.BuildConfig;
 import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.Model.UserClass;
-import fga.mds.gpp.trezentos.View.MainActivity;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class)
+
 public class UserClassControlUnitTest {
 
     public UserClassControl testUser;
+    private Context context;
 
-    private MainActivity mainActivity;
-
-    @Before
-    public void setUp(){
-
-        mainActivity = Robolectric.buildActivity(MainActivity.class).get();
-
-    }
 
     @Test
     public void ShouldValidateNullName() throws UserException {
 
-        boolean isValid = false;
+        testUser = new UserClassControl(context);
+        String isValid;
 
-        UserClass userClass = new UserClass(null, "UnB", 4.5f, "Senha1", 0.5f, 1);
+        isValid = testUser.validateInformation(null, "UnB", "4.5", "Senha1", "0.5", "1");
 
 
-        try{
-
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("Preencha todos os campos!")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
+        assertTrue(isValid.equals("Preencha todos os campos!"));
     }
 
     @Test
-    public void ShouldValidateNullCutOff()throws UserException{
+    public void ShouldValidateNullInstitution() throws UserException {
 
-        boolean isValid = false;
-        UserClass userClass = new UserClass("Calculo 1", null, 4.5f, "Senha1", 0.5f, 1);
+        testUser = new UserClassControl(context);
+        String isValid;
+
+        isValid = testUser.validateInformation("Calculo 1", null, "4.5", "Senha1", "0.5", "1");
 
 
-        try{
+        assertTrue(isValid.equals("Sucesso"));
 
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("Preencha todos os campos!")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
     }
 
 
     @Test
-    public void ShouldValidateZeroCutOff()throws UserException{
+    public void ShouldValidateZeroCutOff() throws UserException {
 
-        boolean isValid = false;
-        UserClass userClass = new UserClass("Calculo 1", "UnB", 0, "Senha1", 0.5f, 1);
+        testUser = new UserClassControl(context);
+        String isValid;
 
-
-        try{
-
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("A nota de corte nao pode ser zero.")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void ShouldValidateNullClassPassword()throws UserException{
-
-        boolean isValid = false;
-
-        UserClass userClass = new UserClass("Calculo 1", "UnB", 4.5f, null, 0.5f, 1);
-
-        try{
-
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("Preencha todos os campos!")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void ShouldValidateNullAddition()throws UserException{
-
-        boolean isValid = false;
-
-        UserClass userClass = new UserClass("Calculo 1", "UnB", 4.5f, "Senha1", 1, 0);
+        isValid = testUser.validateInformation("Calculo 1", "UnB", "0", "Senha1", "0.5", "1");
 
 
-        try{
+        assertTrue(isValid.equals("A nota de corte nao pode ser zero."));
 
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
 
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("Preencha todos os campos!")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
     }
 
 
     @Test
-    public void ShouldValidateZeroAddition()throws UserException{
+    public void ShouldValidateNullClassPassword() throws UserException {
 
-        boolean isValid = false;
-        UserClass userClass = new UserClass("Calculo 1", "UnB", 4.5f, "Senha1", 0, 1);
+        testUser = new UserClassControl(context);
+        String isValid;
 
-        try{
+        isValid = testUser.validateInformation("Calculo 1", "UnB", "4.5", null, "0.5", "1");
 
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
 
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("O acrescimo nao pode ser zero.")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
+        assertTrue(isValid.equals("Preencha todos os campos!"));
     }
 
     @Test
-    public void ShouldValidateNullGroupSize()throws UserException{
+    public void ShouldValidateZeroAddition() throws UserException {
 
-        boolean isValid = false;
+        testUser = new UserClassControl(context);
+        String isValid;
 
-        UserClass userClass = new UserClass("Calculo 1", "UnB", 4.5f, "Senha1", 0.5f, 0);
+        isValid = testUser.validateInformation("Calculo 1", "UnB", "4.5", "Senha1", "0", "5");
 
-        try{
 
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
+        assertTrue(isValid.equals("O acrescimo nao pode ser zero."));
 
-        } catch (UserException userException) {
 
-            if(userException.getMessage().equals("Preencha todos os campos!")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
     }
 
 
     @Test
-    public void ShouldValidateZeroGroupSize()throws UserException{
+    public void ShouldValidateZeroGroupSize() throws UserException {
 
-        boolean isValid = false;
+        testUser = new UserClassControl(context);
+        String isValid;
 
-        UserClass userClass = new UserClass("Calculo 1", "UnB", 4.5f, "Senha1", 0.5f, 0);
+        isValid = testUser.validateInformation("Calculo 1", "UnB", "4.5", "Senha1", "0.5", "0");
 
-        try{
 
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
+        assertTrue(isValid.equals("O tamanho do grupo nao pode ser zero."));
 
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("O tamanho do grupo nao pode ser zero.")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
     }
 
 
     @Test
-    public void ShouldValidateClassNameMaxLength()throws UserException{
+    public void ShouldValidateClassNameMaxLength() throws UserException {
 
-        boolean isValid = false;
+        testUser = new UserClassControl(context);
+        String isValid;
 
-        UserClass userClass = new UserClass("Metodo De Desenvolvimento de Software", "UnB",
-                                            4.5f, "Senha1", 0.5f, 1);
-        try{
+        isValid = testUser.validateInformation("Metodo De Desenvolvimento de Software"
+                , "UnB", "4.5", "Senha1", "0.5", "5");
 
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("O nome deve ter de 3 a 20 caracteres.")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
+        assertTrue(isValid.equals("O nome da sala deve ter de 3 a 20 caracteres."));
     }
 
     @Test
-    public void ShouldValidateClassNameMinLength()throws UserException{
+    public void ShouldValidateClassNameMinLength() throws UserException {
 
-        boolean isValid = false;
 
-        UserClass userClass = new UserClass("DS", "UnB", 4.5f, "Senha1", 0.5f, 1);
-        try{
+        testUser = new UserClassControl(context);
+        String isValid;
 
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
+        isValid = testUser.validateInformation("DS", "UnB", "4.5", "Senha1", "0.5", "5");
 
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("O nome deve ter de 3 a 20 caracteres.")) {
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void ShouldValidatePasswordMinLength()throws UserException{
-
-        boolean isValid = false;
-
-        UserClass userClass = new UserClass("MDS", "UnB", 4.5f, "Senha", 0.5f, 1);
-
-        try{
-
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("A senha deve ter de 6 a 16 caracteres.")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void ShouldValidatePasswordMaxLength()throws UserException{
-
-        boolean isValid = false;
-
-        UserClass userClass = new UserClass("MDS", "UnB", 4.5f, "Senha", 0.5f, 1);
-
-        try{
-
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException) {
-
-            if(userException.getMessage().equals("A senha deve ter de 6 a 16 caracteres.")) {
-
-                isValid = false;
-            }
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void ShouldValidateInstituitionMinLength()throws UserException{
-
-        boolean isValid = false;
-        UserClass userClass = new UserClass("MDS","U",4.5f, "Senha", 0.5f, 1);
-
-        try{
-
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException){
-
-            if(userException.getMessage().equals("A instituição deve ter de 2 a 30 caracteres.")){
-
-                isValid = false;
-            }
-
-        }
-
-        assertFalse(isValid);
+        assertTrue(isValid.equals("O nome da sala deve ter de 3 a 20 caracteres."));
 
     }
 
     @Test
-    public void ShouldValidateInstituitionMaxLength()throws UserException{
+    public void ShouldValidatePasswordMinLength() throws UserException {
 
-        boolean isValid = false;
+        testUser = new UserClassControl(context);
+        String isValid;
 
-        String instituition = "Metodos de desenvolvimento de Software - Universidade de Brasilia";
+        isValid = testUser.validateInformation("MDS", "UnB", "4.5", "Senha", "0.5", "5");
 
-        UserClass userClass = new UserClass("MDS",instituition,4.5f, "Senha", 0.5f, 1);
-
-        try{
-
-            testUser = UserClassControl.getInstance(mainActivity.getApplicationContext());
-            testUser.validateInformation(userClass);
-            isValid = true;
-
-        } catch (UserException userException){
-
-            if(userException.getMessage().equals("A instituição deve ter de 2 a 30 caracteres.")){
-
-                isValid = false;
-            }
-
-        }
-
-        assertFalse(isValid);
+        assertTrue(isValid.equals("A senha deve ter entre 6 e 16 caracteres"));
 
     }
 
+    @Test
+    public void ShouldValidatePasswordMaxLength() throws UserException {
+
+        testUser = new UserClassControl(context);
+        String isValid;
+
+        isValid = testUser.validateInformation("MDS", "UnB", "4.5", "Esqueciminhasenha", "0.5", "5");
+
+        assertTrue(isValid.equals("A senha deve ter entre 6 e 16 caracteres"));
+
+    }
+
+    @Test
+    public void ShouldValidateInstituitionMinLength() throws UserException {
+
+        testUser = new UserClassControl(context);
+        String isValid;
+
+        isValid = testUser.validateInformation("MDS", "IF", "4.5", "Senha1", "0.5", "5");
+
+        assertTrue(isValid.equals("O nome da instituicao deve ter de 3 a 20 caracteres."));
+
+    }
+
+    @Test
+    public void ShouldValidateInstituitionMaxLength() throws UserException {
+
+        testUser = new UserClassControl(context);
+        String isValid;
+
+        isValid = testUser.validateInformation("MDS", "Universidade de Brasilia",
+                                                    "4.5", "Senha1", "0.5", "5");
+
+        assertTrue(isValid.equals("O nome da instituicao deve ter de 3 a 20 caracteres."));
+
+    }
 }

@@ -68,7 +68,7 @@ public class ExamsFragment extends Fragment {
 //        email = "teste@teste.com";
         UserExamControl userExamControl = UserExamControl.getInstance(getActivity());
 
-        userExams = userExamControl.getExamsFromUser(email);
+        userExams = userExamControl.getExamsFromUser("");
     }
 
     @Override
