@@ -207,15 +207,16 @@ public class UserAccountInstrumentedTest {
                 .perform(typeText("Aluno1@aluno.com"));
         closeSoftKeyboard();
         onView(withId(R.id.edit_text_password_register))
-                .perform(typeText("asdq"));
+                .perform(typeText("Aluno"));
         closeSoftKeyboard();
         onView(withId(R.id.edit_text_password_confirmation))
-                .perform(typeText("Aluno1"));
+                .perform(typeText("Aluno"));
         closeSoftKeyboard();
         onView(withId(R.id.sign_up_button))
                 .perform(click());
 
-        onView(withId(R.id.edit_text_password_register)).check(matches(hasErrorText("A senha deve ter entre 6 e 16 caracteres")));
+        onView(withId(R.id.edit_text_password_register)).check(matches
+                (hasErrorText("A senha deve ter entre 6 e 16 caracteres")));
     }
 
     @Test
