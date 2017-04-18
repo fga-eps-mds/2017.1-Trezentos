@@ -31,7 +31,8 @@ public class UserAccount {
 
     }
 
-    public UserAccount(String name, String email, String password, String passwordConfirmation) throws UserException {
+    public UserAccount(String name, String email, String password,
+                       String passwordConfirmation) throws UserException {
             setName(name);
             setEmail(email);
             setPasswordConfirmation(passwordConfirmation);

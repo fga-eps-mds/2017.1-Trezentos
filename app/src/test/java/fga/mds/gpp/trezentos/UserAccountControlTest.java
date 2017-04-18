@@ -29,7 +29,11 @@ public class UserAccountControlTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadeNullName() throws UserException {
+=======
+    public void shouldValitadeNullName() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp(null, "aluno@email.com", "Senha1", "Senha1");
@@ -39,7 +43,11 @@ public class UserAccountControlTest {
 
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadeNullEmail() throws UserException {
+=======
+    public void shouldValitadeNullEmail() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", null, "Senha1", "Senha1");
@@ -49,7 +57,11 @@ public class UserAccountControlTest {
 
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadeNullPassword() throws UserException {
+=======
+    public void shouldValitadeNullPassword() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", null, "Senha1");
@@ -58,7 +70,11 @@ public class UserAccountControlTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadeNullPasswordConfirmation() throws UserException {
+=======
+    public void shouldValitadeNullPasswordConfirmation() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", "Senha1", null);
@@ -68,7 +84,11 @@ public class UserAccountControlTest {
 
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadeNameMinLength() throws UserException {
+=======
+    public void shouldValitadeNameMinLength() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Ei", "aluno@email.com", "Senha1", "Senha1");
@@ -78,7 +98,11 @@ public class UserAccountControlTest {
 
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadeNameMaxLength() throws UserException {
+=======
+    public void shouldValitadeNameMaxLength() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp(
@@ -90,7 +114,11 @@ public class UserAccountControlTest {
 
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadePasswordMinLength() throws UserException {
+=======
+    public void shouldValitadePasswordMinLength() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", "Senha", "Senha");
@@ -99,7 +127,11 @@ public class UserAccountControlTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadePasswordMaxLength() throws UserException {
+=======
+    public void shouldValitadePasswordMaxLength() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla"
@@ -109,7 +141,11 @@ public class UserAccountControlTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void ShouldValitadePasswordMatchs() throws UserException {
+=======
+    public void shouldValitadePasswordMatchs() throws UserException {
+>>>>>>> 85ee230cd7c299bf2c9e03a3fd9d89c2fdc7d134
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla"

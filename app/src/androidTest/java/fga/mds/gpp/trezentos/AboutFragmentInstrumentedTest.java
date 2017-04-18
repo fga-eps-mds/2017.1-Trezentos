@@ -51,7 +51,7 @@ public class AboutFragmentInstrumentedTest {
 
     // AboutFragment test in Main Activity
     @Test
-    public void shouldValidateFragmentIncialization() throws UserException {
+    public void shouldValidateFragmentInicialization() throws UserException {
         onView(withId(R.id.avaliacao_item))
                 .perform(click());
         assertNotNull(mainRule);
@@ -59,11 +59,12 @@ public class AboutFragmentInstrumentedTest {
     }
 
     @Test
-    public void shouldCountItensInListView() {
+    public void shouldCountItemsInListView() {
         onView(withId(R.id.sobre_item))
                 .perform(click());
 
-        AboutFragment frag = (AboutFragment) mainRule.getActivity().getSupportFragmentManager().findFragmentById(frame);
+        AboutFragment frag = (AboutFragment) mainRule.getActivity()
+                .getSupportFragmentManager().findFragmentById(frame);
         ListView listview = (ListView) frag.getActivity().findViewById(R.id.about_list_view);
         assertThat(listview.getAdapter().getCount(), is(NUMBER_OF_ITENS_LISTVIEW));
 

@@ -40,15 +40,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame,classFragment, "fragmentclass" );
         fragmentTransaction.commit();
 
-
-
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_nav);
 
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.
+                OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 FragmentTransaction fragmentTransaction;
 
                 switch (item.getItemId()) {
@@ -73,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.sobre_item:
-
                         AboutFragment aboutFragment = new AboutFragment();
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame,aboutFragment, "fragment_about" );
