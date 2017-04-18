@@ -22,8 +22,8 @@ public class UserClassUnitTest {
     @Test
     public void UserClass_ClassNameTest() {
         UserClass userClass = new UserClass();
-        userClass.setClassName("nome");
-        assertEquals("nome", userClass.getClassName());
+        userClass.setClassName("name");
+        assertEquals("name", userClass.getClassName());
 
     }
 
