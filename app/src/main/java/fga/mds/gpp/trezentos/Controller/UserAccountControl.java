@@ -45,7 +45,6 @@ public class UserAccountControl {
 
     public String validateSignUp(String name, String email, String password,
                                   String passwordConfirmation) {
-
         String errorMessage = "";
 
         try {
@@ -58,7 +57,6 @@ public class UserAccountControl {
     }
 
     public String validateSignUpResponse (){
-
         SignUpRequest signUpRequest = new SignUpRequest(userAccount, false);
 
         String serverResponse = "404";
@@ -72,17 +70,16 @@ public class UserAccountControl {
         }
 
         return serverResponse;
-
     }
 
 
     public void authenticateLoginFb(JSONObject object) {
-
         try {
             String Name = object.getString("name");
             String FEmail = object.getString("email");
 
             UserAccount userAccount = getUserWithInfo(FEmail, Name);
+
             SignUpRequest signUprequest = new SignUpRequest(userAccount, true);
             signUprequest.execute();
         } catch (JSONException e){
@@ -182,7 +179,6 @@ public class UserAccountControl {
 
 
     public void logOutUser(){
-
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
         session.edit()
                 .putBoolean("IsUserLogged", false)

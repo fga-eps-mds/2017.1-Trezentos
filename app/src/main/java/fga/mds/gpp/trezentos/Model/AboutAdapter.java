@@ -63,7 +63,8 @@ public class AboutAdapter extends ArrayAdapter{
             result=convertView;
         }
 
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.down_from_top : R.anim.down_from_top);
+        Animation animation = AnimationUtils.loadAnimation(mContext,
+                (position > lastPosition) ? R.anim.down_from_top : R.anim.down_from_top);
         result.startAnimation(animation);
         lastPosition = position;
 

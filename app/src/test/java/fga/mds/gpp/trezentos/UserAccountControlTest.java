@@ -29,7 +29,7 @@ public class UserAccountControlTest {
     }
 
     @Test
-    public void ShouldValitadeNullName() throws UserException {
+    public void shouldValitadeNullName() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp(null, "aluno@email.com", "Senha1", "Senha1");
@@ -39,7 +39,7 @@ public class UserAccountControlTest {
 
 
     @Test
-    public void ShouldValitadeNullEmail() throws UserException {
+    public void shouldValitadeNullEmail() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", null, "Senha1", "Senha1");
@@ -49,7 +49,7 @@ public class UserAccountControlTest {
 
 
     @Test
-    public void ShouldValitadeNullPassword() throws UserException {
+    public void shouldValitadeNullPassword() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", null, "Senha1");
@@ -58,7 +58,7 @@ public class UserAccountControlTest {
     }
 
     @Test
-    public void ShouldValitadeNullPasswordConfirmation() throws UserException {
+    public void shouldValitadeNullPasswordConfirmation() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", "Senha1", null);
@@ -68,7 +68,7 @@ public class UserAccountControlTest {
 
 
     @Test
-    public void ShouldValitadeNameMinLength() throws UserException {
+    public void shouldValitadeNameMinLength() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Ei", "aluno@email.com", "Senha1", "Senha1");
@@ -78,7 +78,7 @@ public class UserAccountControlTest {
 
 
     @Test
-    public void ShouldValitadeNameMaxLength() throws UserException {
+    public void shouldValitadeNameMaxLength() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp(
@@ -90,7 +90,7 @@ public class UserAccountControlTest {
 
 
     @Test
-    public void ShouldValitadePasswordMinLength() throws UserException {
+    public void shouldValitadePasswordMinLength() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", "Senha", "Senha");
@@ -99,7 +99,7 @@ public class UserAccountControlTest {
     }
 
     @Test
-    public void ShouldValitadePasswordMaxLength() throws UserException {
+    public void shouldValitadePasswordMaxLength() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla"
@@ -109,7 +109,7 @@ public class UserAccountControlTest {
     }
 
     @Test
-    public void ShouldValitadePasswordMatchs() throws UserException {
+    public void shouldValitadePasswordMatchs() throws UserException {
 
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla"
