@@ -15,8 +15,8 @@ public class UserAccountUnitTest {
     public void UserAccount_NameTest (){
         try{
             UserAccount userAccount = new UserAccount();
-            userAccount.setName("nome");
-            assertEquals("nome",userAccount.getName());
+            userAccount.setName("name");
+            assertEquals("name",userAccount.getName());
         }
         catch (Exception c){
 
