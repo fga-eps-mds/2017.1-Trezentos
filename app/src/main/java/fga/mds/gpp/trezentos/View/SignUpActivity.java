@@ -19,7 +19,6 @@ import static fga.mds.gpp.trezentos.R.id.edit_text_password_confirmation;
 import static fga.mds.gpp.trezentos.R.id.edit_text_password_register;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
-
     private static final String TAG = "SignUpActivity";
 
     @Override
@@ -32,12 +31,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         Button alreadySignUp = (Button) findViewById(R.id.already_sign_up);
         alreadySignUp.setOnClickListener(this);
-
     }
 
     // Method for confirmation
-    public boolean confirmInformation() {
-
+    public void confirmInformation() {
         EditText nameEdit = (EditText) findViewById(edit_text_name_register);
         EditText emailEdit = (EditText) findViewById(edit_text_email_register);
         EditText passwordEdit = (EditText) findViewById(edit_text_password_register);
@@ -48,74 +45,85 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String password = passwordEdit.getText().toString();
         String passwordConfirmation = passwordConfirmationEdit.getText().toString();
 
-        String errorMessage;
-        boolean isValid = true;
-        try {
-            UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
-            String response = userAccountControl.validateSignUp(name, email, password, passwordConfirmation);
+        UserAccountControl userAccountControl = UserAccountControl
+                .getInstance(getApplicationContext());
+        String errorMessage = userAccountControl.validateSignUp(name, email,
+                password, passwordConfirmation);
+
+        if (errorMessage.equals("")){
+            String response = userAccountControl.validateSignUpResponse();
             goToMain(response);
-        } catch (UserException userException) {
-
-            errorMessage = userException.getMessage();
-
-            if (errorMessage.equals(getString(R.string.msg_null_name_error_message))) {
-                nameEdit.requestFocus();
-                nameEdit.setError(getString(R.string.msg_null_name_error_message));
-            }
-
-            if (errorMessage.equals(getString(R.string.msg_len_name_error_message))) {
-                nameEdit.requestFocus();
-                nameEdit.setError(getString(R.string.msg_len_name_error_message));
-            }
-
-            if (errorMessage.equals(getString(R.string.msg_len_password_error_message))) {
-                passwordEdit.requestFocus();
-                passwordEdit.setError(getString(R.string.msg_len_password_error_message));
-            }
-
-            if (errorMessage.equals(getString(R.string.msg_password_conf_error_message))) {
-                passwordConfirmationEdit.requestFocus();
-                passwordConfirmationEdit.setError(getString(R.string.msg_password_conf_error_message));
-            }
-
-            if (errorMessage.equals(getString(R.string.msg_upper_case_error_message))) {
-                passwordEdit.requestFocus();
-                passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
-            }
-            if (errorMessage.equals(getString(R.string.msg_null_email_error_message))) {
-                emailEdit.requestFocus();
-                emailEdit.setError(getString(R.string.msg_null_email_error_message));
-
-            }
-            if (errorMessage.equals(getString(R.string.msg_len_email_error_message))) {
-                emailEdit.requestFocus();
-                emailEdit.setError(getString(R.string.msg_len_email_error_message));
-
-            }
-            if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))) {
-                emailEdit.requestFocus();
-                emailEdit.setError(getString(R.string.msg_special_characters_email_error_message));
-
-            }
-            if (errorMessage.equals(getString(R.string.msg_null_password_error_message))) {
-                passwordEdit.requestFocus();
-                passwordEdit.setError(getString(R.string.msg_null_password_error_message));
-
-            }
-            isValid = false;
+        } else {
+            signUpErrorMessage(nameEdit, emailEdit, passwordEdit,
+                    passwordConfirmationEdit, errorMessage);
         }
-    return isValid;
     }
 
-    public void goToMain(String response){
+    private void signUpErrorMessage(EditText nameEdit, EditText emailEdit, EditText passwordEdit,
+                                    EditText passwordConfirmationEdit, String errorMessage) {
+        if (errorMessage.equals(getString(R.string.msg_null_name_error_message))) {
+            nameEdit.requestFocus();
+            nameEdit.setError(getString(R.string.msg_null_name_error_message));
+        }
+
+        if (errorMessage.equals(getString(R.string.msg_len_name_error_message))) {
+            nameEdit.requestFocus();
+            nameEdit.setError(getString(R.string.msg_len_name_error_message));
+        }
+
+        if (errorMessage.equals(getString(R.string.msg_len_password_error_message))) {
+            passwordEdit.requestFocus();
+            passwordEdit.setError(getString(R.string.msg_len_password_error_message));
+        }
+
+        if (errorMessage.equals(getString(R.string.msg_password_conf_error_message))) {
+            passwordConfirmationEdit.requestFocus();
+            passwordConfirmationEdit.setError(getString(R.string.msg_password_conf_error_message));
+        }
+
+        if (errorMessage.equals(getString(R.string.msg_upper_case_error_message))) {
+            passwordEdit.requestFocus();
+            passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
+        }
+
+        if (errorMessage.equals(getString(R.string.msg_null_email_error_message))) {
+            emailEdit.requestFocus();
+            emailEdit.setError(getString(R.string.msg_null_email_error_message));
+
+        }
+
+        if (errorMessage.equals(getString(R.string.msg_len_email_error_message))) {
+            emailEdit.requestFocus();
+            emailEdit.setError(getString(R.string.msg_len_email_error_message));
+
+        }
+
+        if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))) {
+            emailEdit.requestFocus();
+            emailEdit.setError(getString(R.string.msg_special_characters_email_error_message));
+
+        }
+
+        if (errorMessage.equals(getString(R.string.msg_null_password_error_message))) {
+            passwordEdit.requestFocus();
+            passwordEdit.setError(getString(R.string.msg_null_password_error_message));
+        }
+    }
+
+    public void goToMain(String response) {
         if (response.contains("\"code\":\"200\"")){
-            UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+            UserAccountControl userAccountControl = UserAccountControl
+                    .getInstance(getApplicationContext());
             userAccountControl.logInUser();
+
+            Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso!",
+                    Toast.LENGTH_SHORT).show();
+
             Intent goToMain = new Intent(this, MainActivity.class);
-            Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
             startActivity(goToMain);
         } else if (response.contains("\"code\":11000")){
-            Toast.makeText(getApplicationContext(), "Email inválido, tente novamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Email inválido, tente novamente",
+                    Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_SHORT).show();
         }
@@ -123,21 +131,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.already_sign_up: {
                 Intent returnToLogin = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(returnToLogin);
                 finish();
                 break;
-
             }
-
             case R.id.sign_up_button: {
                 confirmInformation();
-
             }
         }
     }
 }
-

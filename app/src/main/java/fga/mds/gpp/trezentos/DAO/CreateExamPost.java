@@ -1,31 +1,29 @@
 package fga.mds.gpp.trezentos.DAO;
 
 
-import android.content.Context;
-import android.location.Criteria;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.io.IOException;
 
+import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserAccount;
+import fga.mds.gpp.trezentos.Model.UserClass;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SignUpRequest extends AsyncTask<String, String, String>{
-
+public class CreateExamPost extends AsyncTask<String, String, String> {
 
     private UserAccount user;
-    private String url = "https://trezentos-api.herokuapp.com/api/user/register";
-    private Boolean isFromFacebook;
+    private Exam exam;
 
-    public SignUpRequest(UserAccount user, Boolean isFromFacebook){
-        this.user = user;
-        this.isFromFacebook = isFromFacebook;
+
+    private String url = "https://trezentos-api.herokuapp.com/api/exam/register";
+
+    public CreateExamPost(Exam exam){
+        this.exam = exam;
     }
 
     @Override
@@ -42,7 +40,7 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
 
         try {
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            return response.body().toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,16 +50,21 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
 
     private String getUrlWithParameters() {
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-        builder.addQueryParameter("email", user.getEmail());
-        builder.addQueryParameter("salt", user.getSalt());
-        builder.addQueryParameter("password", user.getPassword());
-        builder.addQueryParameter("name", user.getName());
-        builder.addQueryParameter("facebook", isFromFacebook.toString());
+
+        builder.addQueryParameter("name", exam.getNameExam());
+        builder.addQueryParameter("userClassName", exam.getUserClassName());
+        builder.addQueryParameter("classOwnerEmail", exam.getClassOwnerEmail());
+
+        
         return builder.build().toString();
+
     }
 
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
     }
+
+
+
 }

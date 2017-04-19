@@ -40,21 +40,17 @@ import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
 
     private static final String TAG = "LoginActivity";
-
     private UserDialog dialog = new UserDialog();
-
-
     private String activityName = this.getClass().getSimpleName();
     private Handler mHandler = new Handler();
-
     private LoginButton loginFacebook;
     private CallbackManager callbackManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
@@ -62,9 +58,11 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setContext(this);
 
         final Button login = (Button) findViewById(R.id.button_login);
+
         Button register = (Button) findViewById(R.id.button_register);
         Button forgotPass = (Button) findViewById(R.id.button_forgot_password);
         Button about = (Button) findViewById(R.id.button_about);
+
         final EditText email = (EditText) findViewById(R.id.edit_text_email);
         final EditText password = (EditText) findViewById(R.id.edit_text_password);
 
@@ -72,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
 
         loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
         loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
-
         loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
             @Override
             public void onSuccess(LoginResult loginResult) {
                 goMainScreen();
@@ -84,30 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 Profile profile = Profile.getCurrentProfile();
 
                 // Facebook Email address
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                                try {
-                                    String Name = object.getString("name");
-                                    String FEmail = object.getString("email");
-
-                                    UserAccountControl userAccountControl = UserAccountControl
-                                            .getInstance(getApplicationContext());
-                                    userAccountControl.authenticateLoginFb(FEmail, Name);
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender");
-                request.setParameters(parameters);
-                request.executeAsync();
+                facebookLogin(loginResult);
             }
 
             @Override
@@ -121,66 +96,31 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener()  {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Implementar aqui parte da verificação do login
                 Log.d(TAG,"Button Login clicado");
                 //dialog.setProgressMessage("Carregando...");
                 //dialog.execute();
 
                 //LOG
                 Log.d(TAG, email.getText().toString());
-             //   Log.d(TAG, password.getText().toString());
+                //Log.d(TAG, password.getText().toString());
+                Log.d(TAG, password.getText().toString());
 
                 UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+                String errorMessage = userAccountControl.authenticateLogin(email.getText().toString(),
+                        password.getText().toString());
 
-                try{
-                    String response = userAccountControl.authenticateLogin(email.getText().toString(), password.getText().toString());
-                    Log.d(TAG, password.getText().toString());
-
-                    if (response.contains("true")){
-                        Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(goToMain);
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), "Email ou Senha inválidos, por favor " +
-                                "tente novamente", Toast.LENGTH_SHORT).show();
-                    }
+                if (errorMessage.equals("")){
+                    String serverResponse = userAccountControl.validateSignInResponse();
+                    userAccountControl.validatePassword(serverResponse, password.getText().toString());
+                    goToMain(serverResponse);
+                } else {
+                    loginErrorMessage(errorMessage, email, password);
                 }
-                catch(UserException userException){
-                    String errorMessage = userException.getMessage();
-
-                    if(errorMessage.equals("O email deve ter entre 5 e 50 caracteres válidos")){
-                        email.requestFocus();
-                        email.setError("Email inválido. Tente novamente");
-                    }
-
-                    if(errorMessage.equals("Email com caracteres inválidos. Tente novamente")){
-                        email.requestFocus();
-                        email.setError("Email inválido. Tente novamente");
-                    }
-
-                    if(errorMessage.equals("O email não pode estar vazio")){
-                        email.requestFocus();
-                        email.setError("O email não pode estar vazio");
-                    }
-
-                    if(errorMessage.equals(getString(R.string.msg_len_password_error_message))){
-                        password.requestFocus();
-                        password.setError("Senha inválida. Tente Novamente");
-                    }
-                    if(errorMessage.equals("A senha não pode estar vazia")){
-                        password.requestFocus();
-                        password.setError("A senha não pode estar vazia");
-                    }
-
-                }
-
-
             }
         });
-
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +147,62 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(showAbout);
             }
         });
+    }
 
+    private void facebookLogin(LoginResult loginResult) {
+        GraphRequest request = GraphRequest.newMeRequest(
+                loginResult.getAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+
+                        UserAccountControl userAccountControl = UserAccountControl
+                                .getInstance(getApplicationContext());
+                        userAccountControl.authenticateLoginFb(object);
+                    }
+                });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email,gender");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    private void loginErrorMessage(String errorMessage, EditText email, EditText password) {
+        if(errorMessage.equals(getString(R.string.msg_len_email_error_message))){
+            email.requestFocus();
+            email.setError("Email inválido. Tente novamente");
+        }
+
+        if(errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))){
+            email.requestFocus();
+            email.setError("Email inválido. Tente novamente");
+        }
+
+        if(errorMessage.equals(getString(R.string.msg_null_email_error_message))){
+            email.requestFocus();
+            email.setError(getString(R.string.msg_null_email_error_message));
+        }
+
+        if(errorMessage.equals(getString(R.string.msg_len_password_error_message))){
+            password.requestFocus();
+            password.setError("Senha inválida. Tente Novamente");
+        }
+
+        if(errorMessage.equals(getString(R.string.msg_null_password_error_message))){
+            password.requestFocus();
+            password.setError(getString(R.string.msg_null_password_error_message));
+        }
+    }
+
+    private void goToMain(String response) {
+        if (response.contains("true")){
+            Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(goToMain);
+        } else {
+            Toast.makeText(getApplicationContext(), "Email ou Senha inválidos, por favor " +
+                    "tente novamente", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void goMainScreen() {

@@ -82,7 +82,6 @@
         app:layout_constraintHorizontal_bias="0.944"
         android:layout_marginTop="6dp"/>
 
-
    <com.facebook.login.widget.LoginButton
        android:id="@+id/button_sign_in_facebook"
        android:layout_width="355dp"

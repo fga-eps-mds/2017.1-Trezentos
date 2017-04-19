@@ -1,5 +1,4 @@
-package fga.mds.gpp.trezentos.Model;
-
+package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Model.About;
 import fga.mds.gpp.trezentos.R;
 
 public class AboutAdapter extends ArrayAdapter{
@@ -41,8 +41,8 @@ public class AboutAdapter extends ArrayAdapter{
 
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder;
-        // view lookup cache stored in tag
 
+        // view lookup cache stored in tag
         final View result;
 
         if (convertView == null) {
@@ -63,7 +63,8 @@ public class AboutAdapter extends ArrayAdapter{
             result=convertView;
         }
 
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.down_from_top : R.anim.down_from_top);
+        Animation animation = AnimationUtils.loadAnimation(mContext,
+                (position > lastPosition) ? R.anim.down_from_top : R.anim.down_from_top);
         result.startAnimation(animation);
         lastPosition = position;
 

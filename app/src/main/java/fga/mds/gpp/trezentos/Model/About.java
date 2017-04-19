@@ -9,7 +9,6 @@ public class About {
     private String subTitle;
 
     public About(){
-
     }
 
     public About(String title, String subTitle) throws UserException{

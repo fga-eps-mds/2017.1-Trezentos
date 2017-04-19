@@ -17,7 +17,7 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/sobre_item"
+        android:id="@+id/about_item"
         android:enabled="true"
         android:icon="@drawable/ic_sobre"
         android:title="@string/sobre"
