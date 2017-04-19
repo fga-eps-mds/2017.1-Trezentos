@@ -15,9 +15,7 @@ import java.util.ArrayList;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.About;
-import fga.mds.gpp.trezentos.Model.AboutAdapter;
 import fga.mds.gpp.trezentos.R;
-
 
 public class AboutFragment extends Fragment {
 
@@ -34,7 +32,6 @@ public class AboutFragment extends Fragment {
 
     }
 
-
     public static AboutFragment newInstance(String param1, String param2) {
         AboutFragment fragment = new AboutFragment();
         Bundle args = new Bundle();
@@ -46,7 +43,6 @@ public class AboutFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -75,7 +71,6 @@ public class AboutFragment extends Fragment {
         }
     }
 
-
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
@@ -95,7 +90,6 @@ public class AboutFragment extends Fragment {
         } catch (UserException e) {
             e.printStackTrace();
         }
-
         adapter = new AboutAdapter(about,getActivity().getApplicationContext());
     }
 

@@ -1,13 +1,10 @@
 package fga.mds.gpp.trezentos.View;
 
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
-
-
 
 public class UserDialog extends AsyncTask<Void, Void, Void> {
 
@@ -45,8 +42,6 @@ public class UserDialog extends AsyncTask<Void, Void, Void> {
     //Ends an progress dialog with custom message
     public void progressDismiss(){
         asyncDialog.dismiss();
-
-
     }
 
     public void setContext(Context context){
@@ -55,7 +50,6 @@ public class UserDialog extends AsyncTask<Void, Void, Void> {
 
     public void setProgressMessage(String progressMessage){
         this.progressMessage = progressMessage;
-
     }
 
     @Override
@@ -66,7 +60,6 @@ public class UserDialog extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         progressDismiss();
-
     }
 
     @Override
@@ -76,8 +69,6 @@ public class UserDialog extends AsyncTask<Void, Void, Void> {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         return null;
     }
-
 }

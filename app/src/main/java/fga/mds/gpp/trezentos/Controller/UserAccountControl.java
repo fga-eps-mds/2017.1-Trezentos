@@ -31,7 +31,6 @@ public class UserAccountControl {
     private final Context context;
     public UserAccount userAccount;
 
-
     private UserAccountControl(final Context context) {
         this.context = context;
     }

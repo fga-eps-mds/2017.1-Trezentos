@@ -27,27 +27,21 @@ public class UserAccountControlTest {
     }
 
     @Test
-
-
     public void shouldValitadeNullName() throws UserException {
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp(null, "aluno@email.com", "Senha1", "Senha1");
         assertEquals(errorMessage, "O nome não pode estar vazio");
     }
 
-
     @Test
     public void shouldValitadeNullEmail() throws UserException {
-
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", null, "Senha1", "Senha1");
         assertEquals(errorMessage, "O email não pode estar vazio");
     }
 
-
     @Test
     public void shouldValitadeNullPassword() throws UserException {
-
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", null, "Senha1");
         assertEquals(errorMessage, "A senha não pode estar vazia");
@@ -55,12 +49,10 @@ public class UserAccountControlTest {
 
     @Test
     public void shouldValitadeNullPasswordConfirmation() throws UserException {
-
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", "Senha1", null);
         assertEquals(errorMessage, "Senhas não coincidem, tente novamente");
     }
-
 
     @Test
     public void shouldValitadeNameMinLength() throws UserException {
@@ -68,7 +60,6 @@ public class UserAccountControlTest {
         String errorMessage = testUser.validateSignUp("Ei", "aluno@email.com", "Senha1", "Senha1");
         assertEquals(errorMessage, "O nome deve ter de 3 a 50 caracteres");
     }
-
 
     @Test
     public void shouldValitadeNameMaxLength() throws UserException {
@@ -79,17 +70,14 @@ public class UserAccountControlTest {
         assertEquals(errorMessage, "O nome deve ter de 3 a 50 caracteres");
     }
 
-
     @Test
     public void shouldValitadePasswordMinLength() throws UserException {
-
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla", "aluno@email.com", "Senha", "Senha");
         assertEquals(errorMessage, "A senha deve ter entre 6 e 16 caracteres");
     }
 
     @Test
-
     public void shouldValitadePasswordMaxLength() throws UserException {
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla"
@@ -99,7 +87,6 @@ public class UserAccountControlTest {
 
     @Test
     public void shouldValitadePasswordMatchs() throws UserException {
-
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
         String errorMessage = testUser.validateSignUp("Carla"
                 , "aluno@email.com", "Senha1", "Senha");

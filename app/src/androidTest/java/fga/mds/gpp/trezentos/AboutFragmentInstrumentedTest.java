@@ -41,8 +41,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-
-
 @RunWith(JUnit4.class)
 public class AboutFragmentInstrumentedTest {
 
@@ -59,7 +57,6 @@ public class AboutFragmentInstrumentedTest {
         onView(withId(R.id.sobre_item))
                 .perform(click());
         assertNotNull(mainRule);
-
     }
 
     @Test
@@ -71,9 +68,5 @@ public class AboutFragmentInstrumentedTest {
                 .getSupportFragmentManager().findFragmentById(frame);
         ListView listview = (ListView) frag.getActivity().findViewById(R.id.about_list_view);
         assertThat(listview.getAdapter().getCount(), is(NUMBER_OF_ITENS_LISTVIEW));
-
     }
-
-
-
 }

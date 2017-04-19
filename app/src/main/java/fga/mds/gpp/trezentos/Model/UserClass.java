@@ -14,7 +14,6 @@ public class UserClass {
 
     public UserClass(){
 
-
     }
 
     public UserClass(String className, String institution, float cutOff, String password,

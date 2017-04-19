@@ -24,5 +24,4 @@ public class AboutUnitTest {
         about.setSubTitle("Subtitle");
         about.equals(about.getSubTitle());
     }
-
 }

@@ -20,6 +20,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private UserDialog dialog = new UserDialog();
     private String activityName = this.getClass().getSimpleName();
     private Handler mHandler = new Handler();
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,13 +34,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         buttonForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-  //              Intent forgotIntent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
-//                startActivity(forgotIntent);
+        //Intent forgotIntent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+        //startActivity(forgotIntent);
 
                 //Log.d(TAG, "Button Forgot Password clicado");
                 //dialog.alert("Email enviado!", "Caso demore mais de 10 minutos, tente novamente");
-
-
             }
         });
 
@@ -48,13 +47,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent forgotIntent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                 startActivity(forgotIntent);
-
                 //Log.d(TAG, "Button Return Login clicado");
                 //dialog.alert("Falha na Autenticação", "Tente novamente...");
-
-
             }
         });
-
     }
 }

@@ -85,21 +85,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
         }
+
         if (errorMessage.equals(getString(R.string.msg_null_email_error_message))) {
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_null_email_error_message));
 
         }
+
         if (errorMessage.equals(getString(R.string.msg_len_email_error_message))) {
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_len_email_error_message));
 
         }
+
         if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))) {
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_special_characters_email_error_message));
 
         }
+
         if (errorMessage.equals(getString(R.string.msg_null_password_error_message))) {
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_null_password_error_message));

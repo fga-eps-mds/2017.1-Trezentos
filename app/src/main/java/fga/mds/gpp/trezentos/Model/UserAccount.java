@@ -25,8 +25,6 @@ public class UserAccount {
 
     public Context context;
 
-    /* metodos */
-
     public UserAccount() {
 
     }
@@ -50,7 +48,7 @@ public class UserAccount {
         if (name != null && !name.isEmpty()) {
             if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
                 throw new UserException("O nome deve ter de 3 a 50 caracteres");
-            }else{
+            } else {
                 this.name = name;
             }
         } else {
@@ -65,9 +63,7 @@ public class UserAccount {
 
             if (email.length() < MIN_EMAIL_LENGTH || email.length() > MAX_EMAIL_LENGTH) {
 
-            }
-            /*validaçao caracteres*/
-            else {
+            } else {
                 String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(email);
@@ -79,7 +75,7 @@ public class UserAccount {
                     else
                         throw new UserException("Email com caracteres inválidos. Tente novamente");
             }
-        }else {
+        } else {
             throw new UserException("O email não pode estar vazio");
         }
     }
@@ -91,8 +87,7 @@ public class UserAccount {
     public void authenticatePassword(String password) throws UserException{
         if (password != null && !password.isEmpty()) {
             this.password = password;
-        }
-        else {
+        } else {
             throw new UserException("A senha não pode estar vazia");
         }
     }
@@ -104,7 +99,7 @@ public class UserAccount {
 
             if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
                 throw new UserException("A senha deve ter entre 6 e 16 caracteres");
-            }else {
+            } else {
                 if (!password.equals(passwordConfirmation)) {
                     throw new UserException("Senhas não coincidem, tente novamente");
                 } else {
@@ -119,7 +114,6 @@ public class UserAccount {
         } else {
             throw new UserException("A senha não pode estar vazia");
         }
-
     }
 
     public void setPasswordConfirmation(String passwordConfirmation) {

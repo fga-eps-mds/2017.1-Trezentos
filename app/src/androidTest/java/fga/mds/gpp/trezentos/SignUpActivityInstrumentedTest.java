@@ -58,7 +58,6 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_name_register)).check(matches(hasErrorText
                     ("O nome não pode estar vazio")));
         }
@@ -79,7 +78,6 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_name_register)).check(matches(hasErrorText
                     ("O nome deve ter de 3 a 50 caracteres")));
         }
@@ -100,7 +98,6 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_name_register)).check(matches(hasErrorText
                     ("O nome deve ter de 3 a 50 caracteres")));
         }
@@ -121,7 +118,6 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_email_register)).check(matches(hasErrorText
                     ("O email não pode estar vazio")));
         }
@@ -142,7 +138,6 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_email_register)).check(matches(hasErrorText
                     ("Email com caracteres inválidos. Tente novamente")));
         }
@@ -163,11 +158,9 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_password_register)).check(matches(hasErrorText
                     ("A senha não pode estar vazia")));
         }
-
 
         @Test
         public void shouldValidateMinPassword() throws UserException {
@@ -185,7 +178,6 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_password_register)).check(matches(hasErrorText
                     ("A senha deve ter entre 6 e 16 caracteres")));
         }
@@ -206,11 +198,9 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_password_confirmation)).check(matches(hasErrorText
                     ("Senhas não coincidem, tente novamente")));
         }
-
 
         @Test
         public void shouldValidateInvalidPassword() throws UserException {
@@ -228,7 +218,6 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             onView(withId(R.id.edit_text_password_confirmation)).check(matches(hasErrorText
                     ("Senhas não coincidem, tente novamente")));
         }
@@ -249,11 +238,9 @@ import static org.junit.Assert.assertEquals;
             closeSoftKeyboard();
             onView(withId(R.id.sign_up_button))
                     .perform(click());
-
             SignUpActivity activity = rule.getActivity();
             onView(withText("Usuário cadastrado com sucesso!")).inRoot(withDecorView(not(is(activity.
                     getWindow().getDecorView())))).check(matches(isDisplayed()));
-
         }
     }
 

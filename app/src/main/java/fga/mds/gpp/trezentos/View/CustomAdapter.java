@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.Model;
+package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnClickListener{
@@ -31,7 +32,6 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
         super(context, R.layout.row_item, data);
         this.dataSet = data;
         this.mContext=context;
-
     }
 
     @Override
@@ -41,8 +41,7 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
         Object object= getItem(position);
         UserClass userClass=(UserClass)object;
 
-        switch (v.getId())
-        {
+        switch (v.getId()){
             case R.id.item_info:
                 //Snackbar.make(v, "Release date " +userClass.getFeature(), Snackbar.LENGTH_LONG)
                 //       .setAction("No action", null).show();

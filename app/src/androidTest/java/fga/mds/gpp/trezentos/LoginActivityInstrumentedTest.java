@@ -62,7 +62,6 @@ import static org.junit.Assert.assertThat;
             closeSoftKeyboard();
             onView(withId(R.id.button_login))
                     .perform(click());
-
             onView(withId(R.id.edit_text_email)).check(matches(hasErrorText
                     ("O email não pode estar vazio")));
         }
@@ -77,7 +76,6 @@ import static org.junit.Assert.assertThat;
             closeSoftKeyboard();
             onView(withId(R.id.button_login))
                     .perform(click());
-
             onView(withId(R.id.edit_text_password)).check(matches(hasErrorText
                     ("A senha não pode estar vazia")));
         }
@@ -92,18 +90,13 @@ import static org.junit.Assert.assertThat;
             closeSoftKeyboard();
             onView(withId(R.id.button_login))
                     .perform(click());
-
         }
 
     // AboutFragment test before Login
-
-
     @Test
     public void shouldValidateAboutFragmentInAboutOnLogin() throws UserException {
         onView(withId(R.id.button_about))
                 .perform(click());
         assertNotNull(rule);
-
     }
-
 }

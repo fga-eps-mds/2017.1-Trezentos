@@ -43,13 +43,9 @@ import fga.mds.gpp.trezentos.R;
 public class LoginActivity extends AppCompatActivity{
 
     private static final String TAG = "LoginActivity";
-
     private UserDialog dialog = new UserDialog();
-
-
     private String activityName = this.getClass().getSimpleName();
     private Handler mHandler = new Handler();
-
     private LoginButton loginFacebook;
     private CallbackManager callbackManager;
 
@@ -62,9 +58,11 @@ public class LoginActivity extends AppCompatActivity{
         dialog.setContext(this);
 
         final Button login = (Button) findViewById(R.id.button_login);
+
         Button register = (Button) findViewById(R.id.button_register);
         Button forgotPass = (Button) findViewById(R.id.button_forgot_password);
         Button about = (Button) findViewById(R.id.button_about);
+
         final EditText email = (EditText) findViewById(R.id.edit_text_email);
         final EditText password = (EditText) findViewById(R.id.edit_text_password);
 
@@ -72,8 +70,8 @@ public class LoginActivity extends AppCompatActivity{
 
         loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
         loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
-
         loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
             @Override
             public void onSuccess(LoginResult loginResult) {
                 goMainScreen();
@@ -101,14 +99,13 @@ public class LoginActivity extends AppCompatActivity{
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Implementar aqui parte da verificação do login
                 Log.d(TAG,"Button Login clicado");
                 //dialog.setProgressMessage("Carregando...");
                 //dialog.execute();
 
                 //LOG
                 Log.d(TAG, email.getText().toString());
-             //   Log.d(TAG, password.getText().toString());
+                //Log.d(TAG, password.getText().toString());
                 Log.d(TAG, password.getText().toString());
 
                 UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
@@ -122,10 +119,8 @@ public class LoginActivity extends AppCompatActivity{
                 } else {
                     loginErrorMessage(errorMessage, email, password);
                 }
-
             }
         });
-
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +147,6 @@ public class LoginActivity extends AppCompatActivity{
                 startActivity(showAbout);
             }
         });
-
     }
 
     private void facebookLogin(LoginResult loginResult) {
@@ -194,6 +188,7 @@ public class LoginActivity extends AppCompatActivity{
             password.requestFocus();
             password.setError("Senha inválida. Tente Novamente");
         }
+
         if(errorMessage.equals(getString(R.string.msg_null_password_error_message))){
             password.requestFocus();
             password.setError(getString(R.string.msg_null_password_error_message));
@@ -204,8 +199,7 @@ public class LoginActivity extends AppCompatActivity{
         if (response.contains("true")){
             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(goToMain);
-        }
-        else{
+        } else {
             Toast.makeText(getApplicationContext(), "Email ou Senha inválidos, por favor " +
                     "tente novamente", Toast.LENGTH_SHORT).show();
         }
