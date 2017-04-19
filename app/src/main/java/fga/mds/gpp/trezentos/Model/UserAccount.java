@@ -1,21 +1,16 @@
 package fga.mds.gpp.trezentos.Model;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 
-import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fga.mds.gpp.trezentos.DAO.UserDao;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
-import fga.mds.gpp.trezentos.R;
 
 public class UserAccount {
 
-    private static UserDao userDao = new UserDao();
     private String email;
     private String name;
     private PasswordUtil passwordUtil;
@@ -31,10 +26,10 @@ public class UserAccount {
 
     public UserAccount(String name, String email, String password,
                        String passwordConfirmation) throws UserException {
-            setName(name);
-            setEmail(email);
-            setPasswordConfirmation(passwordConfirmation);
-            setPassword(password);
+        setName(name);
+        setEmail(email);
+        setPasswordConfirmation(passwordConfirmation);
+        setPassword(password);
     }
 
     public void setSalt(String salt){
@@ -68,12 +63,12 @@ public class UserAccount {
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(email);
 
-                    if (matcher.matches()){
-                        email.toLowerCase();
-                        this.email = email;
-                    }
-                    else
-                        throw new UserException("Email com caracteres inválidos. Tente novamente");
+                if (matcher.matches()){
+                    email.toLowerCase();
+                    this.email = email;
+                }
+                else
+                    throw new UserException("Email com caracteres inválidos. Tente novamente");
             }
         } else {
             throw new UserException("O email não pode estar vazio");
@@ -81,7 +76,7 @@ public class UserAccount {
     }
 
     public void setPassword(String password) throws UserException {
-            ValidatePassword(password);
+        ValidatePassword(password);
     }
 
     public void authenticatePassword(String password) throws UserException{
@@ -140,7 +135,6 @@ public class UserAccount {
         return salt;
     }
 }
-
 
 
 

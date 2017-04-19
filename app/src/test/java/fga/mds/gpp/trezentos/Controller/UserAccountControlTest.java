@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos;
+package fga.mds.gpp.trezentos.Controller;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,6 +7,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import fga.mds.gpp.trezentos.BuildConfig;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.View.LoginActivity;

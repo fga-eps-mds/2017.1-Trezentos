@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos;
+package fga.mds.gpp.trezentos.View;
 
 import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
@@ -16,6 +16,7 @@ import java.util.Random;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
+import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.LoginActivity;
 import fga.mds.gpp.trezentos.View.MainActivity;
 import fga.mds.gpp.trezentos.View.SignUpActivity;

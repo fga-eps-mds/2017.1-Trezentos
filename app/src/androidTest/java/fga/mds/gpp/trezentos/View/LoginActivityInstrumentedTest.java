@@ -1,6 +1,7 @@
-package fga.mds.gpp.trezentos;
+package fga.mds.gpp.trezentos.View;
 
 import android.app.Activity;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import java.util.Random;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
+import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.AboutFragment;
 import fga.mds.gpp.trezentos.View.AboutOnLogin;
 import fga.mds.gpp.trezentos.View.LoginActivity;
@@ -54,7 +56,7 @@ import static org.junit.Assert.assertThat;
 
         @Test
         public void shouldValidateNullEmailLogin() throws UserException {
-            onView(withId(R.id.edit_text_email))
+            onView(ViewMatchers.withId(R.id.edit_text_email))
                     .perform(typeText(""));
             closeSoftKeyboard();
             onView(withId(R.id.edit_text_password))

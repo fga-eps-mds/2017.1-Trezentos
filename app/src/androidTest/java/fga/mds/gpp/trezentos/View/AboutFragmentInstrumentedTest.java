@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos;
+package fga.mds.gpp.trezentos.View;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.core.deps.guava.base.Predicate;
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.ListView;
 
@@ -20,6 +21,7 @@ import org.junit.runners.JUnit4;
 import java.util.Set;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.AboutFragment;
 import fga.mds.gpp.trezentos.View.AboutOnLogin;
 import fga.mds.gpp.trezentos.View.LoginActivity;
@@ -54,14 +56,14 @@ public class AboutFragmentInstrumentedTest {
     // AboutFragment test in Main Activity
     @Test
     public void shouldValidateFragmentInicialization() throws UserException {
-        onView(withId(R.id.sobre_item))
+        onView(ViewMatchers.withId(R.id.about_item))
                 .perform(click());
         assertNotNull(mainRule);
     }
 
     @Test
     public void shouldCountItemsInListView() {
-        onView(withId(R.id.sobre_item))
+        onView(withId(R.id.about_item))
                 .perform(click());
 
         AboutFragment frag = (AboutFragment) mainRule.getActivity()

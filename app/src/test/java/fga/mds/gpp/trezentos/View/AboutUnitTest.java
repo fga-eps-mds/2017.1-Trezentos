@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos;
+package fga.mds.gpp.trezentos.View;
 
 import fga.mds.gpp.trezentos.Model.About;
 import fga.mds.gpp.trezentos.Model.UserClass;

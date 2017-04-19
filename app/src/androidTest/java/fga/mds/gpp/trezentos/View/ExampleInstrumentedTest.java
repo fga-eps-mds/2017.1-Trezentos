@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos;
+package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

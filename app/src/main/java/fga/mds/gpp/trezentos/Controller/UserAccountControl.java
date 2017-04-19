@@ -43,7 +43,7 @@ public class UserAccountControl {
     }
 
     public String validateSignUp(String name, String email, String password,
-                                  String passwordConfirmation) {
+                                 String passwordConfirmation) {
         String errorMessage = "";
 
         try {

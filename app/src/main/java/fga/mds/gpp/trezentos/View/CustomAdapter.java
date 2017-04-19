@@ -68,6 +68,7 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
             viewHolder.className = (TextView) convertView.findViewById(R.id.name);
             viewHolder.institution = (TextView) convertView.findViewById(R.id.type);
             //viewHolder.cutOff = (double) convertView.findViewById(R.id.version_number);
+            // Teacher here
             viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
 
             result=convertView;
@@ -78,8 +79,8 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
             result=convertView;
         }
 
-        Animation animation = AnimationUtils.loadAnimation(mContext,
-                (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition)
+                ? R.anim.down_from_top : R.anim.down_from_top);
         result.startAnimation(animation);
         lastPosition = position;
 
