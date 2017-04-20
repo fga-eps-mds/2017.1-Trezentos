@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "647246574193",
+    "firebase_url": "https://trezentos-3eda9.firebaseio.com",
+    "project_id": "trezentos-3eda9",
+    "storage_bucket": "trezentos-3eda9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647246574193:android:2e480908ce88e15d",
+        "android_client_info": {
+          "package_name": "fga.mds.gpp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647246574193-p45b6rs1n9c7i4jafl1veh197vl0i725.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXChBF4huII19jZpxmqbe9Q7OtJJFsRV0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

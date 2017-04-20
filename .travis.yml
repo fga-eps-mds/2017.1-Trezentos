@@ -36,4 +36,4 @@ before_script:
     - chmod a+x fastlane/travis.sh
 
 script:
-    ./gradlew build
+    - ./fastlane/travis.sh
