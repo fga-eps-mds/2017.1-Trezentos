@@ -1,0 +1,2 @@
+json_key_file "app/play-release.json" # Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
+package_name "fga.mds.gpp" # e.g. com.krausefx.app
