@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
+apply plugin: 'com.google.gms.google-services'
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest',
                                                       'createDebugCoverageReport']) {
@@ -25,12 +26,22 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest',
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
+    signingConfigs {
+        release {
+            storeFile file("release.jks")
+            storePassword "123456"
+            keyAlias "MetodologiaColaborativa"
+            keyPassword "123456"
+        }
+    }
+
     defaultConfig {
         applicationId 'fga.mds.gpp'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionName "${getVersionNameTimestamp()}"
+        versionCode getVersionCodeTimestamp()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -54,6 +65,18 @@ android {
     }
     productFlavors {
     }
+}
+
+def getVersionNameTimestamp() {
+    return new Date().format('yy.MM.ddHHmm')
+}
+
+def getVersionCodeTimestamp() {
+    def date = new Date()
+    def formattedDate = date.format('yyMMddHHmm')
+    def code = formattedDate.toInteger()
+    println sprintf("VersionCode: %d", code)
+    return code
 }
 
 repositories {
