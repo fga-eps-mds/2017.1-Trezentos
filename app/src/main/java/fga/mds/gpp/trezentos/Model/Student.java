@@ -1,11 +1,8 @@
 package fga.mds.gpp.trezentos.Model;
 
-
-
 public class Student extends UserAccount{
 
     public Student(){
-
 
     }
 
@@ -13,6 +10,4 @@ public class Student extends UserAccount{
     public String toString() {
         return "Aluno";
     }
-
-
 }

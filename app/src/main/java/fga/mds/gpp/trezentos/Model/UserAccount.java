@@ -10,22 +10,21 @@ import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
 
 public class UserAccount {
-
     private String email;
     private String name;
-    private PasswordUtil passwordUtil;
     private String password;
     private String passwordConfirmation;
     private String salt;
+    private PasswordUtil passwordUtil;
 
     public Context context;
 
-    public UserAccount() {
+    public UserAccount(){
 
     }
 
     public UserAccount(String name, String email, String password,
-                       String passwordConfirmation) throws UserException {
+                       String passwordConfirmation) throws UserException{
         setName(name);
         setEmail(email);
         setPasswordConfirmation(passwordConfirmation);
@@ -36,27 +35,29 @@ public class UserAccount {
         this.salt = salt;
     }
 
-    public void setName(String name) throws UserException {
+    public void setName(String name) throws UserException{
         Integer MAX_NAME_LENGTH = 50;
         Integer MIN_NAME_LENGTH = 3;
 
-        if (name != null && !name.isEmpty()) {
-            if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-                throw new UserException("O nome deve ter de 3 a 50 caracteres");
+        if (name != null && !name.isEmpty()){
+            if (name.length() < MIN_NAME_LENGTH
+                    || name.length() > MAX_NAME_LENGTH){
+                throw new UserException("@string/msg_len_name_error_message");
             } else {
                 this.name = name;
             }
         } else {
-            throw new UserException("O nome não pode estar vazio");
+            throw new UserException("@string/msg_null_name_error_message");
         }
     }
 
-    public void setEmail(String email) throws UserException {
-        if (email != null && !email.isEmpty()) {
+    public void setEmail(String email) throws UserException{
+        if (email != null && !email.isEmpty()){
             Integer MAX_EMAIL_LENGTH = 50;
             Integer MIN_EMAIL_LENGTH = 5;
 
-            if (email.length() < MIN_EMAIL_LENGTH || email.length() > MAX_EMAIL_LENGTH) {
+            if (email.length() < MIN_EMAIL_LENGTH
+                    || email.length() > MAX_EMAIL_LENGTH){
 
             } else {
                 String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -68,35 +69,36 @@ public class UserAccount {
                     this.email = email;
                 }
                 else
-                    throw new UserException("Email com caracteres inválidos. Tente novamente");
+                    throw new UserException("@string/msg_special_characters_email_error_message");
             }
-        } else {
-            throw new UserException("O email não pode estar vazio");
+        } else{
+            throw new UserException("@string/msg_null_email_error_message");
         }
     }
 
-    public void setPassword(String password) throws UserException {
+    public void setPassword(String password) throws UserException{
         ValidatePassword(password);
     }
 
     public void authenticatePassword(String password) throws UserException{
-        if (password != null && !password.isEmpty()) {
+        if (password != null && !password.isEmpty()){
             this.password = password;
-        } else {
-            throw new UserException("A senha não pode estar vazia");
+        } else{
+            throw new UserException("@string/msg_null_password_error_message");
         }
     }
 
     public void ValidatePassword (String password) throws UserException{
-        if (password != null && !password.isEmpty()) {
+        if (password != null && !password.isEmpty()){
             Integer MIN_PASSWORD_LENGTH = 6;
             Integer MAX_PASSWORD_LENGTH = 16;
 
-            if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
-                throw new UserException("A senha deve ter entre 6 e 16 caracteres");
+            if (password.length() < MIN_PASSWORD_LENGTH
+                    || password.length() > MAX_PASSWORD_LENGTH){
+                throw new UserException("@string/msg_len_password_error_message");
             } else {
-                if (!password.equals(passwordConfirmation)) {
-                    throw new UserException("Senhas não coincidem, tente novamente");
+                if (!password.equals(passwordConfirmation)){
+                    throw new UserException("@string/msg_password_conf_error_message");
                 } else {
                     String salt = PasswordUtil.nextSalt();
                     this.salt = salt;
@@ -107,34 +109,31 @@ public class UserAccount {
                 }
             }
         } else {
-            throw new UserException("A senha não pode estar vazia");
+            throw new UserException("@string/msg_null_password_error_message");
         }
     }
 
-    public void setPasswordConfirmation(String passwordConfirmation) {
+    public void setPasswordConfirmation(String passwordConfirmation){
         this.passwordConfirmation = passwordConfirmation;
     }
 
-    public String getName() {
+    public String getName(){
         return name;
     }
 
-    public String getEmail() {
+    public String getEmail(){
         return email;
     }
 
-    public String getPassword() {
+    public String getPassword(){
         return password;
     }
 
-    public String getPasswordConfirmation() {
+    public String getPasswordConfirmation(){
         return passwordConfirmation;
     }
 
-    public String getSalt() {
+    public String getSalt(){
         return salt;
     }
 }
-
-
-

@@ -4,11 +4,11 @@ import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 
 public class About {
-
     private String title;
     private String subTitle;
 
     public About(){
+
     }
 
     public About(String title, String subTitle) throws UserException{
@@ -24,15 +24,14 @@ public class About {
         return title;
     }
 
-    public void setSubTitle(String Subtitle){
+    public void setSubTitle(String subtitle){
         this.subTitle = subTitle;
     }
-
     public String getSubTitle(){
         return subTitle;
-    }
+   }
 
-    public int getAboutImage(int position){
+    public int getShowImage(int position){
         switch(position){
             case 0:
                 return (R.drawable.trezentos_icon);
