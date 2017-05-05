@@ -2,19 +2,18 @@ package fga.mds.gpp.trezentos.Model;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 
-public class Exam {
+public class Exam{
     private String nameExam;
     private String userClassName;
     private String classOwnerEmail;
 
-    //An empty constructor is needed to create a new instance of object,
-    //in addition is create constructors with arguments.
     public Exam(){
-
+        //An empty constructor is needed to create a new instance of object,
+        //in addition is create constructors with arguments.
     }
 
     public Exam(String nameExam, String userClassName, String classOwnerEmail)
-            throws UserException {
+            throws UserException{
         this.nameExam = nameExam;
         this.userClassName = userClassName;
         this.classOwnerEmail = classOwnerEmail;
@@ -24,14 +23,14 @@ public class Exam {
         final Integer MAX_NAME_EXAM_LENGTH = 15;
         final Integer MIN_NAME_EXAM_LENGTH = 2;
 
-        if (nameExam != null && !nameExam.isEmpty()){
-            if (nameExam.length() < MIN_NAME_EXAM_LENGTH
+        if(nameExam != null && !nameExam.isEmpty()){
+            if(nameExam.length() < MIN_NAME_EXAM_LENGTH
                     || nameExam.length() > MAX_NAME_EXAM_LENGTH){
                 throw new UserException("@string/msg_len_name_exam_error");
             }else{
                 this.nameExam = nameExam;
             }
-        } else{
+        }else{
             throw new UserException("@string/msg_null_name_exam_error");
         }
     }

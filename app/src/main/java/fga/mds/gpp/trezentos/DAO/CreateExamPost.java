@@ -2,10 +2,10 @@ package fga.mds.gpp.trezentos.DAO;
 
 
 import android.os.AsyncTask;
-import java.io.IOException;
+import android.util.Log;
 
+import java.io.IOException;
 import fga.mds.gpp.trezentos.Model.Exam;
-import fga.mds.gpp.trezentos.Model.UserAccount;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -14,7 +14,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class CreateExamPost extends AsyncTask<String, String, String> {
-    private UserAccount user;
     private Exam exam;
 
     private String url = "https://trezentos-api.herokuapp.com/api/exam/register";
@@ -38,8 +37,9 @@ public class CreateExamPost extends AsyncTask<String, String, String> {
         try{
             Response response = client.newCall(request).execute();
             return response.body().toString();
-        } catch (IOException e){
+        }catch (IOException e){
             e.printStackTrace();
+            Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
     }

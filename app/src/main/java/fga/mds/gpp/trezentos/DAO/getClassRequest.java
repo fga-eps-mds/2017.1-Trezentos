@@ -1,6 +1,8 @@
 package fga.mds.gpp.trezentos.DAO;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -11,7 +13,7 @@ import okhttp3.Response;
 public class getClassRequest extends AsyncTask<String, String, String>{
 
     private final String email;
-    private final String url = "https://trezentos-api.herokuapp.com/api/class/user/find";
+    private final static String url = "https://trezentos-api.herokuapp.com/api/class/user/find";
 
     public getClassRequest(String email){
         this.email = email;
@@ -29,8 +31,9 @@ public class getClassRequest extends AsyncTask<String, String, String>{
         try{
             Response response = client.newCall(request).execute();
             return response.body().string();
-        } catch (IOException e) {
+        }catch (IOException e){
             e.printStackTrace();
+            Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
     }

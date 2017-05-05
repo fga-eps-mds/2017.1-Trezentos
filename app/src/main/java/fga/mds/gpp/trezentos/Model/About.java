@@ -3,14 +3,13 @@ package fga.mds.gpp.trezentos.Model;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 
-public class About {
+public class About{
     private String title;
     private String subTitle;
 
-    //An empty constructor is needed to create a new instance of object,
-    //in addition is create contructors with arguments.
     public About(){
-
+        //An empty constructor is needed to create a new instance of object,
+        //in addition is create constructors with arguments.
     }
 
     public About(String title, String subTitle) throws UserException{
@@ -41,7 +40,8 @@ public class About {
                 return R.drawable.tedx;
             case 2:
                 return R.drawable.about_youtube;
-            case 3: //Using the same image as case 2
+            case 3:
+                //Using the same image as case 2
                 return R.drawable.about_youtube;
             case 4:
                 return R.drawable.documents;

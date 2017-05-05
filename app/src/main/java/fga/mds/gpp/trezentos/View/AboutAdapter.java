@@ -72,7 +72,7 @@ public class AboutAdapter extends ArrayAdapter{
         viewHolder.subTitle.setText(about.getSubTitle());
 
         ImageView item_about = (ImageView) convertView.findViewById(R.id.item_about);
-        item_about.setImageResource(about.getAboutImage(position));
+        item_about.setImageResource(about.getShowImage(position));
         // Return the completed view to render on screen
         return convertView;
     }

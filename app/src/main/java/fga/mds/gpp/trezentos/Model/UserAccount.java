@@ -3,13 +3,19 @@ package fga.mds.gpp.trezentos.Model;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-public class UserAccount {
+public class UserAccount{
     private String email;
     private String name;
     private String password;
@@ -18,12 +24,11 @@ public class UserAccount {
 
     private PasswordUtil passwordUtil;
 
-    public Context context;
+    private Context context;
 
-    //An empty constructor is needed to create a new instance of object,
-    //in addition is create constructors with arguments.
     public UserAccount(){
-
+        //An empty constructor is needed to create a new instance of object,
+        //in addition is create constructors with arguments.
     }
 
     public UserAccount(String name, String email, String password,
@@ -39,8 +44,8 @@ public class UserAccount {
     }
 
     public void setName(String name) throws UserException{
-        Integer MAX_NAME_LENGTH = 50;
-        Integer MIN_NAME_LENGTH = 3;
+        final Integer MAX_NAME_LENGTH = 50;
+        final Integer MIN_NAME_LENGTH = 3;
 
         if (name != null && !name.isEmpty()){
             if (name.length() < MIN_NAME_LENGTH
@@ -56,62 +61,63 @@ public class UserAccount {
 
     public void setEmail(String email) throws UserException{
         if (email != null && !email.isEmpty()){
-            Integer MAX_EMAIL_LENGTH = 50;
-            Integer MIN_EMAIL_LENGTH = 5;
+            final Integer MAX_EMAIL_LENGTH = 50;
+            final Integer MIN_EMAIL_LENGTH = 5;
 
-            if (email.length() < MIN_EMAIL_LENGTH
+            if(email.length() < MIN_EMAIL_LENGTH
                     || email.length() > MAX_EMAIL_LENGTH){
 
-            } else {
+            }else{
                 String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
                 Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(email);
 
-                if (matcher.matches()){
+                if(matcher.matches()){
                     email.toLowerCase();
                     this.email = email;
-                }
-                else
+                } else
                     throw new UserException("@string/msg_special_characters_email_error_message");
             }
-        } else{
+        }else{
             throw new UserException("@string/msg_null_email_error_message");
         }
     }
 
     public void setPassword(String password) throws UserException{
-        ValidatePassword(password);
+        validatePassword(password);
     }
 
     public void authenticatePassword(String password) throws UserException{
-        if (password != null && !password.isEmpty()){
+        if(password != null && !password.isEmpty()){
             this.password = password;
-        } else{
+        }else{
             throw new UserException("@string/msg_null_password_error_message");
         }
     }
 
-    public void ValidatePassword (String password) throws UserException{
-        if (password != null && !password.isEmpty()){
-            Integer MIN_PASSWORD_LENGTH = 6;
-            Integer MAX_PASSWORD_LENGTH = 16;
+    public void validatePassword (String password) throws UserException{
+        final Integer MIN_PASSWORD_LENGTH = 6;
+        final Integer MAX_PASSWORD_LENGTH = 16;
+        String salt;
 
-            if (password.length() < MIN_PASSWORD_LENGTH
+        if(password != null && !password.isEmpty()){
+
+            if(password.length() < MIN_PASSWORD_LENGTH
                     || password.length() > MAX_PASSWORD_LENGTH){
                 throw new UserException("@string/msg_len_password_error_message");
-            } else {
-                if (!password.equals(passwordConfirmation)){
+            }else{
+                if(!password.equals(passwordConfirmation)){
                     throw new UserException("@string/msg_password_conf_error_message");
-                } else {
-                    String salt = PasswordUtil.nextSalt();
+                }else{
+                    salt = PasswordUtil.nextSalt();
                     this.salt = salt;
-                    String toBeHashed = (salt+password);
+                    String toBeHashed = salt + password;
                     String hashedPass = passwordUtil.stringToMD5(toBeHashed);
                     Log.d("TAG", salt);
                     this.password = hashedPass;
                 }
             }
-        } else {
+        }else{
             throw new UserException("@string/msg_null_password_error_message");
         }
     }

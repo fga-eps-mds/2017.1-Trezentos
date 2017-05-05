@@ -1,6 +1,8 @@
 package fga.mds.gpp.trezentos.DAO;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
 import java.io.IOException;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 
@@ -13,7 +15,7 @@ import okhttp3.Response;
 public class SignInRequest extends AsyncTask<String, String, String>{
 
     private UserAccount user;
-    private String url = "https://trezentos-api.herokuapp.com/api/user/login";
+    private final static String url = "https://trezentos-api.herokuapp.com/api/user/login";
     public SignInRequest(UserAccount user){
         this.user = user;
     }
@@ -35,6 +37,7 @@ public class SignInRequest extends AsyncTask<String, String, String>{
             return response.body().string();
         }catch (IOException e) {
             e.printStackTrace();
+            Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
     }

@@ -1,26 +1,41 @@
 <resources>
     <string name="app_name">Trezentos</string>
-    <!-- Avisos -->
+
+    <!-- Alerts -->
+    <string name="msg_error_login">Ocorreu um erro ao entrar</string>
+    <string name="msg_empty_space_error_message">Preencha todos os campos!</string>
+
+    <!-- Names -->
     <string name="msg_len_name_error_message">O nome deve ter de 3 a 50 caracteres</string>
     <string name="msg_null_name_error_message">O nome não pode estar vazio</string>
+    <string name="msg_class_name_case_error_message">O nome da sala deve ter de 3 a 20 caracteres.</string>
+    <string name="msg_institution_case_error_message">O nome da instituicao deve ter de 3 a 20 caracteres.</string>
+
+    <!-- Passwords -->
     <string name="msg_len_password_error_message">A senha deve ter entre 6 e 16 caracteres</string>
     <string name="msg_null_password_error_message">A senha não pode estar vazia</string>
     <string name="msg_password_conf_error_message">Senhas não coincidem, tente novamente</string>
     <string name="msg_upper_case_error_message">A senha deve ter ao menos um caracter maiusculo</string>
-    <string name="msg_error_login">Ocorreu um erro ao entrar</string>
+
+    <!-- Emails -->
     <string name="msg_null_email_error_message">"O email não pode estar vazio"</string>
     <string name="msg_len_email_error_message">"O email deve ter entre 5 e 50 caracteres válidos"</string>
     <string name="msg_special_characters_email_error_message">"Email com caracteres inválidos. Tente novamente"</string>
-    <string name="msg_empty_space_error_message">Preencha todos os campos!</string>
-    <string name="msg_class_name_case_error_message">O nome da sala deve ter de 3 a 20 caracteres.</string>
-    <string name="msg_institution_case_error_message">O nome da instituicao deve ter de 3 a 20 caracteres.</string>
+
+    <!-- Create class -->
+    <string name="classname">Nome da sala</string>
+    <string name="institution">Instituiçao (opcional)</string>
+    <string name="password">Senha da sala</string>
+    <string name="cutoff">Nota de corte</string>
+    <string name="instituition">Instituição</string>
+    <string name="addition">Acréscimo</string>
+    <string name="sizegroups">Tamanho dos grupos</string>
     <string name="msg_len_size_group_error_message">O tamanho do grupo nao pode ser zero.</string>
     <string name="msg_len_addition_error_message">O acrescimo nao pode ser zero.</string>
     <string name="msg_len_cut_off_error_message">A nota de corte nao pode ser zero.</string>
-    <!-- Login -->
-    <string name="btn_login_to_sign_up">Cadastrar</string>
-    <string name="facebook_app_id">1840540606200745</string>
 
+    <!-- Login -->
+    <string name="facebook_app_id">1840540606200745</string>
     <string name="sign_up_text">Cadastrar</string>
     <string name="already_sign_up"> <u> Já sou cadastrado </u></string>
     <string name="error_login">Ocorreu um erro ao entrar</string>
@@ -30,27 +45,25 @@
     <string name="avaliacao">Avaliação</string>
     <string name="sobre">Sobre</string>
     <string name="criar_sala">Criar sala</string>
-    <string name="ok">Criar</string>
-    <string name="cancel">Cancelar</string>
-    <string name="classname">Nome da sala</string>
-    <string name="institution">Instituiçao (opcional)</string>
-    <string name="password">Senha da sala</string>
-    <string name="instituition">Instituição</string>
-    <string name="cutoff">Nota de corte</string>
-    <string name="sizegroups">Tamanho dos grupos</string>
-    <string name="addition">Acréscimo</string>
     <string name="msg_cancel_login">Login cancelado</string>
-    <!-- Cadastro -->
+
+    <!-- Buttons -->
     <string name="btn_already_signed_up"> <u> Já sou cadastrado </u></string>
+    <string name="btn_login_to_sign_up">Cadastrar</string>
     <string name="btn_login">Login</string>
     <string name="btn_fb_login">CONTINUAR COM FACEBOOK</string>
     <string name="btn_signup">Cadastrar</string>
     <string name="btn_forgot_password">Esqueci a senha</string>
-    <string name="txt_password">Senha</string>
-    <!-- Esqueceu senha -->
-    <string name="txt_email">E-mail</string>
     <string name="btn_send_to_email">ENVIAR</string>
     <string name="btn_return_to_login">Retornar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ok">Criar</string>
+
+    <!-- Register -->
+    <string name="txt_password">Senha</string>
+
+    <!-- Forgot Password -->
+    <string name="txt_email">E-mail</string>
     <string name="txt_name">Nome</string>
     <string name="txt_confirm_password">Confirme a senha</string>
 

@@ -1,7 +1,9 @@
 package fga.mds.gpp.trezentos.DAO;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import java.io.IOException;
+
 import fga.mds.gpp.trezentos.Model.UserAccount;
 
 import okhttp3.HttpUrl;
@@ -12,7 +14,7 @@ import okhttp3.Response;
 
 public class SignUpRequest extends AsyncTask<String, String, String>{
     private UserAccount user;
-    private String url = "https://trezentos-api.herokuapp.com/api/user/register";
+    private final static String url = "https://trezentos-api.herokuapp.com/api/user/register";
     private Boolean isFromFacebook;
 
     public SignUpRequest(UserAccount user, Boolean isFromFacebook){
@@ -35,8 +37,9 @@ public class SignUpRequest extends AsyncTask<String, String, String>{
         try{
             Response response = client.newCall(request).execute();
             return response.body().string();
-        }catch (IOException e) {
+        }catch (IOException e){
             e.printStackTrace();
+            Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
     }

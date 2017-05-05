@@ -1,6 +1,8 @@
 package fga.mds.gpp.trezentos.DAO;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
 import java.io.IOException;
 
 import fga.mds.gpp.trezentos.Model.UserAccount;
@@ -25,7 +27,7 @@ public class CreateClassPost extends AsyncTask<String, String, String>{
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected String doInBackground(String... params){
         OkHttpClient client = new OkHttpClient();
 
         String urlWithParameters = getUrlWithParameters();
@@ -41,6 +43,7 @@ public class CreateClassPost extends AsyncTask<String, String, String>{
             return response.body().toString();
         }catch (IOException e){
             e.printStackTrace();
+            Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
     }

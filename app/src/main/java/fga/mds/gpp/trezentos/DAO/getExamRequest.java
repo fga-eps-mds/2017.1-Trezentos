@@ -1,6 +1,7 @@
 package fga.mds.gpp.trezentos.DAO;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -34,6 +35,7 @@ public class getExamRequest extends AsyncTask<String, String, String>{
             return response.body().string();
         }catch (IOException e){
             e.printStackTrace();
+            Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
     }
