@@ -15,10 +15,13 @@ public class UserAccount {
     private String password;
     private String passwordConfirmation;
     private String salt;
+
     private PasswordUtil passwordUtil;
 
     public Context context;
 
+    //An empty constructor is needed to create a new instance of object,
+    //in addition is create constructors with arguments.
     public UserAccount(){
 
     }

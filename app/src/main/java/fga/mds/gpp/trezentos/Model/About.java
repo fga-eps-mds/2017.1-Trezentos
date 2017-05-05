@@ -7,6 +7,8 @@ public class About {
     private String title;
     private String subTitle;
 
+    //An empty constructor is needed to create a new instance of object,
+    //in addition is create contructors with arguments.
     public About(){
 
     }
@@ -24,29 +26,29 @@ public class About {
         return title;
     }
 
-    public void setSubTitle(String subtitle){
+    public void setSubTitle(String subTitle){
         this.subTitle = subTitle;
     }
     public String getSubTitle(){
         return subTitle;
-   }
+    }
 
     public int getShowImage(int position){
         switch(position){
             case 0:
-                return (R.drawable.trezentos_icon);
+                return R.drawable.trezentos_icon;
             case 1:
-                return (R.drawable.tedx);
+                return R.drawable.tedx;
             case 2:
-                return (R.drawable.about_youtube);
-            case 3:
-                return (R.drawable.about_youtube);
+                return R.drawable.about_youtube;
+            case 3: //Using the same image as case 2
+                return R.drawable.about_youtube;
             case 4:
-                return (R.drawable.documents);
+                return R.drawable.documents;
             case 5:
-                return (R.drawable.about_record);
+                return R.drawable.about_record;
             default:
-                return (R.drawable.about_unb_tv);
+                return R.drawable.about_unb_tv;
         }
     }
 }

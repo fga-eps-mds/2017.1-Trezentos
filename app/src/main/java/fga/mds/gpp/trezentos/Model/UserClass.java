@@ -12,6 +12,8 @@ public class UserClass implements Serializable {
     private float addition;
     private int sizeGroups;
 
+    //An empty constructor is needed to create a new instance of object,
+    //in addition is create constructors with arguments.
     public UserClass(){
 
     }
@@ -31,8 +33,8 @@ public class UserClass implements Serializable {
     }
 
     public void setClassName(String className) throws UserException{
-        int MIN_CLASSNAME_LENGTH = 3;
-        int MAX_CLASSNAME_LENGTH = 20;
+        final int MIN_CLASSNAME_LENGTH = 3;
+        final int MAX_CLASSNAME_LENGTH = 20;
 
         if((className != null && !className.isEmpty())
                 &&(className.length() < MIN_CLASSNAME_LENGTH
@@ -81,8 +83,8 @@ public class UserClass implements Serializable {
     }
 
     public void setPassword(String password) throws UserException{
-        int MIN_PASSWORD_LENGTH = 6;
-        int MAX_PASSWORD_LENGTH = 16;
+        final int MIN_PASSWORD_LENGTH = 6;
+        final int MAX_PASSWORD_LENGTH = 16;
 
         if((password != null && !password.isEmpty()) &&
                 (password.length() < MIN_PASSWORD_LENGTH ||
@@ -104,7 +106,7 @@ public class UserClass implements Serializable {
     }
 
     public void setAddition(float addition) throws UserException{
-        if(addition != 0){
+        if(addition != 0.0){
             this.addition = addition;
         }else{
             throw new UserException("@string/msg_len_addition_error_message");
@@ -116,7 +118,7 @@ public class UserClass implements Serializable {
     }
 
     public void setCutOff(float cutOff) throws UserException {
-        if(cutOff != 0){
+        if(cutOff != 0.0){
             this.cutOff = cutOff;
         }else{
             throw new UserException("@string/msg_len_cut_off_error_message");

@@ -7,6 +7,8 @@ public class Exam {
     private String userClassName;
     private String classOwnerEmail;
 
+    //An empty constructor is needed to create a new instance of object,
+    //in addition is create constructors with arguments.
     public Exam(){
 
     }
@@ -19,8 +21,8 @@ public class Exam {
     }
 
     public void setNameExam(String nameExam)throws UserException{
-        Integer MAX_NAME_EXAM_LENGTH = 15;
-        Integer MIN_NAME_EXAM_LENGTH = 2;
+        final Integer MAX_NAME_EXAM_LENGTH = 15;
+        final Integer MIN_NAME_EXAM_LENGTH = 2;
 
         if (nameExam != null && !nameExam.isEmpty()){
             if (nameExam.length() < MIN_NAME_EXAM_LENGTH
