@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.List;
+
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -26,6 +28,7 @@ public class ClassFragment extends Fragment {
     private static CustomAdapter adapter;
     private FloatingActionButton floatingActionButton;
     private FragmentTransaction fragmentTransaction;
+    public ListView listView;
 
     public ClassFragment() {
 
@@ -46,7 +49,22 @@ public class ClassFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+//        adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
+//        listView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+
+
         loadClasses();
+        adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
+        if(listView.getAdapter() == null){ //Adapter not set yet.
+            listView.setAdapter(adapter);
+        }
+        else{ //Already has an adapter
+            listView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            listView.invalidateViews();
+            listView.refreshDrawableState();
+        }
     }
 
     private void loadClasses() {
@@ -58,11 +76,27 @@ public class ClassFragment extends Fragment {
         userClasses = userClassControl.getClassesFromUser(email);
     }
 
+//    private void updateClasses(){
+//
+//        loadClasses();
+//        adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
+//        if(listView.getAdapter() == null){ //Adapter not set yet.
+//            listView.setAdapter(adapter);
+//        }
+//        else{ //Already has an adapter
+//            listView.setAdapter(adapter);
+//            adapter.notifyDataSetChanged();
+//            listView.invalidateViews();
+//            listView.refreshDrawableState();
+//        }
+//
+//    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
-        final ListView listView = (ListView) view.findViewById(R.id.class_list_view);
+        listView = (ListView) view.findViewById(R.id.class_list_view);
 
         final UserClass userClass = new UserClass();
         final UserAccount userAccount = new UserAccount();
@@ -72,6 +106,7 @@ public class ClassFragment extends Fragment {
         adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
 
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -88,7 +123,8 @@ public class ClassFragment extends Fragment {
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialogFragment(v);
+                //openDialogFragment(v);
+                startActivity(new Intent(getActivity(), CreateClassActivity.class));
             }
         });
 
@@ -99,7 +135,10 @@ public class ClassFragment extends Fragment {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         CreateClassDialogFragment ccdf = new CreateClassDialogFragment();
         ccdf.show(fragmentTransaction, "dialog");
+
     }
+
+
 
     public void turnOffDialogFragment(){
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -108,7 +147,9 @@ public class ClassFragment extends Fragment {
         if(ccdf != null){
             ccdf.dismiss();
             fragmentTransaction.remove(ccdf);
+            //updateClasses();
         }
+
     }
 
     public void onButtonPressed(Uri uri) {

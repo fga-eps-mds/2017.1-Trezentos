@@ -79,10 +79,10 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
             result=convertView;
         }
 
-        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition)
-                ? R.anim.down_from_top : R.anim.down_from_top);
-        result.startAnimation(animation);
-        lastPosition = position;
+//        Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition)
+//                ? R.anim.down_from_top : R.anim.down_from_top);
+//        result.startAnimation(animation);
+//        lastPosition = position;
 
         viewHolder.className.setText(userClass.getClassName());
         viewHolder.institution.setText(userClass.getInstitution());
