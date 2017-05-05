@@ -113,25 +113,4 @@ public class ClassActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-//    public void openDialogFragment (View view){
-//
-//        android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        CreateClassDialogFragment ccdf = new CreateClassDialogFragment();
-//        ccdf.show(fragmentTransaction, "dialog");
-//
-//    }
-//
-//    public void turnOffDialogFragment(){
-//        android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        CreateClassDialogFragment ccdf = (CreateClassDialogFragment) getFragmentManager().findFragmentByTag("dialog");
-//        if(ccdf != null){
-//            ccdf.dismiss();
-//            fragmentTransaction.remove(ccdf);
-//        }
-//    }
-
 }
