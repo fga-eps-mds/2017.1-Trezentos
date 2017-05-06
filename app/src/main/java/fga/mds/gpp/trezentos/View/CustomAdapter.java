@@ -22,7 +22,6 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
 
     // View lookup cache
     private static class ViewHolder{
-
         TextView className;
         TextView institution;
         double cutOff;
@@ -32,7 +31,6 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
 
     public CustomAdapter(ArrayList<UserClass> data, Context context){
         super(context, R.layout.row_item, data);
-
         this.dataSet = data;
         this.mContext = context;
     }

@@ -23,9 +23,9 @@ public class CreateClassDialogFragment extends DialogFragment{
     public UserAccount userAccount;
 
     public CreateClassDialogFragment(){
-
+        throw new UnsupportedOperationException();
     }
-
+    @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
@@ -95,7 +95,7 @@ public class CreateClassDialogFragment extends DialogFragment{
             }
         });
 
-        return (view);
+        return view;
     }
 
 

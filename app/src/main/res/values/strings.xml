@@ -22,7 +22,6 @@
     <!-- Login -->
     <string name="btn_login_to_sign_up">Cadastrar</string>
     <string name="facebook_app_id">1840540606200745</string>
-
     <string name="sign_up_text">Cadastrar</string>
     <string name="already_sign_up"> <u> Já sou cadastrado </u></string>
     <string name="error_login">Ocorreu um erro ao entrar</string>
@@ -66,4 +65,20 @@
     
     <!--ExamFragment-->
     <string name="name_exam">Nome da Prova</string>
+
+    <!--About-->
+    <string name="about_site">Site</string>
+    <string name="about_metodo_trezentos">Método Trezentos</string>
+    <string name="about_trezentos">Trezentos</string>
+    <string name="about_tedx">TEDx Universidade de Brasilia</string>
+    <string name="about_metodologia">Metodologia Trezentos</string>
+    <string name="about_entenda_metodo">Entenda o método em 3 minutos</string>
+    <string name="about_para_professores">Trezentos para professores</string>
+    <string name="about_detalhes">Detalhes técnicos</string>
+    <string name="about_artigo">Artigo sobre o Trezentos</string>
+    <string name="about_pdf_download">PDF Download</string>
+    <string name="about_record">Record</string>
+    <string name="about_reportagem">Reportagem sobre o Trezentos</string>
+    <string name="about_unbtv">UnBTV</string>
+
 </resources>

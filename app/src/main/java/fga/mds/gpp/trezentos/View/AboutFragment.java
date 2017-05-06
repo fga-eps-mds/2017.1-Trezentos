@@ -17,16 +17,15 @@ import fga.mds.gpp.trezentos.R;
 
 public class AboutFragment extends Fragment{
 
-    public ArrayList<About> about;
+    private ArrayList<About> about;
     private static AboutAdapter adapter;
-    public WebView mWebView;
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private WebView mWebView;
+    static final String ARG_PARAM1 = "param1";
+    static final String ARG_PARAM2 = "param2";
     private OnFragmentInteractionListener mListener;
 
     public AboutFragment(){
-
+        throw new UnsupportedOperationException();
     }
 
     public static AboutFragment newInstance(String param1, String param2){
@@ -77,15 +76,22 @@ public class AboutFragment extends Fragment{
         about = new ArrayList<>();
 
         try {
-            about.add(new About("Site","Método Trezentos"));
-            about.add(new About("Trezentos", "TEDx Universidade de Brasilia"));
-            about.add(new About("Metodologia Trezentos", "Entenda o método em 3 minutos"));
-            about.add(new About("Trezentos para professores", "Detalhes técnicos"));
-            about.add(new About("Artigo sobre o Trezentos","PDF Download"));
-            about.add(new About("Record", "Reportagem sobre o Trezentos"));
-            about.add(new About("UnBTV","Reportagem sobre o Trezentos"));
-
+            about.add(new About(getResources().getString(R.string.about_site),
+                    getResources().getString(R.string.about_metodo_trezentos)));
+            about.add(new About(getResources().getString(R.string.about_trezentos),
+                    getResources().getString(R.string.about_tedx)));
+            about.add(new About(getResources().getString(R.string.about_metodologia),
+                    getResources().getString(R.string.about_entenda_metodo)));
+            about.add(new About(getResources().getString(R.string.about_para_professores),
+                    getResources().getString(R.string.about_detalhes)));
+            about.add(new About(getResources().getString(R.string.about_artigo),
+                    getResources().getString(R.string.about_pdf_download)));
+            about.add(new About(getResources().getString(R.string.about_record),
+                    getResources().getString(R.string.about_reportagem)));
+            about.add(new About(getResources().getString(R.string.about_unbtv),
+                    getResources().getString(R.string.about_reportagem)));
         }
+
         catch (UserException e){
             e.printStackTrace();
         }

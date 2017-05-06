@@ -16,9 +16,9 @@ import fga.mds.gpp.trezentos.Model.About;
 import fga.mds.gpp.trezentos.R;
 
 public class AboutAdapter extends ArrayAdapter{
-
+    private int lastPosition = -1;
     Context mContext;
-    private ArrayList<About> dataSet;
+    ArrayList<About> dataSet;
 
     private static class ViewHolder{
         TextView title;
@@ -32,21 +32,17 @@ public class AboutAdapter extends ArrayAdapter{
         this.mContext = context;
     }
 
-    private int lastPosition = -1;
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         // Get the data item for this position
         About about = (About) getItem(position);
-
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder;
-
         // View lookup cache stored in tag
+
         final View result;
 
         if(convertView == null){
-
             viewHolder = new ViewHolder();
 
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -56,7 +52,6 @@ public class AboutAdapter extends ArrayAdapter{
             viewHolder.subTitle = (TextView) convertView.findViewById(R.id.description);
 
             result = convertView;
-
             convertView.setTag(viewHolder);
         }
         else{
