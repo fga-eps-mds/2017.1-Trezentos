@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity{
 
     private static final String TAG = "LoginActivity";
     private UserDialog dialog = new UserDialog();
-    private String activityName = this.getClass().getSimpleName();
-    private Handler mHandler = new Handler();
+    String activityName = this.getClass().getSimpleName();
+    Handler mHandler = new Handler();
     private LoginButton loginFacebook;
     private CallbackManager callbackManager;
 
@@ -76,8 +76,7 @@ public class LoginActivity extends AppCompatActivity{
             public void onSuccess(LoginResult loginResult){
                 goMainScreen();
 
-                AccessToken accessToken = loginResult.getAccessToken();
-                Profile profile = Profile.getCurrentProfile();
+                AccessToken accessToken;
 
                 // Facebook Email address
                 facebookLogin(loginResult);
@@ -99,7 +98,6 @@ public class LoginActivity extends AppCompatActivity{
         login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Log.d(TAG,"Button Login clicado");
 
                 Log.d(TAG, email.getText().toString());
                 Log.d(TAG, password.getText().toString());
