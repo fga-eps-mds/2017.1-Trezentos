@@ -24,7 +24,7 @@ public class About {
         return title;
     }
 
-    public void setSubTitle(String Subtitle){
+    public void setSubTitle(String subTitle){
         this.subTitle = subTitle;
     }
 
