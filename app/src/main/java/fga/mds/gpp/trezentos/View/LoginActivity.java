@@ -70,13 +70,11 @@ public class LoginActivity extends AppCompatActivity{
 
         loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
         loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
-        loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>(){
 
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(LoginResult loginResult){
                 goMainScreen();
-                /*Log.d(TAG, "Button Login facebook clicado");
-                userAccountControl.insertModelUser(0, loginResult.);*/
 
                 AccessToken accessToken = loginResult.getAccessToken();
                 Profile profile = Profile.getCurrentProfile();
@@ -87,36 +85,37 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(), R.string.msg_cancel_login, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.msg_cancel_login,
+                        Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onError(FacebookException e) {
-                Toast.makeText(getApplicationContext(), R.string.msg_error_login, Toast.LENGTH_SHORT).show();
+            public void onError(FacebookException e){
+                Toast.makeText(getApplicationContext(), R.string.msg_error_login,
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 Log.d(TAG,"Button Login clicado");
-                //dialog.setProgressMessage("Carregando...");
-                //dialog.execute();
 
-                //LOG
                 Log.d(TAG, email.getText().toString());
-                //Log.d(TAG, password.getText().toString());
                 Log.d(TAG, password.getText().toString());
 
                 UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
-                String errorMessage = userAccountControl.authenticateLogin(email.getText().toString(),
-                        password.getText().toString());
+                String emailString = email.getText().toString();
+                String passwordString = password.getText().toString();
+                String errorMessage = userAccountControl.authenticateLogin(emailString,
+                        passwordString);
 
-                if (errorMessage.equals("")){
+                if(errorMessage.equals("")){
                     String serverResponse = userAccountControl.validateSignInResponse();
-                    userAccountControl.validatePassword(serverResponse, password.getText().toString());
+                    userAccountControl.validatePassword(serverResponse, passwordString);
                     goToMain(serverResponse);
-                } else {
+                }
+                else{
                     loginErrorMessage(errorMessage, email, password);
                 }
             }
@@ -125,37 +124,37 @@ public class LoginActivity extends AppCompatActivity{
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Levar o usuario para a tela de cadastro
+                // Go to register screen
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+
                 startActivity(intent);
                 finish();
             }
         });
 
-        forgotPass.setOnClickListener(new View.OnClickListener() {
+        forgotPass.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 Intent forgotIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                 startActivity(forgotIntent);
             }
         });
 
-        about.setOnClickListener(new View.OnClickListener() {
+        about.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 Intent showAbout = new Intent(getApplicationContext(), AboutOnLogin.class);
                 startActivity(showAbout);
             }
         });
     }
 
-    private void facebookLogin(LoginResult loginResult) {
+    private void facebookLogin(LoginResult loginResult){
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
+                new GraphRequest.GraphJSONObjectCallback(){
                     @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-
+                    public void onCompleted(JSONObject object, GraphResponse response){
                         UserAccountControl userAccountControl = UserAccountControl
                                 .getInstance(getApplicationContext());
                         userAccountControl.authenticateLoginFb(object);
@@ -168,7 +167,7 @@ public class LoginActivity extends AppCompatActivity{
         request.executeAsync();
     }
 
-    private void loginErrorMessage(String errorMessage, EditText email, EditText password) {
+    private void loginErrorMessage(String errorMessage, EditText email, EditText password){
         if(errorMessage.equals(getString(R.string.msg_len_email_error_message))){
             email.requestFocus();
             email.setError("Email inválido. Tente novamente");
@@ -195,25 +194,28 @@ public class LoginActivity extends AppCompatActivity{
         }
     }
 
-    private void goToMain(String response) {
+    private void goToMain(String response){
         if (response.contains("true")){
             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(goToMain);
-        } else {
-            Toast.makeText(getApplicationContext(), "Email ou Senha inválidos, por favor " +
-                    "tente novamente", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            String tryAgain = "Email ou Senha inválidos, por favor " +
+                    "tente novamente";
+            Toast.makeText(getApplicationContext(), tryAgain, Toast.LENGTH_SHORT).show();
         }
     }
 
     private void goMainScreen() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
