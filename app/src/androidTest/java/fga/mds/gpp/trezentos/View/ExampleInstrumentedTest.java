@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("fga.mds.gpp.trezentos", appContext.getPackageName());
+        assertEquals("fga.mds.gpp", appContext.getPackageName());
     }
 }
