@@ -22,7 +22,6 @@ public class UserClassControlUnitTest {
 
         isValid = testUser.validateInformation(null, "UnB", "4.5", "Senha1", "0.5", "1");
 
-
         assertTrue(isValid.equals("Preencha todos os campos!"));
     }
 

@@ -135,7 +135,6 @@ public class UserClassControl {
 
         UserClass userClass = new UserClass();
 
-
         try {
             userClass.setClassName(jsonObject.getString("name"));
             userClass.setInstitution(jsonObject.getString("institution"));

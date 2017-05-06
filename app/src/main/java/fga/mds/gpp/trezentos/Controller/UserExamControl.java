@@ -22,7 +22,7 @@ public class UserExamControl {
     private static UserExamControl instance;
     private final Context context;
 
-    private UserExamControl(final Context context){
+    public UserExamControl(final Context context){
 
         this.context = context;
 
