@@ -25,10 +25,10 @@ public class ClassFragment extends Fragment{
     private OnFragmentInteractionListener mListener;
     private static CustomAdapter adapter;
     private FloatingActionButton floatingActionButton;
-    private FragmentTransaction fragmentTransaction;
+    FragmentTransaction fragmentTransaction;
 
     public ClassFragment(){
-
+        throw new UnsupportedOperationException();
     }
 
     public static ClassFragment newInstance(String param1, String param2){

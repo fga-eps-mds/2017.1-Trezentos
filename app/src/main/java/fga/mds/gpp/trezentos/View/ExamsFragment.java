@@ -1,7 +1,5 @@
 package fga.mds.gpp.trezentos.View;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,14 +14,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
-import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Model.Exam;
-import fga.mds.gpp.trezentos.Model.Student;
 import fga.mds.gpp.trezentos.R;
 
 public class ExamsFragment extends Fragment{
