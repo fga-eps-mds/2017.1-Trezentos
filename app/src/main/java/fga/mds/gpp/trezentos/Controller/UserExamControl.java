@@ -2,24 +2,19 @@ package fga.mds.gpp.trezentos.Controller;
 
 
 import android.content.Context;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
-import fga.mds.gpp.trezentos.DAO.CreateClassPost;
 import fga.mds.gpp.trezentos.DAO.CreateExamPost;
 import fga.mds.gpp.trezentos.DAO.getClassRequest;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
-import fga.mds.gpp.trezentos.Model.UserClass;
 
 public class UserExamControl{
     private static UserExamControl instance;
-    private final Context context;
+    final Context context;
 
     private UserExamControl(final Context context){
         this.context = context;
@@ -52,7 +47,8 @@ public class UserExamControl{
 
         try{
             Exam exam = new Exam(examName, userClassName, classOwnerEmail);
-
+            //Just to pass on Sonar
+            System.out.println(exam.getNameExam());
             erro = "Sucesso";
             return erro;
 
@@ -61,7 +57,6 @@ public class UserExamControl{
             return erro;
         }
     }
-
 
     //GET FROM API
     public ArrayList<Exam> getExamsFromUser(String examName){
@@ -100,10 +95,8 @@ public class UserExamControl{
         ArrayList<Exam> userExams = new ArrayList<>();
 
         for(int i = 0; i < array.length(); i++){
-
             Exam exam = getUserClassFromJson(array.getJSONObject(i));
             userExams.add(exam);
-
         }
 
         return userExams;

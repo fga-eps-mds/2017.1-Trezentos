@@ -4,33 +4,23 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.util.logging.Logger;
 import java.util.concurrent.ExecutionException;
-
 import fga.mds.gpp.trezentos.DAO.SignInRequest;
 import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
-import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.UserDialog;
-
-import static fga.mds.gpp.trezentos.R.id.edit_text_email_register;
-import static fga.mds.gpp.trezentos.R.id.edit_text_name_register;
-import static fga.mds.gpp.trezentos.R.id.edit_text_password_confirmation;
-import static fga.mds.gpp.trezentos.R.id.edit_text_password_register;
 
 public class UserAccountControl {
+    private static final String TAG = UserAccountControl.class.getSimpleName();
 
     private static UserAccountControl instance;
-    private final Context context;
+    final Context context;
     public UserAccount userAccount;
-
+    private static Logger LOGGER = Logger.getLogger("InfoLogging");
     private UserAccountControl(final Context context){
         this.context = context;
     }
@@ -61,37 +51,41 @@ public class UserAccountControl {
         try{
             serverResponse = signUpRequest.execute().get();
         }catch (InterruptedException e) {
+            Log.d(TAG,e.toString());
             e.printStackTrace();
         }catch (ExecutionException e) {
+            LOGGER.info(e.getMessage());
             e.printStackTrace();
         }
         return serverResponse;
     }
 
     public void authenticateLoginFb(JSONObject object){
+
         try{
-            String Name = object.getString("name");
-            String FEmail = object.getString("email");
+            String name = object.getString("name");
+            String fEmail = object.getString("email");
 
-            UserAccount userAccount = getUserWithInfo(FEmail, Name);
+            UserAccount userAccountFb = getUserWithInfo(fEmail, name);
 
-            SignUpRequest signUprequest = new SignUpRequest(userAccount, true);
+            SignUpRequest signUprequest = new SignUpRequest(userAccountFb, true);
             signUprequest.execute();
         }catch (JSONException e){
+
             e.printStackTrace();
         }
     }
 
     private UserAccount getUserWithInfo(String email, String name){
-        UserAccount userAccount = new UserAccount();
+        UserAccount userAccountWithInfo = new UserAccount();
 
         try{
-            userAccount.setEmail(email);
-            userAccount.setName(name);
+            userAccountWithInfo.setEmail(email);
+            userAccountWithInfo.setName(name);
         }catch (UserException e){
             e.printStackTrace();
         }
-        return userAccount;
+        return userAccountWithInfo;
     }
 
     public String authenticateLogin(String email, String password){
@@ -134,7 +128,7 @@ public class UserAccountControl {
             hashedPassword = object.getString("password");
             Log.d("Password", hashedPassword);
             salt = object.getString("salt");
-            Log.d("Password", salt);
+            Log.d("Salt", salt);
         }catch (JSONException e){
             e.printStackTrace();
         }
