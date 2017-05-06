@@ -19,7 +19,7 @@ import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class ClassFragment extends Fragment {
+public class ClassFragment extends Fragment{
 
     public ArrayList<UserClass> userClasses;
     private OnFragmentInteractionListener mListener;
@@ -27,11 +27,11 @@ public class ClassFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private FragmentTransaction fragmentTransaction;
 
-    public ClassFragment() {
+    public ClassFragment(){
 
     }
 
-    public static ClassFragment newInstance(String param1, String param2) {
+    public static ClassFragment newInstance(String param1, String param2){
         ClassFragment fragment = new ClassFragment();
         Bundle args = new Bundle();
 
@@ -39,7 +39,7 @@ public class ClassFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
 
@@ -49,7 +49,8 @@ public class ClassFragment extends Fragment {
         loadClasses();
     }
 
-    private void loadClasses() {
+    private void loadClasses(){
+
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String email = session.getString("userEmail","");
@@ -72,9 +73,9 @@ public class ClassFragment extends Fragment {
         adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
 
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 
                 Intent goClass = new  Intent(getActivity(), ClassActivity.class);
                 UserClass userClassCalled = (UserClass) listView.getItemAtPosition(position);
@@ -85,9 +86,9 @@ public class ClassFragment extends Fragment {
         });
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
-        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 openDialogFragment(v);
             }
         });
@@ -95,29 +96,36 @@ public class ClassFragment extends Fragment {
         return view;
     }
 
-    public void openDialogFragment (View view){
+    public void openDialogFragment(View view){
+
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         CreateClassDialogFragment ccdf = new CreateClassDialogFragment();
+
         ccdf.show(fragmentTransaction, "dialog");
     }
 
     public void turnOffDialogFragment(){
+
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         CreateClassDialogFragment ccdf = (CreateClassDialogFragment) getFragmentManager()
                 .findFragmentByTag("dialog");
+
         if(ccdf != null){
             ccdf.dismiss();
             fragmentTransaction.remove(ccdf);
         }
+
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
+    public void onButtonPressed(Uri uri){
+
+        if(mListener != null){
             mListener.onFragmentInteraction(uri);
         }
+
     }
 
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener{
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -26,20 +26,17 @@ import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.Student;
 import fga.mds.gpp.trezentos.R;
 
-public class ExamsFragment extends Fragment {
-
+public class ExamsFragment extends Fragment{
 
     public ArrayList<Exam> userExams;
-
-
     private OnFragmentInteractionListener mListener;
 
-    public ExamsFragment() {
+    public ExamsFragment(){
 
     }
 
 
-    public static ExamsFragment newInstance(String param1, String param2) {
+    public static ExamsFragment newInstance(String param1, String param2){
         ExamsFragment fragment = new ExamsFragment();
         Bundle args = new Bundle();
 
@@ -47,7 +44,7 @@ public class ExamsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
     }
@@ -57,15 +54,12 @@ public class ExamsFragment extends Fragment {
         super.onResume();
 
         loadClasses();
-
     }
 
-    private void loadClasses() {
+    private void loadClasses(){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String email = session.getString("userEmail","");
-
-//        email = "teste@teste.com";
         UserExamControl userExamControl = UserExamControl.getInstance(getActivity());
 
         userExams = userExamControl.getExamsFromUser("");
@@ -73,45 +67,36 @@ public class ExamsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+                             Bundle savedInstanceState){
 
         // Inflate the layout for this fragment
-
         final View view = inflater.inflate(R.layout.fragment_exams, container, false);
 
-
-
         userExams = new ArrayList<Exam>();
-        //friends.clear();
 
         final ListView listView = (ListView) view.findViewById(R.id.list);
 
-
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, userExams);
-
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(),
+                android.R.layout.simple_list_item_1, userExams);
 
         listView.setAdapter(arrayAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 
-
-
-                Snackbar.make(view, "Click List", Snackbar.LENGTH_LONG).setAction("No action", null).show();
+                Snackbar.make(view, "Click List", Snackbar.LENGTH_LONG).
+                        setAction("No action", null).show();
             }
         });
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_btn_add_exams);
-        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) view.
+                findViewById(R.id.floating_btn_add_exams);
+
+        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener(){
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View v){
                 openDialogFragment(v);
-                //Toast.makeText(getActivity(),"Criar Prova", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -120,7 +105,7 @@ public class ExamsFragment extends Fragment {
 
 
 
-    public void openDialogFragment (View view){
+    public void openDialogFragment(View view){
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         CreateExamDialogFragment ccdf = new CreateExamDialogFragment();
@@ -130,11 +115,16 @@ public class ExamsFragment extends Fragment {
 
     public void turnOffDialogFragment(){
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
         CreateExamDialogFragment ccdf = (CreateExamDialogFragment) getFragmentManager()
                 .findFragmentByTag("dialog");
+
         if(ccdf != null){
             ccdf.dismiss();
             fragmentTransaction.remove(ccdf);
+        }
+        else{
+            // Do nothing
         }
     }
 
@@ -144,14 +134,14 @@ public class ExamsFragment extends Fragment {
 
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
+    public void onButtonPressed(Uri uri){
+        if (mListener != null){
             mListener.onFragmentInteraction(uri);
         }
     }
 
 
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener{
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }

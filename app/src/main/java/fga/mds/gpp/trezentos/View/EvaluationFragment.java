@@ -20,42 +20,53 @@ public class EvaluationFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public EvaluationFragment() {
+    public EvaluationFragment(){
 
     }
 
-    public static EvaluationFragment newInstance(String param1, String param2) {
+    public static EvaluationFragment newInstance(String param1, String param2){
         EvaluationFragment fragment = new EvaluationFragment();
+
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+
+        if(getArguments() != null){
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        else{
+            // Do nothing
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState){
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_evaluation, container, false);
+        View returnView = inflater.inflate(R.layout.fragment_evaluation, container, false);
+
+        return returnView;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
+    public void onButtonPressed(Uri uri){
+        if (mListener != null){
             mListener.onFragmentInteraction(uri);
+        }
+        else{
+            // Do nothing
         }
     }
 
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener{
         void onFragmentInteraction(Uri uri);
     }
 }

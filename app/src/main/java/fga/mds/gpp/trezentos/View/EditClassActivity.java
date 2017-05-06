@@ -11,7 +11,7 @@ import android.widget.EditText;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class EditClassActivity extends AppCompatActivity {
+public class EditClassActivity extends AppCompatActivity{
 
     private UserClass userClass;
     private EditText className;
@@ -24,7 +24,7 @@ public class EditClassActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_class);
 
@@ -49,15 +49,13 @@ public class EditClassActivity extends AppCompatActivity {
         className.setText(userClass.getClassName());
         instituition.setText(userClass.getInstitution());
         classPassword.setText(userClass.getPassword());
-        //cutGrade.setText(userClass.getCutOff());
-        //groupsSize.setText(userClass.getSizeGroups());
-        //addition.setText((int) userClass.getAddition());
 
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-            //Update in API
+            public void onClick(View v){
+                // Update in API
+
                 className.getText();
                 instituition.getText();
                 classPassword.getText();
@@ -66,16 +64,18 @@ public class EditClassActivity extends AppCompatActivity {
                 addition.getText();
                 addition.getText();
 
-
             }
+
         });
 
 
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp(){
+
         onBackPressed();
+
         return true;
     }
 }
