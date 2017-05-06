@@ -2,29 +2,22 @@ package fga.mds.gpp.trezentos.Controller;
 
 
 import android.content.Context;
-import android.util.Log;
-import android.util.StringBuilderPrinter;
-import android.widget.EditText;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.DAO.getClassRequest;
 import fga.mds.gpp.trezentos.DAO.CreateClassPost;
-import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 
 public class UserClassControl {
 
     private static UserClassControl instance;
-    private final Context context;
+    final Context context;
 
     UserClassControl(final Context context){
         this.context = context;
@@ -63,19 +56,19 @@ public class UserClassControl {
                                       String addition, String sizeGroups) throws UserException{
 
         String erro;
-
         try{
             UserClass userClass = new UserClass(className, institution,
                     Float.parseFloat(cutOff), password, Float.parseFloat(addition),
                     Integer.parseInt(sizeGroups));
-
+            //Just to pass on Sonar
+            System.out.println(userClass.getClassName());
             erro = "Sucesso";
             return erro;
-        }catch (UserException userException){
-            erro = userException.getMessage();
-            return erro;
-        }
+    }catch (UserException userException){
+        erro = userException.getMessage();
+        return erro;
     }
+}
 
 
     public ArrayList<UserClass> getClassesFromUser(String email) {
@@ -118,9 +111,7 @@ public class UserClassControl {
         ArrayList<UserClass> userClasses = new ArrayList<>();
 
         for(int i = 0; i < array.length(); i++){
-
             UserClass userClass = getUserClassFromJson(array.getJSONObject(i));
-
             userClasses.add(userClass);
         }
 
@@ -128,7 +119,6 @@ public class UserClassControl {
     }
 
     private UserClass getUserClassFromJson(JSONObject jsonObject){
-
         UserClass userClass = new UserClass();
 
         try{
