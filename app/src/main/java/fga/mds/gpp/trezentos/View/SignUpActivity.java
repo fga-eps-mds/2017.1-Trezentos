@@ -116,7 +116,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     .getInstance(getApplicationContext());
             userAccountControl.logInUser();
 
-            Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso!",
+            Toast.makeText(getApplicationContext(),getString(R.string.msg_signup_success),
                     Toast.LENGTH_SHORT).show();
 
             Intent goToMain = new Intent(this, MainActivity.class);

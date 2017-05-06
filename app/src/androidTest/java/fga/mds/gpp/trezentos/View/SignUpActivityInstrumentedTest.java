@@ -240,7 +240,7 @@ import static org.junit.Assert.assertEquals;
             onView(withId(R.id.sign_up_button))
                     .perform(click());
             SignUpActivity activity = rule.getActivity();
-            onView(withText("Usuário cadastrado com sucesso!")).inRoot(withDecorView(not(is(activity.
+            onView(withText(R.string.msg_signup_success)).inRoot(withDecorView(not(is(activity.
                     getWindow().getDecorView())))).check(matches(isDisplayed()));
         }
     }

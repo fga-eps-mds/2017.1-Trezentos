@@ -27,18 +27,14 @@ public class UserClassControl {
     private final Context context;
 
     UserClassControl(final Context context){
-
         this.context = context;
-
     }
 
 
     public static UserClassControl getInstance(final Context context){
 
         if(instance == null){
-
             instance = new UserClassControl(context);
-
         }
 
         return instance;
@@ -46,13 +42,12 @@ public class UserClassControl {
 
     public void validateCreateClass(String className, String institution,
                                     Float cutOff, String password, Float addition,
-                                    Integer sizeGroups, String email) throws UserException {
+                                    Integer sizeGroups, String email) throws UserException{
 
-        try {
+        try{
             UserClass userClass = new UserClass(className, institution, cutOff, password, addition, sizeGroups);
 
             CreateClassPost createClassPost = new CreateClassPost(userClass, email);
-
             createClassPost.execute();
 
         }catch (UserException userException){
@@ -63,21 +58,23 @@ public class UserClassControl {
     }
 
 
-    public String validateInformation(String className, String institution, String cutOff, String password,
-                                         String addition, String sizeGroups) throws UserException{
+    public String validateInformation(String className, String institution,
+                                      String cutOff, String password,
+                                      String addition, String sizeGroups) throws UserException{
 
-            String erro;
-             try{
-                 UserClass userClass = new UserClass(className, institution, Float.parseFloat(cutOff),
-                  password, Float.parseFloat(addition), Integer.parseInt(sizeGroups));
+        String erro;
 
-                 erro = "Sucesso";
-                 return erro;
-             }catch (UserException userException){
+        try{
+            UserClass userClass = new UserClass(className, institution,
+                    Float.parseFloat(cutOff), password, Float.parseFloat(addition),
+                    Integer.parseInt(sizeGroups));
 
-                 erro = userException.getMessage();
-                 return erro;
-             }
+            erro = "Sucesso";
+            return erro;
+        }catch (UserException userException){
+            erro = userException.getMessage();
+            return erro;
+        }
     }
 
 
@@ -90,17 +87,17 @@ public class UserClassControl {
         try {
             serverResponse = classRequest.execute().get();
 
-        } catch (InterruptedException e) {
+        }catch (InterruptedException e){
             e.printStackTrace();
-        } catch (ExecutionException e) {
+        }catch (ExecutionException e){
             e.printStackTrace();
         }
 
         ArrayList<UserClass> userClasses = new ArrayList<UserClass>();
 
-        try {
+        try{
             userClasses = getArrayList(serverResponse);
-        } catch (JSONException e) {
+        }catch (JSONException e){
             e.printStackTrace();
         }
 
@@ -108,13 +105,13 @@ public class UserClassControl {
 
     }
 
-    private ArrayList<UserClass> getArrayList(String serverResponse) throws JSONException {
+    private ArrayList<UserClass> getArrayList(String serverResponse) throws JSONException{
 
         JSONArray array = null;
 
-        try {
+        try{
             array = new JSONArray(serverResponse);
-        } catch (JSONException e) {
+        }catch (JSONException e){
             e.printStackTrace();
         }
 
@@ -125,18 +122,16 @@ public class UserClassControl {
             UserClass userClass = getUserClassFromJson(array.getJSONObject(i));
 
             userClasses.add(userClass);
-
         }
 
         return userClasses;
     }
 
-    private UserClass getUserClassFromJson(JSONObject jsonObject) {
+    private UserClass getUserClassFromJson(JSONObject jsonObject){
 
         UserClass userClass = new UserClass();
 
-
-        try {
+        try{
             userClass.setClassName(jsonObject.getString("name"));
             userClass.setInstitution(jsonObject.getString("institution"));
             userClass.setCutOff(Float.parseFloat(jsonObject.getString("passingScore")));
@@ -144,15 +139,13 @@ public class UserClassControl {
             userClass.setPassword(jsonObject.getString("password"));
             userClass.setSizeGroups(Integer.parseInt(jsonObject.getString("numberOfStudentsPerGroup")));
 
-        } catch (JSONException e) {
+        }catch (JSONException e){
             e.printStackTrace();
-        } catch (UserException e) {
+        }catch (UserException e){
             e.printStackTrace();
         }
 
-
         return userClass;
     }
-
 
 }
