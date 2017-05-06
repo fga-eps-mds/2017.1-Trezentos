@@ -1,6 +1,5 @@
 package fga.mds.gpp.trezentos.View;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +20,7 @@ public class EvaluationFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public EvaluationFragment(){
-
+        throw new UnsupportedOperationException();
     }
 
     public static EvaluationFragment newInstance(String param1, String param2){

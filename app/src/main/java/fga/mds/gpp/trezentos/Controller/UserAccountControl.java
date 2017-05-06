@@ -19,7 +19,7 @@ public class UserAccountControl {
 
     private static UserAccountControl instance;
     final Context context;
-    public UserAccount userAccount;
+    private UserAccount userAccount;
     private static Logger LOGGER = Logger.getLogger("InfoLogging");
     private UserAccountControl(final Context context){
         this.context = context;

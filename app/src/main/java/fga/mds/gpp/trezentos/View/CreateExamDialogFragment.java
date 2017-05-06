@@ -1,6 +1,5 @@
 package fga.mds.gpp.trezentos.View;
 
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

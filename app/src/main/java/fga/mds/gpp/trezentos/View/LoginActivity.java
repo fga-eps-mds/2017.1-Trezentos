@@ -1,43 +1,24 @@
 package fga.mds.gpp.trezentos.View;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.telecom.Call;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Arrays;
-
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
-import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
 
 public class LoginActivity extends AppCompatActivity{
@@ -46,7 +27,6 @@ public class LoginActivity extends AppCompatActivity{
     private UserDialog dialog = new UserDialog();
     String activityName = this.getClass().getSimpleName();
     Handler mHandler = new Handler();
-    private LoginButton loginFacebook;
     private CallbackManager callbackManager;
 
     @Override
@@ -68,6 +48,7 @@ public class LoginActivity extends AppCompatActivity{
 
         callbackManager = CallbackManager.Factory.create();
 
+        LoginButton loginFacebook;
         loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
         loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
         loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>(){
@@ -108,7 +89,7 @@ public class LoginActivity extends AppCompatActivity{
                 String errorMessage = userAccountControl.authenticateLogin(emailString,
                         passwordString);
 
-                if(errorMessage.equals("")){
+                if(errorMessage.equals(null)){
                     String serverResponse = userAccountControl.validateSignInResponse();
                     userAccountControl.validatePassword(serverResponse, passwordString);
                     goToMain(serverResponse);

@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
-
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.R;
@@ -26,7 +25,7 @@ public class ExamsFragment extends Fragment{
     private OnFragmentInteractionListener mListener;
 
     public ExamsFragment(){
-
+        throw new UnsupportedOperationException();
     }
 
 
@@ -52,8 +51,6 @@ public class ExamsFragment extends Fragment{
 
     private void loadClasses(){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        String email = session.getString("userEmail","");
         UserExamControl userExamControl = UserExamControl.getInstance(getActivity());
 
         userExams = userExamControl.getExamsFromUser("");
@@ -122,18 +119,12 @@ public class ExamsFragment extends Fragment{
         }
     }
 
-
-
-
-
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri){
         if (mListener != null){
             mListener.onFragmentInteraction(uri);
         }
     }
-
 
     public interface OnFragmentInteractionListener{
         // TODO: Update argument type and name
