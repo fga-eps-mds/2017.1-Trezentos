@@ -39,7 +39,6 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
 
     @Override
     public void onClick(View v){
-
         int position= (Integer) v.getTag();
         Object object= getItem(position);
         UserClass userClass = (UserClass) object;

@@ -55,7 +55,7 @@ public class AboutFragment extends Fragment{
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 openUrl(position);
             }
         });
@@ -64,7 +64,7 @@ public class AboutFragment extends Fragment{
     }
 
     public void onButtonPressed(Uri uri){
-        if (mListener != null) {
+        if (mListener != null){
             mListener.onFragmentInteraction(uri);
         }
     }
@@ -85,7 +85,8 @@ public class AboutFragment extends Fragment{
             about.add(new About("Record", "Reportagem sobre o Trezentos"));
             about.add(new About("UnBTV","Reportagem sobre o Trezentos"));
 
-        }catch (UserException e){
+        }
+        catch (UserException e){
             e.printStackTrace();
         }
         adapter = new AboutAdapter(about,getActivity().getApplicationContext());
@@ -118,7 +119,7 @@ public class AboutFragment extends Fragment{
             myWebLink.setData(Uri.parse("https://youtu.be/zQsaUjWw330"));
             startActivity(myWebLink);
         }
-        else {
+        else{
             myWebLink.setData(Uri.parse("https://youtu.be/7cfNcn-zge0"));
             startActivity(myWebLink);
         }

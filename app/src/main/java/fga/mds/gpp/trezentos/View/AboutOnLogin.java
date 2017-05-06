@@ -23,6 +23,5 @@ public class AboutOnLogin extends AppCompatActivity{
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.about_on_login, aboutFragment, fragmentAbout);
         fragmentTransaction.commit();
-
     }
 }

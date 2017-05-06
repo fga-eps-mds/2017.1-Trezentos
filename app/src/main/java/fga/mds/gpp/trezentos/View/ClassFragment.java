@@ -45,14 +45,13 @@ public class ClassFragment extends Fragment{
 
     @Override
     public void onResume(){
+
         super.onResume();
         loadClasses();
     }
 
     private void loadClasses(){
-
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
         String email = session.getString("userEmail","");
         UserClassControl userClassControl = UserClassControl.getInstance(getActivity());
 
@@ -61,10 +60,8 @@ public class ClassFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
         final ListView listView = (ListView) view.findViewById(R.id.class_list_view);
-
         final UserClass userClass = new UserClass();
         final UserAccount userAccount = new UserAccount();
 
@@ -97,7 +94,6 @@ public class ClassFragment extends Fragment{
     }
 
     public void openDialogFragment(View view){
-
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         CreateClassDialogFragment ccdf = new CreateClassDialogFragment();
 
@@ -105,7 +101,6 @@ public class ClassFragment extends Fragment{
     }
 
     public void turnOffDialogFragment(){
-
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         CreateClassDialogFragment ccdf = (CreateClassDialogFragment) getFragmentManager()
                 .findFragmentByTag("dialog");

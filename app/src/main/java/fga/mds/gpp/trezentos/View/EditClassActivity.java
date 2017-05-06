@@ -67,13 +67,10 @@ public class EditClassActivity extends AppCompatActivity{
             }
 
         });
-
-
     }
 
     @Override
     public boolean onSupportNavigateUp(){
-
         onBackPressed();
 
         return true;

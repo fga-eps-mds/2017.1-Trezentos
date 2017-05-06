@@ -18,11 +18,11 @@ import static fga.mds.gpp.trezentos.R.id.edit_text_name_register;
 import static fga.mds.gpp.trezentos.R.id.edit_text_password_confirmation;
 import static fga.mds.gpp.trezentos.R.id.edit_text_password_register;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "SignUpActivity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
@@ -34,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     // Method for confirmation
-    public void confirmInformation() {
+    public void confirmInformation(){
         EditText nameEdit = (EditText) findViewById(edit_text_name_register);
         EditText emailEdit = (EditText) findViewById(edit_text_email_register);
         EditText passwordEdit = (EditText) findViewById(edit_text_password_register);
@@ -53,64 +53,57 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if (errorMessage.equals("")){
             String response = userAccountControl.validateSignUpResponse();
             goToMain(response);
-        } else {
+        }
+        else{
             signUpErrorMessage(nameEdit, emailEdit, passwordEdit,
                     passwordConfirmationEdit, errorMessage);
         }
     }
 
     private void signUpErrorMessage(EditText nameEdit, EditText emailEdit, EditText passwordEdit,
-                                    EditText passwordConfirmationEdit, String errorMessage) {
-        if (errorMessage.equals(getString(R.string.msg_null_name_error_message))) {
+                                    EditText passwordConfirmationEdit, String errorMessage){
+        if (errorMessage.equals(getString(R.string.msg_null_name_error_message))){
             nameEdit.requestFocus();
             nameEdit.setError(getString(R.string.msg_null_name_error_message));
         }
-
-        if (errorMessage.equals(getString(R.string.msg_len_name_error_message))) {
+        else if (errorMessage.equals(getString(R.string.msg_len_name_error_message))){
             nameEdit.requestFocus();
             nameEdit.setError(getString(R.string.msg_len_name_error_message));
         }
-
-        if (errorMessage.equals(getString(R.string.msg_len_password_error_message))) {
+        else if (errorMessage.equals(getString(R.string.msg_len_password_error_message))){
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_len_password_error_message));
         }
-
-        if (errorMessage.equals(getString(R.string.msg_password_conf_error_message))) {
+        else if (errorMessage.equals(getString(R.string.msg_password_conf_error_message))){
             passwordConfirmationEdit.requestFocus();
             passwordConfirmationEdit.setError(getString(R.string.msg_password_conf_error_message));
         }
-
-        if (errorMessage.equals(getString(R.string.msg_upper_case_error_message))) {
+        else if (errorMessage.equals(getString(R.string.msg_upper_case_error_message))){
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
         }
-
-        if (errorMessage.equals(getString(R.string.msg_null_email_error_message))) {
+        else if (errorMessage.equals(getString(R.string.msg_null_email_error_message))){
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_null_email_error_message));
 
         }
-
-        if (errorMessage.equals(getString(R.string.msg_len_email_error_message))) {
+        else if (errorMessage.equals(getString(R.string.msg_len_email_error_message))){
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_len_email_error_message));
 
         }
-
-        if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))) {
+        else if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))){
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_special_characters_email_error_message));
 
         }
-
-        if (errorMessage.equals(getString(R.string.msg_null_password_error_message))) {
+        else if (errorMessage.equals(getString(R.string.msg_null_password_error_message))){
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_null_password_error_message));
         }
     }
 
-    public void goToMain(String response) {
+    public void goToMain(String response){
         if (response.contains("\"code\":\"200\"")){
             UserAccountControl userAccountControl = UserAccountControl
                     .getInstance(getApplicationContext());
@@ -121,24 +114,27 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             Intent goToMain = new Intent(this, MainActivity.class);
             startActivity(goToMain);
-        } else if (response.contains("\"code\":11000")){
+        }
+        else if (response.contains("\"code\":11000")){
             Toast.makeText(getApplicationContext(), "Email inválido, tente novamente",
                     Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else{
             Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.already_sign_up: {
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.already_sign_up:{
                 Intent returnToLogin = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(returnToLogin);
+
                 finish();
                 break;
             }
-            case R.id.sign_up_button: {
+            case R.id.sign_up_button:{
                 confirmInformation();
             }
         }
