@@ -18,6 +18,7 @@
     <string name="msg_len_addition_error_message">O acrescimo nao pode ser zero.</string>
     <string name="msg_len_cut_off_error_message">A nota de corte nao pode ser zero.</string>
     <string name="msg_signup_success">Usuário cadastrado com sucesso!</string>
+    <string name="msg_class_success">Sucesso!</string>
     <!-- Login -->
     <string name="btn_login_to_sign_up">Cadastrar</string>
     <string name="facebook_app_id">1840540606200745</string>

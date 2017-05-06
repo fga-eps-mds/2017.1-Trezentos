@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
-
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.About;
 import fga.mds.gpp.trezentos.R;
 
-public class AboutFragment extends Fragment {
+public class AboutFragment extends Fragment{
 
     public ArrayList<About> about;
     private static AboutAdapter adapter;
@@ -25,29 +23,29 @@ public class AboutFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private OnFragmentInteractionListener mListener;
 
-    public AboutFragment() {
+    public AboutFragment(){
 
     }
 
-    public static AboutFragment newInstance(String param1, String param2) {
+    public static AboutFragment newInstance(String param1, String param2){
         AboutFragment fragment = new AboutFragment();
         Bundle args = new Bundle();
+
         fragment.setArguments(args);
 
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState){
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_about, container, false);
         final ListView listView = (ListView) view.findViewById(R.id.about_list_view);
@@ -55,23 +53,23 @@ public class AboutFragment extends Fragment {
         aboutItem();
 
         listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 openUrl(position);
             }
         });
+
         return view;
     }
 
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(Uri uri){
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
 
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener{
         void onFragmentInteraction(Uri uri);
     }
 
@@ -87,7 +85,7 @@ public class AboutFragment extends Fragment {
             about.add(new About("Record", "Reportagem sobre o Trezentos"));
             about.add(new About("UnBTV","Reportagem sobre o Trezentos"));
 
-        } catch (UserException e) {
+        }catch (UserException e){
             e.printStackTrace();
         }
         adapter = new AboutAdapter(about,getActivity().getApplicationContext());
@@ -100,23 +98,23 @@ public class AboutFragment extends Fragment {
             myWebLink.setData(Uri.parse("http://metodo300.com"));
             startActivity(myWebLink);
         }
-        else if(position == 1) {
+        else if(position == 1){
             myWebLink.setData(Uri.parse("https://youtu.be/gay6TYwVwf4"));
             startActivity(myWebLink);
         }
-        else if(position == 2) {
+        else if(position == 2){
             myWebLink.setData(Uri.parse("https://youtu.be/s0g1AgGFP5k"));
             startActivity(myWebLink);
         }
-        else if(position == 3) {
+        else if(position == 3){
             myWebLink.setData(Uri.parse("https://youtu.be/QLJtwsX8NqU"));
             startActivity(myWebLink);
         }
-        else if(position == 4) {
+        else if(position == 4){
             myWebLink.setData(Uri.parse("http://www.scielo.br/pdf/er/n63/1984-0411-er-63-00253.pdf"));
             startActivity(myWebLink);
         }
-        else if(position == 5) {
+        else if(position == 5){
             myWebLink.setData(Uri.parse("https://youtu.be/zQsaUjWw330"));
             startActivity(myWebLink);
         }
