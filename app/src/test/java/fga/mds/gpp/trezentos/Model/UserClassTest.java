@@ -53,6 +53,16 @@ public class UserClassTest {
         assertEquals(10, userClass.getSizeGroups());
     }
 
+    @Test
+    public void shouldValidateConstructor() throws UserException {
+        UserClass userClass = new UserClass("Name", "Institution", 10.0f, "password", 10.0f, 5);
+        assertEquals("Name", userClass.getClassName());
+        assertEquals("Institution", userClass.getInstitution());
+        assertEquals(10.0f, userClass.getCutOff(), 0.1f);
+        assertEquals("password", userClass.getPassword());
+        assertEquals(10.0f, userClass.getAddition(), 0.1f);
+        assertEquals(5, userClass.getSizeGroups());
+    }
 }
 
 

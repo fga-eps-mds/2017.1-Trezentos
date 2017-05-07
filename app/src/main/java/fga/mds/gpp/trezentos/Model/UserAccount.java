@@ -102,7 +102,7 @@ public class UserAccount {
                     this.salt = salt;
                     String toBeHashed = (salt+password);
                     String hashedPass = passwordUtil.stringToMD5(toBeHashed);
-                    Log.d("TAG", salt);
+                    //Log.d("TAG", salt);
                     this.password = hashedPass;
                 }
             }
