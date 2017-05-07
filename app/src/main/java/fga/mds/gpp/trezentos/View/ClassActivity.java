@@ -45,22 +45,26 @@ public class ClassActivity extends AppCompatActivity {
         userClass = (UserClass) intent.getSerializableExtra("Class");
 
         if(userClass != null){
-            TextView textView = (TextView) findViewById(R.id.testClass);
-            textView.setText(userClass.getClassName());
+//            TextView textView = (TextView) findViewById(R.id.testClass);
+//            textView.setText(userClass.getClassName());
             setTitle(userClass.getClassName());
         }
 
 
 
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn_add_test);
+
+
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn);
 
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent goCreateExam = new  Intent(getApplicationContext(), CreateExamActivity.class);
+                UserClass userClassCalled = (UserClass) userClass;
+                goCreateExam.putExtra("Class", userClassCalled);
 
-                //openDialogFragment(v);
-                //openDialogFragment(v);
-                //Toast.makeText(ClassActivity.this,"Criar Prova", Toast.LENGTH_SHORT).show();
+                startActivity(goCreateExam);
+                //Toast.makeText(ClassActivity.this,"Criar", Toast.LENGTH_SHORT).show();
 
             }
         });

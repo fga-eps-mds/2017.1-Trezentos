@@ -49,10 +49,6 @@ public class ClassFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-//        adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
-//        listView.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-
 
         loadClasses();
         adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
@@ -76,21 +72,6 @@ public class ClassFragment extends Fragment {
         userClasses = userClassControl.getClassesFromUser(email);
     }
 
-//    private void updateClasses(){
-//
-//        loadClasses();
-//        adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
-//        if(listView.getAdapter() == null){ //Adapter not set yet.
-//            listView.setAdapter(adapter);
-//        }
-//        else{ //Already has an adapter
-//            listView.setAdapter(adapter);
-//            adapter.notifyDataSetChanged();
-//            listView.invalidateViews();
-//            listView.refreshDrawableState();
-//        }
-//
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -123,7 +104,7 @@ public class ClassFragment extends Fragment {
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //openDialogFragment(v);
+
                 startActivity(new Intent(getActivity(), CreateClassActivity.class));
             }
         });

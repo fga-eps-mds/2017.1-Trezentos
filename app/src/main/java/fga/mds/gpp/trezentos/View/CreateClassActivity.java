@@ -2,13 +2,22 @@ package fga.mds.gpp.trezentos.View;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.renderscript.Double2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
@@ -25,18 +34,19 @@ public class CreateClassActivity extends AppCompatActivity {
     public UserAccount userAccount;
     private ProgressBar progressBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_class);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Criar Sala");
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        setTitle("Criar Sala");
 
         final EditText classNameField = (EditText) findViewById(R.id.edit_text_class_name);
         final EditText institutionField = (EditText) findViewById(R.id.edit_text_institution);
@@ -51,6 +61,7 @@ public class CreateClassActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean isValid;
+
                 progressBar.setVisibility(View.VISIBLE);
 
                 UserClassControl userClassControl = UserClassControl.getInstance(CreateClassActivity.this);
@@ -174,6 +185,24 @@ public class CreateClassActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+
+
+    //Setting upp
+    public void moveName(View view){
+        ImageView image = (ImageView)findViewById(R.id.nameImageView);
+        Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move);
+        image.startAnimation(animation1);
+    }
+
+    public void moveInstituition(View view){
+        ImageView image = (ImageView)findViewById(R.id.institutionImageView);
+        Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move);
+        image.startAnimation(animation1);
+    }
+
+
+
 
 }
 

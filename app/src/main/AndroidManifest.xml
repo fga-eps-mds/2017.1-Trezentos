@@ -35,7 +35,8 @@
         <activity android:name=".View.AboutOnLogin" />
         <activity android:name=".View.ClassActivity" />
         <activity android:name=".View.EditClassActivity" />
-        <activity android:name=".View.CreateClassActivity"></activity>
+        <activity android:name=".View.CreateClassActivity" />
+        <activity android:name=".View.CreateExamActivity"></activity>
     </application>
 
 </manifest>

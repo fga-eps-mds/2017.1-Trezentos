@@ -85,16 +85,16 @@ public class StudensFragment extends Fragment {
             }
         });
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_btn_add_student);
-        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //openDialogFragment(v);
-                Toast.makeText(getActivity(),"Criar Estudante", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floating_btn_add_student);
+//        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                //openDialogFragment(v);
+//                Toast.makeText(getActivity(),"Criar Estudante", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
 
         return view;
