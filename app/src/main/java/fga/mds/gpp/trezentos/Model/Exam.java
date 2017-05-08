@@ -14,9 +14,9 @@ public class Exam{
 
     public Exam(String nameExam, String userClassName, String classOwnerEmail)
             throws UserException{
-        this.nameExam = nameExam;
-        this.userClassName = userClassName;
-        this.classOwnerEmail = classOwnerEmail;
+        setNameExam(nameExam);
+        setClassOwnerEmail(userClassName);
+        setClassOwnerEmail(classOwnerEmail);
     }
 
     public void setNameExam(String nameExam)throws UserException{
@@ -26,12 +26,12 @@ public class Exam{
         if(nameExam != null && !nameExam.isEmpty()){
             if(nameExam.length() < MIN_NAME_EXAM_LENGTH
                     || nameExam.length() > MAX_NAME_EXAM_LENGTH){
-                throw new UserException("@string/msg_len_name_exam_error");
+                throw new UserException("O nome da prova deve ter entre 2 e 15 caracteres.");
             }else{
                 this.nameExam = nameExam;
             }
         }else{
-            throw new UserException("@string/msg_null_name_exam_error");
+            throw new UserException("O nome não pode ser vazio");
         }
     }
 
@@ -53,10 +53,5 @@ public class Exam{
 
     public String getClassOwnerEmail(){
         return classOwnerEmail;
-    }
-
-    @Override
-    public String toString(){
-        return "\n"+"@string/exam_to_string"+ nameExam+ "\n";
     }
 }

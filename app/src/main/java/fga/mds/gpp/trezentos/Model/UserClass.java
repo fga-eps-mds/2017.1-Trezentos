@@ -39,9 +39,9 @@ public class UserClass implements Serializable {
                 &&(className.length() < MIN_CLASSNAME_LENGTH
                 || className.length() > MAX_CLASSNAME_LENGTH)){
 
-            throw new UserException("@string/msg_class_name_case_error_message");
+            throw new UserException("O nome da sala deve ter de 3 a 20 caracteres.");
         }else if(className == null || className.isEmpty()){
-            throw new UserException("@string/msg_empty_space_error_message");
+            throw new UserException("Preencha todos os campos!");
         }else{
             this.className = className;
         }
@@ -55,7 +55,7 @@ public class UserClass implements Serializable {
         if(sizeGroups > 0){
             this.sizeGroups = sizeGroups;
         }else{
-            throw new UserException("@string/msg_len_size_group_error_message");
+            throw new UserException("O tamanho do grupo nao pode ser zero.");
         }
     }
 
@@ -71,7 +71,7 @@ public class UserClass implements Serializable {
                 (institution.length() < MIN_INSTITUTION_LENGTH
                         || institution.length() > MAX_INSTITUTION_LENGTH)){
 
-            throw new UserException("@string/msg_institution_case_error_message");
+            throw new UserException("O nome da instituicao deve ter de 3 a 20 caracteres.");
         }else{
             this.institution = institution;
         }
@@ -89,11 +89,11 @@ public class UserClass implements Serializable {
                 (password.length() < MIN_PASSWORD_LENGTH ||
                         password.length() > MAX_PASSWORD_LENGTH)){
 
-            throw new UserException("@string/msg_len_password_error_message");
+            throw new UserException("A senha deve ter entre 6 e 16 caracteres");
 
         }
         else if(password == null || password.isEmpty()){
-            throw new UserException("@string/msg_empty_space_error_message");
+            throw new UserException("Preencha todos os campos!");
 
         }else{
             this.password = password;
@@ -108,7 +108,7 @@ public class UserClass implements Serializable {
         if(addition != 0.0f){
             this.addition = addition;
         }else{
-            throw new UserException("@string/msg_len_addition_error_message");
+            throw new UserException("O acrescimo nao pode ser zero.");
         }
     }
 
@@ -120,7 +120,7 @@ public class UserClass implements Serializable {
         if(cutOff != 0.0f){
             this.cutOff = cutOff;
         }else{
-            throw new UserException("@string/msg_len_cut_off_error_message");
+            throw new UserException("A nota de corte nao pode ser zero.");
         }
     }
 }

@@ -50,12 +50,12 @@ public class UserAccount{
         if (name != null && !name.isEmpty()){
             if (name.length() < MIN_NAME_LENGTH
                     || name.length() > MAX_NAME_LENGTH){
-                throw new UserException("@string/msg_len_name_error_message");
+                throw new UserException("O nome deve ter de 3 a 50 caracteres");
             } else {
                 this.name = name;
             }
         } else {
-            throw new UserException("@string/msg_null_name_error_message");
+            throw new UserException("O nome não pode estar vazio");
         }
     }
 
@@ -76,10 +76,10 @@ public class UserAccount{
                     email.toLowerCase();
                     this.email = email;
                 } else
-                    throw new UserException("@string/msg_special_characters_email_error_message");
+                    throw new UserException("Email com caracteres inválidos. Tente novamente");
             }
         }else{
-            throw new UserException("@string/msg_null_email_error_message");
+            throw new UserException("O email não pode estar vazio");
         }
     }
 
@@ -91,7 +91,7 @@ public class UserAccount{
         if(password != null && !password.isEmpty()){
             this.password = password;
         }else{
-            throw new UserException("@string/msg_null_password_error_message");
+            throw new UserException("A senha não pode estar vazia");
         }
     }
 
@@ -104,10 +104,10 @@ public class UserAccount{
 
             if(password.length() < MIN_PASSWORD_LENGTH
                     || password.length() > MAX_PASSWORD_LENGTH){
-                throw new UserException("@string/msg_len_password_error_message");
+                throw new UserException("A senha deve ter entre 6 e 16 caracteres");
             }else{
                 if(!password.equals(passwordConfirmation)){
-                    throw new UserException("@string/msg_password_conf_error_message");
+                    throw new UserException("Senhas não coincidem, tente novamente");
                 }else{
                     salt = PasswordUtil.nextSalt();
                     this.salt = salt;
@@ -118,7 +118,7 @@ public class UserAccount{
                 }
             }
         }else{
-            throw new UserException("@string/msg_null_password_error_message");
+            throw new UserException("A senha não pode estar vazia");
         }
     }
 
