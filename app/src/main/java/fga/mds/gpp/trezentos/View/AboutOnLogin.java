@@ -6,17 +6,22 @@ import android.os.Bundle;
 
 import fga.mds.gpp.trezentos.R;
 
-public class AboutOnLogin extends AppCompatActivity {
+public class AboutOnLogin extends AppCompatActivity{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_on_login);
+
+        int contentView = R.layout.activity_about_on_login;
+        setContentView(contentView);
+
+
+        AboutFragment aboutFragment = new AboutFragment();
+        String fragmentAbout = "fragment_about";
 
         FragmentTransaction fragmentTransaction;
-        AboutFragment aboutFragment = new AboutFragment();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.about_on_login, aboutFragment, "fragment_about");
+        fragmentTransaction.replace(R.id.about_on_login, aboutFragment, fragmentAbout);
         fragmentTransaction.commit();
     }
 }

@@ -6,40 +6,36 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 
-public class UserDialog extends AsyncTask<Void, Void, Void> {
+public class UserDialog extends AsyncTask<Void, Void, Void>{
 
     private AlertDialog.Builder alert;
     private Context context;
-    ProgressDialog asyncDialog;
+    private ProgressDialog asyncDialog;
 
     private String progressMessage;
 
-    //Shows an alert dialog with custom message
+    // Shows an alert dialog with custom message
     public void alert(String alertTitle, String  alertMessage){
 
-        new AlertDialog.Builder(context)
-                .setTitle(alertTitle)
-                .setMessage(alertMessage)
-                .setCancelable(false)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(context).setTitle(alertTitle)
+                .setMessage(alertMessage).setCancelable(false)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener(){
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO
+                    public void onClick(DialogInterface dialog, int which){
+                        // TODO: Set action
                     }
                 }).show();
-
     }
 
-    //Creates an progres dialog with custom message
+    // Creates an progress dialog with custom message
     public void progressCreate(String progressMessage){
         asyncDialog = new ProgressDialog(context);
         String typeStatus;
         asyncDialog.setMessage(progressMessage);
         asyncDialog.show();
-
     }
 
-    //Ends an progress dialog with custom message
+    // Ends an progress dialog with custom message
     public void progressDismiss(){
         asyncDialog.dismiss();
     }
@@ -53,22 +49,25 @@ public class UserDialog extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected void onPreExecute() {
+    protected void onPreExecute(){
         progressCreate(progressMessage);
     }
 
     @Override
-    protected void onPostExecute(Void result) {
+    protected void onPostExecute(Void result){
         progressDismiss();
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
-        try {
+    protected Void doInBackground(Void... params){
+
+        try{
             Thread.sleep(2000);
-        } catch (InterruptedException e) {
+        }
+        catch(InterruptedException e){
             e.printStackTrace();
         }
+
         return null;
     }
 }

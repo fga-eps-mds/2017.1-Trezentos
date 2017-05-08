@@ -60,3 +60,5 @@ freeline_project_description.json
 gen-external-apklibs
 
 .scannerwork/
+
+.DS_Store

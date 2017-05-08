@@ -4,34 +4,24 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.util.logging.Logger;
 import java.util.concurrent.ExecutionException;
-
 import fga.mds.gpp.trezentos.DAO.SignInRequest;
 import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
-import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.UserDialog;
-
-import static fga.mds.gpp.trezentos.R.id.edit_text_email_register;
-import static fga.mds.gpp.trezentos.R.id.edit_text_name_register;
-import static fga.mds.gpp.trezentos.R.id.edit_text_password_confirmation;
-import static fga.mds.gpp.trezentos.R.id.edit_text_password_register;
 
 public class UserAccountControl {
+    private static final String TAG = UserAccountControl.class.getSimpleName();
 
     private static UserAccountControl instance;
-    private final Context context;
-    public UserAccount userAccount;
-
-    private UserAccountControl(final Context context) {
+    final Context context;
+    private UserAccount userAccount;
+    private static Logger LOGGER = Logger.getLogger("InfoLogging");
+    private UserAccountControl(final Context context){
         this.context = context;
     }
 
@@ -43,12 +33,12 @@ public class UserAccountControl {
     }
 
     public String validateSignUp(String name, String email, String password,
-                                 String passwordConfirmation) {
+                                 String passwordConfirmation){
         String errorMessage = "";
 
-        try {
+        try{
             userAccount = new UserAccount(name, email, password, passwordConfirmation);
-        } catch (UserException userException) {
+        }catch (UserException userException){
             errorMessage = userException.getMessage();
         }
         return errorMessage;
@@ -56,95 +46,94 @@ public class UserAccountControl {
 
     public String validateSignUpResponse (){
         SignUpRequest signUpRequest = new SignUpRequest(userAccount, false);
-
         String serverResponse = "404";
 
-        try {
+        try{
             serverResponse = signUpRequest.execute().get();
-        } catch (InterruptedException e) {
+        }catch (InterruptedException e) {
+            Log.d(TAG,e.toString());
             e.printStackTrace();
-        } catch (ExecutionException e) {
+        }catch (ExecutionException e) {
+            LOGGER.info(e.getMessage());
             e.printStackTrace();
         }
-
         return serverResponse;
     }
 
-    public void authenticateLoginFb(JSONObject object) {
-        try {
-            String Name = object.getString("name");
-            String FEmail = object.getString("email");
+    public void authenticateLoginFb(JSONObject object){
 
-            UserAccount userAccount = getUserWithInfo(FEmail, Name);
+        try{
+            String name = object.getString("name");
+            String fEmail = object.getString("email");
 
-            SignUpRequest signUprequest = new SignUpRequest(userAccount, true);
+            UserAccount userAccountFb = getUserWithInfo(fEmail, name);
+
+            SignUpRequest signUprequest = new SignUpRequest(userAccountFb, true);
             signUprequest.execute();
-        } catch (JSONException e){
+        }catch (JSONException e){
+
             e.printStackTrace();
         }
     }
 
-    private UserAccount getUserWithInfo(String email, String name) {
-        UserAccount userAccount = new UserAccount();
+    private UserAccount getUserWithInfo(String email, String name){
+        UserAccount userAccountWithInfo = new UserAccount();
 
-        try {
-            userAccount.setEmail(email);
-            userAccount.setName(name);
-        } catch (UserException e) {
+        try{
+            userAccountWithInfo.setEmail(email);
+            userAccountWithInfo.setName(name);
+        }catch (UserException e){
             e.printStackTrace();
         }
-
-        return userAccount;
+        return userAccountWithInfo;
     }
 
-    public String authenticateLogin(String email, String password) {
-
+    public String authenticateLogin(String email, String password){
         String errorMessage = "";
 
-        try {
+        try{
             userAccount = new UserAccount();
             //Verify email
             userAccount.setEmail(email);
             //Verify the password
             userAccount.authenticatePassword(password);
-        } catch (UserException userException){
+        }catch (UserException userException){
             errorMessage = userException.getMessage();
         }
 
         return errorMessage;
     }
 
-    public String validateSignInResponse() {
+    public String validateSignInResponse(){
         SignInRequest signInRequest = new SignInRequest(userAccount);
-
         String serverResponse = "404";
 
-        try {
+        try{
             serverResponse = signInRequest.execute().get();
-        } catch (InterruptedException e) {
+        }catch (InterruptedException e){
             e.printStackTrace();
-        } catch (ExecutionException e) {
+        }catch (ExecutionException e){
             e.printStackTrace();
         }
 
         return serverResponse;
     }
 
-    public void validatePassword(String serverResponse, String password) {
+    public void validatePassword(String serverResponse, String password){
         JSONObject object = getObjectFromServerResponse(serverResponse);
         String hashedPassword = null;
         String salt = null;
 
-        try {
+        try{
             hashedPassword = object.getString("password");
             Log.d("Password", hashedPassword);
             salt = object.getString("salt");
-            Log.d("Password", salt);
-        } catch (JSONException e) {
+            Log.d("Salt", salt);
+        }catch (JSONException e){
             e.printStackTrace();
         }
 
-        if (PasswordUtil.decryptPass(hashedPassword, salt, password)) {
+        if (PasswordUtil.decryptPass(hashedPassword, salt, password)){
             logInUser();
         }
         else{
@@ -152,21 +141,21 @@ public class UserAccountControl {
         }
     }
 
-    private JSONObject getObjectFromServerResponse(String serverResponse) {
+    private JSONObject getObjectFromServerResponse(String serverResponse){
         JSONObject object = null;
 
-        try {
+        try{
             object = new JSONObject(serverResponse);
-        } catch (JSONException e) {
+        }catch (JSONException e){
             e.printStackTrace();
         }
 
         return object;
     }
 
-
-    public void logInUser() {
+    public void logInUser(){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+
         session.edit()
                 .putBoolean("IsUserLogged", true)
                 .putString("userEmail", userAccount.getEmail())
@@ -174,13 +163,12 @@ public class UserAccountControl {
                 .apply();
     }
 
-
     public void logOutUser(){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+
         session.edit()
                 .putBoolean("IsUserLogged", false)
                 .putString("userName", "")
                 .apply();
-
     }
 }

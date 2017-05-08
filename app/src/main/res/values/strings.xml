@@ -33,7 +33,9 @@
     <string name="msg_len_size_group_error_message">O tamanho do grupo nao pode ser zero.</string>
     <string name="msg_len_addition_error_message">O acrescimo nao pode ser zero.</string>
     <string name="msg_len_cut_off_error_message">A nota de corte nao pode ser zero.</string>
-
+    
+    <string name="msg_signup_success">Usuário cadastrado com sucesso!</string>
+    <string name="msg_class_success">Sucesso!</string>
     <!-- Login -->
     <string name="facebook_app_id">1840540606200745</string>
     <string name="sign_up_text">Cadastrar</string>
@@ -77,4 +79,20 @@
     
     <!--ExamFragment-->
     <string name="name_exam">Nome da Prova</string>
+
+    <!--About-->
+    <string name="about_site">Site</string>
+    <string name="about_metodo_trezentos">Método Trezentos</string>
+    <string name="about_trezentos">Trezentos</string>
+    <string name="about_tedx">TEDx Universidade de Brasilia</string>
+    <string name="about_metodologia">Metodologia Trezentos</string>
+    <string name="about_entenda_metodo">Entenda o método em 3 minutos</string>
+    <string name="about_para_professores">Trezentos para professores</string>
+    <string name="about_detalhes">Detalhes técnicos</string>
+    <string name="about_artigo">Artigo sobre o Trezentos</string>
+    <string name="about_pdf_download">PDF Download</string>
+    <string name="about_record">Record</string>
+    <string name="about_reportagem">Reportagem sobre o Trezentos</string>
+    <string name="about_unbtv">UnBTV</string>
+
 </resources>
