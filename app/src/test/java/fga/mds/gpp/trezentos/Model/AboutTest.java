@@ -37,12 +37,12 @@ public class AboutTest {
     @Test
     public void shouldValidateAboutImage(){
         About about = new About();
-        assertEquals(R.drawable.trezentos_icon, about.getAboutImage(0));
-        assertEquals(R.drawable.tedx, about.getAboutImage(1));
-        assertEquals(R.drawable.about_youtube, about.getAboutImage(2));
-        assertEquals(R.drawable.about_youtube, about.getAboutImage(3));
-        assertEquals(R.drawable.documents, about.getAboutImage(4));
-        assertEquals(R.drawable.about_record, about.getAboutImage(5));
-        assertEquals(R.drawable.about_unb_tv, about.getAboutImage(6));
+        assertEquals(R.drawable.trezentos_icon, about.getShowImage(0));
+        assertEquals(R.drawable.tedx, about.getShowImage(1));
+        assertEquals(R.drawable.about_youtube, about.getShowImage(2));
+        assertEquals(R.drawable.about_youtube, about.getShowImage(3));
+        assertEquals(R.drawable.documents, about.getShowImage(4));
+        assertEquals(R.drawable.about_record, about.getShowImage(5));
+        assertEquals(R.drawable.about_unb_tv, about.getShowImage(6));
     }
 }

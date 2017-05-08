@@ -30,13 +30,6 @@ public class ExamTest {
     }
 
     @Test
-    public void shouldValidateToString() throws UserException {
-        Exam exam = new Exam();
-        exam.setNameExam("1");
-        assertEquals("\n"+"Prova: "+ exam.getNameExam()+ "\n", exam.toString());
-    }
-
-    @Test
     public void shouldValidateExamConstructor() throws UserException {
         Exam exam = new Exam("Prova 1", "Calculo 1", "Joao123@email.com");
         assertEquals("Prova 1", exam.getNameExam());

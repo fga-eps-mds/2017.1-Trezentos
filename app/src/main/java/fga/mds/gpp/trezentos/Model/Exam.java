@@ -15,7 +15,7 @@ public class Exam{
     public Exam(String nameExam, String userClassName, String classOwnerEmail)
             throws UserException{
         setNameExam(nameExam);
-        setClassOwnerEmail(userClassName);
+        setUserClassName(userClassName);
         setClassOwnerEmail(classOwnerEmail);
     }
 
