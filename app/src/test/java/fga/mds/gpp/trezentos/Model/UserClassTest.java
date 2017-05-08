@@ -9,91 +9,60 @@ import fga.mds.gpp.trezentos.Exception.UserException;
 public class UserClassTest {
 
     @Test
-    public void UserClass_ClassName() {
+    public void shouldValidateClassName() throws UserException {
         UserClass userClass = new UserClass();
-        try {
-            userClass.setClassName("nome");
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
+        userClass.setClassName("nome");
         assertEquals("nome", userClass.getClassName());
 
     }
 
     @Test
-    public void UserClass_Institution() {
+    public void shouldValidateInstitution() throws UserException {
         UserClass userClass = new UserClass();
-        try {
-            userClass.setInstitution("nome");
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
+        userClass.setInstitution("nome");
         assertEquals("nome", userClass.getInstitution());
     }
 
     @Test
-    public void UserClass_CutOff() {
+    public void shouldValidateCutOff() throws UserException {
         UserClass userClass = new UserClass();
         Float floatCutOff = 10.0f;
-        try {
-            userClass.setCutOff(floatCutOff);
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
+        userClass.setCutOff(floatCutOff);
         assertTrue(floatCutOff.equals(userClass.getCutOff()));
     }
 
     @Test
-    public void UserClass_Password(){
-        boolean isValid = false;
-
+    public void shouldValidatePassword () throws UserException {
         UserClass userClass = new UserClass();
-
-        try {
-            isValid = true;
-            userClass.setPassword("nome");
-        } catch (UserException e) {
-            isValid = false;
-            e.printStackTrace();
-        }
-
-        assertFalse(isValid);
-    }
-
-    @Test
-    public void UserClass_passwordTest (){
-        UserClass userClass = new UserClass();
-        try {
-            userClass.setPassword("password");
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
+        userClass.setPassword("password");
         assertEquals("password",userClass.getPassword());
     }
 
     @Test
-    public void UserClass_Addition() {
+    public void shouldValidateAddition() throws UserException {
         UserClass userClass = new UserClass();
         Float floatAdd = 10.0f;
-        try {
-            userClass.setAddition(floatAdd);
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
+        userClass.setAddition(floatAdd);
         assertTrue(floatAdd.equals(userClass.getAddition()));
     }
 
     @Test
-    public void UserClass_SizeGroups() {
+    public void shouldValidateSizeGroups() throws UserException {
         UserClass userClass = new UserClass();
-        try {
-            userClass.setSizeGroups(10);
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
+        userClass.setSizeGroups(10);
         assertEquals(10, userClass.getSizeGroups());
     }
 
+    @Test
+    public void shouldValidateConstructor() throws UserException {
+        UserClass userClass = new UserClass("Name", "Institution", 10.0f, "password", 10.0f, 5);
+        assertEquals("Name", userClass.getClassName());
+        assertEquals("Institution", userClass.getInstitution());
+        assertEquals(10.0f, userClass.getCutOff(), 0.1f);
+        assertEquals("password", userClass.getPassword());
+        assertEquals(10.0f, userClass.getAddition(), 0.1f);
+        assertEquals(5, userClass.getSizeGroups());
+    }
 }
 
 
