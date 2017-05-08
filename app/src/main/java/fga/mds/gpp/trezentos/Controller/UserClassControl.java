@@ -121,7 +121,7 @@ public class UserClassControl {
     private UserClass getUserClassFromJson(JSONObject jsonObject){
         UserClass userClass = new UserClass();
 
-        try{
+        try {
             userClass.setClassName(jsonObject.getString("name"));
             userClass.setInstitution(jsonObject.getString("institution"));
             userClass.setCutOff(Float.parseFloat(jsonObject.getString("passingScore")));
