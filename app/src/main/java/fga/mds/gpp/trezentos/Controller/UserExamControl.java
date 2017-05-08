@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import fga.mds.gpp.trezentos.DAO.CreateClassPost;
 import fga.mds.gpp.trezentos.DAO.CreateExamPost;
 import fga.mds.gpp.trezentos.DAO.getClassRequest;
+import fga.mds.gpp.trezentos.DAO.getExamRequest;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -21,7 +22,7 @@ public class UserExamControl {
 
     private static UserExamControl instance;
     private final Context context;
-
+    private  Exam exam;
     private UserExamControl(final Context context){
 
         this.context = context;
@@ -59,7 +60,7 @@ public class UserExamControl {
 
         String erro;
         try{
-            Exam exam = new Exam(examName, userClassName, classOwnerEmail);
+            exam = new Exam(examName, userClassName, classOwnerEmail);
 
             erro = "Sucesso";
             return erro;
@@ -72,14 +73,14 @@ public class UserExamControl {
 
 
     //GET FROM API
-    public ArrayList<Exam> getExamsFromUser(String examName) {
+    public ArrayList<Exam> getExamsFromUser(String email, String userClassName) {
 
-        getClassRequest classRequest = new getClassRequest(examName);
+        getExamRequest examRequest = new getExamRequest(email, userClassName);
 
         String serverResponse = "404";
 
         try {
-            serverResponse = classRequest.execute().get();
+            serverResponse = examRequest.execute().get();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -113,7 +114,7 @@ public class UserExamControl {
 
         for(int i = 0; i < array.length(); i++){
 
-            Exam exam = getUserClassFromJson(array.getJSONObject(i));
+            Exam exam = getUserExamFromJson(array.getJSONObject(i));
 
             userExams.add(exam);
 
@@ -122,7 +123,7 @@ public class UserExamControl {
         return userExams;
     }
 
-    private Exam getUserClassFromJson(JSONObject jsonObject) {
+    private Exam getUserExamFromJson(JSONObject jsonObject) {
 
         Exam exam = new Exam();
 

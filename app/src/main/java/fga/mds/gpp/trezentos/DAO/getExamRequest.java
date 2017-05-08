@@ -13,15 +13,15 @@ import okhttp3.Response;
 public class getExamRequest extends AsyncTask<String, String, String> {
 
     private final String email;
-    //private final String userClassName;
+    private final String userClassName;
 
 
-    private final String url = "https://trezentos-api.herokuapp.com/api/exam/find";
+    private final String url = "https://trezentos-api.herokuapp.com/api/exam/class/user/find";
 
-    public getExamRequest(String email){
+    public getExamRequest(String email, String userClassName){
 
         this.email = email;
-        //this.userClassName = userClassName;
+        this.userClassName = userClassName;
 
     }
 
@@ -51,7 +51,7 @@ public class getExamRequest extends AsyncTask<String, String, String> {
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
         builder.addQueryParameter("email", email);
-        //builder.addQueryParameter("userClassName", userClassName);
+        builder.addQueryParameter("userClassName", userClassName);
         return builder.build().toString();
     }
 

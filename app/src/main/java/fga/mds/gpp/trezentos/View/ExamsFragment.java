@@ -34,6 +34,7 @@ public class ExamsFragment extends Fragment {
     public ListView listView;
     public ArrayAdapter arrayAdapter;
     public UserExamControl userExamControl;
+    private UserClass userClass;
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,11 +76,13 @@ public class ExamsFragment extends Fragment {
     private void loadClasses() {
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String email = session.getString("userEmail","");
+        Intent intent = getActivity().getIntent();
+        userClass = (UserClass) intent.getSerializableExtra("Class");
 
 //        email = "teste@teste.com";
         userExamControl = UserExamControl.getInstance(getActivity());
 
-        userExams = userExamControl.getExamsFromUser(email);
+        userExams = userExamControl.getExamsFromUser(email, userClass.getClassName());
     }
 
     @Override
