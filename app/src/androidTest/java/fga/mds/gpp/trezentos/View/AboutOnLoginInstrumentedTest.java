@@ -6,11 +6,13 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.ListView;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 
@@ -31,6 +33,13 @@ public class AboutOnLoginInstrumentedTest {
     @Rule
     public ActivityTestRule<AboutOnLogin> aboutRule =
             new ActivityTestRule<>(AboutOnLogin.class);
+
+
+    @Before
+    public void setUp() {
+        UserAccountControl.getInstance(aboutRule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(aboutRule.getActivity()).validateSignInResponse();
+    }
 
     @Test
     public void shouldCountItemsInListView() {

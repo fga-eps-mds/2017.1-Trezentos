@@ -5,11 +5,13 @@ import android.support.test.rule.ActivityTestRule;
 import android.util.Log;
 import android.widget.ListView;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -23,6 +25,13 @@ public class ExamsFragmentInstrumentedTest {
     @Rule
     public ActivityTestRule<ClassActivity> classRule =
             new ActivityTestRule<>(ClassActivity.class);
+
+
+    @Before
+    public void setUp() {
+        UserAccountControl.getInstance(classRule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(classRule.getActivity()).validateSignInResponse();
+    }
 
     @Test
     public void shouldValidateExamsFragmentInitialization(){

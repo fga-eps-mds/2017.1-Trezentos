@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.LoginActivity;
@@ -37,6 +38,12 @@ public class CreateClassDialogFragmentIntrumentedTest  {
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
     public CreateClassDialogFragment fragmentTest = new CreateClassDialogFragment();
 
+
+    @Before
+    public void setUp() {
+        UserAccountControl.getInstance(rule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(rule.getActivity()).validateSignInResponse();
+    }
 
     @Test
     public void shouldAssertNotNullActivity(){

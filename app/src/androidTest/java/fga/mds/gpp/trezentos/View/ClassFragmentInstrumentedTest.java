@@ -10,11 +10,13 @@ import android.widget.ListView;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
 
 import static android.support.test.espresso.Espresso.onData;
@@ -35,6 +37,13 @@ public class ClassFragmentInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> mainRule =
             new ActivityTestRule<>(MainActivity.class);
+
+
+    @Before
+    public void setUp() {
+        UserAccountControl.getInstance(mainRule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(mainRule.getActivity()).validateSignInResponse();
+    }
 
     @Test
     public void shouldValidateClassFragmentInitialization() {

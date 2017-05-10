@@ -2,11 +2,13 @@ package fga.mds.gpp.trezentos.View;
 
 import android.support.test.rule.ActivityTestRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -25,6 +27,13 @@ public class MainActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> rule
             = new ActivityTestRule<>(MainActivity.class);
+
+
+    @Before
+    public void setUp() {
+        UserAccountControl.getInstance(rule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(rule.getActivity()).validateSignInResponse();
+    }
 
     @Test
     public void shouldCallClassFragment(){

@@ -6,11 +6,13 @@ import android.support.test.rule.ActivityTestRule;
 import junit.framework.Assert;
 
 import org.hamcrest.Matcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.LoginActivity;
@@ -33,6 +35,12 @@ public class UserAccountInstrumentedTest {
     @Rule
     public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class);
 
+
+    @Before
+    public void setUp() {
+        UserAccountControl.getInstance(rule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(rule.getActivity()).validateSignInResponse();
+    }
 
     @Test
     public void shouldValidateNullEmailLogin() throws UserException{

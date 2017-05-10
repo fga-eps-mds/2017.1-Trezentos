@@ -20,6 +20,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.Set;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.AboutFragment;
@@ -52,6 +53,12 @@ public class AboutFragmentInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> mainRule = new ActivityTestRule<>(MainActivity.class);
     public ActivityTestRule<AboutOnLogin> aboutRule = new ActivityTestRule<>(AboutOnLogin.class);
+
+    @Before
+    public void setUp() {
+        UserAccountControl.getInstance(mainRule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(mainRule.getActivity()).validateSignInResponse();
+    }
 
     // AboutFragment test in Main Activity
     @Test
