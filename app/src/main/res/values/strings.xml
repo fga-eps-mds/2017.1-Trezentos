@@ -94,5 +94,6 @@
     <string name="about_record">Record</string>
     <string name="about_reportagem">Reportagem sobre o Trezentos</string>
     <string name="about_unbtv">UnBTV</string>
+    <string name="invalid_login">Email ou senha inválidos</string>
 
 </resources>

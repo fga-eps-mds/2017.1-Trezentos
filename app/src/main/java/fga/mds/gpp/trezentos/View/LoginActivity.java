@@ -17,9 +17,12 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Arrays;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
+import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 
 public class LoginActivity extends AppCompatActivity{
@@ -30,7 +33,7 @@ public class LoginActivity extends AppCompatActivity{
     Handler mHandler = new Handler();
     private CallbackManager callbackManager;
     private LoginButton loginFacebook;
-
+    private UserAccountControl userAccountControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -81,17 +84,22 @@ public class LoginActivity extends AppCompatActivity{
                 Log.d(TAG, email.getText().toString());
                 Log.d(TAG, password.getText().toString());
 
-                UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+                userAccountControl = UserAccountControl.getInstance(getApplicationContext());
                 String emailString = email.getText().toString();
                 String passwordString = password.getText().toString();
                 String errorMessage = userAccountControl.authenticateLogin(emailString,
                         passwordString);
 
                 if(errorMessage != null){
-                    Toast.makeText(getApplicationContext(), "por favor, me diz que entra", Toast.LENGTH_LONG).show();
                     String serverResponse = userAccountControl.validateSignInResponse();
-                    userAccountControl.validatePassword(serverResponse, passwordString);
-                    goToMain(serverResponse);
+                    try {
+                        validatePasswordAndLogsUser(serverResponse, passwordString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UserException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
                 }
                 else{
                     loginErrorMessage(errorMessage, email, password);
@@ -125,6 +133,16 @@ public class LoginActivity extends AppCompatActivity{
                 startActivity(showAbout);
             }
         });
+    }
+
+    private void validatePasswordAndLogsUser(String serverResponse, String passwordString) throws JSONException, UserException {
+        JSONObject responseJson = new JSONObject(serverResponse);
+        if(responseJson.getString("name") != null) {
+            userAccountControl.validatePassword(serverResponse, passwordString);
+            goToMain(serverResponse);
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.invalid_login, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void facebookLogin(LoginResult loginResult){

@@ -13,6 +13,7 @@ import fga.mds.gpp.trezentos.DAO.SignUpRequest;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
+import fga.mds.gpp.trezentos.R;
 
 public class UserAccountControl {
     private static final String TAG = UserAccountControl.class.getSimpleName();
@@ -119,8 +120,9 @@ public class UserAccountControl {
         return serverResponse;
     }
 
-    public void validatePassword(String serverResponse, String password){
+    public void validatePassword(String serverResponse, String password) throws UserException {
         JSONObject object = getObjectFromServerResponse(serverResponse);
+
         String hashedPassword = null;
         String salt = null;
 
@@ -138,6 +140,7 @@ public class UserAccountControl {
         }
         else{
             logOutUser();
+            throw new UserException(context.getString(R.string.invalid_login));
         }
     }
 
