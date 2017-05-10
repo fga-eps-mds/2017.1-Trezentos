@@ -14,6 +14,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import org.json.JSONObject;
@@ -28,6 +29,8 @@ public class LoginActivity extends AppCompatActivity{
     String activityName = this.getClass().getSimpleName();
     Handler mHandler = new Handler();
     private CallbackManager callbackManager;
+    private LoginButton loginFacebook;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -48,7 +51,6 @@ public class LoginActivity extends AppCompatActivity{
 
         callbackManager = CallbackManager.Factory.create();
 
-        LoginButton loginFacebook;
         loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
         loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
         loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>(){
@@ -56,10 +58,6 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onSuccess(LoginResult loginResult){
                 goMainScreen();
-
-                AccessToken accessToken;
-
-                // Facebook Email address
                 facebookLogin(loginResult);
             }
 
@@ -89,7 +87,8 @@ public class LoginActivity extends AppCompatActivity{
                 String errorMessage = userAccountControl.authenticateLogin(emailString,
                         passwordString);
 
-                if(errorMessage.equals(null)){
+                if(errorMessage != null){
+                    Toast.makeText(getApplicationContext(), "por favor, me diz que entra", Toast.LENGTH_LONG).show();
                     String serverResponse = userAccountControl.validateSignInResponse();
                     userAccountControl.validatePassword(serverResponse, passwordString);
                     goToMain(serverResponse);
@@ -191,21 +190,5 @@ public class LoginActivity extends AppCompatActivity{
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 }

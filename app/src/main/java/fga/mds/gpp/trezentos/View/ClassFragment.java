@@ -27,9 +27,9 @@ public class ClassFragment extends Fragment{
     private FloatingActionButton floatingActionButton;
     FragmentTransaction fragmentTransaction;
 
-    public ClassFragment(){
-        throw new UnsupportedOperationException();
-    }
+//    public ClassFragment(){
+//        throw new UnsupportedOperationException();
+//    }
 
     public static ClassFragment newInstance(String param1, String param2){
         ClassFragment fragment = new ClassFragment();
