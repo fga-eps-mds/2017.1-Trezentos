@@ -35,7 +35,7 @@
     <string name="msg_len_cut_off_error_message">A nota de corte nao pode ser zero.</string>
     
     <string name="msg_signup_success">Usuário cadastrado com sucesso!</string>
-    <string name="msg_class_success">Sucesso!</string>
+    <string name="msg_class_success">Sucesso</string>
     <!-- Login -->
     <string name="facebook_app_id">1840540606200745</string>
     <string name="sign_up_text">Cadastrar</string>

@@ -19,23 +19,6 @@ public class AboutFragment extends Fragment{
 
     private ArrayList<About> about;
     private static AboutAdapter adapter;
-    private WebView mWebView;
-    static final String ARG_PARAM1 = "param1";
-    static final String ARG_PARAM2 = "param2";
-    private OnFragmentInteractionListener mListener;
-
-    public AboutFragment(){
-        throw new UnsupportedOperationException();
-    }
-
-    public static AboutFragment newInstance(String param1, String param2){
-        AboutFragment fragment = new AboutFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -61,17 +44,7 @@ public class AboutFragment extends Fragment{
 
         return view;
     }
-
-    public void onButtonPressed(Uri uri){
-        if (mListener != null){
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    public interface OnFragmentInteractionListener{
-        void onFragmentInteraction(Uri uri);
-    }
-
+    
     public void aboutItem(){
         about = new ArrayList<>();
 

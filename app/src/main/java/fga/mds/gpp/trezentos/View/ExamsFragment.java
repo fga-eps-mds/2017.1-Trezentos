@@ -22,24 +22,10 @@ import fga.mds.gpp.trezentos.R;
 public class ExamsFragment extends Fragment{
 
     public ArrayList<Exam> userExams;
-    private OnFragmentInteractionListener mListener;
-
-    public ExamsFragment(){
-        throw new UnsupportedOperationException();
-    }
-
-
-    public static ExamsFragment newInstance(String param1, String param2){
-        ExamsFragment fragment = new ExamsFragment();
-        Bundle args = new Bundle();
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -102,32 +88,5 @@ public class ExamsFragment extends Fragment{
         CreateExamDialogFragment ccdf = new CreateExamDialogFragment();
         ccdf.show(fragmentTransaction, "dialog");
 
-    }
-
-    public void turnOffDialogFragment(){
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-
-        CreateExamDialogFragment ccdf = (CreateExamDialogFragment) getFragmentManager()
-                .findFragmentByTag("dialog");
-
-        if(ccdf != null){
-            ccdf.dismiss();
-            fragmentTransaction.remove(ccdf);
-        }
-        else{
-            // Do nothing
-        }
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri){
-        if (mListener != null){
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    public interface OnFragmentInteractionListener{
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

@@ -209,4 +209,9 @@ public class LoginActivity extends AppCompatActivity{
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 }
