@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity{
                 String errorMessage = userAccountControl.authenticateLogin(emailString,
                         passwordString);
 
-                if(errorMessage != null){
+                if(errorMessage.isEmpty()){
                     String serverResponse = userAccountControl.validateSignInResponse();
                     try {
                         validatePasswordAndLogsUser(serverResponse, passwordString);
@@ -100,8 +100,7 @@ public class LoginActivity extends AppCompatActivity{
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
-                }
-                else{
+                } else{
                     loginErrorMessage(errorMessage, email, password);
                 }
             }

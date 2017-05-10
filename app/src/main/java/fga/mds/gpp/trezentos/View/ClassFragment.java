@@ -22,21 +22,9 @@ import fga.mds.gpp.trezentos.R;
 public class ClassFragment extends Fragment{
 
     public ArrayList<UserClass> userClasses;
-    private OnFragmentInteractionListener mListener;
     private static CustomAdapter adapter;
     private FloatingActionButton floatingActionButton;
-    FragmentTransaction fragmentTransaction;
 
-//    public ClassFragment(){
-//        throw new UnsupportedOperationException();
-//    }
-
-    public static ClassFragment newInstance(String param1, String param2){
-        ClassFragment fragment = new ClassFragment();
-        Bundle args = new Bundle();
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -98,29 +86,5 @@ public class ClassFragment extends Fragment{
         CreateClassDialogFragment ccdf = new CreateClassDialogFragment();
 
         ccdf.show(fragmentTransaction, "dialog");
-    }
-
-    public void turnOffDialogFragment(){
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        CreateClassDialogFragment ccdf = (CreateClassDialogFragment) getFragmentManager()
-                .findFragmentByTag("dialog");
-
-        if(ccdf != null){
-            ccdf.dismiss();
-            fragmentTransaction.remove(ccdf);
-        }
-
-    }
-
-    public void onButtonPressed(Uri uri){
-
-        if(mListener != null){
-            mListener.onFragmentInteraction(uri);
-        }
-
-    }
-
-    public interface OnFragmentInteractionListener{
-        void onFragmentInteraction(Uri uri);
     }
 }

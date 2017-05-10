@@ -22,9 +22,6 @@ public class CreateClassDialogFragment extends DialogFragment{
     public UserClass userClass;
     public UserAccount userAccount;
 
-    public CreateClassDialogFragment(){
-        throw new UnsupportedOperationException();
-    }
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
