@@ -33,15 +33,19 @@ public class CreateExamActivity extends AppCompatActivity {
         userClass = (UserClass) intent.getSerializableExtra("Class");
 
 
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences session = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
 
         classOwnnerEmail = session.getString("userEmail","");
-        UserClassControl userClassControl = UserClassControl.getInstance(getApplicationContext());
+        UserClassControl userClassControl = UserClassControl
+                .getInstance(getApplicationContext());
 
         userClassName = userClass.getClassName();
 
 
-        Toast.makeText(CreateExamActivity.this," Usuario: " + classOwnnerEmail + " " + "Nome Sala: " + userClassName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(CreateExamActivity.this," Usuario: "
+                + classOwnnerEmail + " "
+                    + "Nome Sala: " + userClassName, Toast.LENGTH_SHORT).show();
 
         final Button buttonOk = (Button) findViewById(R.id.ok_create_button);
         final EditText examNameField = (EditText) findViewById(R.id.exam_name);
@@ -53,11 +57,13 @@ public class CreateExamActivity extends AppCompatActivity {
 
                 boolean isValid;
 
-                UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
+                UserExamControl userExamControl = UserExamControl
+                        .getInstance(getApplicationContext());
 
                 try {
 
-                    isValid = confirmInformation(userExamControl, examNameField, userClassName, classOwnnerEmail);
+                    isValid = confirmInformation(userExamControl,
+                            examNameField, userClassName, classOwnnerEmail);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -69,8 +75,8 @@ public class CreateExamActivity extends AppCompatActivity {
                     String examName = examNameField.getText().toString();
 
                     try {
-
-                        userExamControl.validateCreateExam(examName, userClassName, classOwnnerEmail);
+                        userExamControl.validateCreateExam
+                                (examName, userClassName, classOwnnerEmail);
                     } catch (UserException e) {
                         e.printStackTrace();
                     }
@@ -81,20 +87,24 @@ public class CreateExamActivity extends AppCompatActivity {
         });
     }
 
-    public boolean confirmInformation(UserExamControl userExamControl, EditText examNameField, String userClassName, String classOwnnerEmail) throws UserException {
+    public boolean confirmInformation
+            (UserExamControl userExamControl,
+                EditText examNameField, String userClassName,
+                    String classOwnnerEmail) throws UserException {
 
         boolean isValid = false;
         String examName = examNameField.getText().toString();
         String errorMessage;
 
-        errorMessage = userExamControl.validateInformation(examName, userClassName, classOwnnerEmail );
+        errorMessage = userExamControl
+                .validateInformation(examName,userClassName, classOwnnerEmail );
 
         if (errorMessage.equals("Preencha todos os campos!")) {
             examNameField.setError("Preencha todos os campos!");
             isValid = false;
         }
 
-        if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
+        if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")){
             examNameField.requestFocus();
             examNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
             isValid = false;
@@ -108,7 +118,3 @@ public class CreateExamActivity extends AppCompatActivity {
         return isValid;
     }
 }
-
-
-
-//nome + email conta
