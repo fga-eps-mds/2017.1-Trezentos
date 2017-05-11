@@ -12,6 +12,16 @@ public class UserClass implements Serializable {
     private float addition;
     private int sizeGroups;
 
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
+    }
+
+    private String ownerEmail;
+
     public UserClass(){
         //An empty constructor is needed to create a new instance of object,
         //in addition is create constructors with arguments.
