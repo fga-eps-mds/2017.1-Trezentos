@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserAccount;
@@ -27,9 +29,9 @@ public class ClassFragment extends Fragment{
     private FloatingActionButton floatingActionButton;
     FragmentTransaction fragmentTransaction;
 
-    public ClassFragment(){
-        throw new UnsupportedOperationException();
-    }
+    //public ClassFragment(){
+//        throw new UnsupportedOperationException();
+  //  }
 
     public static ClassFragment newInstance(String param1, String param2){
         ClassFragment fragment = new ClassFragment();
@@ -74,11 +76,21 @@ public class ClassFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 
-                Intent goClass = new  Intent(getActivity(), ClassActivity.class);
+               // Intent goClass = new  Intent(getActivity(), ClassActivity.class);
                 UserClass userClassCalled = (UserClass) listView.getItemAtPosition(position);
-                goClass.putExtra("Class", userClassCalled);
+               // goClass.putExtra("Class", userClassCalled);
 
-                startActivity(goClass);
+                // startActivity(goClass);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userClass", userClassCalled);
+
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                JoinClassFragment joinClassFragment = new JoinClassFragment();
+                joinClassFragment.setArguments(bundle);
+                joinClassFragment.show(fragmentTransaction, "joinClass");
+
+
             }
         });
 
