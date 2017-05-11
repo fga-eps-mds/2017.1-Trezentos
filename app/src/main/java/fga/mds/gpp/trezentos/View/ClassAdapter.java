@@ -33,7 +33,7 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.row_item, parent, false);
+                .inflate(R.layout.class_item, parent, false);
         ClassViewHolder holder = new ClassViewHolder(view);
         view.setOnClickListener(this);
 
