@@ -4,23 +4,41 @@
     android:layout_height="match_parent"
     tools:context="fga.mds.gpp.trezentos.View.UserFragment">
 
-    <Button
-        android:id="@+id/button_loggout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="Sair"
 
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Perfil Fragment"
-        android:textSize="40dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="50dp"
-        />
+        <Button
+            android:id="@+id/button_loggout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Sair"
+
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/button_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Search"
+
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perfil Fragment"
+            android:textSize="40dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="50dp"
+            />
+
+    </LinearLayout>
 
 </FrameLayout>

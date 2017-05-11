@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.DAO.getAllClassRequest;
 import fga.mds.gpp.trezentos.DAO.getClassRequest;
 import fga.mds.gpp.trezentos.DAO.CreateClassPost;
 import fga.mds.gpp.trezentos.DAO.SignUpRequest;
@@ -26,7 +27,7 @@ public class UserClassControl {
     private static UserClassControl instance;
     private final Context context;
 
-    UserClassControl(final Context context){
+    public UserClassControl(final Context context){
 
         this.context = context;
 
@@ -80,6 +81,33 @@ public class UserClassControl {
              }
     }
 
+
+    public ArrayList<UserClass> getClasses() {
+
+        getAllClassRequest classRequest = new getAllClassRequest();
+
+        String serverResponse = "404";
+
+        try {
+            serverResponse = classRequest.execute().get();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<UserClass> userClasses = new ArrayList<UserClass>();
+
+        try {
+            userClasses = getArrayList(serverResponse);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return userClasses;
+
+    }
 
     public ArrayList<UserClass> getClassesFromUser(String email) {
 

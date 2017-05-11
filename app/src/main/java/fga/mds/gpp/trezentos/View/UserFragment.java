@@ -22,6 +22,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private Button logoutButton;
+    private Button classButton;
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
@@ -54,7 +55,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         logoutButton = (Button) view.findViewById(R.id.button_loggout);
+        classButton = (Button) view.findViewById(R.id.button_class);
+
         logoutButton.setOnClickListener(this);
+        classButton.setOnClickListener(this);
 
         return view;
     }
@@ -69,11 +73,15 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 userAccountControl.logOutUser();
 
                 goLoginScreen();
-
+                break;
+            }
+            case R.id.button_class: {
+                goClassScreen();
                 break;
             }
         }
     }
+
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
@@ -83,6 +91,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void goClassScreen() {
+        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
         startActivity(intent);
     }
 }
