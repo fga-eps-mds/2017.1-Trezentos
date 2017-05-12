@@ -1,13 +1,16 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,10 +18,13 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import fga.mds.gpp.trezentos.R;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class MainActivity extends AppCompatActivity{
 
     private BottomNavigationView bottomNavigationView;
     private ClassFragment fragment;
+    private Menu menu;
     private FragmentTransaction fragmentTransaction;
 
     @Override
@@ -36,6 +42,10 @@ public class MainActivity extends AppCompatActivity{
         // Noinspection SimplifiableIfStatement
         if(id == R.id.action_settings){
             Toast.makeText(MainActivity.this, "Configurações", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if(id == R.id.search_classes){
+            goClassScreen();
             return true;
         }
 
@@ -119,4 +129,10 @@ public class MainActivity extends AppCompatActivity{
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    private void goClassScreen() {
+        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+        startActivity(intent);
+    }
+
 }

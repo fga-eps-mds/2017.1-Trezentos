@@ -77,7 +77,7 @@ public class ExamsFragmentInstrumentedTest {
         onView(ViewMatchers.withText("EXAMS"))
                 .perform(click());
 
-        onView(withId(R.id.floating_btn_add_exams)).perform(click());
+        onView(withId(R.id.floating_btn)).perform(click());
 
         assertNotNull(classRule);
 
