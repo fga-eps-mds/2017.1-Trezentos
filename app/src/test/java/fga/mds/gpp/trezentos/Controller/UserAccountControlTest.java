@@ -17,7 +17,7 @@ import static junit.framework.TestCase.assertFalse;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class UserAccountControlTest {
+public class    UserAccountControlTest {
 
     UserAccountControl testUser;
     private LoginActivity activity;

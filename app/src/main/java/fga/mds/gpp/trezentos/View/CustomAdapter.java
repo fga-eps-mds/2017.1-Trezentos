@@ -82,11 +82,6 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
             result = convertView;
         }
 
-        int ordenation = (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top;
-        Animation animation = AnimationUtils.loadAnimation(mContext, ordenation);
-        result.startAnimation(animation);
-        lastPosition = position;
-
         viewHolder.className.setText(userClass.getClassName());
         viewHolder.institution.setText(userClass.getInstitution());
         viewHolder.info.setOnClickListener(this);

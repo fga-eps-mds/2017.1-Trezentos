@@ -10,6 +10,7 @@
     <string name="msg_null_name_error_message">O nome não pode estar vazio</string>
     <string name="msg_class_name_case_error_message">O nome da sala deve ter de 3 a 20 caracteres.</string>
     <string name="msg_institution_case_error_message">O nome da instituicao deve ter de 3 a 20 caracteres.</string>
+    <string name="msg_create_exam_name_error">O nome da prova deve ter de 2 a 15 caracteres.</string>
 
     <!-- Passwords -->
     <string name="msg_len_password_error_message">A senha deve ter entre 6 e 16 caracteres</string>
@@ -76,7 +77,7 @@
     <!--Tab-->
     <string name="tab_text_students">Alunos</string>
     <string name="tab_text_tests">Salas</string>
-    
+
     <!--ExamFragment-->
     <string name="name_exam">Nome da Prova</string>
 

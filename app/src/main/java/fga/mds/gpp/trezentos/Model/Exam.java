@@ -26,7 +26,8 @@ public class Exam{
         if(nameExam != null && !nameExam.isEmpty()){
             if(nameExam.length() < MIN_NAME_EXAM_LENGTH
                     || nameExam.length() > MAX_NAME_EXAM_LENGTH){
-                throw new UserException("O nome da prova deve ter entre 2 e 15 caracteres.");
+                throw new UserException("O nome da prova " +
+                        "deve ter entre 2 e 15 caracteres.");
             }else{
                 this.nameExam = nameExam;
             }
@@ -47,11 +48,11 @@ public class Exam{
         return userClassName;
     }
 
-    public void setClassOwnerEmail(String classOwnerEmail)throws UserException{
+    public void setClassOwnerEmail(String classOwnerEmail)throws UserException {
         this.classOwnerEmail = classOwnerEmail;
     }
 
-    public String getClassOwnerEmail(){
+    public String getClassOwnerEmail() {
         return classOwnerEmail;
     }
 }
