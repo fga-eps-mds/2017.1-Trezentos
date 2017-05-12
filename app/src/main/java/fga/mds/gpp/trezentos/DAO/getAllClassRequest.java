@@ -13,7 +13,8 @@ import okhttp3.Response;
 public class getAllClassRequest extends AsyncTask<String, String, String> {
 
 
-    private final String url = "https://trezentos-api.herokuapp.com/api/class/find";
+    private final String url =
+            "https://trezentos-api.herokuapp.com/api/class/find";
 
     public getAllClassRequest(){
 

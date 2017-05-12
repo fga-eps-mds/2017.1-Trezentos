@@ -2,6 +2,8 @@ package fga.mds.gpp.trezentos.View;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,17 +29,21 @@ public class SearchActivity extends AppCompatActivity {
     public ClassAdapter classAdapter;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        SharedPreferences session = PreferenceManager
+                .getDefaultSharedPreferences(SearchActivity.this);
+        email = session.getString("userEmail","");
+
         initClasses();
         initToolbar();
         initAppBarLayout();
         initRecyclerView();
-
 
     }
 
@@ -61,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
     private void initRecyclerView(){
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView);
+        classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView, email);
         recyclerView.setAdapter(classAdapter);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layout);
@@ -85,19 +91,11 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void hideViews() {
-        //toolbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
         appBarLayout.animate().translationY(-appBarLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-
-       // FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFabButton.getLayoutParams();
-        //int fabBottomMargin = lp.bottomMargin;
-        //mFabButton.animate().translationY(mFabButton.getHeight()+fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
     }
 
     private void showViews() {
-        //toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
         appBarLayout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
-
-        //mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
     @Override

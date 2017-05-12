@@ -157,6 +157,8 @@ public class UserClassControl {
             userClass.setAddition(Float.parseFloat(jsonObject.getString("additionScore")));
             userClass.setPassword(jsonObject.getString("password"));
             userClass.setSizeGroups(Integer.parseInt(jsonObject.getString("numberOfStudentsPerGroup")));
+            userClass.setOwnerEmail(jsonObject.getString("ownerEmail"));
+            userClass.setStudents(jsonObject.getJSONArray("students"));
 
         }catch (JSONException e){
             e.printStackTrace();

@@ -1,6 +1,8 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,12 +22,15 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
     private Context context;
     private RecyclerView recyclerView;
     private FriendFilter friendFilter;
+    private String email;
 
-    public ClassAdapter(ArrayList<UserClass> userClasses, Context context, RecyclerView recyclerView){
+    public ClassAdapter(ArrayList<UserClass> userClasses, Context context,
+                        RecyclerView recyclerView, String email){
         this.userClasses = userClasses;
         this.filteredClasses = userClasses;
         this.context = context;
         this.recyclerView =  recyclerView;
+        this.email = email;
 
         getFilter();
     }
@@ -43,10 +48,27 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        ClassViewHolder classViewHolder = (ClassViewHolder) holder;
         UserClass userClass  = filteredClasses.get(position) ;
-        classViewHolder.name.setText(userClass.getClassName());
-        classViewHolder.institution.setText(userClass.getInstitution());
+
+        if(userClass.getOwnerEmail().equals(email)){
+
+            Log.d("EQUALS", userClass.getOwnerEmail() + " = " + email);
+
+        }else{
+
+            ClassViewHolder classViewHolder = (ClassViewHolder) holder;
+
+            if(userClass.getStudents().contains(email)){
+
+            }else {
+
+                classViewHolder.name.setText(userClass.getClassName());
+                classViewHolder.institution.setText(userClass.getInstitution());
+
+                Log.d("EQUALS", userClass.getOwnerEmail() + " != " + email);
+
+            }
+        }
 
     }
 
