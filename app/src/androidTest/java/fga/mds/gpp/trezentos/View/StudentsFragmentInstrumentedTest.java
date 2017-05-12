@@ -74,7 +74,7 @@ public class StudentsFragmentInstrumentedTest {
         onView(ViewMatchers.withText("STUDENTS"))
                 .perform(click());
 
-        onView(withId(R.id.floating_btn_add_student)).perform(click());
+        onView(withId(R.id.floating_btn)).perform(click());
 
         assertNotNull(classRule);
     }

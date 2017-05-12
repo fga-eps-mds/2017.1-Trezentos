@@ -15,16 +15,6 @@
 
     </ListView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floating_btn_add_student"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="30dp"
-        android:contentDescription="@string/criar_sala"
-        android:src="@drawable/ic_criar_sala"
-        android:onClick="onClickCreate"
 
-        app:backgroundTint="@color/colorBottomMenu" />
 
 </FrameLayout>

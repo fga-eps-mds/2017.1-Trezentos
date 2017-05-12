@@ -6,4 +6,13 @@
         android:orderInCategory="100"
         android:title="@string/configuracoes"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/search_classes"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom"
+
+        />
+
 </menu>

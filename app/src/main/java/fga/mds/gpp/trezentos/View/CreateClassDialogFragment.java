@@ -95,6 +95,11 @@ public class CreateClassDialogFragment extends DialogFragment{
         return view;
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){

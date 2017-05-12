@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fga.mds.gpp.trezentos.View.CreateExamActivity"
+    android:orientation="vertical">
+
+
+
+    <EditText
+        android:id="@+id/exam_name"
+        android:textSize="25dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginLeft="0dp"
+        android:hint="Nome do teste"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:id="@+id/ok_create_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/cardview_dark_background"
+        android:textColor="@color/cardview_light_background" />
+
+</LinearLayout>

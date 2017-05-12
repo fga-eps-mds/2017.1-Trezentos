@@ -41,8 +41,10 @@ public class ClassFragmentInstrumentedTest {
 
     @Before
     public void setUp() {
-        UserAccountControl.getInstance(mainRule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
-        UserAccountControl.getInstance(mainRule.getActivity()).validateSignInResponse();
+        UserAccountControl.getInstance(mainRule.getActivity())
+                .authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(mainRule.getActivity())
+                .validateSignInResponse();
     }
 
     @Test
