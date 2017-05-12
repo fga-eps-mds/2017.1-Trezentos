@@ -64,7 +64,15 @@ public class JoinClassFragment extends DialogFragment implements View.OnClickLis
         try {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String email = preferences.getString("userEmail", null);
-            userClassControl.validateJoinClass(userClass, password.getText().toString(), email);
+
+            String result = userClassControl.validateJoinClass(userClass, password.getText().toString(), email);
+            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+            if (result.contains("true")) {
+                Toast.makeText(getActivity(), getActivity().getString(R.string.join_class_success), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), getActivity().getString(R.string.join_class_failed), Toast.LENGTH_SHORT).show();
+            }
+            getDialog().dismiss();
         } catch (UserClassException e) {
             password.setError(e.getMessage());
             e.printStackTrace();
@@ -77,3 +85,13 @@ public class JoinClassFragment extends DialogFragment implements View.OnClickLis
         }
     }
 }
+
+//    to properly open dialog
+//
+//    Bundle bundle = new Bundle();
+//    bundle.putSerializable("userClass", userClassCalled);
+//
+//    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//    JoinClassFragment joinClassFragment = new JoinClassFragment();
+//    joinClassFragment.setArguments(bundle);
+//    joinClassFragment.show(fragmentTransaction, "joinClass");

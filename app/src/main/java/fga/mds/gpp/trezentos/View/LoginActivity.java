@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity{
                 String errorMessage = userAccountControl.authenticateLogin(emailString,
                         passwordString);
 
-                if(errorMessage.equals(null)){
+                if(errorMessage.isEmpty()){
                     String serverResponse = userAccountControl.validateSignInResponse();
                     userAccountControl.validatePassword(serverResponse, passwordString);
                     goToMain(serverResponse);

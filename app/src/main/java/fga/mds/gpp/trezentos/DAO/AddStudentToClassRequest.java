@@ -34,12 +34,12 @@ public class AddStudentToClassRequest extends AsyncTask<String, String, String>{
         RequestBody body = RequestBody.create(null, "");
         Request request = new Request.Builder()
                 .url(urlWithParameters)
-                .post(body)
+                .put(body)
                 .build();
 
         try{
             Response response = client.newCall(request).execute();
-            return response.body().toString();
+            return response.body().string();
         }catch (IOException e){
             e.printStackTrace();
             Log.i("LOG", "IOException in doInBackground method");

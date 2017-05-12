@@ -145,16 +145,16 @@ public class UserClassControl {
     }
 
     public String validateJoinClass(UserClass userClass, String password, String studentEmail) throws UserClassException, ExecutionException, InterruptedException {
-        String serverResponse = null;
+        String serverResponse;
         if (!password.isEmpty()){
             if(password.equals(userClass.getPassword())){
                 AddStudentToClassRequest addStudentToClassRequest = new AddStudentToClassRequest(userClass, studentEmail);
                 serverResponse = addStudentToClassRequest.execute().get();
             } else {
-                throw new UserClassException("A senha errada. Por favor, digite novamente");
+                throw new UserClassException(context.getString(R.string.join_class_wrong_password_error));
             }
         } else {
-            throw new UserClassException("A senha não pode ser vazia");
+            throw new UserClassException(context.getString(R.string.join_class_null_password_error));
         }
 
         return serverResponse;

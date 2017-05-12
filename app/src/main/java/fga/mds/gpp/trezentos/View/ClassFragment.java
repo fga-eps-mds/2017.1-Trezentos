@@ -76,21 +76,11 @@ public class ClassFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 
-               // Intent goClass = new  Intent(getActivity(), ClassActivity.class);
+                Intent goClass = new  Intent(getActivity(), ClassActivity.class);
                 UserClass userClassCalled = (UserClass) listView.getItemAtPosition(position);
-               // goClass.putExtra("Class", userClassCalled);
+                goClass.putExtra("Class", userClassCalled);
 
-                // startActivity(goClass);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("userClass", userClassCalled);
-
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                JoinClassFragment joinClassFragment = new JoinClassFragment();
-                joinClassFragment.setArguments(bundle);
-                joinClassFragment.show(fragmentTransaction, "joinClass");
-
-
+                 startActivity(goClass);
             }
         });
 
