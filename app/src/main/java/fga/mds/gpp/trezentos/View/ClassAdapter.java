@@ -1,10 +1,7 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,27 +45,10 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        UserClass userClass  = filteredClasses.get(position) ;
-
-        if(userClass.getOwnerEmail().equals(email)){
-
-            Log.d("EQUALS", userClass.getOwnerEmail() + " = " + email);
-
-        }else{
-
-            ClassViewHolder classViewHolder = (ClassViewHolder) holder;
-
-            if(userClass.getStudents().contains(email)){
-
-            }else {
-
-                classViewHolder.name.setText(userClass.getClassName());
-                classViewHolder.institution.setText(userClass.getInstitution());
-
-                Log.d("EQUALS", userClass.getOwnerEmail() + " != " + email);
-
-            }
-        }
+        UserClass userClass  = filteredClasses.get(position);
+        ClassViewHolder classViewHolder = (ClassViewHolder) holder;
+        classViewHolder.name.setText(userClass.getClassName());
+        classViewHolder.institution.setText(userClass.getInstitution());
 
     }
 
@@ -110,7 +90,6 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
                 for (UserClass userClass : userClasses) {
                     if (userClass.getClassName().toLowerCase().contains(constraint.toString().toLowerCase())) {
                         tempList.add(userClass);
-                        Log.d("PUT", userClass.getClassName());
                     }
                 }
 
@@ -120,7 +99,6 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
                 filterResults.count = userClasses.size();
                 filterResults.values = userClasses;
             }
-
             return filterResults;
         }
 

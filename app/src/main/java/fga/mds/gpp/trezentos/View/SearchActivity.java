@@ -11,11 +11,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
@@ -67,6 +67,7 @@ public class SearchActivity extends AppCompatActivity {
     private void initRecyclerView(){
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        userClasses = getFormatedClasses(userClasses);
         classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView, email);
         recyclerView.setAdapter(classAdapter);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -100,12 +101,10 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        // getMenuInflater().inflate(R.menu.menu_navigation, menu);
-        getMenuInflater().inflate(R.menu.search_navigation, menu);
 
+        getMenuInflater().inflate(R.menu.search_navigation, menu);
         MenuItem searchViewItem = menu.findItem(R.id.action_search);
-        // Get the SearchView and set the searchable configuration
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) searchViewItem.getActionView();
         searchView.setQueryHint("Search");
@@ -114,7 +113,7 @@ public class SearchActivity extends AppCompatActivity {
 
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
             public boolean onQueryTextChange(String newText) {
-                // This is your adapter that will be filtered
+                // Adapter that will be filtered
                 classAdapter.getFilter().filter(newText);
                 return true;
             }
@@ -126,6 +125,18 @@ public class SearchActivity extends AppCompatActivity {
         };
         searchView.setOnQueryTextListener(queryTextListener);
         return true;
+    }
+
+    public ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){
+        ArrayList<UserClass> tempList = new ArrayList<UserClass>();
+        for (UserClass userClass : userClasses) {
+            if (userClass.getOwnerEmail().equals(email) || userClass.getStudents().contains(email)) {
+            }else{
+                tempList.add(userClass);
+                Log.d("PUT", userClass.getClassName());
+            }
+        }
+        return tempList;
     }
 }
 

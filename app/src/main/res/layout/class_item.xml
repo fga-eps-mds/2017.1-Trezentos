@@ -10,7 +10,7 @@
     <LinearLayout
         android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="70dp"
         android:orientation="vertical"
         >
 
@@ -21,6 +21,7 @@
             android:layout_alignParentTop="true"
             android:text="Nome Sala"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/black" />
 
@@ -41,7 +42,7 @@
         android:id="@+id/item_info"
         android:layout_width="72dp"
         android:layout_height="35dp"
-        android:layout_gravity="end|center_horizontal"
+        android:layout_gravity="end|center_vertical"
         android:src="@drawable/ic_more" />
 
 </android.support.v7.widget.CardView>
