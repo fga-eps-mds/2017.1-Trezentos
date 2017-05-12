@@ -1,16 +1,14 @@
 package fga.mds.gpp.trezentos.DAO;
 
-import android.os.AsyncTask;
+
 import android.util.Log;
-
 import java.io.IOException;
-
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class getClassRequest extends AsyncTask<String, String, String>{
+public class getClassRequest {
 
     private final String email;
     private final static String url = "https://trezentos-api.herokuapp.com/api/class/user/find";
@@ -19,8 +17,7 @@ public class getClassRequest extends AsyncTask<String, String, String>{
         this.email = email;
     }
 
-    @Override
-    protected String doInBackground(String... params){
+    public String get(){
         OkHttpClient client = new OkHttpClient();
 
         String urlWithParameters = getUrlWithParameters();

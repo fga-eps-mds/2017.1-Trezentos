@@ -1,16 +1,14 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,14 +16,10 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import fga.mds.gpp.trezentos.R;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 public class MainActivity extends AppCompatActivity{
 
     private BottomNavigationView bottomNavigationView;
-    private ClassFragment fragment;
-    private Menu menu;
-    private FragmentTransaction fragmentTransaction;
+    private Fragment selectedFragment;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -36,9 +30,7 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-
         int id = item.getItemId();
-
         // Noinspection SimplifiableIfStatement
         if(id == R.id.action_settings){
             Toast.makeText(MainActivity.this, "Configurações", Toast.LENGTH_SHORT).show();
@@ -52,9 +44,11 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        selectedFragment = null;
 
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if(AccessToken.getCurrentAccessToken() == null && !session.getBoolean("IsUserLogged", false)){
@@ -64,63 +58,40 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ClassFragment classFragment = new ClassFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, classFragment, "fragmentclass" );
-        fragmentTransaction.commit();
-
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView
                         .OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                FragmentTransaction fragmentTransaction;
-
                 switch (item.getItemId()){
                     case R.id.salas_item:
-                        Toast.makeText(MainActivity.this, "Button Salas", Toast.LENGTH_SHORT).show();
-
-                        ClassFragment classFragment = new ClassFragment();
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, classFragment, "fragment_class");
-                        fragmentTransaction.commit();
-
-                        return true;
+                        selectedFragment = ClassFragment.newInstance();
+                        break;
 
                     case R.id.usuario_item:
-                        Toast.makeText(MainActivity.this, "Button Usuario", Toast.LENGTH_SHORT).show();
-
-                        UserFragment userFragment = new UserFragment();
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame,userFragment, "fragment_user" );
-                        fragmentTransaction.commit();
-
-                        return true;
+                        selectedFragment = UserFragment.newInstance();
+                        break;
 
                     case R.id.about_item:
-                        Toast.makeText(MainActivity.this,"Button Sobre", Toast.LENGTH_SHORT).show();
-
-                        AboutFragment aboutFragment = new AboutFragment();
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame,aboutFragment, "fragment_about" );
-                        fragmentTransaction.commit();
-
-                        return true;
+                        selectedFragment = AboutFragment.newInstance();
+                        break;
 
                     case R.id.avaliacao_item:
-                        Toast.makeText(MainActivity.this,"Button Avaliação", Toast.LENGTH_SHORT).show();
-
-                        EvaluationFragment evaluationFragment = new EvaluationFragment();
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame,evaluationFragment, "fragment_evaluation" );
-                        fragmentTransaction.commit();
-                        return true;
+                        selectedFragment = EvaluationFragment.newInstance();
+                        break;
                 }
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame, selectedFragment);
+                transaction.commit();
                 return true;
             }
 
         });
+
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, ClassFragment.newInstance());
+        transaction.commit();
     }
 
     private void goLoginScreen() {
@@ -131,8 +102,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void goClassScreen() {
-        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), SearchActivity.class));
     }
 
 }

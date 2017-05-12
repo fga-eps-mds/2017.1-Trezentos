@@ -72,7 +72,6 @@ public class UserClassControl {
     }
 }
 
-
     public ArrayList<UserClass> getClasses() {
 
         getAllClassRequest classRequest = new getAllClassRequest();
@@ -106,14 +105,7 @@ public class UserClassControl {
 
         String serverResponse = "404";
 
-        try {
-            serverResponse = classRequest.execute().get();
-
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
-            e.printStackTrace();
-        }
+        serverResponse = classRequest.get();
 
         ArrayList<UserClass> userClasses = new ArrayList<UserClass>();
 
