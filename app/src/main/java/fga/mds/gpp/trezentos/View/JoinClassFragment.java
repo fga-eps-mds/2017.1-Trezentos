@@ -37,7 +37,7 @@ public class JoinClassFragment extends DialogFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         userClass = (UserClass) getArguments().getSerializable("userClass");
-        getDialog().setTitle(userClass.getOwnerEmail());
+        getDialog().setTitle(userClass.getClassName());
 
         final View view = inflater.inflate(R.layout.fragment_join_class, container, false);
 
