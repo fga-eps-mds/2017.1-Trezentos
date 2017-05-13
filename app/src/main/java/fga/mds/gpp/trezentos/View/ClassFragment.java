@@ -2,7 +2,6 @@ package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import java.util.ArrayList;
-import java.util.List;
 
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserAccount;
@@ -38,7 +36,7 @@ public class ClassFragment extends Fragment{
     public void onResume(){
         super.onResume();
 
-        loadClasses();
+        userClasses = loadClasses();
         adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
         if(listView.getAdapter() == null){ //Adapter not set yet.
             listView.setAdapter(adapter);
@@ -51,12 +49,24 @@ public class ClassFragment extends Fragment{
         }
     }
 
-    private void loadClasses(){
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    private ArrayList<UserClass> loadClasses(){
+        SharedPreferences session = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
         String email = session.getString("userEmail","");
-        UserClassControl userClassControl = UserClassControl.getInstance(getActivity());
+        UserClassControl userClassControl = UserClassControl
+                .getInstance(getActivity());
 
-        userClasses = userClassControl.getClassesFromUser(email);
+        ArrayList<UserClass> tempList = new ArrayList<>();
+        userClasses = userClassControl.getClasses();
+
+        for (UserClass userClass : this.userClasses) {
+            if ( userClass.getOwnerEmail().equals(email) ||
+                    userClass.getStudents().contains(email)) {
+                tempList.add(userClass);
+            }
+        }
+
+        return tempList;
     }
 
 
@@ -68,7 +78,7 @@ public class ClassFragment extends Fragment{
         final UserClass userClass = new UserClass();
         final UserAccount userAccount = new UserAccount();
 
-        loadClasses();
+        userClasses = loadClasses();
 
         adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
 
