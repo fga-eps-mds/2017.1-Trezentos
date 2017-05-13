@@ -76,8 +76,7 @@ public class CustomAdapter extends ArrayAdapter<UserClass> implements View.OnCli
 
             convertView.setTag(viewHolder);
 
-        }
-        else{
+        } else{
             viewHolder = (ViewHolder) convertView.getTag();
             result = convertView;
         }

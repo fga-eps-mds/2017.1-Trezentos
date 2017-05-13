@@ -43,6 +43,7 @@ public class ClassActivity extends AppCompatActivity{
 //            textView.setText(userClass.getClassName());
             setTitle(userClass.getClassName());
         }
+
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn);
 
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {

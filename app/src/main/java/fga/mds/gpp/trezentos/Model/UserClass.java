@@ -1,16 +1,24 @@
 package fga.mds.gpp.trezentos.Model;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+
 import fga.mds.gpp.trezentos.Exception.UserException;
 
 public class UserClass implements Serializable {
+
     private String className;
     private String institution;
     private float cutOff;
     private String password;
     private float addition;
     private int sizeGroups;
+    private String ownerEmail;
+    private ArrayList<String> students;
 
     public UserClass(){
         //An empty constructor is needed to create a new instance of object,
@@ -123,4 +131,33 @@ public class UserClass implements Serializable {
             throw new UserException("A nota de corte nao pode ser zero.");
         }
     }
+
+    public ArrayList<String> getStudents(){
+        return students;
+    }
+
+    public void setStudents(JSONArray jArray){
+
+        ArrayList<String> tempList = new ArrayList<String>();
+
+        if (jArray != null) {
+            for(int i = 0;i < jArray.length(); i++){
+                try {
+                    tempList.add(jArray.getString(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        this.students = tempList;
+    }
+
+    public String getOwnerEmail(){
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail){
+        this.ownerEmail = ownerEmail;
+    }
+
 }

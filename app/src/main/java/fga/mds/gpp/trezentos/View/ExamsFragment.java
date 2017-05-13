@@ -3,6 +3,7 @@ package fga.mds.gpp.trezentos.View;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.net.sip.SipAudioCall;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Model.Exam;
+
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
@@ -91,7 +93,6 @@ public class ExamsFragment extends Fragment{
                 Snackbar.make(view, "Click List", Snackbar.LENGTH_LONG).setAction("No action", null).show();
             }
         });
-
         return view;
     }
 }

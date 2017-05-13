@@ -90,7 +90,6 @@ public class ClassFragment extends Fragment{
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener(){
             @Override
-
             public void onClick(View v) {
 
                 startActivity(new Intent(getActivity(), CreateClassActivity.class));
@@ -98,30 +97,5 @@ public class ClassFragment extends Fragment{
         });
 
         return view;
-    }
-
-    public void openDialogFragment(View view){
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        CreateClassDialogFragment ccdf = new CreateClassDialogFragment();
-        ccdf.show(fragmentTransaction, "dialog");
-
-    }
-
-
-
-    public void turnOffDialogFragment(){
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        CreateClassDialogFragment ccdf = (CreateClassDialogFragment) getFragmentManager()
-                .findFragmentByTag("dialog");
-        if(ccdf != null){
-            ccdf.dismiss();
-            fragmentTransaction.remove(ccdf);
-            //updateClasses();
-        }
-
-    }
-
-    public void onButtonPressed(Uri uri) {
-
     }
 }

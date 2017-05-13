@@ -98,7 +98,6 @@ public class UserExamControl{
 
         for(int i = 0; i < array.length(); i++){
             Exam exam = getUserExamFromJson(array.getJSONObject(i));
-
             userExams.add(exam);
         }
 

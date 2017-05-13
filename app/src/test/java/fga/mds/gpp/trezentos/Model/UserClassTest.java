@@ -1,8 +1,15 @@
 package fga.mds.gpp.trezentos.Model;
 
+import android.util.Log;
+
 import static org.junit.Assert.*;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.junit.Test;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 
@@ -13,7 +20,6 @@ public class UserClassTest {
         UserClass userClass = new UserClass();
         userClass.setClassName("nome");
         assertEquals("nome", userClass.getClassName());
-
     }
 
     @Test
@@ -54,6 +60,31 @@ public class UserClassTest {
     }
 
     @Test
+    public void shouldValidateOwnerEmail(){
+        UserClass userClass = new UserClass();
+        userClass.setOwnerEmail("teste@email.com");
+        assertEquals("teste@email.com", userClass.getOwnerEmail());
+    }
+
+//    @Test
+//    public void shouldValidateStudentsRegistreds(){
+//        UserClass userClass = new UserClass();
+//        ArrayList<String> tempList;
+//
+//        JSONArray jArray = new JSONArray();
+//
+//        userClass.setStudents(jArray);
+//        tempList = userClass.getStudents();
+//
+//        if(tempList == userClass.getStudents()){
+//            Log.d("FUNFAPLZ", "Resultado é = " + String.valueOf(userClass.getStudents()));
+//            Log.d("FUNFAPLZ", "Resultado é = " + tempList);
+//        }
+//
+//        assertEquals(tempList, userClass.getStudents());
+//    }
+
+    @Test
     public void shouldValidateConstructor() throws UserException {
         UserClass userClass = new UserClass("Name", "Institution", 10.0f, "password", 10.0f, 5);
         assertEquals("Name", userClass.getClassName());
@@ -63,6 +94,7 @@ public class UserClassTest {
         assertEquals(10.0f, userClass.getAddition(), 0.1f);
         assertEquals(5, userClass.getSizeGroups());
     }
+
 }
 
 
