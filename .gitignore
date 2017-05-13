@@ -44,6 +44,7 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/kotlinc.xml
+.idea/misc.xml
 
 # Keystore files
 *.jks

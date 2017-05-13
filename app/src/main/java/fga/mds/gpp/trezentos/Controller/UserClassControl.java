@@ -52,8 +52,6 @@ public class UserClassControl {
         } catch (UserException userException) {
             userException.printStackTrace();
         }
-
-
     }
 
 
@@ -80,33 +78,6 @@ public class UserClassControl {
     public ArrayList<UserClass> getClasses() {
 
         getAllClassRequest classRequest = new getAllClassRequest();
-
-        String serverResponse = "404";
-
-        try {
-            serverResponse = classRequest.execute().get();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        ArrayList<UserClass> userClasses = new ArrayList<UserClass>();
-
-        try {
-            userClasses = getArrayList(serverResponse);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return userClasses;
-
-    }
-
-    public ArrayList<UserClass> getClassesFromUser(String email) {
-
-        getClassRequest classRequest = new getClassRequest(email);
 
         String serverResponse = "404";
 
@@ -162,7 +133,7 @@ public class UserClassControl {
             userClass.setPassword(jsonObject.getString("password"));
             userClass.setSizeGroups(Integer.parseInt(jsonObject.getString("numberOfStudentsPerGroup")));
             userClass.setOwnerEmail(jsonObject.getString("ownerEmail"));
-            userClass.setStudents(new ArrayList<>((Collection) jsonObject.getJSONArray("students")));
+            userClass.setStudents(getStudentsFromJson(jsonObject.getJSONArray("students")));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -171,6 +142,20 @@ public class UserClassControl {
         }
 
         return userClass;
+    }
+
+    private ArrayList<String> getStudentsFromJson(JSONArray jsonArray) {
+        ArrayList<String> students = new ArrayList<>();
+
+        for(int i = 0; i < jsonArray.length(); i++) {
+            try {
+                students.add(jsonArray.getString(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return students;
     }
 
     public String validateJoinClass(UserClass userClass, String password, String studentEmail) throws UserClassException, ExecutionException, InterruptedException {
