@@ -1,9 +1,10 @@
 package fga.mds.gpp.trezentos.Controller;
 
 import org.junit.Test;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
@@ -18,26 +19,39 @@ public class SortStudentsUtilUnitTest{
 
         Map<String, Double> map = new HashMap<>(populateMap());
 
-        List<Map.Entry<String, Double>> mapSortedByScore = sortStudentsUtil.sortByTestScore(map);
-        Map<String, Double> expected = new HashMap<>();
+        List<Map.Entry<String, Double>> listOrdered = sortStudentsUtil.sortByTestScore(map);
+        Map<String, Double> mapOut = new HashMap<>();
 
-        for (Map.Entry<String, Double> entry : mapSortedByScore) {
-            expected.put(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, Double> entry : listOrdered) {
+            mapOut.put(entry.getKey(), entry.getValue());
         }
 
-        Map<String, Double> mapOut = new HashMap<>(populateOrderedMapByScore());
+        Map<String, Double> expected = new HashMap<>(populateOrderedMapByScore());
 
         assertThat(mapOut, is(expected));
     }
 
     @Test
     public void shouldOrdenateStudentsByGroup(){
-        Map<String, Double> map = new HashMap<>(populateOrderedMapByScore());
-        List<Map.Entry<String, Double>> list = new ArrayList<>(map.entrySet());
+        Map<String, Double> map = populateMap();
+        List<Map.Entry<String, Double>> list = new LinkedList<>(map.entrySet());
 
-        Map<String, Double> mapOut = new LinkedHashMap<>(sortStudentsUtil.newMapStudents(list, 3, 10));
+        Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+            public int compare(Map.Entry<String, Double> obj1, Map.Entry<String, Double> obj2) {
+                return obj2.getValue().compareTo(obj1.getValue());
+            }
+        });
 
-        Map<String, Double> expected = new HashMap<>(populateOrderedMapByGroupNumber());
+        Map<String, Double> mapOut = sortStudentsUtil.newMapStudents(list, 3, 10);
+        Map<String, Double> expected = populateOrderedMapByGroupNumber();
+
+        assertThat(mapOut, is(expected));
+    }
+
+    @Test
+    public void shouldOrdenateGroup(){
+        Map<String, Double> mapOut = sortStudentsUtil.sortGroups(populateMap());
+        Map<String, Double> expected = populateOrderedMapByGroupNumber();
 
         assertThat(mapOut, is(expected));
     }
@@ -81,22 +95,22 @@ public class SortStudentsUtilUnitTest{
     }
 
     public Map <String, Double> populateOrderedMapByGroupNumber(){
-        Map<String, Double> mapOut = new HashMap<>();
+        Map<String, Double> map = new HashMap<>();
 
-        mapOut.put("emailG@hotmail.com", 1.0);
-        mapOut.put("emailB@hotmail.com", 2.0);
-        mapOut.put("emailE@hotmail.com", 3.0);
+        map.put("emailG@hotmail.com", 1.0);
+        map.put("emailB@hotmail.com", 2.0);
+        map.put("emailE@hotmail.com", 3.0);
 
-        mapOut.put("emailJ@hotmail.com", 3.0);
-        mapOut.put("emailC@hotmail.com", 2.0);
-        mapOut.put("emailF@hotmail.com", 1.0);
+        map.put("emailJ@hotmail.com", 3.0);
+        map.put("emailC@hotmail.com", 2.0);
+        map.put("emailF@hotmail.com", 1.0);
 
-        mapOut.put("emailA@hotmail.com", 3.0);
-        mapOut.put("emailI@hotmail.com", 2.0);
-        mapOut.put("emailH@hotmail.com", 1.0);
-        mapOut.put("emailD@hotmail.com", 3.0);
+        map.put("emailA@hotmail.com", 3.0);
+        map.put("emailI@hotmail.com", 2.0);
+        map.put("emailH@hotmail.com", 1.0);
+        map.put("emailD@hotmail.com", 3.0);
 
-        return mapOut;
+        return map;
     }
 
 }
