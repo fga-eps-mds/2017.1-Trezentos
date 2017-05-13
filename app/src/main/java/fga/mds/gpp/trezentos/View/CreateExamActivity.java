@@ -56,6 +56,7 @@ public class CreateExamActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 boolean isValid;
+                isValid = false;
 
                 UserExamControl userExamControl = UserExamControl
                         .getInstance(getApplicationContext());
@@ -67,7 +68,7 @@ public class CreateExamActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return;
+                    isValid = false;
                 }
 
                 if (isValid) {
@@ -110,9 +111,11 @@ public class CreateExamActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        if (errorMessage.equals("O nome da prova deve ter de 2 a 15 caracteres.")){
+        if (errorMessage.equals("O nome da prova " +
+                "deve ter entre 2 e 15 caracteres.")){
             examNameField.requestFocus();
-            examNameField.setError("O nome da prova deve ter de 2 a 15 caracteres.");
+            examNameField.setError("O nome da prova " +
+                    "deve ter entre 2 e 15 caracteres.");
             isValid = false;
         }
 
