@@ -1,5 +1,10 @@
 package fga.mds.gpp.trezentos.Controller.Util;
 
+/*
+* File: SortStudentsUtil.java
+* Purpose: Sort students within the room groups
+* */
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -17,7 +22,7 @@ public class SortStudentsUtil {
     public static Map<String, Double> sortGroups(Map<String, Double> map){
 
         List<Map.Entry<String, Double>> mapSortedByScore = sortByTestScore(map);
-        // Note: Size of the group and total of students coming from the database
+        // Note: Size of the group and total of students must be coming from the database
         Map<String, Double> newMap = newMapStudents(mapSortedByScore, 3, 10);
 
         return newMap;
@@ -28,27 +33,29 @@ public class SortStudentsUtil {
     * @params: List<Map> - converted list of students from database; Integer - Room group size;
     *          Integer - total number of students in the room
     * @return: Map - email(key) and student group number(Double)
-    *
     * */
     public static Map<String, Double> newMapStudents (List<Map.Entry<String, Double>> unsortList,
                                                       Integer groupSize, Integer totalStudents){
+
         Map<String, Double> newMap = new LinkedHashMap<>();
 
-        Double it = 1.0;
-        int sent = 0;
-        Double rest = (totalStudents*1.0) % groupSize;
-        Double totalGroups = (totalStudents-rest) / groupSize;
+        Double it = 1.0; // Iterator to number the groups
+        int sentinel = 0; // Sentinel to coordinate the logic
+        Double leftoverStudents = (totalStudents*1.0) % groupSize;
+        Double totalGroups = (totalStudents-leftoverStudents) / groupSize;
 
         // Assignment of group numbers
         for (Map.Entry<String, Double> entry : unsortList) {
             newMap.put(entry.getKey(), it);
-            if (sent == 0) {
+            // Logic for numbers in ascending order
+            if (sentinel == 0) {
                 it++;
                 if (it > totalGroups) {
-                    sent++; it--;
+                    sentinel++; it--;
                 } else {
                     // do nothing
                 }
+            // Logic for numbers in descending order
             } else {
                 it--;
                 if (it == 0) {

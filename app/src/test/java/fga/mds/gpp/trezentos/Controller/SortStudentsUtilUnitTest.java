@@ -1,5 +1,10 @@
 package fga.mds.gpp.trezentos.Controller;
 
+/*
+* File: SortStudentsUtilTest.java
+* Purpose: To perform SortStudentsUtil.java class tests
+* */
+
 import org.junit.Test;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,6 +19,7 @@ import fga.mds.gpp.trezentos.Controller.Util.SortStudentsUtil;
 public class SortStudentsUtilUnitTest{
     SortStudentsUtil sortStudentsUtil = new SortStudentsUtil();
 
+    // Tested method: sortByTestScore();
     @Test
     public void shouldOrdenateStudentsByScore(){
 
@@ -31,6 +37,7 @@ public class SortStudentsUtilUnitTest{
         assertThat(mapOut, is(expected));
     }
 
+    // Tested method: newMapStudents();
     @Test
     public void shouldOrdenateStudentsByGroup(){
         Map<String, Double> map = populateMap();
@@ -48,6 +55,7 @@ public class SortStudentsUtilUnitTest{
         assertThat(mapOut, is(expected));
     }
 
+    // Tested method: sortGroups();
     @Test
     public void shouldOrdenateGroup(){
         Map<String, Double> mapOut = sortStudentsUtil.sortGroups(populateMap());
