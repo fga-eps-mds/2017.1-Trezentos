@@ -6,13 +6,7 @@
     tools:context="fga.mds.gpp.trezentos.View.ExamsFragment">
 
 
-    <ListView
-        android:id="@+id/list"
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ListView>
 
     <ProgressBar
         android:id="@+id/progressBarExam"
@@ -20,6 +14,14 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        />
 
 
 
