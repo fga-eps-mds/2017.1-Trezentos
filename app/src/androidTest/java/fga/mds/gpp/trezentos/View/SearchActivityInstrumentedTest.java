@@ -1,10 +1,10 @@
 package fga.mds.gpp.trezentos.View;
 
-import android.support.test.espresso.action.TypeTextAction;
+import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.widget.EditText;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,8 +18,9 @@ import fga.mds.gpp.trezentos.R;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertNotNull;
 
@@ -27,21 +28,26 @@ import static junit.framework.Assert.assertNotNull;
 public class SearchActivityInstrumentedTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mainRule =
-            new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<SearchActivity> mainRule =
+            new ActivityTestRule<>(SearchActivity.class);
+
+    @Before
+    public void setUp() {
+        UserAccountControl.getInstance(mainRule.getActivity()).authenticateLogin("teste@gmail.com", "123456");
+        UserAccountControl.getInstance(mainRule.getActivity()).validateSignInResponse();
+    }
+
 
     @Test
     public void shouldSearchAnClass(){
 
-        onView(withId(R.id.search_classes))
-                .perform(click());
         onView(withId(R.id.action_search))
                 .perform(click());
 
-//        onView(withId(R.id.action_search))
-//                .perform(typeText("teste"));
-//
-//        closeSoftKeyboard();
+        onView(isAssignableFrom(EditText.class))
+                .perform(typeText("teste"), pressImeActionButton());
+
+        closeSoftKeyboard();
 
         assertNotNull(mainRule);
 
@@ -50,28 +56,12 @@ public class SearchActivityInstrumentedTest {
     @Test
     public void shouldEnterOnClassFiltrered(){
 
-        onView(withId(R.id.action_search))
-                .perform(click());
-
-        onView(withId(R.id.search_classes))
-                .perform(click());
-
         SearchActivity searchActivity;
 
-        searchActivity = (SearchActivity) mainRule.getActivity()
-                .getApplicationContext();
+        searchActivity = mainRule.getActivity();
 
-        RecyclerView recyclerView;
-
-        recyclerView = (RecyclerView) searchActivity.findViewById(R.id.recycler);
-
-        onView(withId(R.id.action_search))
-                .perform(click());
-
-        onView(withId(R.id.action_search))
-                .perform(typeText("teste"));
-
-        closeSoftKeyboard();
+        RecyclerView recyclerView =
+                (RecyclerView) searchActivity.findViewById(R.id.recycler);
 
         if(recyclerView.getAdapter().getItemCount() > 0){
             onView(ViewMatchers.withId(R.id.recycler))
@@ -85,14 +75,11 @@ public class SearchActivityInstrumentedTest {
     @Test
     public void shouldClickOnPreviousActivity(){
 
+        onView(withId(R.id.toolbar))
+                .perform(click());
+
+        assertNotNull(mainRule);
 
     }
-
-    @Test
-    public void shouldHideToolBarWithUpScrollList(){
-
-
-    }
-
 
 }
