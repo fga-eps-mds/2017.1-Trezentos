@@ -29,7 +29,19 @@ public class SortStudentsUtilUnitTest{
 
         assertThat(mapOut, is(expected));
     }
-    
+
+    @Test
+    public void shouldOrdenateStudentsByGroup(){
+        Map<String, Double> map = new HashMap<>(populateOrderedMapByScore());
+        List<Map.Entry<String, Double>> list = new ArrayList<>(map.entrySet());
+
+        Map<String, Double> mapOut = new LinkedHashMap<>(sortStudentsUtil.newMapStudents(list, 3, 10));
+
+        Map<String, Double> expected = new HashMap<>(populateOrderedMapByGroupNumber());
+
+        assertThat(mapOut, is(expected));
+    }
+
     public Map <String, Double> populateMap(){
         Map<String, Double> map = new HashMap<>();
 
