@@ -36,12 +36,8 @@
         android:id="@+id/progressBar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="270dp"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:visibility="gone" />
-
-    <!-- tools:showIn="@layout/activity_main" -->
-
 
 
 </FrameLayout>

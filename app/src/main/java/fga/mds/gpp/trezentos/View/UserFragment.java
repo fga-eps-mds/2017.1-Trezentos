@@ -21,11 +21,13 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
     private Button logoutButton;
     private Button classButton;
-
     private OnFragmentInteractionListener mListener;
+    private static UserFragment fragment;
 
-    public static UserFragment newInstance() {
-        UserFragment fragment= new UserFragment();
+    public static UserFragment getInstance() {
+        if(fragment == null){
+            fragment = new UserFragment();
+        }
         return fragment;
     }
 

@@ -3,6 +3,7 @@ package fga.mds.gpp.trezentos.View;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
@@ -29,21 +32,19 @@ public class SearchActivity extends AppCompatActivity {
     public ClassAdapter classAdapter;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
-    private String email;
+    private ProgressBar progressBar;
+    private  String userEmail;
+    public UserClassControl userClassControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
-        SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(SearchActivity.this);
-        email = session.getString("userEmail","");
+        progressBar = (ProgressBar) findViewById(R.id.progressBarSearch);
 
         initClasses();
         initToolbar();
         initAppBarLayout();
-        initRecyclerView();
 
     }
 
@@ -66,11 +67,14 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initRecyclerView(){
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        userClasses = getFormatedClasses(userClasses);
-        classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView, email);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setAdapter(classAdapter);
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        userClasses = getFormatedClasses(userClasses);
+        classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView);
+        recyclerView.setAdapter(classAdapter);
+
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(getApplication(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layout);
 
         recyclerView.setOnScrollListener(new HidingScrollListener() {
@@ -86,9 +90,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initClasses() {
-
-        UserClassControl userClassControl = UserClassControl.getInstance(getApplicationContext());
-        userClasses = userClassControl.getClasses();
+        progressBar.setVisibility(View.VISIBLE);
+        new ServerOperation().execute();
     }
 
     private void hideViews() {
@@ -130,13 +133,43 @@ public class SearchActivity extends AppCompatActivity {
     public ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){
         ArrayList<UserClass> tempList = new ArrayList<UserClass>();
         for (UserClass userClass : userClasses) {
-            if (userClass.getOwnerEmail().equals(email) || userClass.getStudents().contains(email)) {
+            if (userClass.getOwnerEmail().equals(userEmail) || userClass.getStudents().contains(userEmail)) {
             }else{
                 tempList.add(userClass);
                 Log.d("PUT", userClass.getClassName());
             }
         }
         return tempList;
+    }
+
+    class ServerOperation extends AsyncTask<String, Void, String> {
+
+        public ServerOperation(){}
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            userClasses = userClassControl.getClasses();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressBar.setVisibility(View.GONE);
+
+            initRecyclerView();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            userClassControl = UserClassControl.getInstance(getApplicationContext());
+            SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getApplication());
+            userEmail = session.getString("userEmail","");
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
     }
 }
 

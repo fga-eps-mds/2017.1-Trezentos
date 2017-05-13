@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickListener, Filterable {
+public class ClassAdapter extends RecyclerView.Adapter implements Filterable {
 
     private ArrayList<UserClass> userClasses;
     private ArrayList<UserClass> filteredClasses;
@@ -19,16 +19,13 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
     private Context context;
     private RecyclerView recyclerView;
     private FriendFilter friendFilter;
-    private String email;
 
-    public ClassAdapter(ArrayList<UserClass> userClasses, Context context,
-                        RecyclerView recyclerView, String email){
+
+    public ClassAdapter(ArrayList<UserClass> userClasses, Context context, RecyclerView recyclerView){
         this.userClasses = userClasses;
         this.filteredClasses = userClasses;
         this.context = context;
         this.recyclerView =  recyclerView;
-        this.email = email;
-
         getFilter();
     }
 
@@ -37,7 +34,6 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.class_item, parent, false);
         ClassViewHolder holder = new ClassViewHolder(view);
-        view.setOnClickListener(this);
 
         return holder;
     }
@@ -69,13 +65,6 @@ public class ClassAdapter extends RecyclerView.Adapter implements View.OnClickLi
         }
 
         return friendFilter;
-    }
-
-    @Override
-    public void onClick(final View view) {
-        int itemPosition = recyclerView.getChildLayoutPosition(view);
-        UserClass userClass = userClasses.get(itemPosition);
-
     }
 
     private class FriendFilter extends Filter {

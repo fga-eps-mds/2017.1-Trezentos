@@ -21,8 +21,6 @@ import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-
-
 public class ClassFragment extends Fragment{
 
     public ArrayList<UserClass> userClasses;
@@ -30,9 +28,13 @@ public class ClassFragment extends Fragment{
     private  String userEmail;
     public ProgressBar progressBar;
     public UserClassControl userClassControl;
+    private static ClassFragment fragment;
 
-    public static ClassFragment newInstance() {
-        ClassFragment fragment = new ClassFragment();
+
+    public static ClassFragment getInstance() {
+        if(fragment == null){
+            fragment = new ClassFragment();
+        }
         return fragment;
     }
 
@@ -72,15 +74,17 @@ public class ClassFragment extends Fragment{
         return view;
     }
 
-    private class Adapter extends RecyclerView.Adapter {
+    private class Adapter extends RecyclerView.Adapter implements View.OnClickListener {
 
-        private final ArrayList<UserClass> category;
+        private final ArrayList<UserClass> userClasses;
         private Context context;
+        private  RecyclerView recyclerView;
 
 
-        public Adapter(ArrayList<UserClass> category, Context context) {
-            this.category = category;
+        public Adapter(ArrayList<UserClass> userClasses, Context context,  RecyclerView recyclerView) {
+            this.userClasses = userClasses;
             this.context = context;
+            this.recyclerView = recyclerView;
         }
 
         @Override
@@ -88,6 +92,7 @@ public class ClassFragment extends Fragment{
 
             View view = LayoutInflater.from(context).inflate(R.layout.user_class_item, parent, false);
             ViewHolder holder = new ViewHolder(view);
+            view.setOnClickListener(this);
 
             return holder;
         }
@@ -106,8 +111,26 @@ public class ClassFragment extends Fragment{
 
         @Override
         public int getItemCount() {
+            return userClasses.size();
+        }
 
-            return category.size();
+        @Override
+        public long getItemId(int position) {
+            return super.getItemId(position);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+
+            int itemPosition = recyclerView.getChildLayoutPosition(v);
+            UserClass userClass = userClasses.get(itemPosition);
+
+            Intent goClass = new  Intent(context, ClassActivity.class);
+            goClass.putExtra("Class", userClass);
+            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(goClass);
+
         }
     }
 
@@ -116,15 +139,11 @@ public class ClassFragment extends Fragment{
         final TextView className;
         final TextView classInstitution;
 
-
-
-
         public ViewHolder(View view) {
             super(view);
             className = (TextView) view.findViewById(R.id.class_name);
             classInstitution = (TextView) view.findViewById(R.id.class_institution);
         }
-
     }
 
     class ServerOperation extends AsyncTask<String, Void, String> {
@@ -143,7 +162,7 @@ public class ClassFragment extends Fragment{
             progressBar.setVisibility(View.GONE);
 
             RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler);
-            recyclerView.setAdapter(new Adapter(userClasses, getActivity().getApplicationContext()));
+            recyclerView.setAdapter(new Adapter(userClasses, getActivity().getApplicationContext(), recyclerView));
 
             final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

@@ -65,19 +65,19 @@ public class MainActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.salas_item:
-                        selectedFragment = ClassFragment.newInstance();
+                        selectedFragment = ClassFragment.getInstance();
                         break;
 
                     case R.id.usuario_item:
-                        selectedFragment = UserFragment.newInstance();
+                        selectedFragment = UserFragment.getInstance();
                         break;
 
                     case R.id.about_item:
-                        selectedFragment = AboutFragment.newInstance();
+                        selectedFragment = AboutFragment.getInstance();
                         break;
 
                     case R.id.avaliacao_item:
-                        selectedFragment = EvaluationFragment.newInstance();
+                        selectedFragment = EvaluationFragment.getInstance();
                         break;
                 }
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity{
 
         //Manually displaying the first fragment - one time only
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, ClassFragment.newInstance());
+        transaction.replace(R.id.frame, ClassFragment.getInstance());
         transaction.commit();
     }
 

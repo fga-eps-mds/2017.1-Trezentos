@@ -11,22 +11,19 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class getExamRequest extends AsyncTask<String, String, String>{
+public class getExamRequest {
 
     private final String email;
     private final String userClassName;
-
     private final String url = "https://trezentos-api.herokuapp.com/api/exam/class/user/find";
 
     public getExamRequest(String email, String userClassName){
-
         this.email = email;
         this.userClassName = userClassName;
 
     }
 
-    @Override
-    protected String doInBackground(String... params){
+    public String get(){
         OkHttpClient client = new OkHttpClient();
 
         String urlWithParameters = getUrlWithParameters();
@@ -43,6 +40,7 @@ public class getExamRequest extends AsyncTask<String, String, String>{
             Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
+
     }
 
     private String getUrlWithParameters(){

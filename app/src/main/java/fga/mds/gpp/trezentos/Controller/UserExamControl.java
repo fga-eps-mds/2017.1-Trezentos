@@ -64,15 +64,7 @@ public class UserExamControl{
         getExamRequest examRequest = new getExamRequest(email, userClassName);
 
         String serverResponse = "404";
-
-        try {
-            serverResponse = examRequest.execute().get();
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
-            e.printStackTrace();
-        }
-
+        serverResponse = examRequest.get();
         ArrayList<Exam> userExams = new ArrayList<Exam>();
 
         try{

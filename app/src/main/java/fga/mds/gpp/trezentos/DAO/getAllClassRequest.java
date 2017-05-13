@@ -10,18 +10,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class getAllClassRequest extends AsyncTask<String, String, String> {
+public class getAllClassRequest {
 
 
-    private final String url =
-            "https://trezentos-api.herokuapp.com/api/class/find";
+    private final String url = "https://trezentos-api.herokuapp.com/api/class/find";
 
-    public getAllClassRequest(){
+    public getAllClassRequest(){}
 
-    }
 
-    @Override
-    protected String doInBackground(String... params) {
+    public String get(){
 
         OkHttpClient client = new OkHttpClient();
 
@@ -39,7 +36,9 @@ public class getAllClassRequest extends AsyncTask<String, String, String> {
         }
 
         return null;
+
     }
+
 
     private String getUrlWithParameters() {
 

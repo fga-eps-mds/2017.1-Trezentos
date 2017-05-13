@@ -45,7 +45,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="35dp"
-            android:src="@drawable/ic_more"
+            android:src="@drawable/ic_more_white"
             android:foregroundGravity="center_vertical|bottom"
             android:layout_marginRight="13dp"
             android:layout_marginEnd="13dp"

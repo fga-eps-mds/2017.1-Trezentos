@@ -5,10 +5,7 @@ import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-
 import fga.mds.gpp.trezentos.DAO.getAllClassRequest;
 import fga.mds.gpp.trezentos.DAO.getClassRequest;
 import fga.mds.gpp.trezentos.DAO.CreateClassPost;
@@ -24,7 +21,6 @@ public class UserClassControl {
 
         this.context = context;
     }
-
 
     public static UserClassControl getInstance(final Context context){
 
@@ -48,10 +44,7 @@ public class UserClassControl {
         }catch (UserException userException){
             userException.printStackTrace();
         }
-
-
     }
-
 
     public String validateInformation(String className, String institution,
                                       String cutOff, String password,
@@ -73,20 +66,9 @@ public class UserClassControl {
 }
 
     public ArrayList<UserClass> getClasses() {
-
         getAllClassRequest classRequest = new getAllClassRequest();
-
         String serverResponse = "404";
-
-        try {
-            serverResponse = classRequest.execute().get();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
+        serverResponse = classRequest.get();
         ArrayList<UserClass> userClasses = new ArrayList<UserClass>();
 
         try {
@@ -96,7 +78,6 @@ public class UserClassControl {
         }
 
         return userClasses;
-
     }
 
     public ArrayList<UserClass> getClassesFromUser(String email) {

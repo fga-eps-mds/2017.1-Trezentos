@@ -11,9 +11,13 @@ import fga.mds.gpp.trezentos.R;
 
 public class EvaluationFragment extends Fragment {
 
+    private static EvaluationFragment fragment;
 
-    public static EvaluationFragment newInstance() {
-        EvaluationFragment fragment = new EvaluationFragment();
+    public static EvaluationFragment getInstance() {
+
+        if(fragment == null){
+            fragment = new EvaluationFragment();
+        }
         return fragment;
     }
 

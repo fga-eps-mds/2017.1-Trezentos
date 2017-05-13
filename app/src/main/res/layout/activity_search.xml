@@ -29,4 +29,11 @@
         android:paddingTop="?attr/actionBarSize"
         android:clipToPadding="false"/>
 
+    <ProgressBar
+        android:id="@+id/progressBarSearch"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
+
 </FrameLayout>

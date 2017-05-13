@@ -19,9 +19,12 @@ public class AboutFragment extends Fragment{
 
     private ArrayList<About> about;
     private static AboutAdapter adapter;
+    private static AboutFragment fragment;
 
-    public static AboutFragment newInstance() {
-        AboutFragment fragment = new AboutFragment();
+    public static AboutFragment getInstance() {
+        if(fragment == null){
+            fragment = new AboutFragment();
+        }
         return fragment;
     }
 

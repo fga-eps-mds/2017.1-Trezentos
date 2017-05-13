@@ -4,19 +4,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.net.sip.SipAudioCall;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import java.util.ArrayList;
+
+import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Model.Exam;
 
@@ -30,6 +37,8 @@ public class ExamsFragment extends Fragment{
     public ArrayAdapter arrayAdapter;
     public UserExamControl userExamControl;
     private UserClass userClass;
+    public ProgressBar progressBar;
+    public  String userEmail;
 
     public ExamsFragment() {
 
@@ -52,44 +61,25 @@ public class ExamsFragment extends Fragment{
     public void onResume(){
         super.onResume();
 
-        loadClasses();
-        arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, userExams);
-        if(listView.getAdapter() == null){ //Adapter not set yet.
-            listView.setAdapter(arrayAdapter);
-        }
-        else{ //Already has an adapter
-            listView.setAdapter(arrayAdapter);
-            arrayAdapter.notifyDataSetChanged();
-            listView.invalidateViews();
-            listView.refreshDrawableState();
-        }
     }
 
-    private void loadClasses(){
+    private void loadRecover(){
+
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String email = session.getString("userEmail","");
+        userEmail = session.getString("userEmail","");
+
         Intent intent = getActivity().getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
 
-//        email = "teste@teste.com";
         userExamControl = UserExamControl.getInstance(getActivity());
 
-        userExams = userExamControl.getExamsFromUser(email, userClass.getClassName());
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_exams, container, false);
-
-
-        // Inflate the layout for this fragment
-        loadClasses();
+    public void initListView(){
         arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, userExams);
         arrayAdapter.notifyDataSetChanged();
-        //friends.clear();
 
-        //Snackbar.make(view, userExams. , Snackbar.LENGTH_LONG).setAction("No action", null).show();
-        listView = (ListView) view.findViewById(R.id.list);
+        listView = (ListView) getActivity().findViewById(R.id.list);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,6 +88,18 @@ public class ExamsFragment extends Fragment{
                 Snackbar.make(view, "Click List", Snackbar.LENGTH_LONG).setAction("No action", null).show();
             }
         });
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_exams, container, false);
+
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBarExam);
+        progressBar.setVisibility(View.VISIBLE);
+
+        new ServerOperation().execute();
+
         return view;
     }
 
@@ -107,5 +109,34 @@ public class ExamsFragment extends Fragment{
         CreateExamDialogFragment ccdf = new CreateExamDialogFragment();
         ccdf.show(fragmentTransaction, "dialog");
 
+    }
+
+
+
+    class ServerOperation extends AsyncTask<String, Void, String> {
+
+        public ServerOperation(){}
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            userExams = userExamControl.getExamsFromUser(userEmail, userClass.getClassName());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressBar.setVisibility(View.GONE);
+            initListView();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            loadRecover();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
     }
 }
