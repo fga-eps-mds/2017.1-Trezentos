@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
@@ -24,7 +26,6 @@ public class ClassFragment extends Fragment{
     public ArrayList<UserClass> userClasses;
     private static CustomAdapter adapter;
     private FloatingActionButton floatingActionButton;
-    private FragmentTransaction fragmentTransaction;
     public ListView listView;
 
     @Override
@@ -93,7 +94,7 @@ public class ClassFragment extends Fragment{
                 UserClass userClassCalled = (UserClass) listView.getItemAtPosition(position);
                 goClass.putExtra("Class", userClassCalled);
 
-                startActivity(goClass);
+                 startActivity(goClass);
             }
         });
 

@@ -60,29 +60,22 @@ public class UserClassTest {
     }
 
     @Test
-    public void shouldValidateOwnerEmail(){
+    public void shouldValidateStudentsRegistreds(){
         UserClass userClass = new UserClass();
-        userClass.setOwnerEmail("teste@email.com");
-        assertEquals("teste@email.com", userClass.getOwnerEmail());
+        ArrayList<String> tempList = new ArrayList<>();
+        tempList.add("teststudent");
+        tempList.add("anotherteststudent");
+
+        userClass.setStudents(tempList);
+
+        assertEquals(tempList, userClass.getStudents());
     }
 
-//    @Test
-//    public void shouldValidateStudentsRegistreds(){
-//        UserClass userClass = new UserClass();
-//        ArrayList<String> tempList;
-//
-//        JSONArray jArray = new JSONArray();
-//
-//        userClass.setStudents(jArray);
-//        tempList = userClass.getStudents();
-//
-//        if(tempList == userClass.getStudents()){
-//            Log.d("FUNFAPLZ", "Resultado é = " + String.valueOf(userClass.getStudents()));
-//            Log.d("FUNFAPLZ", "Resultado é = " + tempList);
-//        }
-//
-//        assertEquals(tempList, userClass.getStudents());
-//    }
+    public void shouldProperlySetOwnerEmail() {
+        UserClass userClass = new UserClass();
+        userClass.setOwnerEmail("teste@teste.com");
+        assertEquals("teste@teste.com", userClass.getOwnerEmail());
+    }
 
     @Test
     public void shouldValidateConstructor() throws UserException {

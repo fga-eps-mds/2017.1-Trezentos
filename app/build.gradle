@@ -59,6 +59,8 @@ android {
                 includeNoLocationClasses = true
             }
         }
+
+        unitTests.returnDefaultValues = true
     }
     lintOptions {
         abortOnError false

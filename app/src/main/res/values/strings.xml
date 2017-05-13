@@ -97,4 +97,10 @@
     <string name="about_unbtv">UnBTV</string>
     <string name="invalid_login">Email ou senha inválidos</string>
 
+    <!--Join Class-->
+    <string name="join_class_wrong_password_error">Senha errada. Por favor, digite novamente</string>
+    <string name="join_class_null_password_error">A senha não pode ser vazia</string>
+    <string name="join_class_failed">Algo deu errado. Por favor, tente novamente.</string>
+    <string name="join_class_success">Aluno registrado com sucesso</string>
+
 </resources>
