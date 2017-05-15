@@ -49,6 +49,9 @@ public class EditClassActivity extends AppCompatActivity{
         className.setText(userClass.getClassName());
         instituition.setText(userClass.getInstitution());
         classPassword.setText(userClass.getPassword());
+//        cutGrade.setText((int) userClass.getCutOff());
+//        groupsSize.setText(userClass.getSizeGroups());
+//        addition.setText((int) userClass.getAddition());
 
 
         saveButton.setOnClickListener(new View.OnClickListener(){

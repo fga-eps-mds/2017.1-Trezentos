@@ -7,14 +7,10 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.concurrent.ExecutionException;
-
 import fga.mds.gpp.trezentos.DAO.getAllClassRequest;
 import fga.mds.gpp.trezentos.DAO.AddStudentToClassRequest;
-import fga.mds.gpp.trezentos.DAO.getClassRequest;
 import fga.mds.gpp.trezentos.DAO.CreateClassPost;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
@@ -54,7 +50,6 @@ public class UserClassControl {
         }
     }
 
-
     public String validateInformation(String className, String institution,
                                       String cutOff, String password,
                                       String addition, String sizeGroups) throws UserException {
@@ -74,22 +69,10 @@ public class UserClassControl {
         }
     }
 
-
     public ArrayList<UserClass> getClasses() {
-
         getAllClassRequest classRequest = new getAllClassRequest();
-
         String serverResponse = "404";
-
-        try {
-            serverResponse = classRequest.execute().get();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
+        serverResponse = classRequest.get();
         ArrayList<UserClass> userClasses = new ArrayList<UserClass>();
 
         try {
@@ -99,10 +82,9 @@ public class UserClassControl {
         }
 
         return userClasses;
-
     }
 
-    private ArrayList<UserClass> getArrayList(String serverResponse) throws JSONException {
+    private ArrayList<UserClass> getArrayList(String serverResponse) throws JSONException{
 
         JSONArray array = null;
 

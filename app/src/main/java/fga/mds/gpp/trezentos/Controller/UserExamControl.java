@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import fga.mds.gpp.trezentos.DAO.CreateExamPost;
-import fga.mds.gpp.trezentos.DAO.getClassRequest;
 import fga.mds.gpp.trezentos.DAO.getExamRequest;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
@@ -65,15 +64,7 @@ public class UserExamControl{
         getExamRequest examRequest = new getExamRequest(email, userClassName);
 
         String serverResponse = "404";
-
-        try {
-            serverResponse = examRequest.execute().get();
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
-            e.printStackTrace();
-        }
-
+        serverResponse = examRequest.get();
         ArrayList<Exam> userExams = new ArrayList<Exam>();
 
         try{

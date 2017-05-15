@@ -4,6 +4,7 @@ package fga.mds.gpp.trezentos.View;
 import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -65,13 +66,13 @@ public class ClassFragmentInstrumentedTest {
                 .getSupportFragmentManager()
                 .findFragmentById(frame);
 
-        ListView listView =
-                (ListView) classFragment.getActivity()
-                        .findViewById(R.id.class_list_view);
+        RecyclerView recyclerView =
+                (RecyclerView) classFragment.getActivity()
+                        .findViewById(R.id.recycler);
 
-        if(listView.getAdapter().getCount() > 0) {
+        if(recyclerView.getAdapter().getItemCount() > 0) {
 
-            onView(ViewMatchers.withId(R.id.class_list_view))
+            onView(ViewMatchers.withId(R.id.recycler))
                     .perform(click());
 
         }

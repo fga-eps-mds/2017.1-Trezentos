@@ -17,33 +17,43 @@ public class ClassActivity extends AppCompatActivity{
 
     private FloatingActionButton floatingActionButton;
     private UserClass userClass;
+    private ViewPager viewPager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        initToolbar();
+        initViewPager();
+        initTabLayout();
+        initFloatingButton();
+        initRecover();
 
+
+        if(userClass != null){setTitle(userClass.getClassName());}
+
+    }
+
+    public void initToolbar(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+    public void initViewPager(){
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         setupViewPager(viewPager);
+    }
 
+    public void initTabLayout(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+    }
 
-        Intent intent = getIntent();
-        userClass = (UserClass) intent.getSerializableExtra("Class");
-
-        if(userClass != null){
-//            TextView textView = (TextView) findViewById(R.id.testClass);
-//            textView.setText(userClass.getClassName());
-            setTitle(userClass.getClassName());
-        }
-
+    public void initFloatingButton(){
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn);
 
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
@@ -52,11 +62,15 @@ public class ClassActivity extends AppCompatActivity{
                 Intent goCreateExam = new  Intent(getApplicationContext(), CreateExamActivity.class);
                 UserClass userClassCalled = (UserClass) userClass;
                 goCreateExam.putExtra("Class", userClassCalled);
-
                 startActivity(goCreateExam);
-                //Toast.makeText(ClassActivity.this,"Criar", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    public void initRecover(){
+        Intent intent = getIntent();
+        userClass = (UserClass) intent.getSerializableExtra("Class");
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -70,7 +84,6 @@ public class ClassActivity extends AppCompatActivity{
     @Override
     public boolean onSupportNavigateUp(){
         onBackPressed();
-
         return true;
     }
 
@@ -78,7 +91,6 @@ public class ClassActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu){
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_class, menu);
-
         return true;
     }
 
@@ -91,15 +103,16 @@ public class ClassActivity extends AppCompatActivity{
         }
         else if(id == R.id.action_edit_class){
 
-            Intent intentEditClass = new  Intent(getApplicationContext(), EditClassActivity.class);
-            UserClass userClassCalled = (UserClass) userClass;
-            intentEditClass.putExtra("Class", userClassCalled);
+                Intent intentEditClass = new  Intent(getApplicationContext(), EditClassActivity.class);
+                UserClass userClassCalled = (UserClass) userClass;
+                intentEditClass.putExtra("Class", userClassCalled);
 
-            startActivity(intentEditClass);
+                startActivity(intentEditClass);
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
 

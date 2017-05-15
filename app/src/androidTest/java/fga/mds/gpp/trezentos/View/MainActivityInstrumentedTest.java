@@ -41,10 +41,6 @@ public class MainActivityInstrumentedTest {
         onView(withId(R.id.salas_item))
                 .perform(click());
 
-        assertThat(rule.getActivity().
-                getSupportFragmentManager().findFragmentById(frame).getTag(),
-                    is(equalTo("fragment_class")));
-
     }
 
     @Test
@@ -52,34 +48,6 @@ public class MainActivityInstrumentedTest {
 
         onView(withId(R.id.usuario_item))
                 .perform(click());
-
-        assertThat(rule.getActivity()
-                .getSupportFragmentManager().findFragmentById(frame)
-                    .getTag(), is(equalTo("fragment_user")));
-
-    }
-
-    @Test
-    public void shouldCallAboutFragment(){
-
-        onView(withId(R.id.about_item))
-                .perform(click());
-
-        assertThat(rule.getActivity()
-                .getSupportFragmentManager().findFragmentById(frame)
-                    .getTag(), is(equalTo("fragment_about")));
-
-    }
-
-    @Test
-    public void shouldCallEvaluationFragment(){
-
-        onView(withId(R.id.avaliacao_item))
-                .perform(click());
-
-        assertThat(rule.getActivity().
-                getSupportFragmentManager().findFragmentById(frame)
-                    .getTag(), is(equalTo("fragment_evaluation")));
 
     }
 

@@ -1,32 +1,43 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
-import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 public class ClassFragment extends Fragment{
 
     public ArrayList<UserClass> userClasses;
-    private static CustomAdapter adapter;
     private FloatingActionButton floatingActionButton;
-    public ListView listView;
+    private  String userEmail;
+    public ProgressBar progressBar;
+    public UserClassControl userClassControl;
+    private static ClassFragment fragment;
+
+
+    public static ClassFragment getInstance() {
+        if(fragment == null){
+            fragment = new ClassFragment();
+        }
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -37,67 +48,155 @@ public class ClassFragment extends Fragment{
     public void onResume(){
         super.onResume();
 
-        userClasses = loadClasses();
-        adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
-        if(listView.getAdapter() == null){ //Adapter not set yet.
-            listView.setAdapter(adapter);
-        }
-        else{ //Already has an adapter
-            listView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            listView.invalidateViews();
-            listView.refreshDrawableState();
-        }
-    }
-
-    private ArrayList<UserClass> loadClasses(){
-        SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String email = session.getString("userEmail","");
-        UserClassControl userClassControl = UserClassControl
-                .getInstance(getActivity());
 
-        ArrayList<UserClass> tempList = new ArrayList<>();
-        userClasses = userClassControl.getClasses();
-
-        for (UserClass userClass : this.userClasses) {
-            if ( userClass.getOwnerEmail().equals(email) ||
-                    userClass.getStudents().contains(email)) {
-                tempList.add(userClass);
-            }
-        }
-
-        return tempList;
+        new ServerOperation(email).execute();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
-        listView = (ListView) view.findViewById(R.id.class_list_view);
 
-        final UserClass userClass = new UserClass();
-        final UserAccount userAccount = new UserAccount();
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String email = session.getString("userEmail","");
 
-        userClasses = loadClasses();
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
-        adapter = new CustomAdapter(userClasses,getActivity().getApplicationContext());
+        new ServerOperation(email).execute();
+        initFloatingActionButton(view);
 
-        listView.setAdapter(adapter);
+        return view;
+    }
 
-        adapter.notifyDataSetChanged();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+    private class Adapter extends RecyclerView.Adapter implements View.OnClickListener {
 
-                Intent goClass = new  Intent(getActivity(), ClassActivity.class);
-                UserClass userClassCalled = (UserClass) listView.getItemAtPosition(position);
-                goClass.putExtra("Class", userClassCalled);
+        private final ArrayList<UserClass> userClasses;
+        private Context context;
+        private  RecyclerView recyclerView;
 
-                 startActivity(goClass);
+
+        public Adapter(ArrayList<UserClass> userClasses, Context context,  RecyclerView recyclerView) {
+            this.userClasses = userClasses;
+            this.context = context;
+            this.recyclerView = recyclerView;
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View view = LayoutInflater.from(context).inflate(R.layout.user_class_item, parent, false);
+            ViewHolder holder = new ViewHolder(view);
+            view.setOnClickListener(this);
+
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+
+            ViewHolder holder = (ViewHolder) viewHolder;
+
+
+            UserClass userClass  = userClasses.get(position) ;
+            holder.className.setText(userClass.getClassName());
+            holder.classInstitution.setText(userClass.getInstitution());
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return userClasses.size();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return super.getItemId(position);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+
+            int itemPosition = recyclerView.getChildLayoutPosition(v);
+            UserClass userClass = userClasses.get(itemPosition);
+
+            Intent goClass = new  Intent(context, ClassActivity.class);
+            goClass.putExtra("Class", userClass);
+            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(goClass);
+
+        }
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        final TextView className;
+        final TextView classInstitution;
+
+        public ViewHolder(View view) {
+            super(view);
+            className = (TextView) view.findViewById(R.id.class_name);
+            classInstitution = (TextView) view.findViewById(R.id.class_institution);
+        }
+    }
+
+    class ServerOperation extends AsyncTask<String, Void, String> {
+
+        private String email;
+
+        public ServerOperation(String email){
+            this.email = email;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            userClasses = new ArrayList<>();
+            ArrayList<UserClass> allClasses = userClassControl.getClasses();
+
+            for (UserClass userClass : allClasses) {
+                if (userClass.getOwnerEmail().equals(email) ||
+                        userClass.getStudents().contains(email)) {
+                    userClasses.add(userClass);
+                }
             }
-        });
 
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressBar.setVisibility(View.GONE);
+
+            if (getActivity() != null) {
+                RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler);
+                recyclerView.setAdapter(new Adapter(userClasses, getActivity().getApplicationContext(), recyclerView));
+
+                final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(layoutManager);
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            userClassControl = UserClassControl.getInstance(getActivity());
+            SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            userEmail = session.getString("userEmail","");
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
+
+    public void initFloatingActionButton(View view){
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener(){
             @Override
@@ -106,7 +205,5 @@ public class ClassFragment extends Fragment{
                 startActivity(new Intent(getActivity(), CreateClassActivity.class));
             }
         });
-
-        return view;
     }
 }

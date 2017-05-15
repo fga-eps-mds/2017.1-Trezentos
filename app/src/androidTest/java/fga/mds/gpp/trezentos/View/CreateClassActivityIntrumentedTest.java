@@ -35,10 +35,8 @@ import static org.junit.Assert.assertNotNull;
 public class CreateClassActivityIntrumentedTest {
 
     @Rule
-    public ActivityTestRule<CreateClassActivity> rule = 
+    public ActivityTestRule<CreateClassActivity> rule =
             new ActivityTestRule<>(CreateClassActivity.class);
-
-
 
     @Before
     public void setUp() {
@@ -91,32 +89,6 @@ public class CreateClassActivityIntrumentedTest {
         closeSoftKeyboard();
         onView(withId(R.id.edit_text_cut_grade))
                 .perform(typeText(String.valueOf(4.5)));
-        closeSoftKeyboard();
-        onView(withId(R.id.edit_text_size_groups))
-                .perform(typeText(String.valueOf(5)));
-        closeSoftKeyboard();
-        onView(withId(R.id.edit_text_addition))
-                .perform(typeText(String.valueOf(0.5)));
-        closeSoftKeyboard();
-        onView(withId(R.id.button_save))
-                .perform(click());
-        onView(withId(R.id.edit_text_class_name))
-                .check(matches(hasErrorText("Preencha todos os campos!")));
-    }
-
-    @Test
-    public void shouldValidateNullCutOff() throws UserException{
-        onView(withId(R.id.edit_text_class_name))
-                .perform(typeText("Calculo 1"));
-        closeSoftKeyboard();
-        onView(withId(R.id.edit_text_institution))
-                .perform(typeText("UnB"));
-        closeSoftKeyboard();
-        onView(withId(R.id.edit_text_class_password))
-                .perform(typeText("Senha1"));
-        closeSoftKeyboard();
-        onView(withId(R.id.edit_text_cut_grade))
-                .perform(typeText(""));
         closeSoftKeyboard();
         onView(withId(R.id.edit_text_size_groups))
                 .perform(typeText(String.valueOf(5)));
@@ -205,7 +177,7 @@ public class CreateClassActivityIntrumentedTest {
         onView(withId(R.id.button_save))
                 .perform(click());
         onView(withId(R.id.edit_text_class_name)).check(matches
-                (hasErrorText("@string/msg_class_name_case_error_message")));
+                (hasErrorText("O nome da sala deve ter de 3 a 20 caracteres.")));
     }
 
     @Test
@@ -257,7 +229,7 @@ public class CreateClassActivityIntrumentedTest {
         onView(withId(R.id.button_save))
                 .perform(click());
         onView(withId(R.id.edit_text_institution)).check(matches(
-                hasErrorText("@string/msg_institution_case_error_message")));
+                hasErrorText("O nome da instituicao deve ter de 3 a 20 caracteres.")));
     }
 
 

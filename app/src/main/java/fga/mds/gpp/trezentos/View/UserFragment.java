@@ -18,16 +18,17 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserFragment extends Fragment implements View.OnClickListener{
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
     private Button logoutButton;
     private Button classButton;
-    private String mParam1;
-    private String mParam2;
     private OnFragmentInteractionListener mListener;
+    private static UserFragment fragment;
 
-    public UserFragment(){
-
+    public static UserFragment getInstance() {
+        if(fragment == null){
+            fragment = new UserFragment();
+        }
+        return fragment;
     }
 
     @Override

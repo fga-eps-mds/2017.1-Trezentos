@@ -47,7 +47,7 @@ public class StudentsFragmentInstrumentedTest extends
     public void shouldValidateStudentsFragmentInitialization(){
         onView(withId(R.id.salas_item))
                 .perform(click());
-        onData(anything()).inAdapterView(withId(R.id.class_list_view))
+        onData(anything()).inAdapterView(withId(R.id.recycler))
                 .atPosition(0).perform(click());
         onView(ViewMatchers.withText("STUDENTS"))
                 .perform(click());
@@ -60,7 +60,7 @@ public class StudentsFragmentInstrumentedTest extends
 //    public void shouldClickOnStudentRegistered(){
 //        onView(withId(R.id.salas_item))
 //                .perform(click());
-//        onData(anything()).inAdapterView(withId(R.id.class_list_view))
+//        onData(anything()).inAdapterView(withId(R.id.recycler))
 //                .atPosition(0).perform(click());
 //
 //            ListView listView;
@@ -89,7 +89,7 @@ public class StudentsFragmentInstrumentedTest extends
     public void shouldClickOnButtonStudent(){
         onView(withId(R.id.salas_item))
                 .perform(click());
-        onData(anything()).inAdapterView(withId(R.id.class_list_view))
+        onData(anything()).inAdapterView(withId(R.id.recycler))
                 .atPosition(0).perform(click());
         onView(ViewMatchers.withText("STUDENTS"))
                 .perform(click());

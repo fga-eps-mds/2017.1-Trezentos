@@ -11,8 +11,15 @@ import fga.mds.gpp.trezentos.R;
 
 public class EvaluationFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static EvaluationFragment fragment;
+
+    public static EvaluationFragment getInstance() {
+
+        if(fragment == null){
+            fragment = new EvaluationFragment();
+        }
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -19,6 +19,14 @@ public class AboutFragment extends Fragment{
 
     private ArrayList<About> about;
     private static AboutAdapter adapter;
+    private static AboutFragment fragment;
+
+    public static AboutFragment getInstance() {
+        if(fragment == null){
+            fragment = new AboutFragment();
+        }
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){

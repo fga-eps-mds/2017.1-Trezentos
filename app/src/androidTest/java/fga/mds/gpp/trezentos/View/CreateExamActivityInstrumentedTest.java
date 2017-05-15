@@ -62,7 +62,7 @@ public class CreateExamActivityInstrumentedTest extends
     public void shouldAssertNotNullActivity(){
         onView(withId(R.id.salas_item))
                 .perform(click());
-        onData(anything()).inAdapterView(withId(R.id.class_list_view))
+        onData(anything()).inAdapterView(withId(R.id.recycler))
                 .atPosition(0).perform(click());
         onView(withId(floating_btn))
                 .perform(click());
@@ -73,7 +73,7 @@ public class CreateExamActivityInstrumentedTest extends
     public void shouldValidateNullExamName() throws UserException {
         onView(withId(R.id.salas_item))
                 .perform(click());
-        onData(anything()).inAdapterView(withId(R.id.class_list_view))
+        onData(anything()).inAdapterView(withId(R.id.recycler))
                 .atPosition(0).perform(click());
         onView(withId(floating_btn))
                 .perform(click());
@@ -93,7 +93,7 @@ public class CreateExamActivityInstrumentedTest extends
     public void shouldValidadeExamNameMinLength() throws UserException{
         onView(withId(R.id.salas_item))
                 .perform(click());
-        onData(anything()).inAdapterView(withId(R.id.class_list_view))
+        onData(anything()).inAdapterView(withId(R.id.recycler))
                 .atPosition(0).perform(click());
         onView(withId(floating_btn))
                 .perform(click());
@@ -113,7 +113,7 @@ public class CreateExamActivityInstrumentedTest extends
     public void shouldValidadeExamNameMaxLength() throws UserException{
         onView(withId(R.id.salas_item))
                 .perform(click());
-        onData(anything()).inAdapterView(withId(R.id.class_list_view))
+        onData(anything()).inAdapterView(withId(R.id.recycler))
                 .atPosition(0).perform(click());
         onView(withId(floating_btn))
                 .perform(click());
