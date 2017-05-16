@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,13 +15,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
+
+import static fga.mds.gpp.trezentos.R.id.button_refresh;
 
 public class ClassFragment extends Fragment{
 
@@ -30,6 +37,10 @@ public class ClassFragment extends Fragment{
     public ProgressBar progressBar;
     public UserClassControl userClassControl;
     private static ClassFragment fragment;
+    private LinearLayout noInternetLayout;
+    private  Boolean connection;
+    private Button buttonRefresh;
+    private String email;
 
 
     public static ClassFragment getInstance() {
@@ -47,32 +58,36 @@ public class ClassFragment extends Fragment{
     @Override
     public void onResume(){
         super.onResume();
-
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String email = session.getString("userEmail","");
-
-        new ServerOperation(email).execute();
+        new ServerOperation().execute();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
+        noInternetLayout = (LinearLayout) view.findViewById(R.id.no_internet_layout);
+        buttonRefresh = (Button) view.findViewById(button_refresh);
+        buttonRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                noInternetLayout.setVisibility(View.GONE);
+                new ServerOperation().execute();
 
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String email = session.getString("userEmail","");
+            }
+        });
+            SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            email = session.getString("userEmail","");
 
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+            initFloatingActionButton(view);
 
-        new ServerOperation(email).execute();
-        initFloatingActionButton(view);
-
+            new ServerOperation().execute();
         return view;
     }
 
@@ -103,8 +118,6 @@ public class ClassFragment extends Fragment{
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
             ViewHolder holder = (ViewHolder) viewHolder;
-
-
             UserClass userClass  = userClasses.get(position) ;
             holder.className.setText(userClass.getClassName());
             holder.classInstitution.setText(userClass.getInstitution());
@@ -120,7 +133,6 @@ public class ClassFragment extends Fragment{
         public long getItemId(int position) {
             return super.getItemId(position);
         }
-
 
         @Override
         public void onClick(View v) {
@@ -150,39 +162,52 @@ public class ClassFragment extends Fragment{
 
     class ServerOperation extends AsyncTask<String, Void, String> {
 
-        private String email;
 
-        public ServerOperation(String email){
-            this.email = email;
+        public ServerOperation(){
         }
 
         @Override
         protected String doInBackground(String... params) {
-            userClasses = new ArrayList<>();
-            ArrayList<UserClass> allClasses = userClassControl.getClasses();
+            if(isNetworkAvailable(getContext()) && isInternetAvailable() ){ //If internet is ok
 
-            for (UserClass userClass : allClasses) {
-                if (userClass.getOwnerEmail().equals(email) ||
-                        userClass.getStudents().contains(email)) {
-                    userClasses.add(userClass);
+                userClasses = new ArrayList<>();
+                ArrayList<UserClass> allClasses = userClassControl.getClasses();
+
+                for (UserClass userClass : allClasses) {
+                    if (userClass.getOwnerEmail().equals(email) ||
+                            userClass.getStudents().contains(email)) {
+                        userClasses.add(userClass);
+                    }
                 }
-            }
+                return "true";
 
-            return null;
+            }else{
+                return null;
+
+            }
         }
 
         @Override
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.GONE);
+            if(result == "true"){
+                if (getActivity() != null) {
 
-            if (getActivity() != null) {
-                RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler);
-                recyclerView.setAdapter(new Adapter(userClasses, getActivity().getApplicationContext(), recyclerView));
 
-                final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(layoutManager);
+
+                        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        recyclerView.setAdapter(new Adapter(userClasses, getActivity().getApplicationContext(), recyclerView));
+
+                        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        recyclerView.setLayoutManager(layoutManager);
+
+                }
+            }else{
+                noInternetLayout.setVisibility(View.VISIBLE);
             }
+
         }
 
         @Override
@@ -194,6 +219,23 @@ public class ClassFragment extends Fragment{
 
         @Override
         protected void onProgressUpdate(Void... values) {}
+
+        public boolean isNetworkAvailable(Context context) {
+            final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+            return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+        }
+
+        public boolean isInternetAvailable() {
+            try {
+                final InetAddress address = InetAddress.getByName("www.google.com");
+                if(!address.equals("")){
+                    return true;
+                }
+                //return !address.equals("");
+            } catch (UnknownHostException e) {
+            }
+            return false;
+        }
     }
 
     public void initFloatingActionButton(View view){
@@ -206,4 +248,6 @@ public class ClassFragment extends Fragment{
             }
         });
     }
+
+
 }
