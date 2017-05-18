@@ -2,20 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="fga.mds.gpp.trezentos.View.StudensFragment">
+    tools:context="fga.mds.gpp.trezentos.View.GroupsFragment">
 
-
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerStudents"
-
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        />
-
-
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

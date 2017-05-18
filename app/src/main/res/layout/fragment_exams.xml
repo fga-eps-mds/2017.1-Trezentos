@@ -5,9 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fga.mds.gpp.trezentos.View.ExamsFragment">
 
-
-
-
     <ProgressBar
         android:id="@+id/progressBarExam"
         android:layout_width="50dp"
@@ -16,7 +13,7 @@
         android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
+        android:id="@+id/recyclerExam"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

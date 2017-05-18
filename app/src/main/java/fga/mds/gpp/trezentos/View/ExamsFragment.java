@@ -76,22 +76,10 @@ public class ExamsFragment extends Fragment{
     }
 
     public void initListView(){
-//        arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, userExams);
-//        arrayAdapter.notifyDataSetChanged();
-//
-//        listView = (ListView) getActivity().findViewById(R.id.list);
-//        listView.setAdapter(arrayAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                Snackbar.make(view, "Click List", Snackbar.LENGTH_LONG).setAction("No action", null).show();
-//            }
-//        });
 
         progressBar.setVisibility(View.GONE);
 
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler);
+        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerExam);
         recyclerView.setAdapter(new ExamsFragment.Adapter(userExams, getActivity().getApplicationContext(), recyclerView));
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -189,7 +177,7 @@ public class ExamsFragment extends Fragment{
             int itemPosition = recyclerView.getChildLayoutPosition(v);
             Exam exam = exams.get(itemPosition);
 
-            Intent goClass = new  Intent(context, ClassActivity.class);
+            Intent goClass = new  Intent(context, ExamActivity.class);
             goClass.putExtra("Class", userClass);
             goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(goClass);

@@ -22,6 +22,8 @@ public class UserAccount{
     private String passwordConfirmation;
     private String salt;
 
+    public int photo;
+
     private PasswordUtil passwordUtil;
 
     private Context context;
@@ -29,6 +31,11 @@ public class UserAccount{
     public UserAccount(){
         //An empty constructor is needed to create a new instance of object,
         //in addition is create constructors with arguments.
+    }
+
+    public UserAccount(String name, int photo){
+        this.name = name;
+        this.photo = photo;
     }
 
     public UserAccount(String name, String email, String password,
@@ -145,4 +152,8 @@ public class UserAccount{
     public String getSalt(){
         return salt;
     }
+
+
+
+    public int getPhoto() {return  photo;}
 }

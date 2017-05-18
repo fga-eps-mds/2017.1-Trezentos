@@ -39,7 +39,8 @@
         <activity android:name=".View.EditClassActivity" />
         <activity android:name=".View.CreateClassActivity" />
         <activity android:name=".View.CreateExamActivity" />
-        <activity android:name=".View.SearchActivity"></activity>
+        <activity android:name=".View.SearchActivity" />
+        <activity android:name=".View.ExamActivity"></activity>
     </application>
 
 </manifest>
