@@ -185,7 +185,6 @@ public class ExamsFragment extends Fragment{
         }
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView className;

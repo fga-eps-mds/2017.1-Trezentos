@@ -207,7 +207,6 @@ public class ClassFragment extends Fragment{
             }else{
                 noInternetLayout.setVisibility(View.VISIBLE);
             }
-
         }
 
         @Override

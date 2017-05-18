@@ -1,6 +1,8 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -31,9 +33,7 @@ public class ClassActivity extends AppCompatActivity{
         initFloatingButton();
         initRecover();
 
-
         if(userClass != null){setTitle(userClass.getClassName());}
-
     }
 
     public void initToolbar(){
@@ -112,7 +112,6 @@ public class ClassActivity extends AppCompatActivity{
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }
 

@@ -2,6 +2,7 @@ package fga.mds.gpp.trezentos.View;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,18 +18,18 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
-
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fga.mds.gpp.trezentos.Model.UserAccount;
+import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 
-public class StudensFragment extends Fragment implements NumberPicker.OnValueChangeListener {
+public class StudensFragment extends Fragment {
 
     private ArrayList<UserAccount> userAccounts;
+    private UserClass userClass;
 
     public StudensFragment(){
         // Required empty public constructor
@@ -43,21 +44,28 @@ public class StudensFragment extends Fragment implements NumberPicker.OnValueCha
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         // Inflate the layout for this fragment
+
+
         final View view = inflater.inflate(R.layout.fragment_studens, container, false);
+
+        Intent intent = getActivity().getIntent();
+        userClass = (UserClass) intent.getSerializableExtra("Class");
+
+        ArrayList<String> students = userClass.getStudents();
         //ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBarExam);
         //progressBar.setVisibility(View.VISIBLE);
 
-        userAccounts = new ArrayList<>();
-        userAccounts.add(new UserAccount("Arthur Diniz", R.drawable.ic_person));
-        userAccounts.add(new UserAccount("Grabriel Climaco", R.drawable.ic_person));
-        userAccounts.add(new UserAccount("Ana Carolina", R.drawable.ic_person));
-        userAccounts.add(new UserAccount("Elmar", R.drawable.ic_person));
-        Log.i("SIZE", "Size" + String.valueOf(userAccounts.size()));
+//        userAccounts = new ArrayList<>();
+//        userAccounts.add(new UserAccount("Arthur Diniz", R.drawable.ic_person));
+//        userAccounts.add(new UserAccount("Grabriel Climaco", R.drawable.ic_person));
+//        userAccounts.add(new UserAccount("Ana Carolina", R.drawable.ic_person));
+//        userAccounts.add(new UserAccount("Elmar", R.drawable.ic_person));
+//        Log.i("SIZE", "Size" + String.valueOf(userAccounts.size()));
 
 
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
-        recyclerView.setAdapter(new StudensFragment.AdapterStudents(userAccounts, getActivity().getApplicationContext(), recyclerView));
+        recyclerView.setAdapter(new StudensFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
         Log.i("SIZE", "teste");
 
         if(recyclerView != null) {
@@ -73,20 +81,15 @@ public class StudensFragment extends Fragment implements NumberPicker.OnValueCha
 
     }
 
-    @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
-    }
-
     private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
 
-        private final ArrayList<UserAccount> userAccounts;
+        private final ArrayList<String> userAccounts;
         private Context context;
         private  RecyclerView recyclerView;
         private  StudensFragment.ViewHolder holder;
 
 
-        public AdapterStudents(ArrayList<UserAccount> userAccounts, Context context,  RecyclerView recyclerView) {
+        public AdapterStudents(ArrayList<String> userAccounts, Context context,  RecyclerView recyclerView) {
             this.userAccounts = userAccounts;
             this.context = context;
             this.recyclerView = recyclerView;
@@ -108,9 +111,9 @@ public class StudensFragment extends Fragment implements NumberPicker.OnValueCha
             holder = (StudensFragment.ViewHolder) viewHolder;
 
 
-            UserAccount userAccount = userAccounts.get(position) ;
-            holder.userAccountName.setText(userAccount.getName());//
-            holder.circleImageView.setImageResource(userAccount.getPhoto());
+            String userAccount = userAccounts.get(position);
+            holder.userAccountName.setText(userAccount);//
+            //holder.circleImageView.setImageResource(userAccount.getPhoto());
 
 
         }
@@ -148,7 +151,6 @@ public class StudensFragment extends Fragment implements NumberPicker.OnValueCha
         }
     }
 
-
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, NumberPicker.OnValueChangeListener {
 
         final TextView userAccountName;
@@ -172,24 +174,6 @@ public class StudensFragment extends Fragment implements NumberPicker.OnValueCha
             noPresence.setOnClickListener(this);
             gradeLayout.setOnClickListener(this);
 
-
-//            presence.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    noPresence.setVisibility(View.VISIBLE);
-//                    presence.setVisibility(View.GONE);
-//                }
-//            });
-//
-//            noPresence.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    noPresence.setVisibility(View.GONE);
-//                    presence.setVisibility(View.VISIBLE);
-//                }
-//            });
-
-
         }
 
 
@@ -211,56 +195,55 @@ public class StudensFragment extends Fragment implements NumberPicker.OnValueCha
 
 
                 case R.id.gradeLayout:
-                    final Dialog d = new Dialog(getContext());
-                    d.setTitle("NumberPicker");
-                    d.setContentView(R.layout.dialog);
-                    Button b1 = (Button) d.findViewById(R.id.button1);
-                    Button b2 = (Button) d.findViewById(R.id.button2);
-
-                    final NumberPicker np1 = (NumberPicker) d.findViewById(R.id.numberPicker1);
-                    np1.setMinValue(0);   // min value 0
-                    np1.setMaxValue(10); // max value 100
-                    np1.setWrapSelectorWheel(false);
-                    np1.setOnValueChangedListener(this);
-
-
-                    final NumberPicker np2 = (NumberPicker) d.findViewById(R.id.numberPicker2);
-                    np2.setMinValue(0);   // min value 0
-                    np2.setMaxValue(99); // max value 100
-                    np2.setWrapSelectorWheel(false);
-                    np2.setOnValueChangedListener(this);
-
-
-
-                    b1.setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View v) {
-                           gradeTextView.setText(String.valueOf(np1.getValue()) + "." + String.valueOf(np2.getValue())); //set the value to textview
-
-                            d.dismiss();
-                        }
-                    });
-                    b2.setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View v) {
-                            d.dismiss(); // dismiss the dialog
-                        }
-                    });
-                    d.show();
+                    showGradePicker();
                     break;
-
-
 
             }
         }
 
         @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {}
 
+        public void showGradePicker(){
+
+            final Dialog d = new Dialog(getContext());
+            d.setTitle("NumberPicker");
+            d.setContentView(R.layout.dialog);
+            Button b1 = (Button) d.findViewById(R.id.button1);
+            Button b2 = (Button) d.findViewById(R.id.button2);
+
+            final NumberPicker np1 = (NumberPicker) d.findViewById(R.id.numberPicker1);
+            np1.setMinValue(0);  // min value 0
+            np1.setMaxValue(10); // max value 100
+            np1.setWrapSelectorWheel(false);
+            np1.setOnValueChangedListener(this);
+
+
+            final NumberPicker np2 = (NumberPicker) d.findViewById(R.id.numberPicker2);
+            np2.setMinValue(0); // min value 0
+            np2.setMaxValue(99); // max value 100
+            np2.setWrapSelectorWheel(false);
+            np2.setOnValueChangedListener(this);
+
+
+            b1.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    gradeTextView.setText(String.valueOf(np1.getValue()) + "." + String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
+
+                    d.dismiss();
+                }
+            });
+            b2.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    d.dismiss(); // dismiss the dialog
+                }
+            });
+            d.show();
         }
     }
-
 
 }
