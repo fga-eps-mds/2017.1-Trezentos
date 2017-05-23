@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fga.mds.gpp.trezentos.View.EditClassActivity"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <EditText
+        android:id="@+id/edit_text_class_name"
+        android:layout_marginTop="20dp"
+        android:textSize="25dp"
+        android:hint="Nome da Sala"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+
+
+
+    <EditText
+        android:id="@+id/edit_text_institution"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:hint="Instituição"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/edit_text_class_password"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:hint="Senha Sala"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/edit_text_cut_grade"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:hint="Nota de Corte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/edit_text_size_groups"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:hint="Tamanho dos Grupos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <EditText
+        android:id="@+id/edit_text_addition"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:hint="Acrécimo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:background="@color/cardview_dark_background"
+        android:textColor="@color/cardview_light_background"
+        />
+</LinearLayout>

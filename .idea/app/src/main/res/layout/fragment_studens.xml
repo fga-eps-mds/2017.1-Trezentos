@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fga.mds.gpp.trezentos.View.StudensFragment">
+
+
+
+    <ListView
+        android:id="@+id/list"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_btn_add_student"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="30dp"
+        android:contentDescription="@string/criar_sala"
+        android:src="@drawable/ic_criar_sala"
+        android:onClick="onClickCreate"
+
+        app:backgroundTint="@color/colorBottomMenu" />
+
+</FrameLayout>

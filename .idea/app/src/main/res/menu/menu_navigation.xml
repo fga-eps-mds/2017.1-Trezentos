@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/salas_item"
+        android:enabled="true"
+        android:icon="@drawable/ic_salas"
+        android:title="@string/salas"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/usuario_item"
+        android:enabled="true"
+        android:icon="@drawable/ic_perfil"
+        android:title="@string/perfil"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/about_item"
+        android:enabled="true"
+        android:icon="@drawable/ic_sobre"
+        android:title="@string/sobre"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/avaliacao_item"
+        android:enabled="true"
+        android:icon="@drawable/ic_avaliacao"
+        android:title="@string/avaliacao"
+        app:showAsAction="ifRoom" />
+</menu>
