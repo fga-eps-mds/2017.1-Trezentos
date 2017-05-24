@@ -65,9 +65,9 @@ public class StudentsFragmentInstrumentedTest extends
 //
 //            ListView listView;
 //
-//            StudensFragment studentsFragment;
+//            StudentsFragment studentsFragment;
 //
-//            studentsFragment = (StudensFragment) classRule.getActivity()
+//            studentsFragment = (StudentsFragment) classRule.getActivity()
 //                    .getSupportFragmentManager().findFragmentById(R.id.view_pager);
 //
 //            onView(ViewMatchers.withText("STUDENTS"))

@@ -20,9 +20,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fga.mds.gpp.trezentos.Model.UserAccount;
@@ -30,12 +27,12 @@ import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 
-public class StudensFragment extends Fragment {
+public class StudentsFragment extends Fragment {
 
     private ArrayList<UserAccount> userAccounts;
     private UserClass userClass;
 
-    public StudensFragment(){
+    public StudentsFragment(){
         // Required empty public constructor
     }
 
@@ -69,7 +66,7 @@ public class StudensFragment extends Fragment {
 
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
-        recyclerView.setAdapter(new StudensFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
+        recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
         Log.i("SIZE", "teste");
 
         if(recyclerView != null) {
@@ -90,7 +87,7 @@ public class StudensFragment extends Fragment {
         private final ArrayList<String> userAccounts;
         private Context context;
         private  RecyclerView recyclerView;
-        private  StudensFragment.ViewHolder holder;
+        private  StudentsFragment.ViewHolder holder;
 
 
         public AdapterStudents(ArrayList<String> userAccounts, Context context,  RecyclerView recyclerView) {
@@ -103,7 +100,7 @@ public class StudensFragment extends Fragment {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             View view = LayoutInflater.from(context).inflate(R.layout.student_item, parent, false);
-            StudensFragment.ViewHolder holder = new StudensFragment.ViewHolder(view);
+            StudentsFragment.ViewHolder holder = new StudentsFragment.ViewHolder(view);
             view.setOnClickListener(this);
 
             return holder;
@@ -112,7 +109,7 @@ public class StudensFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-            holder = (StudensFragment.ViewHolder) viewHolder;
+            holder = (StudentsFragment.ViewHolder) viewHolder;
 
             String userAccount = userAccounts.get(position);
             holder.userAccountName.setText(userAccount);//
@@ -278,6 +275,9 @@ public class StudensFragment extends Fragment {
         return list;
     }
 
+    public ArrayList<HashMap<String, String>> getArrayGrades(){
+        return list;
+    }
 //    public void saveArray(String email, String grade){
 //        ArrayList<HashMap<String, String>> array = populateList (populateMap(email, grade));
 //

@@ -1,8 +1,6 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -21,7 +19,7 @@ public class ClassActivity extends AppCompatActivity{
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
-    private StudensFragment studensFragment;
+    private StudentsFragment studentsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -78,7 +76,7 @@ public class ClassActivity extends AppCompatActivity{
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new ExamsFragment(), "EXAMS");
-        adapter.addFragment(new StudensFragment(), "STUDENTS");
+        adapter.addFragment(new StudentsFragment(), "STUDENTS");
         viewPager.setAdapter(adapter);
     }
 
