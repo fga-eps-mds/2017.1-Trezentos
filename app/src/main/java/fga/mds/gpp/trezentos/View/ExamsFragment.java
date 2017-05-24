@@ -76,8 +76,6 @@ public class ExamsFragment extends Fragment{
 
         ArrayList <HashMap<String, Double>> aluno = new ArrayList<HashMap<String, Double>>();
 
-
-
     }
 
     public void initListView(){

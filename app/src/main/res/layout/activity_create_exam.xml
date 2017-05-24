@@ -7,8 +7,6 @@
     tools:context="fga.mds.gpp.trezentos.View.CreateExamActivity"
     android:orientation="vertical">
 
-
-
     <EditText
         android:id="@+id/exam_name"
         android:textSize="25dp"
@@ -18,7 +16,6 @@
         android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 
     <Button
         android:id="@+id/ok_create_button"

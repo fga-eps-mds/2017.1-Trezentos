@@ -21,6 +21,7 @@ public class ClassActivity extends AppCompatActivity{
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
+    private StudensFragment studensFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -108,6 +109,9 @@ public class ClassActivity extends AppCompatActivity{
                 intentEditClass.putExtra("Class", userClassCalled);
 
                 startActivity(intentEditClass);
+        }
+        else if (id == R.id.action_update_grades){
+
         }
 
         return super.onOptionsItemSelected(item);

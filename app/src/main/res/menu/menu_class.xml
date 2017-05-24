@@ -13,6 +13,10 @@
         android:orderInCategory="100"
         android:title="@string/configuracoes"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/action_update_grades"
+        android:orderInCategory="100"
+        android:title="@string/update_grades"
+        app:showAsAction="never" />
 
 </menu>

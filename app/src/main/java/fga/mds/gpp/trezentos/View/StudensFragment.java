@@ -19,6 +19,10 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fga.mds.gpp.trezentos.Model.UserAccount;
@@ -56,8 +60,8 @@ public class StudensFragment extends Fragment {
         //progressBar.setVisibility(View.VISIBLE);
 
         userAccounts = new ArrayList<>();
-        userAccounts.add(new UserAccount("Arthur Diniz", R.drawable.ic_person));
-        userAccounts.add(new UserAccount("Grabriel Climaco", R.drawable.ic_person));
+   //   userAccounts.add(new UserAccount("Arthur Diniz", R.drawable.ic_person));
+     //   userAccounts.add(new UserAccount("Grabriel Climaco", R.drawable.ic_person));
 //        userAccounts.add(new UserAccount("Ana Carolina", R.drawable.ic_person));
 //        userAccounts.add(new UserAccount("Elmar", R.drawable.ic_person));
 //        Log.i("SIZE", "Size" + String.valueOf(userAccounts.size()));
@@ -110,12 +114,9 @@ public class StudensFragment extends Fragment {
 
             holder = (StudensFragment.ViewHolder) viewHolder;
 
-
             String userAccount = userAccounts.get(position);
             holder.userAccountName.setText(userAccount);//
             //holder.circleImageView.setImageResource(userAccount.getPhoto());
-
-
         }
 
         @Override
@@ -232,6 +233,14 @@ public class StudensFragment extends Fragment {
                 public void onClick(View v) {
                     gradeTextView.setText(String.valueOf(np1.getValue()) + "." + String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
 
+                    String grade = gradeTextView.getText().toString();
+                    String email = userAccountName.getText().toString();
+
+                    Log.i("SIZE", grade);
+                    Log.i("SIZE", email);
+
+                 //   populateMap(email, grade);
+                    populateList(populateMap(email, grade));
                     d.dismiss();
                 }
             });
@@ -246,4 +255,37 @@ public class StudensFragment extends Fragment {
         }
     }
 
+    public HashMap<String, String> populateMap(String email, String grade){
+        HashMap<String, String> mapEmailAndGrade = new HashMap<>();
+        mapEmailAndGrade.put(email,grade);
+        return mapEmailAndGrade;
+    }
+
+    ArrayList<HashMap<String, String>> list = new ArrayList<>();
+
+    public ArrayList<HashMap<String, String>> populateList(HashMap<String, String> mapEmailAndGrade){
+        if (list!= null){
+        list.add(mapEmailAndGrade);
+        }else{
+            //do nothing
+        }
+
+        for(int i=0; i< list.size();i++)
+        {
+            Log.e("myLog","Data prodArrayList in ADD Method = "+list.get(i).toString());
+        }
+
+        return list;
+    }
+
+//    public void saveArray(String email, String grade){
+//        ArrayList<HashMap<String, String>> array = populateList (populateMap(email, grade));
+//
+//        for(int i=0; i< array.size();i++)
+//        {
+//            Log.e("myLog","Data prodArrayList in ADD Method = "+array.get(i).toString());
+//        }
+//    }
+
 }
+

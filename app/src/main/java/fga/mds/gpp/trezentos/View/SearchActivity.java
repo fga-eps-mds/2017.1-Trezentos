@@ -169,7 +169,6 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("PUT", userClass.getClassName());
             }
         }
-
         return tempList;
     }
 
