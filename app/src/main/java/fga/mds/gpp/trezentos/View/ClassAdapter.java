@@ -1,24 +1,35 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class ClassAdapter extends RecyclerView.Adapter implements Filterable {
-
+public class ClassAdapter extends RecyclerView.Adapter implements Filterable{
     private ArrayList<UserClass> userClasses;
     private ArrayList<UserClass> filteredClasses;
     private ArrayList<UserClass> tempList = null;
     private Context context;
     private RecyclerView recyclerView;
     private FriendFilter friendFilter;
+    private ClassViewHolder.OnItemClickListener listener;
+
+    public void setOnItemClickListener(ClassViewHolder.OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
 
     public ClassAdapter(ArrayList<UserClass> userClasses, Context context, RecyclerView recyclerView){
@@ -34,13 +45,12 @@ public class ClassAdapter extends RecyclerView.Adapter implements Filterable {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.class_item, parent, false);
         ClassViewHolder holder = new ClassViewHolder(view);
-
+        holder.setOnItemClickListener(listener);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         UserClass userClass  = filteredClasses.get(position);
         ClassViewHolder classViewHolder = (ClassViewHolder) holder;
         classViewHolder.name.setText(userClass.getClassName());

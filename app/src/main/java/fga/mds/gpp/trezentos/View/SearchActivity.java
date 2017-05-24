@@ -1,11 +1,13 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,6 +50,28 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    private ClassViewHolder.OnItemClickListener callJoinClass() {
+        return new ClassViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                UserClass userClass = userClasses.get(position);
+                showJoinClassFragment(userClass);
+            }
+        };
+    }
+
+    private void showJoinClassFragment(UserClass userClass) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("userClass", userClass);
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        JoinClassFragment joinClassFragment = new JoinClassFragment();
+        joinClassFragment.setArguments(bundle);
+        joinClassFragment.show(fragmentTransaction, "joinClass");
+    }
+
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -72,9 +96,11 @@ public class SearchActivity extends AppCompatActivity {
 
         userClasses = getFormatedClasses(userClasses);
         classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView);
+        classAdapter.setOnItemClickListener(callJoinClass());
         recyclerView.setAdapter(classAdapter);
 
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(getApplication(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(getApplication(),
+                LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layout);
 
         recyclerView.setOnScrollListener(new HidingScrollListener() {
@@ -89,13 +115,15 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+
     private void initClasses() {
         progressBar.setVisibility(View.VISIBLE);
         new ServerOperation().execute();
     }
 
     private void hideViews() {
-        appBarLayout.animate().translationY(-appBarLayout.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+        appBarLayout.animate().translationY(-appBarLayout.getHeight()).
+                setInterpolator(new AccelerateInterpolator(2));
     }
 
     private void showViews() {
@@ -126,6 +154,7 @@ public class SearchActivity extends AppCompatActivity {
                 return true;
             }
         };
+
         searchView.setOnQueryTextListener(queryTextListener);
         return true;
     }
@@ -133,17 +162,18 @@ public class SearchActivity extends AppCompatActivity {
     public ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){
         ArrayList<UserClass> tempList = new ArrayList<UserClass>();
         for (UserClass userClass : userClasses) {
-            if (userClass.getOwnerEmail().equals(userEmail) || userClass.getStudents().contains(userEmail)) {
+            if (userClass.getOwnerEmail().equals(userEmail) ||
+                    userClass.getStudents().contains(userEmail)) {
             }else{
                 tempList.add(userClass);
                 Log.d("PUT", userClass.getClassName());
             }
         }
+
         return tempList;
     }
 
     class ServerOperation extends AsyncTask<String, Void, String> {
-
         public ServerOperation(){}
 
         @Override
@@ -156,15 +186,14 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.GONE);
-
             initRecyclerView();
-
         }
 
         @Override
         protected void onPreExecute() {
             userClassControl = UserClassControl.getInstance(getApplicationContext());
-            SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getApplication());
+            SharedPreferences session = PreferenceManager.
+                    getDefaultSharedPreferences(getApplication());
             userEmail = session.getString("userEmail","");
         }
 

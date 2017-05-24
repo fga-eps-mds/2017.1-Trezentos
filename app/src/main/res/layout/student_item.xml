@@ -82,7 +82,7 @@
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Prova"
+                        android:text="Nota"
                         android:layout_gravity="center_vertical"
                         android:textColor="#FFF"
                         android:textSize="15dp"
@@ -131,10 +131,6 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_no_presence"
                         android:onClick="onClick"/>
-
-
-
-
 
 
                 </LinearLayout>

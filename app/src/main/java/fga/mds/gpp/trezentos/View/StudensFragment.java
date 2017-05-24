@@ -55,9 +55,9 @@ public class StudensFragment extends Fragment {
         //ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBarExam);
         //progressBar.setVisibility(View.VISIBLE);
 
-//        userAccounts = new ArrayList<>();
-//        userAccounts.add(new UserAccount("Arthur Diniz", R.drawable.ic_person));
-//        userAccounts.add(new UserAccount("Grabriel Climaco", R.drawable.ic_person));
+        userAccounts = new ArrayList<>();
+        userAccounts.add(new UserAccount("Arthur Diniz", R.drawable.ic_person));
+        userAccounts.add(new UserAccount("Grabriel Climaco", R.drawable.ic_person));
 //        userAccounts.add(new UserAccount("Ana Carolina", R.drawable.ic_person));
 //        userAccounts.add(new UserAccount("Elmar", R.drawable.ic_person));
 //        Log.i("SIZE", "Size" + String.valueOf(userAccounts.size()));

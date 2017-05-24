@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
@@ -72,6 +73,10 @@ public class ExamsFragment extends Fragment{
         userClass = (UserClass) intent.getSerializableExtra("Class");
 
         userExamControl = UserExamControl.getInstance(getActivity());
+
+        ArrayList <HashMap<String, Double>> aluno = new ArrayList<HashMap<String, Double>>();
+
+
 
     }
 
