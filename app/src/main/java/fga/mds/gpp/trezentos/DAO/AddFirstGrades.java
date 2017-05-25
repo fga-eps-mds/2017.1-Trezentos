@@ -3,6 +3,8 @@ package fga.mds.gpp.trezentos.DAO;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,27 +18,20 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * Created by carolina on 24/05/17.
- */
-
 public class AddFirstGrades extends AsyncTask<String, String, String>{
-    private final String email;
-    private final String userClassName;
-    private final String nameExam;
-    private final ArrayList<HashMap<String,String>> arrayFirstGrades;
+
+    private  HashMap<String,String> hashFirstGrades;
     private StudentsFragment studentsFragment;
     private UserClass userClass;
     private Exam exam;
+    private HashMap<String, String> toBeParsed;
 
     private final String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
 
-    private AddFirstGrades(String email, String userClassName, String nameExam,
-                           ArrayList<HashMap<String, String>> arrayFirstGrades){
-        this.email = email;
-        this.userClassName = userClassName;
-        this.nameExam = nameExam;
-        this.arrayFirstGrades = arrayFirstGrades;
+    public AddFirstGrades(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades){
+        this.userClass = userClass;
+        this.exam = exam;
+        this.hashFirstGrades = hashFirstGrades;
     }
 
     @Override
@@ -70,8 +65,10 @@ public class AddFirstGrades extends AsyncTask<String, String, String>{
         builder.addQueryParameter("userClassName", userClass.getClassName());
         // nome da prova
         builder.addQueryParameter("name", exam.getNameExam());
+        Log.d("NOTASDAO", Integer.toString(studentsFragment.getHashEmailAndGrade().size()));
+        // primeira nota
+        builder.addQueryParameter("firstGrades", studentsFragment.getHashEmailAndGrade().toString());
 
-        builder.addQueryParameter("firstGrades", String.valueOf(studentsFragment.getArrayGrades()));
         return builder.build().toString();
     }
 }

@@ -7,9 +7,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import fga.mds.gpp.trezentos.Controller.UserExamControl;
+import fga.mds.gpp.trezentos.Exception.UserClassException;
+import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
@@ -19,7 +29,7 @@ public class ClassActivity extends AppCompatActivity{
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
-    private StudentsFragment studentsFragment;
+    StudentsFragment studentsFragment = new StudentsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -95,21 +105,32 @@ public class ClassActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+
         int id = item.getItemId();
 
         if (id == R.id.action_settings){
+            Log.d("MAP", "settings");
             return true;
         }
-        else if(id == R.id.action_edit_class){
 
+        else if(id == R.id.action_edit_class){
                 Intent intentEditClass = new  Intent(getApplicationContext(), EditClassActivity.class);
                 UserClass userClassCalled = (UserClass) userClass;
                 intentEditClass.putExtra("Class", userClassCalled);
-
+            Log.d("MAP", "editclass");
                 startActivity(intentEditClass);
+            return true;
         }
+
         else if (id == R.id.action_update_grades){
 
+            HashMap<String, String> map = studentsFragment.getHashEmailAndGrade();
+
+            Log.d("TAMANHOMAPA", "upgrade clicado");
+
+            Log.d("TAMANHOMAPA", Integer.toString(map.size()));
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

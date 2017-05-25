@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,6 +33,7 @@ public class StudentsFragment extends Fragment {
 
     private ArrayList<UserAccount> userAccounts;
     private UserClass userClass;
+    private HashMap<String, String> mapEmailAndGrade = new HashMap<>();
 
     public StudentsFragment(){
         // Required empty public constructor
@@ -154,17 +157,16 @@ public class StudentsFragment extends Fragment {
         final TextView userAccountName;
         final ImageView presence;
         final ImageView noPresence;
-        final CircleImageView circleImageView;
+      //  final CircleImageView circleImageView;
         final LinearLayout gradeLayout;
         final TextView gradeTextView;
-
 
         public ViewHolder(View view) {
             super(view);
             userAccountName = (TextView) view.findViewById(R.id.student_name);
             presence = (ImageView) view.findViewById(R.id.presence);
             noPresence= (ImageView) view.findViewById(R.id.no_presence);
-            circleImageView = (CircleImageView) view.findViewById(R.id.profile_image);
+           // circleImageView = (CircleImageView) view.findViewById(R.id.profile_image);
             gradeLayout = (LinearLayout) view.findViewById(R.id.gradeLayout);
             gradeTextView = (TextView) view.findViewById(R.id.text_view_grade);
 
@@ -173,7 +175,6 @@ public class StudentsFragment extends Fragment {
             gradeLayout.setOnClickListener(this);
 
         }
-
 
         @Override
         public void onClick(View v) {
@@ -233,11 +234,11 @@ public class StudentsFragment extends Fragment {
                     String grade = gradeTextView.getText().toString();
                     String email = userAccountName.getText().toString();
 
-                    Log.i("SIZE", grade);
-                    Log.i("SIZE", email);
+                    Log.i("MAP", grade);
+                    Log.i("MAP", email);
+                    mapEmailAndGrade.put(email, grade);
 
-                 //   populateMap(email, grade);
-                    populateList(populateMap(email, grade));
+                    Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
                     d.dismiss();
                 }
             });
@@ -252,40 +253,12 @@ public class StudentsFragment extends Fragment {
         }
     }
 
-    public HashMap<String, String> populateMap(String email, String grade){
-        HashMap<String, String> mapEmailAndGrade = new HashMap<>();
-        mapEmailAndGrade.put(email,grade);
+        public HashMap<String, String> getHashEmailAndGrade(){
         return mapEmailAndGrade;
     }
 
-    ArrayList<HashMap<String, String>> list = new ArrayList<>();
-
-    public ArrayList<HashMap<String, String>> populateList(HashMap<String, String> mapEmailAndGrade){
-        if (list!= null){
-        list.add(mapEmailAndGrade);
-        }else{
-            //do nothing
-        }
-
-        for(int i=0; i< list.size();i++)
-        {
-            Log.e("myLog","Data prodArrayList in ADD Method = "+list.get(i).toString());
-        }
-
-        return list;
-    }
-
-    public ArrayList<HashMap<String, String>> getArrayGrades(){
-        return list;
-    }
-//    public void saveArray(String email, String grade){
-//        ArrayList<HashMap<String, String>> array = populateList (populateMap(email, grade));
-//
-//        for(int i=0; i< array.size();i++)
-//        {
-//            Log.e("myLog","Data prodArrayList in ADD Method = "+array.get(i).toString());
-//        }
-//    }
-
 }
+
+
+
 

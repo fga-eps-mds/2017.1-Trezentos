@@ -2,15 +2,25 @@ package fga.mds.gpp.trezentos.Controller;
 
 
 import android.content.Context;
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import fga.mds.gpp.trezentos.DAO.AddFirstGrades;
+import fga.mds.gpp.trezentos.DAO.AddStudentToClassRequest;
 import fga.mds.gpp.trezentos.DAO.CreateExamPost;
 import fga.mds.gpp.trezentos.DAO.getExamRequest;
+import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.UserClass;
+import fga.mds.gpp.trezentos.R;
 
 public class UserExamControl{
     private static UserExamControl instance;
@@ -48,7 +58,6 @@ public class UserExamControl{
 
         try{
             exam = new Exam(examName, userClassName, classOwnerEmail);
-
             erro = "Sucesso";
             return erro;
 
@@ -57,6 +66,19 @@ public class UserExamControl{
             return erro;
         }
     }
+
+    public String validateAddsFirstGrade(UserClass userClass, Exam exam,
+                                         HashMap<String, String> hashFirstGrades) throws UserClassException, ExecutionException, InterruptedException {
+
+        String serverResponse;
+
+        AddFirstGrades addFirstGrades = new AddFirstGrades(userClass, exam, hashFirstGrades);
+                serverResponse = addFirstGrades.execute().get();
+
+        Log.d("SERVERresponse", serverResponse);
+        return serverResponse;
+    }
+
 
     //GET FROM API
     public ArrayList<Exam> getExamsFromUser(String email, String userClassName) {
