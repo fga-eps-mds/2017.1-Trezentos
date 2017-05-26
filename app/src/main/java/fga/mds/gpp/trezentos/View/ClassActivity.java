@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,16 +24,17 @@ import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class ClassActivity extends AppCompatActivity{
+public class ClassActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButton;
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
     StudentsFragment studentsFragment = new StudentsFragment();
+    Exam exam;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
 
@@ -42,33 +44,35 @@ public class ClassActivity extends AppCompatActivity{
         initFloatingButton();
         initRecover();
 
-        if(userClass != null){setTitle(userClass.getClassName());}
+        if (userClass != null) {
+            setTitle(userClass.getClassName());
+        }
     }
 
-    public void initToolbar(){
+    public void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    public void initViewPager(){
+    public void initViewPager() {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         setupViewPager(viewPager);
     }
 
-    public void initTabLayout(){
+    public void initTabLayout() {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public void initFloatingButton(){
+    public void initFloatingButton() {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn);
 
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goCreateExam = new  Intent(getApplicationContext(), CreateExamActivity.class);
+                Intent goCreateExam = new Intent(getApplicationContext(), CreateExamActivity.class);
                 UserClass userClassCalled = (UserClass) userClass;
                 goCreateExam.putExtra("Class", userClassCalled);
                 startActivity(goCreateExam);
@@ -77,12 +81,12 @@ public class ClassActivity extends AppCompatActivity{
 
     }
 
-    public void initRecover(){
+    public void initRecover() {
         Intent intent = getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
     }
 
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new ExamsFragment(), "EXAMS");
@@ -91,50 +95,47 @@ public class ClassActivity extends AppCompatActivity{
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_class, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings){
+        if (id == R.id.action_settings) {
             Log.d("MAP", "settings");
             return true;
-        }
-
-        else if(id == R.id.action_edit_class){
-                Intent intentEditClass = new  Intent(getApplicationContext(), EditClassActivity.class);
-                UserClass userClassCalled = (UserClass) userClass;
-                intentEditClass.putExtra("Class", userClassCalled);
+        } else if (id == R.id.action_edit_class) {
+            Intent intentEditClass = new Intent(getApplicationContext(), EditClassActivity.class);
+            UserClass userClassCalled = (UserClass) userClass;
+            intentEditClass.putExtra("Class", userClassCalled);
             Log.d("MAP", "editclass");
-                startActivity(intentEditClass);
+            startActivity(intentEditClass);
             return true;
-        }
-
-        else if (id == R.id.action_update_grades){
-
+        } else if (id == R.id.action_update_grades) {
+            UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
             HashMap<String, String> map = studentsFragment.getHashEmailAndGrade();
-
-            Log.d("TAMANHOMAPA", "upgrade clicado");
-
-            Log.d("TAMANHOMAPA", Integer.toString(map.size()));
-
+            try {
+                userExamControl.validateAddsFirstGrade(userClass, exam, map);
+            } catch (UserClassException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 }
-

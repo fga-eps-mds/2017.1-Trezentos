@@ -33,7 +33,7 @@ public class StudentsFragment extends Fragment {
 
     private ArrayList<UserAccount> userAccounts;
     private UserClass userClass;
-    private HashMap<String, String> mapEmailAndGrade = new HashMap<>();
+    private static HashMap<String, String> mapEmailAndGrade = new HashMap<>();
 
     public StudentsFragment(){
         // Required empty public constructor
@@ -78,15 +78,10 @@ public class StudentsFragment extends Fragment {
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
         }
-
-
         return view;
-
-
     }
 
     private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
-
         private final ArrayList<String> userAccounts;
         private Context context;
         private  RecyclerView recyclerView;
@@ -229,7 +224,8 @@ public class StudentsFragment extends Fragment {
             {
                 @Override
                 public void onClick(View v) {
-                    gradeTextView.setText(String.valueOf(np1.getValue()) + "." + String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
+                    gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
+                            String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
 
                     String grade = gradeTextView.getText().toString();
                     String email = userAccountName.getText().toString();
@@ -254,7 +250,8 @@ public class StudentsFragment extends Fragment {
     }
 
         public HashMap<String, String> getHashEmailAndGrade(){
-        return mapEmailAndGrade;
+            Log.d("LOG GET HASH", Integer.toString(mapEmailAndGrade.size()));
+            return mapEmailAndGrade;
     }
 
 }

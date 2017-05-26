@@ -7,10 +7,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+
+import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
@@ -22,6 +26,7 @@ public class ExamActivity extends AppCompatActivity {
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
+    StudentsFragment studentsFragment = new StudentsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -111,6 +116,18 @@ public class ExamActivity extends AppCompatActivity {
 //            intentEditClass.putExtra("Class", userClassCalled);
 //
 //            startActivity(intentEditClass);
+        }
+        else if (id == R.id.action_update_grades){
+
+            HashMap<String, String> map = studentsFragment.getHashEmailAndGrade();
+
+            Toast.makeText(this, "Enviou", Toast.LENGTH_LONG);
+
+            Log.d("TAMANHOMAPA", "upgrade clicado");
+
+            Log.d("TAMANHOMAPA", Integer.toString(map.size()));
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

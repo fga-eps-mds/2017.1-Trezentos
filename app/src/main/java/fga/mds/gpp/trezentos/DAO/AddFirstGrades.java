@@ -3,6 +3,7 @@ package fga.mds.gpp.trezentos.DAO;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.View.StudentsFragment;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -36,13 +38,19 @@ public class AddFirstGrades extends AsyncTask<String, String, String>{
 
     @Override
     protected String doInBackground(String... params){
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
+        String newBodyFirstGrades = new String();
 
-        String urlWithParameters = getUrlWithParameters();
+        try{
+            newBodyFirstGrades = createBody(userClass, exam, hashFirstGrades);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
 
-        RequestBody body = RequestBody.create(null, "");
+        RequestBody body = RequestBody.create(JSON, newBodyFirstGrades);
         Request request = new Request.Builder()
-                .url(urlWithParameters)
+                .url(url)
                 .put(body)
                 .build();
 
@@ -56,19 +64,16 @@ public class AddFirstGrades extends AsyncTask<String, String, String>{
         return null;
     }
 
-    private String getUrlWithParameters(){
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+    public String createBody(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades) throws JSONException {
+        String firstGrades = hashFirstGrades.toString();
 
-        // owner email
-        builder.addQueryParameter("email", userClass.getOwnerEmail());
-        //nome da sala
-        builder.addQueryParameter("userClassName", userClass.getClassName());
-        // nome da prova
-        builder.addQueryParameter("name", exam.getNameExam());
-        Log.d("NOTASDAO", Integer.toString(studentsFragment.getHashEmailAndGrade().size()));
-        // primeira nota
-        builder.addQueryParameter("firstGrades", studentsFragment.getHashEmailAndGrade().toString());
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("email", userClass.getOwnerEmail());
+        jsonBody.put("userClassName", userClass.getClassName());
+        jsonBody.put("name", exam.getNameExam());
+        jsonBody.put("firstGrades", firstGrades);
 
-        return builder.build().toString();
+        return jsonBody.toString();
     }
+
 }
