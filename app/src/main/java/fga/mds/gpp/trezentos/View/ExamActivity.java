@@ -15,7 +15,11 @@ import android.widget.Toast;
 
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.Controller.UserExamControl;
+import fga.mds.gpp.trezentos.Exception.UserClassException;
+import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
@@ -26,6 +30,7 @@ public class ExamActivity extends AppCompatActivity {
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
+    private Exam exam;
     StudentsFragment studentsFragment = new StudentsFragment();
 
     @Override
@@ -36,12 +41,11 @@ public class ExamActivity extends AppCompatActivity {
         initToolbar();
         initViewPager();
         initTabLayout();
-        initFloatingButton();
         initRecover();
 
-
-        if(userClass != null){setTitle(userClass.getClassName());}
-
+        if(exam != null){
+            setTitle(exam.getNameExam());
+        }
     }
 
     public void initToolbar(){
@@ -61,24 +65,12 @@ public class ExamActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public void initFloatingButton(){
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn);
-
-        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goCreateExam = new  Intent(getApplicationContext(), CreateExamActivity.class);
-                UserClass userClassCalled = (UserClass) userClass;
-                goCreateExam.putExtra("Class", userClassCalled);
-                startActivity(goCreateExam);
-            }
-        });
-
-    }
 
     public void initRecover(){
         Intent intent = getIntent();
-        userClass = (UserClass) intent.getSerializableExtra("Class");
+        Bundle extras = intent.getExtras();
+        exam = (Exam) extras.getSerializable("Exam");
+        userClass = (UserClass) extras.getSerializable("Class");
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -98,36 +90,31 @@ public class ExamActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_class, menu);
+        getMenuInflater().inflate(R.menu.menu_exam, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
+        if (id == R.id.action_update_grades){
+                UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-        if (id == R.id.action_settings){
-            return true;
-        }
-        else if(id == R.id.action_edit_class){
+                Log.d("DATAEXAME", Integer.toString(studentsFragment.getHashEmailAndGrade().size()));
+                Log.d("DATAEXAME", userClass.getClassName());
+                Log.d("DATAEXAME", exam.getNameExam());
+                Log.d("DATAEXAME", exam.getClassOwnerEmail());
 
-//            Intent intentEditClass = new  Intent(getApplicationContext(), EditClassActivity.class);
-//            UserClass userClassCalled = (UserClass) userClass;
-//            intentEditClass.putExtra("Class", userClassCalled);
-//
-//            startActivity(intentEditClass);
-        }
-        else if (id == R.id.action_update_grades){
-
-            HashMap<String, String> map = studentsFragment.getHashEmailAndGrade();
-
-            Toast.makeText(this, "Enviou", Toast.LENGTH_LONG);
-
-            Log.d("TAMANHOMAPA", "upgrade clicado");
-
-            Log.d("TAMANHOMAPA", Integer.toString(map.size()));
-
-            return true;
+            try {
+                userExamControl.validateAddsFirstGrade(userClass, exam, studentsFragment.getHashEmailAndGrade());
+            } catch (UserClassException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

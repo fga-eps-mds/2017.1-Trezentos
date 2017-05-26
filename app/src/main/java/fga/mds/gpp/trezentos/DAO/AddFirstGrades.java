@@ -20,33 +20,24 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AddFirstGrades extends AsyncTask<String, String, String>{
-
-    private  HashMap<String,String> hashFirstGrades;
-    private StudentsFragment studentsFragment;
+public class AddFirstGrades extends AsyncTask<String, String, String> {
+    private HashMap<String, String> hashFirstGrades;
     private UserClass userClass;
     private Exam exam;
-    private HashMap<String, String> toBeParsed;
-
     private final String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
 
-    public AddFirstGrades(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades){
+    public AddFirstGrades(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades) {
         this.userClass = userClass;
         this.exam = exam;
         this.hashFirstGrades = hashFirstGrades;
     }
 
     @Override
-    protected String doInBackground(String... params){
+    protected String doInBackground(String... params) {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
-        String newBodyFirstGrades = new String();
-
-        try{
-            newBodyFirstGrades = createBody(userClass, exam, hashFirstGrades);
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
+        String newBodyFirstGrades = createBody(userClass, exam, hashFirstGrades);
+        Log.d("newBody", newBodyFirstGrades);
 
         RequestBody body = RequestBody.create(JSON, newBodyFirstGrades);
         Request request = new Request.Builder()
@@ -54,26 +45,55 @@ public class AddFirstGrades extends AsyncTask<String, String, String>{
                 .put(body)
                 .build();
 
-        try{
+        try {
             Response response = client.newCall(request).execute();
             return response.body().string();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
     }
 
-    public String createBody(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades) throws JSONException {
+    public String createBody(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades) {
         String firstGrades = hashFirstGrades.toString();
 
         JSONObject jsonBody = new JSONObject();
-        jsonBody.put("email", userClass.getOwnerEmail());
-        jsonBody.put("userClassName", userClass.getClassName());
-        jsonBody.put("name", exam.getNameExam());
-        jsonBody.put("firstGrades", firstGrades);
+        try {
+            jsonBody.put("email", exam.getClassOwnerEmail());
+            Log.d("JSON", exam.getClassOwnerEmail());
+        } catch (JSONException e) {
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try {
+            jsonBody.put("userClassName", userClass.getClassName());
+            Log.d("JSON", userClass.getClassName());
+        } catch (JSONException e) {
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try {
+            jsonBody.put("name", exam.getNameExam());
+            Log.d("JSON", exam.getNameExam());
+        } catch (JSONException e) {
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try {
+            jsonBody.put("firstGrades", firstGrades);
+            Log.d("JSON", firstGrades);
+        } catch (JSONException e) {
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
 
+        Log.d("JSON", jsonBody.toString());
         return jsonBody.toString();
     }
 
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+    }
 }

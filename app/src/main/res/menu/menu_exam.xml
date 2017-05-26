@@ -4,15 +4,9 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_edit_class"
+        android:id="@+id/action_update_grades"
         android:orderInCategory="100"
-        android:title="opcao 1"
+        android:title="@string/update_grades"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="opcao 2"
-        app:showAsAction="never" />
-
 
 </menu>

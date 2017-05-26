@@ -71,11 +71,14 @@ public class UserExamControl{
                                          HashMap<String, String> hashFirstGrades) throws UserClassException, ExecutionException, InterruptedException {
 
         String serverResponse;
-
+        Log.d("OBJETOS",hashFirstGrades.toString());
+        Log.d("OBJETOS",userClass.getClassName());
+        Log.d("OBJETOS",exam.getClassOwnerEmail());
+        Log.d("OBJETOS",exam.getNameExam());
         AddFirstGrades addFirstGrades = new AddFirstGrades(userClass, exam, hashFirstGrades);
                 serverResponse = addFirstGrades.execute().get();
 
-        Log.d("SERVERresponse", serverResponse);
+        Log.d("JSON", serverResponse);
         return serverResponse;
     }
 

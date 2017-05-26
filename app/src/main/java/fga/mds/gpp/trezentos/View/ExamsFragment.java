@@ -36,8 +36,6 @@ import fga.mds.gpp.trezentos.R;
 public class ExamsFragment extends Fragment{
 
     public ArrayList<Exam> userExams;
-    public ListView listView;
-    public ArrayAdapter arrayAdapter;
     public UserExamControl userExamControl;
     private UserClass userClass;
     public ProgressBar progressBar;
@@ -143,7 +141,6 @@ public class ExamsFragment extends Fragment{
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
             View view = LayoutInflater.from(context).inflate(R.layout.exam_item, parent, false);
             ExamsFragment.ViewHolder holder = new ExamsFragment.ViewHolder(view);
             view.setOnClickListener(this);
@@ -153,14 +150,10 @@ public class ExamsFragment extends Fragment{
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-
             ExamsFragment.ViewHolder holder = (ExamsFragment.ViewHolder) viewHolder;
 
-
             Exam exam  = exams.get(position) ;
-            holder.className.setText(exam.getNameExam());//
-
-
+            holder.className.setText(exam.getNameExam());
         }
 
         @Override
@@ -180,10 +173,13 @@ public class ExamsFragment extends Fragment{
             int itemPosition = recyclerView.getChildLayoutPosition(v);
             Exam exam = exams.get(itemPosition);
 
-            Intent goClass = new  Intent(context, ExamActivity.class);
-            goClass.putExtra("Class", userClass);
-            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(goClass);
+            Intent goExam = new  Intent(context, ExamActivity.class);
+            Bundle extras = new Bundle();
+            extras.putSerializable("Exam", exam);
+            extras.putSerializable("Class", userClass);
+            goExam.putExtras(extras);
+            goExam.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(goExam);
 
         }
     }

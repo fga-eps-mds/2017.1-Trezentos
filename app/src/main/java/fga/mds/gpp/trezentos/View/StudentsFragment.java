@@ -49,7 +49,6 @@ public class StudentsFragment extends Fragment {
                              Bundle savedInstanceState){
         // Inflate the layout for this fragment
 
-
         final View view = inflater.inflate(R.layout.fragment_studens, container, false);
 
         Intent intent = getActivity().getIntent();
@@ -60,13 +59,6 @@ public class StudentsFragment extends Fragment {
         //progressBar.setVisibility(View.VISIBLE);
 
         userAccounts = new ArrayList<>();
-   //   userAccounts.add(new UserAccount("Arthur Diniz", R.drawable.ic_person));
-     //   userAccounts.add(new UserAccount("Grabriel Climaco", R.drawable.ic_person));
-//        userAccounts.add(new UserAccount("Ana Carolina", R.drawable.ic_person));
-//        userAccounts.add(new UserAccount("Elmar", R.drawable.ic_person));
-//        Log.i("SIZE", "Size" + String.valueOf(userAccounts.size()));
-
-
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
         recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
@@ -96,7 +88,6 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
             View view = LayoutInflater.from(context).inflate(R.layout.student_item, parent, false);
             StudentsFragment.ViewHolder holder = new StudentsFragment.ViewHolder(view);
             view.setOnClickListener(this);
@@ -127,10 +118,7 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-
             int itemPosition = recyclerView.getChildLayoutPosition(v);
-
-
 
 //            if(v.getId() == R.id.presence){
 //                holder.noPresence.setVisibility(View.VISIBLE);
@@ -141,8 +129,6 @@ public class StudentsFragment extends Fragment {
 //                holder.presence.setVisibility(View.VISIBLE);
 //            }
             //Exam exam = exams.get(itemPosition);
-
-
 
         }
     }

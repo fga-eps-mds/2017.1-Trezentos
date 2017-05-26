@@ -30,8 +30,6 @@ public class ClassActivity extends AppCompatActivity {
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
-    StudentsFragment studentsFragment = new StudentsFragment();
-    Exam exam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,19 +119,6 @@ public class ClassActivity extends AppCompatActivity {
             intentEditClass.putExtra("Class", userClassCalled);
             Log.d("MAP", "editclass");
             startActivity(intentEditClass);
-            return true;
-        } else if (id == R.id.action_update_grades) {
-            UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
-            HashMap<String, String> map = studentsFragment.getHashEmailAndGrade();
-            try {
-                userExamControl.validateAddsFirstGrade(userClass, exam, map);
-            } catch (UserClassException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return true;
         }
         return super.onOptionsItemSelected(item);
