@@ -18,12 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
@@ -46,32 +43,31 @@ public class StudentsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState){
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        final View view = inflater.inflate(R.layout.fragment_studens, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_students, container, false);
         Intent intent = getActivity().getIntent();
+
+        //creates a new array of students that are enrolled at this class
         userClass = (UserClass) intent.getSerializableExtra("Class");
-
         ArrayList<String> students = userClass.getStudents();
-        //ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBarExam);
-        //progressBar.setVisibility(View.VISIBLE);
+        Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
+        //if first item is null it will be removed
+        if (students.get(0).length() == 0){
+            students.remove(0);
+        }
+            Log.d("ARRAYSTUDENTS", students.toString());
 
-        userAccounts = new ArrayList<>();
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
-        recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
-        Log.i("SIZE", "teste");
-
-        if(recyclerView != null) {
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
+            recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
 
             final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
-        }
-        return view;
+
+     return view;
     }
+
 
     private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
         private final ArrayList<String> userAccounts;
@@ -134,7 +130,6 @@ public class StudentsFragment extends Fragment {
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, NumberPicker.OnValueChangeListener {
-
         final TextView userAccountName;
         final ImageView presence;
         final ImageView noPresence;
@@ -241,7 +236,3 @@ public class StudentsFragment extends Fragment {
     }
 
 }
-
-
-
-

@@ -169,7 +169,6 @@ public class ExamsFragment extends Fragment{
 
         @Override
         public void onClick(View v) {
-
             int itemPosition = recyclerView.getChildLayoutPosition(v);
             Exam exam = exams.get(itemPosition);
 
@@ -180,7 +179,6 @@ public class ExamsFragment extends Fragment{
             goExam.putExtras(extras);
             goExam.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(goExam);
-
         }
     }
 

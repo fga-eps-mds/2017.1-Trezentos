@@ -66,12 +66,11 @@ public class ClassActivity extends AppCompatActivity {
 
     public void initFloatingButton() {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn);
-
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent goCreateExam = new Intent(getApplicationContext(), CreateExamActivity.class);
-                UserClass userClassCalled = (UserClass) userClass;
+                UserClass userClassCalled = userClass;
                 goCreateExam.putExtra("Class", userClassCalled);
                 startActivity(goCreateExam);
             }

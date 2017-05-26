@@ -26,7 +26,7 @@ import fga.mds.gpp.trezentos.R;
 public class ExamActivity extends AppCompatActivity {
 
 
-    private FloatingActionButton floatingActionButton;
+   // private FloatingActionButton floatingActionButton;
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
@@ -37,7 +37,6 @@ public class ExamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam);
-
         initToolbar();
         initViewPager();
         initTabLayout();

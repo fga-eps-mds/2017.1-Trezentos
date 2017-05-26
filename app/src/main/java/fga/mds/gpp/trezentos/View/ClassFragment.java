@@ -69,6 +69,7 @@ public class ClassFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
+
         noInternetLayout = (LinearLayout) view.findViewById(R.id.no_internet_layout);
         buttonRefresh = (Button) view.findViewById(button_refresh);
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +93,6 @@ public class ClassFragment extends Fragment{
     }
 
     private class Adapter extends RecyclerView.Adapter implements View.OnClickListener {
-
         private final ArrayList<UserClass> userClasses;
         private Context context;
         private  RecyclerView recyclerView;
@@ -192,8 +192,6 @@ public class ClassFragment extends Fragment{
             progressBar.setVisibility(View.GONE);
             if(result == "true"){
                 if (getActivity() != null) {
-
-
 
                         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler);
                         recyclerView.setVisibility(View.VISIBLE);
