@@ -73,6 +73,7 @@
     <!--Menu-->
     <string name="configuracoes">Configuracoes</string>
     <string name="edit_class">Editar Sala</string>
+    <string name="sort_groups">Ordenar Grupos</string>
 
     <!--Tab-->
     <string name="tab_text_students">Alunos</string>
