@@ -96,6 +96,7 @@ public class ExamActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
+
         if (id == R.id.action_update_grades){
                 UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
@@ -114,9 +115,9 @@ public class ExamActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
                 return true;
-        }
 
-        return super.onOptionsItemSelected(item);
     }
+        return super.onOptionsItemSelected(item);
 
+    }
 }
