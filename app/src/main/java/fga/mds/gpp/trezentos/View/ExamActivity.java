@@ -93,7 +93,7 @@ public class ExamActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_class, menu);
+        getMenuInflater().inflate(R.menu.menu_exam, menu);
         return true;
     }
 
@@ -101,16 +101,8 @@ public class ExamActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
-        if (id == R.id.action_settings){
-            return true;
-        }
-        else if(id == R.id.action_edit_class){
+        if(id == R.id.action_sort_groups){
 
-//            Intent intentEditClass = new  Intent(getApplicationContext(), EditClassActivity.class);
-//            UserClass userClassCalled = (UserClass) userClass;
-//            intentEditClass.putExtra("Class", userClassCalled);
-//
-//            startActivity(intentEditClass);
         }
 
         return super.onOptionsItemSelected(item);

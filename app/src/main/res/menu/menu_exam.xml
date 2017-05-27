@@ -4,15 +4,9 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_edit_class"
+        android:id="@+id/action_sort_groups"
         android:orderInCategory="100"
-        android:title="opcao 1"
+        android:title="@string/sort_groups"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="opcao 2"
-        app:showAsAction="never" />
-
 
 </menu>

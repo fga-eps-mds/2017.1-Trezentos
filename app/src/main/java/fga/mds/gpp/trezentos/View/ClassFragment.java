@@ -220,6 +220,8 @@ public class ClassFragment extends Fragment{
         protected void onProgressUpdate(Void... values) {}
 
         public boolean isNetworkAvailable(Context context) {
+            if (context == null){return false;}
+
             final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
             return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
         }
