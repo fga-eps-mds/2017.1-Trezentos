@@ -96,14 +96,14 @@ public class ExamActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
+        
+        if (id == R.id.action_update_grades) {
+            UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-        if (id == R.id.action_update_grades){
-                UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
-
-                Log.d("DATAEXAME", Integer.toString(studentsFragment.getHashEmailAndGrade().size()));
-                Log.d("DATAEXAME", userClass.getClassName());
-                Log.d("DATAEXAME", exam.getNameExam());
-                Log.d("DATAEXAME", exam.getClassOwnerEmail());
+            Log.d("DATAEXAME", Integer.toString(studentsFragment.getHashEmailAndGrade().size()));
+            Log.d("DATAEXAME", userClass.getClassName());
+            Log.d("DATAEXAME", exam.getNameExam());
+            Log.d("DATAEXAME", exam.getClassOwnerEmail());
 
             try {
                 userExamControl.validateAddsFirstGrade(userClass, exam, studentsFragment.getHashEmailAndGrade());
@@ -115,9 +115,12 @@ public class ExamActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
                 return true;
-
-    }
+        }
+        else if(id == R.id.action_sort_groups){
+        }
         return super.onOptionsItemSelected(item);
+
 
     }
 }
+

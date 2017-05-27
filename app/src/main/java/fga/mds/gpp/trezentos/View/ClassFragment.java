@@ -168,7 +168,7 @@ public class ClassFragment extends Fragment{
 
         @Override
         protected String doInBackground(String... params) {
-            if(isInternetAvailable() ){ //If internet is ok
+            if(isNetworkAvailable(getContext()) && isInternetAvailable()){ //If internet is ok
 
                 userClasses = new ArrayList<>();
                 ArrayList<UserClass> allClasses = userClassControl.getClasses();
