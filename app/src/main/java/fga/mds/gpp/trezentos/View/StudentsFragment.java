@@ -56,15 +56,22 @@ public class StudentsFragment extends Fragment {
         userClass = (UserClass) intent.getSerializableExtra("Class");
 
         userExam = (Exam) intent.getSerializableExtra("Exam");
-        students = userClass.getStudents();
+                students = userClass.getStudents();
 
+        populateMapValues(students); //clear map and populates it
+        arrangeMap(students);//creates a new array of students that are enrolled at this class
+
+        ArrayList<String> students = userClass.getStudents();
+        Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
+
+        students = userClass.getStudents();
         populateMapValues(students); //clear map and populates it
         arrangeMap(students);//creates a new array of students that are enrolled at this class
 
         View view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
         recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
-
+        
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -92,14 +99,14 @@ public class StudentsFragment extends Fragment {
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.student_item, parent, false);
 
-            if(!(getActivity() instanceof ExamActivity)){
+            if (!(getActivity() instanceof ExamActivity)) {
 
                 view.findViewById(presence).setVisibility(View.GONE);
                 view.findViewById(no_presence).setVisibility(View.GONE);
                 view.findViewById(gradeLayout).setVisibility(View.GONE);
                 view.findViewById(text_view_grade).setVisibility(View.GONE);
 
-            }else{
+            } else {
                 // do nothing
             }
             StudentsFragment.ViewHolder holder =
@@ -154,8 +161,8 @@ public class StudentsFragment extends Fragment {
             presence = (ImageView) view.findViewById(R.id.presence);
             secondPresence = (ImageView) view.findViewById(R.id.presence_second_exam);
             secondNoPresence = (ImageView) view.findViewById(R.id.no_presence_second_exam);
-            noPresence= (ImageView) view.findViewById(no_presence);
-           // circleImageView = (CircleImageView) view.findViewById(R.id.profile_image);
+            noPresence = (ImageView) view.findViewById(no_presence);
+            // circleImageView = (CircleImageView) view.findViewById(R.id.profile_image);
             gradeLayout = (LinearLayout) view.findViewById(R.id.gradeLayout);
             secondGradeLayout = (LinearLayout) view
                     .findViewById(R.id.second_grade_layout);
@@ -245,12 +252,12 @@ public class StudentsFragment extends Fragment {
                     String email;
                     String grade;
 
-                    if(CLICK == 1){
+                    if (CLICK == 1) {
                         gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
 
                         grade = gradeTextView.getText().toString();
-                    }else{
+                    } else {
                         secondGradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format
                                         ("%02d", np2.getValue())));
@@ -278,6 +285,7 @@ public class StudentsFragment extends Fragment {
             d.show();
         }
     }
+
 
     public HashMap<String, String> populateMapValues(ArrayList<String> students) {
         mapEmailAndGrade.clear();
@@ -310,5 +318,6 @@ public class StudentsFragment extends Fragment {
             Log.d("DEBUGMAP", students.toString());
             return students;
         }
+
     }
 }
