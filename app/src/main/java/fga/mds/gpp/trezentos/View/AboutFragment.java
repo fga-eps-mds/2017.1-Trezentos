@@ -57,22 +57,14 @@ public class AboutFragment extends Fragment{
         about = new ArrayList<>();
 
         try {
-            about.add(new About(getResources().getString(R.string.about_site),
-                    getResources().getString(R.string.about_metodo_trezentos)));
-            about.add(new About(getResources().getString(R.string.about_trezentos),
-                    getResources().getString(R.string.about_tedx)));
-            about.add(new About(getResources().getString(R.string.about_metodologia),
-                    getResources().getString(R.string.about_entenda_metodo)));
-            about.add(new About(getResources().getString(R.string.about_para_professores),
-                    getResources().getString(R.string.about_detalhes)));
-            about.add(new About(getResources().getString(R.string.about_artigo),
-                    getResources().getString(R.string.about_pdf_download)));
-            about.add(new About(getResources().getString(R.string.about_record),
-                    getResources().getString(R.string.about_reportagem)));
-            about.add(new About(getResources().getString(R.string.about_unbtv),
-                    getResources().getString(R.string.about_reportagem)));
+            about.add(new About(getResources().getString(R.string.about_site),getResources().getString(R.string.about_metodo_trezentos)));
+            about.add(new About(getResources().getString(R.string.about_trezentos), getResources().getString(R.string.about_tedx)));
+            about.add(new About(getResources().getString(R.string.about_metodologia),getResources().getString(R.string.about_entenda_metodo)));
+            about.add(new About(getResources().getString(R.string.about_para_professores),getResources().getString(R.string.about_detalhes)));
+            about.add(new About(getResources().getString(R.string.about_artigo), getResources().getString(R.string.about_pdf_download)));
+            about.add(new About(getResources().getString(R.string.about_record),getResources().getString(R.string.about_reportagem)));
+            about.add(new About(getResources().getString(R.string.about_unbtv),getResources().getString(R.string.about_reportagem)));
         }
-
         catch (UserException e){
             e.printStackTrace();
         }
@@ -85,28 +77,22 @@ public class AboutFragment extends Fragment{
         if(position == 0){
             myWebLink.setData(Uri.parse("http://metodo300.com"));
             startActivity(myWebLink);
-        }
-        else if(position == 1){
+        }else if(position == 1){
             myWebLink.setData(Uri.parse("https://youtu.be/gay6TYwVwf4"));
             startActivity(myWebLink);
-        }
-        else if(position == 2){
+        }else if(position == 2){
             myWebLink.setData(Uri.parse("https://youtu.be/s0g1AgGFP5k"));
             startActivity(myWebLink);
-        }
-        else if(position == 3){
+        }else if(position == 3){
             myWebLink.setData(Uri.parse("https://youtu.be/QLJtwsX8NqU"));
             startActivity(myWebLink);
-        }
-        else if(position == 4){
+        }else if(position == 4){
             myWebLink.setData(Uri.parse("http://www.scielo.br/pdf/er/n63/1984-0411-er-63-00253.pdf"));
             startActivity(myWebLink);
-        }
-        else if(position == 5){
+        }else if(position == 5){
             myWebLink.setData(Uri.parse("https://youtu.be/zQsaUjWw330"));
             startActivity(myWebLink);
-        }
-        else{
+        }else{
             myWebLink.setData(Uri.parse("https://youtu.be/7cfNcn-zge0"));
             startActivity(myWebLink);
         }

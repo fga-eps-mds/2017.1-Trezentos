@@ -100,19 +100,16 @@ public class ClassActivity extends AppCompatActivity{
 
         if (id == R.id.action_settings){
             return true;
-        }
-        else if(id == R.id.action_edit_class){
+        }else if(id == R.id.action_edit_class){
 
-                Intent intentEditClass = new  Intent(getApplicationContext(), EditClassActivity.class);
+                Intent intentEditClass = new  Intent(getApplicationContext(),
+                        EditClassActivity.class);
                 UserClass userClassCalled = (UserClass) userClass;
                 intentEditClass.putExtra("Class", userClassCalled);
 
                 startActivity(intentEditClass);
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
 }
 

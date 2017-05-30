@@ -22,6 +22,7 @@ public class UserAccountControl {
     final Context context;
     private UserAccount userAccount;
     private static Logger LOGGER = Logger.getLogger("InfoLogging");
+
     private UserAccountControl(final Context context){
         this.context = context;
     }
@@ -52,10 +53,10 @@ public class UserAccountControl {
         try{
             serverResponse = signUpRequest.execute().get();
         }catch (InterruptedException e) {
-            Log.d(TAG,e.toString());
+//            Log.d(TAG,e.toString());
             e.printStackTrace();
         }catch (ExecutionException e) {
-            LOGGER.info(e.getMessage());
+//            LOGGER.info(e.getMessage());
             e.printStackTrace();
         }
         return serverResponse;
@@ -72,7 +73,6 @@ public class UserAccountControl {
             SignUpRequest signUprequest = new SignUpRequest(userAccountFb, true);
             signUprequest.execute();
         }catch (JSONException e){
-
             e.printStackTrace();
         }
     }
@@ -123,22 +123,20 @@ public class UserAccountControl {
     public void validatePassword(String serverResponse, String password) throws UserException {
         JSONObject object = getObjectFromServerResponse(serverResponse);
 
-        String hashedPassword = null;
-        String salt = null;
+        String hashedPassword = null, salt = null;
 
         try{
             hashedPassword = object.getString("password");
-            Log.d("Password", hashedPassword);
+ //           Log.d("Password", hashedPassword);
             salt = object.getString("salt");
-            Log.d("Salt", salt);
+ //           Log.d("Salt", salt);
         }catch (JSONException e){
             e.printStackTrace();
         }
 
         if (PasswordUtil.decryptPass(hashedPassword, salt, password)){
             logInUser();
-        }
-        else{
+        }else{
             logOutUser();
             throw new UserException(context.getString(R.string.invalid_login));
         }

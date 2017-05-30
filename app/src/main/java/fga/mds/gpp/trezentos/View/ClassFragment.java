@@ -104,7 +104,6 @@ public class ClassFragment extends Fragment{
 
             ViewHolder holder = (ViewHolder) viewHolder;
 
-
             UserClass userClass  = userClasses.get(position) ;
             holder.className.setText(userClass.getClassName());
             holder.classInstitution.setText(userClass.getInstitution());
@@ -124,7 +123,6 @@ public class ClassFragment extends Fragment{
 
         @Override
         public void onClick(View v) {
-
             int itemPosition = recyclerView.getChildLayoutPosition(v);
             UserClass userClass = userClasses.get(itemPosition);
 
@@ -137,7 +135,6 @@ public class ClassFragment extends Fragment{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         final TextView className;
         final TextView classInstitution;
 
@@ -201,7 +198,6 @@ public class ClassFragment extends Fragment{
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener(){
             @Override
             public void onClick(View v) {
-
                 startActivity(new Intent(getActivity(), CreateClassActivity.class));
             }
         });

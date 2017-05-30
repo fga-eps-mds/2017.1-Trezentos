@@ -53,8 +53,7 @@ public class AboutAdapter extends ArrayAdapter{
 
             result = convertView;
             convertView.setTag(viewHolder);
-        }
-        else{
+        }else{
             viewHolder = (ViewHolder) convertView.getTag();
             result = convertView;
         }

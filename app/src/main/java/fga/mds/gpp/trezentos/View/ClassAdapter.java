@@ -31,8 +31,7 @@ public class ClassAdapter extends RecyclerView.Adapter implements Filterable {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.class_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.class_item, parent, false);
         ClassViewHolder holder = new ClassViewHolder(view);
 
         return holder;
@@ -84,7 +83,7 @@ public class ClassAdapter extends RecyclerView.Adapter implements Filterable {
 
                 filterResults.count = tempList.size();
                 filterResults.values = tempList;
-            } else {
+            }else{
                 filterResults.count = userClasses.size();
                 filterResults.values = userClasses;
             }
