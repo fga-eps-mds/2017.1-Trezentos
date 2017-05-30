@@ -28,7 +28,7 @@ import fga.mds.gpp.trezentos.R;
 
 public class StudentsFragment extends Fragment {
 
-    private ArrayList<UserAccount> userAccounts;
+    private ArrayList<String> students;
     private UserClass userClass;
     private static HashMap<String, String> mapEmailAndGrade = new HashMap<>();
 
@@ -44,20 +44,14 @@ public class StudentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_students, container, false);
         Intent intent = getActivity().getIntent();
-
-        //creates a new array of students that are enrolled at this class
         userClass = (UserClass) intent.getSerializableExtra("Class");
-        ArrayList<String> students = userClass.getStudents();
-        Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
-        //if first item is null it will be removed
-        if (students.get(0).length() == 0){
-            students.remove(0);
-        }
-            Log.d("ARRAYSTUDENTS", students.toString());
 
+        students = userClass.getStudents();
+        populateMapValues(students); //clear map and populates it
+        arrangeMap(students);//creates a new array of students that are enrolled at this class
+
+        View view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
             RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
             recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
 
@@ -182,7 +176,6 @@ public class StudentsFragment extends Fragment {
         public void showGradePicker(){
 
             final Dialog d = new Dialog(getContext());
-            d.setTitle("NumberPicker");
             d.setContentView(R.layout.dialog);
             Button b1 = (Button) d.findViewById(R.id.button1);
             Button b2 = (Button) d.findViewById(R.id.button2);
@@ -230,9 +223,28 @@ public class StudentsFragment extends Fragment {
         }
     }
 
+
+    public HashMap<String, String> populateMapValues(ArrayList<String> students){
+        mapEmailAndGrade.clear();
+
+        for (int i = 0; i < students.size(); i++){
+            mapEmailAndGrade.put(students.get(i), "0.00");
+        }
+        Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
+        return mapEmailAndGrade;
+    }
+
         public HashMap<String, String> getHashEmailAndGrade(){
-            Log.d("LOG GET HASH", Integer.toString(mapEmailAndGrade.size()));
+            Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
             return mapEmailAndGrade;
     }
 
+    public void arrangeMap(ArrayList<String>students){
+        Log.d("DEBUGMAP", Integer.toString(students.get(0).length()));
+        //if first item is null it will be removed
+        if (students.get(0).length() == 0){
+            students.remove(0);
+        }
+        Log.d("DEBUGMAP", students.toString());
+    }
 }
