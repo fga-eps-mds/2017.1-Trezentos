@@ -71,7 +71,7 @@ public class StudentsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
         recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
-        
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -189,9 +189,6 @@ public class StudentsFragment extends Fragment {
                 case R.id.no_presence:
                     setNoPresenceExam(presence, noPresence);
                     break;
-//                case no_presence:
-//                    noPresence.setVisibility(View.GONE);
-//                    presence.setVisibility(View.VISIBLE);
 
                 case R.id.gradeLayout:
                     showGradePicker(1);
@@ -211,7 +208,6 @@ public class StudentsFragment extends Fragment {
 
             }
         }
-
         private void setPresenceExam(ImageView presenceView, ImageView noPresenceView) {
             noPresenceView.setVisibility(View.VISIBLE);
             presenceView.setVisibility(View.GONE);
@@ -225,6 +221,7 @@ public class StudentsFragment extends Fragment {
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         }
+
 
         public void showGradePicker(final int CLICK) {
             final Dialog d = new Dialog(getContext());
@@ -286,7 +283,6 @@ public class StudentsFragment extends Fragment {
         }
     }
 
-
     public HashMap<String, String> populateMapValues(ArrayList<String> students) {
         mapEmailAndGrade.clear();
 
@@ -318,6 +314,5 @@ public class StudentsFragment extends Fragment {
             Log.d("DEBUGMAP", students.toString());
             return students;
         }
-
     }
 }
