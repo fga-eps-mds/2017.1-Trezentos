@@ -91,8 +91,7 @@ public class StudentsFragment extends Fragment {
             holder = (StudentsFragment.ViewHolder) viewHolder;
 
             String userAccount = userAccounts.get(position);
-            holder.userAccountName.setText(userAccount);//
-            //holder.circleImageView.setImageResource(userAccount.getPhoto());
+            holder.userAccountName.setText(userAccount);
         }
 
         @Override
@@ -108,17 +107,6 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            int itemPosition = recyclerView.getChildLayoutPosition(v);
-
-//            if(v.getId() == R.id.presence){
-//                holder.noPresence.setVisibility(View.VISIBLE);
-//                holder.presence.setVisibility(View.GONE);
-//            }
-//            if(v.getId() == R.id.no_presence){
-//                holder.noPresence.setVisibility(View.GONE);
-//                holder.presence.setVisibility(View.VISIBLE);
-//            }
-            //Exam exam = exams.get(itemPosition);
 
         }
     }
@@ -131,6 +119,8 @@ public class StudentsFragment extends Fragment {
         final TextView secondGradeTextView;
         final ImageView presence;
         final ImageView noPresence;
+        final ImageView secondPresence;
+        final ImageView secondNoPresence;
         final LinearLayout gradeLayout;
         final LinearLayout secondGradeLayout;
 
@@ -138,7 +128,10 @@ public class StudentsFragment extends Fragment {
             super(view);
             userAccountName = (TextView) view.findViewById(R.id.student_name);
             presence = (ImageView) view.findViewById(R.id.presence);
+            secondPresence = (ImageView) view.findViewById(R.id.presence_second_exam);
+            secondNoPresence = (ImageView) view.findViewById(R.id.no_presence_second_exam);
             noPresence = (ImageView) view.findViewById(R.id.no_presence);
+
             gradeLayout = (LinearLayout) view.findViewById(R.id.gradeLayout);
             secondGradeLayout = (LinearLayout) view
                     .findViewById(R.id.second_grade_layout);
@@ -150,6 +143,8 @@ public class StudentsFragment extends Fragment {
             noPresence.setOnClickListener(this);
             gradeLayout.setOnClickListener(this);
             secondGradeLayout.setOnClickListener(this);
+            secondNoPresence.setOnClickListener(this);
+            secondPresence.setOnClickListener(this);
         }
 
         @Override
@@ -157,11 +152,11 @@ public class StudentsFragment extends Fragment {
             switch (v.getId()) {
 
                 case R.id.presence:
-                    setPresenceExam();
+                    setPresenceExam(presence, noPresence);
                     break;
 
                 case R.id.no_presence:
-                    setNoPresenceExam();
+                    setNoPresenceExam(presence, noPresence);
                     break;
 
                 case R.id.gradeLayout:
@@ -173,24 +168,24 @@ public class StudentsFragment extends Fragment {
                     break;
 
                 case R.id.presence_second_exam:
-                    setPresenceExam();
+                    setPresenceExam(secondPresence, secondNoPresence);
                     break;
 
                 case R.id.no_presence_second_exam:
-                    setNoPresenceExam();
+                    setNoPresenceExam(secondPresence, secondNoPresence);
                     break;
 
             }
         }
 
-        private void setPresenceExam() {
-            noPresence.setVisibility(View.VISIBLE);
-            presence.setVisibility(View.GONE);
+        private void setPresenceExam(ImageView presenceView, ImageView noPresenceView) {
+            noPresenceView.setVisibility(View.VISIBLE);
+            presenceView.setVisibility(View.GONE);
         }
 
-        private void setNoPresenceExam() {
-            noPresence.setVisibility(View.GONE);
-            presence.setVisibility(View.VISIBLE);
+        private void setNoPresenceExam(ImageView presenceView, ImageView noPresenceView) {
+            noPresenceView.setVisibility(View.GONE);
+            presenceView.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -231,7 +226,7 @@ public class StudentsFragment extends Fragment {
                     }else{
                         secondGradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format
-                                        ("%02d", np2.getValue()))); //set the value to textview
+                                        ("%02d", np2.getValue())));
 
                         grade = secondGradeTextView.getText().toString();
                     }
