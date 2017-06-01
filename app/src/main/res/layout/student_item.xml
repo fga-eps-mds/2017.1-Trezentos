@@ -13,21 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        >
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/avatar"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FFF"/>
-
-
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,32 +32,21 @@
 
             <View
                 android:background="#FFF"
-                android:layout_marginLeft="20dp"
+
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="2dp">
 
             </View>
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginLeft="20dp"
-
-                >
-
-                <View
-                    android:background="#FFF"
-
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent">
-
-                </View>
-
+                android:layout_marginLeft="0dp">
 
                 <LinearLayout
                     android:id="@+id/gradeLayout"
-                    android:layout_width="120dp"
+                    android:layout_width="115dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
@@ -96,8 +71,6 @@
                         android:textSize="30dp"
                         android:textStyle="bold"
                        />
-
-
                 </LinearLayout>
 
 
@@ -116,7 +89,7 @@
 
                     <ImageView
                         android:id="@+id/presence"
-                        android:layout_width="match_parent"
+                        android:layout_width="70dp"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_presence"
                         android:visibility="gone"
@@ -124,18 +97,75 @@
 
                     <ImageView
                         android:id="@+id/no_presence"
-                        android:layout_width="match_parent"
+                        android:layout_width="70dp"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_no_presence"
                         android:onClick="onClick"/>
-
-
                 </LinearLayout>
 
+                <View
+                    android:background="#FFF"
+
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent">
+                </View>
+
+                <LinearLayout
+                    android:id="@+id/second_grade_layout"
+                    android:layout_width="115dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Nota 300"
+                        android:textColor="#FFF"
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/text_view_second_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="#FFF"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:background="#FFF"
+
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent">
+                </View>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/presence_second_exam"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_presence"
+                        android:visibility="gone"
+                        android:onClick="onClick"/>
+
+                    <ImageView
+                        android:id="@+id/no_presence_second_exam"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_no_presence"
+                        android:onClick="onClick"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
 
 
