@@ -1,7 +1,6 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
-
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
@@ -31,7 +25,7 @@ public class ExamActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
-    StudentsFragment studentsFragment = new StudentsFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -100,13 +94,18 @@ public class ExamActivity extends AppCompatActivity {
         if (id == R.id.action_update_grades) {
             UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-            Log.d("DATAEXAME", Integer.toString(studentsFragment.getHashEmailAndGrade().size()));
+            // Update exam with grades set in NumberPicker
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            exam = (Exam) extras.getSerializable("Exam");
+
             Log.d("DATAEXAME", userClass.getClassName());
             Log.d("DATAEXAME", exam.getNameExam());
             Log.d("DATAEXAME", exam.getClassOwnerEmail());
+            Log.d("DATAEXAME", exam.getFirstGrades());
 
             try {
-                userExamControl.validateAddsFirstGrade(userClass, exam, studentsFragment.getHashEmailAndGrade());
+                userExamControl.validateAddsFirstGrade(userClass, exam);
             } catch (UserClassException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {

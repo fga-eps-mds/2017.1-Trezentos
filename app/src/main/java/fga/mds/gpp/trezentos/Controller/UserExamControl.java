@@ -64,15 +64,15 @@ public class UserExamControl{
         }
     }
 
-    public String validateAddsFirstGrade(UserClass userClass, Exam exam,
-                                         HashMap<String, String> hashFirstGrades) throws UserClassException, ExecutionException, InterruptedException {
+    public String validateAddsFirstGrade(UserClass userClass, Exam exam)
+            throws UserClassException, ExecutionException, InterruptedException{
 
         String serverResponse;
-        Log.d("OBJETOS",hashFirstGrades.toString());
+        Log.d("OBJETOS",exam.getFirstGrades());
         Log.d("OBJETOS",userClass.getClassName());
         Log.d("OBJETOS",exam.getClassOwnerEmail());
         Log.d("OBJETOS",exam.getNameExam());
-        AddFirstGradesPost addFirstGradesPost = new AddFirstGradesPost(userClass, exam, hashFirstGrades);
+        AddFirstGradesPost addFirstGradesPost = new AddFirstGradesPost(userClass, exam);
                 serverResponse = addFirstGradesPost.execute().get();
 
         Log.d("JSON", serverResponse);
@@ -125,6 +125,7 @@ public class UserExamControl{
             exam.setNameExam(jsonObject.getString("name"));
             exam.setUserClassName(jsonObject.getString("userClassName"));
             exam.setClassOwnerEmail(jsonObject.getString("classOwnerEmail"));
+            exam.setFirstGrade(jsonObject.getString("firstGrades"));
 
         }catch (JSONException e){
             e.printStackTrace();
@@ -134,4 +135,5 @@ public class UserExamControl{
 
         return exam;
     }
-}   
+
+}
