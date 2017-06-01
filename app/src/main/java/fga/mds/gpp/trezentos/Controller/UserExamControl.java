@@ -126,9 +126,7 @@ public class UserExamControl{
             exam.setUserClassName(jsonObject.getString("userClassName"));
             exam.setClassOwnerEmail(jsonObject.getString("classOwnerEmail"));
 
-        }catch (JSONException e){
-            e.printStackTrace();
-        }catch (UserException e){
+        }catch (JSONException | UserException e){
             e.printStackTrace();
         }
 

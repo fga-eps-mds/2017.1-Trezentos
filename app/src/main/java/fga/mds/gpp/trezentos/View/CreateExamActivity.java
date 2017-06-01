@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,10 +18,11 @@ import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class CreateExamActivity extends AppCompatActivity {
+public class CreateExamActivity extends AppCompatActivity implements View.OnClickListener {
 
     public UserClass userClass;
     public UserAccount userAccount;
+    public EditText examNameField;
     public String userClassName;
     public String classOwnnerEmail;
 
@@ -38,16 +40,26 @@ public class CreateExamActivity extends AppCompatActivity {
 //                    + "Nome Sala: " + userClassName, Toast.LENGTH_SHORT).show();
 
         final Button buttonOk = (Button) findViewById(R.id.ok_create_button);
-        final EditText examNameField = (EditText) findViewById(R.id.exam_name);
+        examNameField = (EditText) findViewById(R.id.exam_name);
 
-        confirmButtonClick(buttonOk, examNameField);
+        buttonOk.setOnClickListener(this);
 
     }
+
+    /*
+    Purpose: Recover the last intent initiated before this class.
+    Without @params and @return
+     */
 
     private void recoverIntent(){
         Intent intent = getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
     }
+
+    /*
+    Purpose: this method recover SharedPreferences about userEmail.
+    Without @params and @return
+     */
 
     private void recoverSharedPreferences(){
         SharedPreferences session = PreferenceManager
@@ -56,37 +68,44 @@ public class CreateExamActivity extends AppCompatActivity {
         classOwnnerEmail = session.getString("userEmail","");
     }
 
-    private void confirmButtonClick(final Button buttonOk, final EditText examNameField){
-        buttonOk.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    /*
+    Purpose: Overriding method onClick to improve AMLOC metric.
+    @params: View where button pressed exists.
+     */
 
-                boolean isValid;
+    @Override
+    public void onClick(View v) {
 
-                UserExamControl userExamControl = UserExamControl
-                        .getInstance(getApplicationContext());
+            boolean isValid = false;
 
-                try {
-                    isValid = confirmInformation(userExamControl,
-                            examNameField, userClassName, classOwnnerEmail);
+            UserExamControl userExamControl = UserExamControl
+                    .getInstance(getApplicationContext());
 
-                    if(isValid){
-                        String examName = examNameField.getText().toString();
+            try {
+                isValid = confirmInformation(userExamControl,
+                        examNameField, userClassName, classOwnnerEmail);
 
-                        userExamControl.validateCreateExam
-                                (examName, userClassName, classOwnnerEmail);
+                if(isValid){
+                    String examName = examNameField.getText().toString();
 
-                        onBackPressed();
-                    }
+                    userExamControl.validateCreateExam
+                            (examName, userClassName, classOwnnerEmail);
 
-                } catch (UserException e) {
-                    e.printStackTrace();
+                    onBackPressed();
                 }
 
+            } catch (UserException e) {
+                e.printStackTrace();
             }
-        });
 
     }
+
+    /*
+    Purpose: Method to validate information about Exam params
+    @params: Controller of Exam, field of exam name and Strings about the class
+    where a exam will be created and the owner email.
+    @return: boolean to confirm all fields of parameters.
+     */
 
     public boolean confirmInformation
             (UserExamControl userExamControl,

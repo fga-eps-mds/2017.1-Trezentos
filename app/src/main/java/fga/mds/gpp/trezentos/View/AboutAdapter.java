@@ -45,10 +45,8 @@ public class AboutAdapter extends ArrayAdapter{
         if(convertView == null){
             viewHolder = new ViewHolder();
 
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.about_item, parent, false);
-
-            initNewViewHolder(viewHolder, convertView);
+            convertView = inflateConvertView(parent);
+            viewHolder = initNewViewHolder(viewHolder, convertView);
 
             result = convertView;
             convertView.setTag(viewHolder);
@@ -63,6 +61,14 @@ public class AboutAdapter extends ArrayAdapter{
         ImageView item_about = (ImageView) convertView.findViewById(R.id.item_about);
         item_about.setImageResource(about.getShowImage(position));
         // Return the completed view to render on screen
+        return convertView;
+    }
+
+    public View inflateConvertView(ViewGroup parent){
+
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View convertView = inflater.inflate(R.layout.about_item, parent, false);
+
         return convertView;
     }
 
