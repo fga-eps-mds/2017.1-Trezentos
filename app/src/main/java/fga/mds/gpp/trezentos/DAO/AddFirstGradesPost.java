@@ -20,13 +20,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AddFirstGrades extends AsyncTask<String, String, String> {
+public class AddFirstGradesPost extends AsyncTask<String, String, String> {
     private HashMap<String, String> hashFirstGrades;
     private UserClass userClass;
     private Exam exam;
     private final String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
 
-    public AddFirstGrades(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades) {
+    public AddFirstGradesPost(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades) {
         this.userClass = userClass;
         this.exam = exam;
         this.hashFirstGrades = hashFirstGrades;

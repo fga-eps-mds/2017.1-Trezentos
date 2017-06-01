@@ -1,6 +1,5 @@
 package fga.mds.gpp.trezentos.Model;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 

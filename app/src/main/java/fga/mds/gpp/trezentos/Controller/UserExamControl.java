@@ -9,18 +9,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import fga.mds.gpp.trezentos.DAO.AddFirstGrades;
-import fga.mds.gpp.trezentos.DAO.AddStudentToClassRequest;
+import fga.mds.gpp.trezentos.DAO.AddFirstGradesPost;
 import fga.mds.gpp.trezentos.DAO.CreateExamPost;
 import fga.mds.gpp.trezentos.DAO.getExamRequest;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
-import fga.mds.gpp.trezentos.R;
 
 public class UserExamControl{
     private static UserExamControl instance;
@@ -75,8 +72,8 @@ public class UserExamControl{
         Log.d("OBJETOS",userClass.getClassName());
         Log.d("OBJETOS",exam.getClassOwnerEmail());
         Log.d("OBJETOS",exam.getNameExam());
-        AddFirstGrades addFirstGrades = new AddFirstGrades(userClass, exam, hashFirstGrades);
-                serverResponse = addFirstGrades.execute().get();
+        AddFirstGradesPost addFirstGradesPost = new AddFirstGradesPost(userClass, exam, hashFirstGrades);
+                serverResponse = addFirstGradesPost.execute().get();
 
         Log.d("JSON", serverResponse);
         return serverResponse;

@@ -32,12 +32,12 @@ public class StudentsFragment extends Fragment {
     private UserClass userClass;
     private static HashMap<String, String> mapEmailAndGrade = new HashMap<>();
 
-    public StudentsFragment(){
+    public StudentsFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -52,25 +52,25 @@ public class StudentsFragment extends Fragment {
         arrangeMap(students);//creates a new array of students that are enrolled at this class
 
         View view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
-            recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
+        recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
 
-            final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            recyclerView.setLayoutManager(layoutManager);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
-     return view;
+        return view;
     }
 
 
     private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
         private final ArrayList<String> userAccounts;
         private Context context;
-        private  RecyclerView recyclerView;
-        private  StudentsFragment.ViewHolder holder;
+        private RecyclerView recyclerView;
+        private StudentsFragment.ViewHolder holder;
 
 
-        public AdapterStudents(ArrayList<String> userAccounts, Context context,  RecyclerView recyclerView) {
+        public AdapterStudents(ArrayList<String> userAccounts, Context context, RecyclerView recyclerView) {
             this.userAccounts = userAccounts;
             this.context = context;
             this.recyclerView = recyclerView;
@@ -127,7 +127,7 @@ public class StudentsFragment extends Fragment {
         final TextView userAccountName;
         final ImageView presence;
         final ImageView noPresence;
-      //  final CircleImageView circleImageView;
+        //  final CircleImageView circleImageView;
         final LinearLayout gradeLayout;
         final TextView gradeTextView;
 
@@ -135,8 +135,8 @@ public class StudentsFragment extends Fragment {
             super(view);
             userAccountName = (TextView) view.findViewById(R.id.student_name);
             presence = (ImageView) view.findViewById(R.id.presence);
-            noPresence= (ImageView) view.findViewById(R.id.no_presence);
-           // circleImageView = (CircleImageView) view.findViewById(R.id.profile_image);
+            noPresence = (ImageView) view.findViewById(R.id.no_presence);
+            // circleImageView = (CircleImageView) view.findViewById(R.id.profile_image);
             gradeLayout = (LinearLayout) view.findViewById(R.id.gradeLayout);
             gradeTextView = (TextView) view.findViewById(R.id.text_view_grade);
 
@@ -148,18 +148,16 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
 
                 case R.id.presence:
                     noPresence.setVisibility(View.VISIBLE);
                     presence.setVisibility(View.GONE);
-
                     break;
 
                 case R.id.no_presence:
                     noPresence.setVisibility(View.GONE);
                     presence.setVisibility(View.VISIBLE);
-
                     break;
 
 
@@ -171,9 +169,10 @@ public class StudentsFragment extends Fragment {
         }
 
         @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {}
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        }
 
-        public void showGradePicker(){
+        public void showGradePicker() {
 
             final Dialog d = new Dialog(getContext());
             d.setContentView(R.layout.dialog);
@@ -194,8 +193,7 @@ public class StudentsFragment extends Fragment {
             np2.setOnValueChangedListener(this);
 
 
-            b1.setOnClickListener(new View.OnClickListener()
-            {
+            b1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
@@ -212,8 +210,7 @@ public class StudentsFragment extends Fragment {
                     d.dismiss();
                 }
             });
-            b2.setOnClickListener(new View.OnClickListener()
-            {
+            b2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     d.dismiss(); // dismiss the dialog
@@ -223,28 +220,36 @@ public class StudentsFragment extends Fragment {
         }
     }
 
-
-    public HashMap<String, String> populateMapValues(ArrayList<String> students){
+    public HashMap<String, String> populateMapValues(ArrayList<String> students) {
         mapEmailAndGrade.clear();
 
-        for (int i = 0; i < students.size(); i++){
+        for (int i = 0; i < students.size(); i++) {
             mapEmailAndGrade.put(students.get(i), "0.00");
         }
         Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
         return mapEmailAndGrade;
     }
 
-        public HashMap<String, String> getHashEmailAndGrade(){
-            Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
-            return mapEmailAndGrade;
+    public HashMap<String, String> getHashEmailAndGrade() {
+        Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
+        return mapEmailAndGrade;
     }
 
-    public void arrangeMap(ArrayList<String>students){
-        Log.d("DEBUGMAP", Integer.toString(students.get(0).length()));
-        //if first item is null it will be removed
-        if (students.get(0).length() == 0){
-            students.remove(0);
+    public ArrayList<String> arrangeMap(ArrayList<String> students) {
+        //if item is null it will be removed
+        int i = 0;
+        if (students.size() == 0) {
+            return students;
+        } else {
+            do {
+                if (students.get(i).length() == 0) {
+                    students.remove(i);
+                }
+                ++i;
+            } while (i < students.size());
+            Log.d("DEBUGMAP", Integer.toString(students.size()));
+            Log.d("DEBUGMAP", students.toString());
+            return students;
         }
-        Log.d("DEBUGMAP", students.toString());
     }
 }
