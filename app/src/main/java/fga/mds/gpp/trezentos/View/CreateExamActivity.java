@@ -17,7 +17,6 @@ import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-
 public class CreateExamActivity extends AppCompatActivity {
 
     public UserClass userClass;
@@ -29,63 +28,64 @@ public class CreateExamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_exam);
 
-        Intent intent = getIntent();
-        userClass = (UserClass) intent.getSerializableExtra("Class");
-
-
-        SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-
-        classOwnnerEmail = session.getString("userEmail","");
-        UserClassControl userClassControl = UserClassControl
-                .getInstance(getApplicationContext());
+        recoverIntent();
+        recoverSharedPreferences();
 
         userClassName = userClass.getClassName();
 
-
-        Toast.makeText(CreateExamActivity.this," Usuario: "
-                + classOwnnerEmail + " "
-                    + "Nome Sala: " + userClassName, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(CreateExamActivity.this," Usuario: "
+//                + classOwnnerEmail + " "
+//                    + "Nome Sala: " + userClassName, Toast.LENGTH_SHORT).show();
 
         final Button buttonOk = (Button) findViewById(R.id.ok_create_button);
         final EditText examNameField = (EditText) findViewById(R.id.exam_name);
 
+        confirmButtonClick(buttonOk, examNameField);
 
+    }
+
+    private void recoverIntent(){
+        Intent intent = getIntent();
+        userClass = (UserClass) intent.getSerializableExtra("Class");
+    }
+
+    private void recoverSharedPreferences(){
+        SharedPreferences session = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+
+        classOwnnerEmail = session.getString("userEmail","");
+    }
+
+    private void confirmButtonClick(final Button buttonOk, final EditText examNameField){
         buttonOk.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 boolean isValid;
-                isValid = false;
 
                 UserExamControl userExamControl = UserExamControl
                         .getInstance(getApplicationContext());
 
                 try {
-
                     isValid = confirmInformation(userExamControl,
                             examNameField, userClassName, classOwnnerEmail);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    isValid = false;
-                }
+                    if(isValid){
+                        String examName = examNameField.getText().toString();
 
-                if (isValid) {
-
-                    String examName = examNameField.getText().toString();
-
-                    try {
                         userExamControl.validateCreateExam
                                 (examName, userClassName, classOwnnerEmail);
-                    } catch (UserException e) {
-                        e.printStackTrace();
+
+                        onBackPressed();
                     }
 
-                    onBackPressed();
+                } catch (UserException e) {
+                    e.printStackTrace();
                 }
+
             }
         });
+
     }
 
     public boolean confirmInformation
@@ -97,7 +97,7 @@ public class CreateExamActivity extends AppCompatActivity {
         String examName = examNameField.getText().toString();
         String errorMessage;
 
-        if(examName.isEmpty() == true){
+        if(examName.isEmpty()){
             examNameField.setError("Preencha todos os campos!");
             isValid = false;
         }
@@ -105,21 +105,16 @@ public class CreateExamActivity extends AppCompatActivity {
         errorMessage = userExamControl
                 .validateInformation(examName,userClassName, classOwnnerEmail );
 
-
         if (errorMessage.equals("Preencha todos os campos!")) {
             examNameField.setError("Preencha todos os campos!");
             isValid = false;
-        }
-
-        if (errorMessage.equals("O nome da prova " +
+        }else if (errorMessage.equals("O nome da prova " +
                 "deve ter entre 2 e 15 caracteres.")){
             examNameField.requestFocus();
             examNameField.setError("O nome da prova " +
                     "deve ter entre 2 e 15 caracteres.");
             isValid = false;
-        }
-
-        if (errorMessage.equals("Sucesso")) {
+        }else if (errorMessage.equals("Sucesso")) {
             isValid = true;
         }
 

@@ -65,39 +65,28 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if (errorMessage.equals(getString(R.string.msg_null_name_error_message))){
             nameEdit.requestFocus();
             nameEdit.setError(getString(R.string.msg_null_name_error_message));
-        }
-        else if (errorMessage.equals(getString(R.string.msg_len_name_error_message))){
+        }else if (errorMessage.equals(getString(R.string.msg_len_name_error_message))){
             nameEdit.requestFocus();
             nameEdit.setError(getString(R.string.msg_len_name_error_message));
-        }
-        else if (errorMessage.equals(getString(R.string.msg_len_password_error_message))){
+        }else if (errorMessage.equals(getString(R.string.msg_len_password_error_message))){
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_len_password_error_message));
-        }
-        else if (errorMessage.equals(getString(R.string.msg_password_conf_error_message))){
+        }else if (errorMessage.equals(getString(R.string.msg_password_conf_error_message))){
             passwordConfirmationEdit.requestFocus();
             passwordConfirmationEdit.setError(getString(R.string.msg_password_conf_error_message));
-        }
-        else if (errorMessage.equals(getString(R.string.msg_upper_case_error_message))){
+        }else if (errorMessage.equals(getString(R.string.msg_upper_case_error_message))){
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_upper_case_error_message));
-        }
-        else if (errorMessage.equals(getString(R.string.msg_null_email_error_message))){
+        }else if (errorMessage.equals(getString(R.string.msg_null_email_error_message))){
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_null_email_error_message));
-
-        }
-        else if (errorMessage.equals(getString(R.string.msg_len_email_error_message))){
+        }else if (errorMessage.equals(getString(R.string.msg_len_email_error_message))){
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_len_email_error_message));
-
-        }
-        else if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))){
+        }else if (errorMessage.equals(getString(R.string.msg_special_characters_email_error_message))){
             emailEdit.requestFocus();
             emailEdit.setError(getString(R.string.msg_special_characters_email_error_message));
-
-        }
-        else if (errorMessage.equals(getString(R.string.msg_null_password_error_message))){
+        }else if (errorMessage.equals(getString(R.string.msg_null_password_error_message))){
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_null_password_error_message));
         }
@@ -114,12 +103,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             Intent goToMain = new Intent(this, MainActivity.class);
             startActivity(goToMain);
-        }
-        else if (response.contains("\"code\":11000")){
+        }else if (response.contains("\"code\":11000")){
             Toast.makeText(getApplicationContext(), "Email inválido, tente novamente",
                     Toast.LENGTH_SHORT).show();
-        }
-        else{
+        }else{
             Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_SHORT).show();
         }
     }
