@@ -9,8 +9,7 @@ public class Exam implements Serializable {
     private String nameExam;
     private String userClassName;
     private String classOwnerEmail;
-    private String  firstGrades;
-
+    private String firstGrades;
     private String secondGrades;
 
     public Exam(){
@@ -62,7 +61,7 @@ public class Exam implements Serializable {
         return classOwnerEmail;
     }
 
-    public void setFirstGrade(String firstGrades) {
+    public void setFirstGrades(String firstGrades) {
         this.firstGrades = firstGrades;
     }
 

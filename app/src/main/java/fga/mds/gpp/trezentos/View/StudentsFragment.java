@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -22,13 +21,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Model.Exam;
-import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 import static fga.mds.gpp.trezentos.R.id.gradeLayout;
-import static fga.mds.gpp.trezentos.R.id.no_presence;
-import static fga.mds.gpp.trezentos.R.id.presence;
 import static fga.mds.gpp.trezentos.R.id.student_name;
 import static fga.mds.gpp.trezentos.R.id.text_view_grade;
 
@@ -100,8 +96,6 @@ public class StudentsFragment extends Fragment {
 
             if(!(getActivity() instanceof ExamActivity)){
 
-                view.findViewById(presence).setVisibility(View.GONE);
-                view.findViewById(no_presence).setVisibility(View.GONE);
                 view.findViewById(gradeLayout).setVisibility(View.GONE);
                 view.findViewById(text_view_grade).setVisibility(View.GONE);
 
@@ -147,20 +141,12 @@ public class StudentsFragment extends Fragment {
         final TextView userAccountName;
         final TextView gradeTextView;
         final TextView secondGradeTextView;
-        final ImageView presence;
-        final ImageView noPresence;
-        final ImageView secondPresence;
-        final ImageView secondNoPresence;
         final LinearLayout gradeLayout;
         final LinearLayout secondGradeLayout;
 
         public ViewHolder(View view) {
             super(view);
             userAccountName = (TextView) view.findViewById(student_name);
-            presence = (ImageView) view.findViewById(R.id.presence);
-            secondPresence = (ImageView) view.findViewById(R.id.presence_second_exam);
-            secondNoPresence = (ImageView) view.findViewById(R.id.no_presence_second_exam);
-            noPresence= (ImageView) view.findViewById(no_presence);
             gradeLayout = (LinearLayout) view.findViewById(R.id.gradeLayout);
             secondGradeLayout = (LinearLayout) view
                     .findViewById(R.id.second_grade_layout);
@@ -168,25 +154,13 @@ public class StudentsFragment extends Fragment {
             secondGradeTextView = (TextView) view
                     .findViewById(R.id.text_view_second_grade);
 
-            presence.setOnClickListener(this);
-            noPresence.setOnClickListener(this);
             gradeLayout.setOnClickListener(this);
             secondGradeLayout.setOnClickListener(this);
-            secondNoPresence.setOnClickListener(this);
-            secondPresence.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-
-                case R.id.presence:
-                    setPresenceExam(presence, noPresence);
-                    break;
-
-                case R.id.no_presence:
-                    setNoPresenceExam(presence, noPresence);
-                    break;
 
                 case R.id.gradeLayout:
                     showGradePicker(1);
@@ -195,26 +169,7 @@ public class StudentsFragment extends Fragment {
                 case R.id.second_grade_layout:
                     showGradePicker(2);
                     break;
-
-                case R.id.presence_second_exam:
-                    setPresenceExam(secondPresence, secondNoPresence);
-                    break;
-
-                case R.id.no_presence_second_exam:
-                    setNoPresenceExam(secondPresence, secondNoPresence);
-                    break;
-
             }
-        }
-
-        private void setPresenceExam(ImageView presenceView, ImageView noPresenceView) {
-            noPresenceView.setVisibility(View.VISIBLE);
-            presenceView.setVisibility(View.GONE);
-        }
-
-        private void setNoPresenceExam(ImageView presenceView, ImageView noPresenceView) {
-            noPresenceView.setVisibility(View.GONE);
-            presenceView.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -229,6 +184,7 @@ public class StudentsFragment extends Fragment {
             final NumberPicker np2 = (NumberPicker) d.findViewById(R.id.numberPicker2);
             Button b1 = (Button) d.findViewById(R.id.button1);
             Button b2 = (Button) d.findViewById(R.id.button2);
+            Button bOk300 = (Button) d.findViewById(R.id.button1);
 
             np1.setMinValue(0);  // min value 0
             np1.setMaxValue(10); // max value 100
@@ -240,37 +196,60 @@ public class StudentsFragment extends Fragment {
             np2.setWrapSelectorWheel(false);
             np2.setOnValueChangedListener(this);
 
+            if (CLICK == 1) {
+                b1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String email;
+                        String grade;
 
-            b1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String email;
-                    String grade;
-
-                    if(CLICK == 1){
                         gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
 
                         grade = gradeTextView.getText().toString();
-                    }else{
+                        email = userAccountName.getText().toString();
+
+                        Log.i("MAP", grade);
+                        Log.i("MAP", email);
+                        Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
+
+                        mapEmailAndGrade.put(email, grade);
+                        userExam.setFirstGrades(mapEmailAndGrade.toString());
+
+                        Log.d("TAMANHOMAPA", userExam.getFirstGrades());
+
+                        d.dismiss();
+                    }
+                });
+            } else {
+                bOk300.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String email;
+                        String grade;
+
                         secondGradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format
                                         ("%02d", np2.getValue())));
 
                         grade = secondGradeTextView.getText().toString();
+
+                        email = userAccountName.getText().toString();
+
+                        Log.i("MAP", grade);
+                        Log.i("MAP", email);
+                        Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
+
+                        mapEmailAndGrade.put(email, grade);
+                        userExam.setSecondGrades(mapEmailAndGrade.toString());
+
+                        Log.d("TAMANHOMAPA", userExam.getSecondGrades());
+
+                        d.dismiss();
                     }
-                    email = userAccountName.getText().toString();
+                });
+            }
 
-                    Log.i("MAP", grade);
-                    Log.i("MAP", email);
-                    mapEmailAndGrade.put(email, grade);
-                    Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
-                    userExam.setFirstGrade(mapEmailAndGrade.toString());
-                    Log.d("TAMANHOMAPA", userExam.getFirstGrades());
-
-                    d.dismiss();
-                }
-            });
             b2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -278,6 +257,7 @@ public class StudentsFragment extends Fragment {
                 }
             });
             d.show();
+
         }
     }
 

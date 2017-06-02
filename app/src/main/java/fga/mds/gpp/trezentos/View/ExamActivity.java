@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
@@ -102,22 +104,32 @@ public class ExamActivity extends AppCompatActivity {
             Log.d("DATAEXAME", userClass.getClassName());
             Log.d("DATAEXAME", exam.getNameExam());
             Log.d("DATAEXAME", exam.getClassOwnerEmail());
-            Log.d("DATAEXAME", exam.getFirstGrades());
 
-            try {
-                userExamControl.validateAddsFirstGrade(userClass, exam);
-            } catch (UserClassException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            //if (exam.getSecondGrades().equals(null)) {
+
+                try {
+                    userExamControl.validateAddsFirstGrade(userClass, exam);
+                } catch (UserClassException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            //}
+            //else if (!exam.getFirstGrades().equals("") && !exam.getSecondGrades().equals("")){
+
+//                try {
+//                    userExamControl.addsSecondGrade(userClass, exam);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+            //} else {
+             //   Toast.makeText(getApplicationContext(), "Primeira Nota Vazia", Toast.LENGTH_SHORT).show();
+            //}
             return true;
-
-
-        }else if(id == R.id.action_sort_groups){
-
         }
 
         return super.onOptionsItemSelected(item);
