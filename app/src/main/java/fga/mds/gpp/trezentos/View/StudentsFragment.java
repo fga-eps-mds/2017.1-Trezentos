@@ -21,15 +21,23 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
+
+import static fga.mds.gpp.trezentos.R.id.gradeLayout;
+import static fga.mds.gpp.trezentos.R.id.no_presence;
+import static fga.mds.gpp.trezentos.R.id.presence;
+import static fga.mds.gpp.trezentos.R.id.student_name;
+import static fga.mds.gpp.trezentos.R.id.text_view_grade;
 
 
 public class StudentsFragment extends Fragment {
 
     private ArrayList<String> students;
     private UserClass userClass;
+    private Exam userExam;
     private static HashMap<String, String> mapEmailAndGrade = new HashMap<>();
 
     public StudentsFragment() {
@@ -46,6 +54,14 @@ public class StudentsFragment extends Fragment {
                              Bundle savedInstanceState) {
         Intent intent = getActivity().getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
+        userExam = (Exam) intent.getSerializableExtra("Exam");
+        ArrayList<String> students = userClass.getStudents();
+        Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
+        //if first item is null it will be removed
+        if (students.get(0).length() == 0){
+            students.remove(0);
+        }
+            Log.d("ARRAYSTUDENTS", students.toString());
 
         students = userClass.getStudents();
         populateMapValues(students); //clear map and populates it
@@ -78,8 +94,22 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.student_item, parent, false);
-            StudentsFragment.ViewHolder holder = new StudentsFragment.ViewHolder(view);
+
+            View view = LayoutInflater.from(context)
+                    .inflate(R.layout.student_item, parent, false);
+
+            if(!(getActivity() instanceof ExamActivity)){
+
+                view.findViewById(presence).setVisibility(View.GONE);
+                view.findViewById(no_presence).setVisibility(View.GONE);
+                view.findViewById(gradeLayout).setVisibility(View.GONE);
+                view.findViewById(text_view_grade).setVisibility(View.GONE);
+
+            }else{
+                // do nothing
+            }
+            StudentsFragment.ViewHolder holder =
+                    new StudentsFragment.ViewHolder(view);
             view.setOnClickListener(this);
 
             return holder;
@@ -126,12 +156,11 @@ public class StudentsFragment extends Fragment {
 
         public ViewHolder(View view) {
             super(view);
-            userAccountName = (TextView) view.findViewById(R.id.student_name);
+            userAccountName = (TextView) view.findViewById(student_name);
             presence = (ImageView) view.findViewById(R.id.presence);
             secondPresence = (ImageView) view.findViewById(R.id.presence_second_exam);
             secondNoPresence = (ImageView) view.findViewById(R.id.no_presence_second_exam);
-            noPresence = (ImageView) view.findViewById(R.id.no_presence);
-
+            noPresence= (ImageView) view.findViewById(no_presence);
             gradeLayout = (LinearLayout) view.findViewById(R.id.gradeLayout);
             secondGradeLayout = (LinearLayout) view
                     .findViewById(R.id.second_grade_layout);
@@ -235,8 +264,10 @@ public class StudentsFragment extends Fragment {
                     Log.i("MAP", grade);
                     Log.i("MAP", email);
                     mapEmailAndGrade.put(email, grade);
-
                     Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
+                    userExam.setFirstGrade(mapEmailAndGrade.toString());
+                    Log.d("TAMANHOMAPA", userExam.getFirstGrades());
+
                     d.dismiss();
                 }
             });

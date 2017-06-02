@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-import fga.mds.gpp.trezentos.DAO.AddFirstGradesPost;
+import fga.mds.gpp.trezentos.DAO.AddFirstGrades;
 import fga.mds.gpp.trezentos.DAO.CreateExamPost;
 import fga.mds.gpp.trezentos.DAO.getExamRequest;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
@@ -64,16 +64,17 @@ public class UserExamControl{
         }
     }
 
-    public String validateAddsFirstGrade(UserClass userClass, Exam exam,
-                                         HashMap<String, String> hashFirstGrades) throws UserClassException, ExecutionException, InterruptedException {
+    public String validateAddsFirstGrade(UserClass userClass, Exam exam)
+            throws UserClassException, ExecutionException, InterruptedException{
 
         String serverResponse;
-        Log.d("OBJETOS",hashFirstGrades.toString());
+        Log.d("OBJETOS",exam.getFirstGrades());
         Log.d("OBJETOS",userClass.getClassName());
         Log.d("OBJETOS",exam.getClassOwnerEmail());
         Log.d("OBJETOS",exam.getNameExam());
-        AddFirstGradesPost addFirstGradesPost = new AddFirstGradesPost(userClass, exam, hashFirstGrades);
-                serverResponse = addFirstGradesPost.execute().get();
+
+        AddFirstGrades addFirstGrades = new AddFirstGrades(userClass, exam);
+                serverResponse = addFirstGrades.execute().get();
 
         Log.d("JSON", serverResponse);
         return serverResponse;
@@ -125,6 +126,7 @@ public class UserExamControl{
             exam.setNameExam(jsonObject.getString("name"));
             exam.setUserClassName(jsonObject.getString("userClassName"));
             exam.setClassOwnerEmail(jsonObject.getString("classOwnerEmail"));
+           // exam.setFirstGrade(jsonObject.getString("firstGrades"));
 
         }catch (JSONException e){
             e.printStackTrace();
@@ -134,4 +136,5 @@ public class UserExamControl{
 
         return exam;
     }
-}   
+
+}

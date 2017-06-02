@@ -1,6 +1,7 @@
 package fga.mds.gpp.trezentos.Model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
 
@@ -8,6 +9,9 @@ public class Exam implements Serializable {
     private String nameExam;
     private String userClassName;
     private String classOwnerEmail;
+    private String  firstGrades;
+
+    private String secondGrades;
 
     public Exam(){
         //An empty constructor is needed to create a new instance of object,
@@ -56,5 +60,21 @@ public class Exam implements Serializable {
 
     public String getClassOwnerEmail() {
         return classOwnerEmail;
+    }
+
+    public void setFirstGrade(String firstGrades) {
+        this.firstGrades = firstGrades;
+    }
+
+    public String getFirstGrades() {
+        return firstGrades;
+    }
+
+    public void setSecondGrades(String secondGrades) {
+        this.secondGrades = secondGrades;
+    }
+
+    public String getSecondGrades() {
+        return secondGrades;
     }
 }
