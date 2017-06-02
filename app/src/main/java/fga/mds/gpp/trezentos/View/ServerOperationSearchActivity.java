@@ -38,11 +38,14 @@ public class ServerOperationSearchActivity extends AsyncTask<String, Void, Strin
     private SearchActivity searchActivity;
 
     public ServerOperationSearchActivity(Application application, ProgressBar progressBar,
-                                         SearchActivity searchActivity, AppBarLayout appBarLayout){
+             SearchActivity searchActivity, AppBarLayout appBarLayout,
+             ClassAdapter classAdapter, ArrayList<UserClass> userClasses){
         this.application = application;
         this.progressBar = progressBar;
         this.searchActivity = searchActivity;
         this.appBarLayout = appBarLayout;
+        this.classAdapter = classAdapter;
+        this.userClasses = userClasses;
     }
 
     private void initRecyclerView(){
@@ -51,7 +54,8 @@ public class ServerOperationSearchActivity extends AsyncTask<String, Void, Strin
         recyclerView.setAdapter(classAdapter);
 
         userClasses = getFormatedClasses(userClasses);
-        classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView);
+        searchActivity.classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView);
+        classAdapter = searchActivity.classAdapter;
         classAdapter.setOnItemClickListener(callJoinClass());
         recyclerView.setAdapter(classAdapter);
 

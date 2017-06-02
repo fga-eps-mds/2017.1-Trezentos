@@ -27,6 +27,8 @@ import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<UserClass> userClasses;
@@ -37,6 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private  String userEmail;
     public UserClassControl userClassControl;
+    private ServerOperationSearchActivity serverOperationSearchActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +47,9 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         progressBar = (ProgressBar) findViewById(R.id.progressBarSearch);
 
-        initClasses();
         initToolbar();
         initAppBarLayout();
+        initClasses();
 
     }
 
@@ -70,8 +73,7 @@ public class SearchActivity extends AppCompatActivity {
     private void initClasses() {
         progressBar.setVisibility(View.VISIBLE);
         new ServerOperationSearchActivity(getApplication(), progressBar,
-                this, appBarLayout)
-                .execute();
+                this, appBarLayout, classAdapter, userClasses).execute();
     }
 
     public void hideViews() {
@@ -117,5 +119,3 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 }
-
-

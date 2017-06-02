@@ -63,7 +63,7 @@ public class UserExamControlUnitTest {
 
         isValid = testUser.validateInformation("P1", "Usuario", null);
 
-        assertTrue(isValid.equals("O email não pode estar vazio "));
+        assertTrue(isValid.equals("O email não pode estar vazio"));
 
     }
 
@@ -91,7 +91,7 @@ public class UserExamControlUnitTest {
 
         isValid = testUser.validateInformation("P", "Usuario", "exemplo@dominio.com");
 
-        assertTrue(isValid.equals("O nome da prova deve ter entre 2 e 15 caracteres/."));
+        assertTrue(isValid.equals("O nome da prova deve ter entre 2 e 15 caracteres."));
 
     }
 

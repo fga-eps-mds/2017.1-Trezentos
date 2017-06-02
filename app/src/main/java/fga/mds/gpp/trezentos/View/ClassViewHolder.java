@@ -11,8 +11,8 @@ import fga.mds.gpp.trezentos.R;
 
 public class ClassViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    final TextView name;
-    final TextView institution;
+    public TextView name;
+    public TextView institution;
     // Define listener member variable
     private OnItemClickListener listener;
 

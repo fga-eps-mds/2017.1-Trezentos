@@ -46,16 +46,10 @@ public class Exam implements Serializable {
     }
 
     public void setUserClassName(String userClassName) throws UserException{
-        final Integer MAX_NAME_EXAM_LENGTH = 3;
-        final Integer MIN_NAME_EXAM_LENGTH = 20;
 
         if(userClassName != null && !userClassName.isEmpty()){
-            if(userClassName.length() < MIN_NAME_EXAM_LENGTH
-                    || userClassName.length() > MAX_NAME_EXAM_LENGTH){
-                throw new UserException("O nome da sala deve ter de 3 a 20 caracteres.");
-            }else{
-                this.userClassName = userClassName;
-            }
+            this.userClassName = userClassName;
+
         }else{
             throw new UserException("O nome não pode ser vazio");
         }
@@ -68,23 +62,7 @@ public class Exam implements Serializable {
 
     public void setClassOwnerEmail(String classOwnerEmail)throws UserException {
         if (classOwnerEmail != null && !classOwnerEmail.isEmpty()){
-            final Integer MAX_EMAIL_LENGTH = 50;
-            final Integer MIN_EMAIL_LENGTH = 5;
-
-            if(classOwnerEmail.length() < MIN_EMAIL_LENGTH
-                    || classOwnerEmail.length() > MAX_EMAIL_LENGTH){
-
-            }else{
-                String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-                Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-                Matcher matcher = pattern.matcher(classOwnerEmail);
-
-                if(matcher.matches()){
-                    classOwnerEmail.toLowerCase();
                     this.classOwnerEmail = classOwnerEmail;
-                } else
-                    throw new UserException("Email com caracteres inválidos. Tente novamente");
-            }
         }else{
             throw new UserException("O email não pode estar vazio");
         }
