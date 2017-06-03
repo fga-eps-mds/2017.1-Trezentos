@@ -1,9 +1,12 @@
 package fga.mds.gpp.trezentos.Model;
 
+
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.R;
 
 public class Exam implements Serializable {
     private String nameExam;
@@ -12,12 +15,12 @@ public class Exam implements Serializable {
     private String  firstGrades;
 
     public Exam(){
-        //An empty constructor is needed to create a new instance of object,
-        //in addition is create constructors with arguments.
+    //An empty constructor is needed to create a new instance of object,
+    //in addition is create constructors with arguments.
     }
 
     public Exam(String nameExam, String userClassName, String classOwnerEmail)
-            throws UserException{
+            throws UserException {
         setNameExam(nameExam);
         setUserClassName(userClassName);
         setClassOwnerEmail(classOwnerEmail);
@@ -45,7 +48,14 @@ public class Exam implements Serializable {
     }
 
     public void setUserClassName(String userClassName) throws UserException{
-        this.userClassName = userClassName;
+
+        if(userClassName != null && !userClassName.isEmpty()){
+            this.userClassName = userClassName;
+
+        }else{
+            throw new UserException("O nome não pode ser vazio");
+        }
+
     }
 
     public String getUserClassName(){
@@ -53,7 +63,11 @@ public class Exam implements Serializable {
     }
 
     public void setClassOwnerEmail(String classOwnerEmail)throws UserException {
-        this.classOwnerEmail = classOwnerEmail;
+        if (classOwnerEmail != null && !classOwnerEmail.isEmpty()){
+            this.classOwnerEmail = classOwnerEmail;
+        }else{
+            throw new UserException("O email não pode estar vazio");
+        }
     }
 
     public String getClassOwnerEmail() {
