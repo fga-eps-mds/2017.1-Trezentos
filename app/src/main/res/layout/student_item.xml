@@ -88,39 +88,40 @@
                     >
                 </LinearLayout>
 
-                <View
-                    android:background="#FFF"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent">
-                </View>
+                    <LinearLayout
+                        android:id="@+id/second_grade_layout"
+                        android:layout_width="115dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/second_grade_layout"
-                    android:layout_width="115dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:text="Nota 300"
+                            android:textColor="#FFF"
+                            android:textSize="15dp"
+                            android:textStyle="bold"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="Nota 300"
-                        android:textColor="#FFF"
-                        android:textSize="15dp"
-                        android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/text_view_second_grade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="#FFF"
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/text_view_second_grade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="#FFF"
-                        android:textSize="30dp"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
+                    <View
+                        android:background="#FFF"
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent">
+                    </View>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

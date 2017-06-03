@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.DAO.AddFirstGrades;
@@ -81,7 +80,7 @@ public class UserExamControl{
         return serverResponse;
     }
 
-    public String addsSecondGrade(UserClass userClass, Exam exam) throws ExecutionException, InterruptedException {
+    public String addSecondGrade(UserClass userClass, Exam exam) throws ExecutionException, InterruptedException {
         String serverResponse;
 
         AddSecondGrades addSecondGrades = new AddSecondGrades(userClass, exam);
@@ -135,7 +134,6 @@ public class UserExamControl{
             exam.setNameExam(jsonObject.getString("name"));
             exam.setUserClassName(jsonObject.getString("userClassName"));
             exam.setClassOwnerEmail(jsonObject.getString("classOwnerEmail"));
-           // exam.setFirstGrades(jsonObject.getString("firstGrades"));
 
         }catch (JSONException e){
             e.printStackTrace();
@@ -145,5 +143,4 @@ public class UserExamControl{
 
         return exam;
     }
-
 }

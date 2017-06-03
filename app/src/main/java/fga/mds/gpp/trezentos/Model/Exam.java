@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.View.StudentsFragment;
 
 public class Exam implements Serializable {
     private String nameExam;
@@ -41,7 +42,7 @@ public class Exam implements Serializable {
         }
     }
 
-    public String getNameExam(){
+    public String getNameExam() {
         return nameExam;
     }
 
@@ -49,7 +50,7 @@ public class Exam implements Serializable {
         this.userClassName = userClassName;
     }
 
-    public String getUserClassName(){
+    public String getUserClassName() {
         return userClassName;
     }
 

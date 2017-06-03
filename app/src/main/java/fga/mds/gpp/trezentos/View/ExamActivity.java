@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
@@ -21,13 +20,10 @@ import fga.mds.gpp.trezentos.R;
 
 public class ExamActivity extends AppCompatActivity {
 
-
-   // private FloatingActionButton floatingActionButton;
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -89,11 +85,10 @@ public class ExamActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
+        int ID = item.getItemId();
 
-        if (id == R.id.action_update_grades) {
+        if (ID == R.id.action_update_grades) {
             UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
             // Update exam with grades set in NumberPicker
@@ -105,34 +100,36 @@ public class ExamActivity extends AppCompatActivity {
             Log.d("DATAEXAME", exam.getNameExam());
             Log.d("DATAEXAME", exam.getClassOwnerEmail());
 
-            //if (exam.getSecondGrades().equals(null)) {
+            try {
+                userExamControl.validateAddsFirstGrade(userClass, exam);
+            } catch (UserClassException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-                try {
-                    userExamControl.validateAddsFirstGrade(userClass, exam);
-                } catch (UserClassException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            //}
-            //else if (!exam.getFirstGrades().equals("") && !exam.getSecondGrades().equals("")){
+            return true;
+        }else if(ID == R.id.action_update_trezentos_grades) {
+            UserExamControl userExamControl;
+            userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-//                try {
-//                    userExamControl.addsSecondGrade(userClass, exam);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                }
-            //} else {
-             //   Toast.makeText(getApplicationContext(), "Primeira Nota Vazia", Toast.LENGTH_SHORT).show();
-            //}
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            exam = (Exam) extras.getSerializable("Exam");
+
+            try {
+                userExamControl.addSecondGrade(userClass, exam);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 }

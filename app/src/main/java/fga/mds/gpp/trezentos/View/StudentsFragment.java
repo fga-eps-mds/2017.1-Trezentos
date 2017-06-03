@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
@@ -35,6 +36,9 @@ public class StudentsFragment extends Fragment {
     private UserClass userClass;
     private Exam userExam;
     private static HashMap<String, String> mapEmailAndGrade = new HashMap<>();
+    private boolean TREZENTOS_OPTION = false;
+    private boolean FIRST_GRADE_OPTION = false;
+
 
     public StudentsFragment() {
         // Required empty public constructor
@@ -53,6 +57,7 @@ public class StudentsFragment extends Fragment {
         userExam = (Exam) intent.getSerializableExtra("Exam");
         ArrayList<String> students = userClass.getStudents();
         Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
+
         //if first item is null it will be removed
         if (students.get(0).length() == 0){
             students.remove(0);
@@ -73,9 +78,7 @@ public class StudentsFragment extends Fragment {
 
         return view;
     }
-
-
-    private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
+        private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
         private final ArrayList<String> userAccounts;
         private Context context;
         private RecyclerView recyclerView;
@@ -135,7 +138,7 @@ public class StudentsFragment extends Fragment {
         }
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, NumberPicker.OnValueChangeListener {
 
         final TextView userAccountName;
@@ -174,17 +177,19 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
         }
 
-        public void showGradePicker(final int CLICK) {
+        public int showGradePicker(final int CLICK) {
             final Dialog d = new Dialog(getContext());
             d.setContentView(R.layout.dialog);
 
             final NumberPicker np1 = (NumberPicker) d.findViewById(R.id.numberPicker1);
             final NumberPicker np2 = (NumberPicker) d.findViewById(R.id.numberPicker2);
+
             Button b1 = (Button) d.findViewById(R.id.button1);
             Button b2 = (Button) d.findViewById(R.id.button2);
-            Button bOk300 = (Button) d.findViewById(R.id.button1);
+            Button buttonOK300 = (Button) d.findViewById(R.id.button1);
 
             np1.setMinValue(0);  // min value 0
             np1.setMaxValue(10); // max value 100
@@ -196,7 +201,7 @@ public class StudentsFragment extends Fragment {
             np2.setWrapSelectorWheel(false);
             np2.setOnValueChangedListener(this);
 
-            if (CLICK == 1) {
+            if(CLICK == 1) {
                 b1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -214,36 +219,45 @@ public class StudentsFragment extends Fragment {
                         Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
 
                         mapEmailAndGrade.put(email, grade);
+
+                        if (CLICK == 2) {
+
+                        }
                         userExam.setFirstGrades(mapEmailAndGrade.toString());
 
                         Log.d("TAMANHOMAPA", userExam.getFirstGrades());
 
+                        FIRST_GRADE_OPTION = true;
+
                         d.dismiss();
                     }
                 });
-            } else {
-                bOk300.setOnClickListener(new View.OnClickListener() {
+            }else {
+                buttonOK300.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String email;
-                        String grade;
+                        String EMAIL;
+                        String GRADE;
 
                         secondGradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format
                                         ("%02d", np2.getValue())));
 
-                        grade = secondGradeTextView.getText().toString();
+                        GRADE = secondGradeTextView.getText().toString();
 
-                        email = userAccountName.getText().toString();
+                        EMAIL = userAccountName.getText().toString();
 
-                        Log.i("MAP", grade);
-                        Log.i("MAP", email);
+                        Log.i("MAP", GRADE);
+                        Log.i("MAP", EMAIL);
                         Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
 
-                        mapEmailAndGrade.put(email, grade);
+                        mapEmailAndGrade.put(EMAIL, GRADE);
+
                         userExam.setSecondGrades(mapEmailAndGrade.toString());
 
                         Log.d("TAMANHOMAPA", userExam.getSecondGrades());
+
+                        TREZENTOS_OPTION = true;
 
                         d.dismiss();
                     }
@@ -258,7 +272,9 @@ public class StudentsFragment extends Fragment {
             });
             d.show();
 
+            return CLICK;
         }
+
     }
 
     public HashMap<String, String> populateMapValues(ArrayList<String> students) {
@@ -281,7 +297,7 @@ public class StudentsFragment extends Fragment {
         int i = 0;
         if (students.size() == 0) {
             return students;
-        } else {
+        }else{
             do {
                 if (students.get(i).length() == 0) {
                     students.remove(i);
@@ -292,5 +308,13 @@ public class StudentsFragment extends Fragment {
             Log.d("DEBUGMAP", students.toString());
             return students;
         }
+    }
+
+    public boolean button300Pressed(){
+        return TREZENTOS_OPTION;
+    }
+
+    public boolean buttonFirstGradePressed(){
+        return FIRST_GRADE_OPTION;
     }
 }
