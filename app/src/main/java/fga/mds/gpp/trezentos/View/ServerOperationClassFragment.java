@@ -2,10 +2,13 @@ package fga.mds.gpp.trezentos.View;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -92,6 +95,8 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
 
                     recyclerView.setAdapter(classFragmentAdapter);
 
+                    classFragmentAdapter.setOnItemClickListener(callJoinClass());
+
                     final LinearLayoutManager layoutManager =
                             new LinearLayoutManager(classFragment
                             .getActivity());
@@ -108,6 +113,23 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
             noInternetLayout.setVisibility(View.VISIBLE);
 
         }
+    }
+
+    private ClassViewHolder.OnItemClickListener callJoinClass() {
+        return new ClassViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                UserClass userClass = userClasses.get(position);
+                showJoinClassFragment(userClass);
+            }
+        };
+    }
+
+    private void showJoinClassFragment(UserClass userClass){
+        Intent goClass = new  Intent(getApplicationContext(), ClassActivity.class);
+        goClass.putExtra("Class", userClass);
+        goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplicationContext().startActivity(goClass);
     }
 
     private ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){

@@ -64,13 +64,6 @@ class ClassFragmentAdapter extends RecyclerView.Adapter implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        int itemPosition = recyclerView.getChildLayoutPosition(v);
-        UserClass userClass = userClasses.get(itemPosition);
-
-        Intent goClass = new  Intent(context, ClassActivity.class);
-        goClass.putExtra("Class", userClass);
-        goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(goClass);
 
     }
 }
