@@ -7,6 +7,7 @@ package fga.mds.gpp.trezentos.Controller.Util;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,4 +90,41 @@ public class SortStudentsUtil {
 
         return list;
     }
+
+    public static Map<String, Boolean>determinateLiders
+            (Map<String, Float> mapEmailGrade, Float cutOff){
+
+        Map<String, Boolean> mapEmailLider = new HashMap<>();
+
+        List<Map.Entry<String, Float>> list = new LinkedList<>
+                (mapEmailGrade.entrySet());
+
+        for (Map.Entry<String,Float> it : list){
+           if(it.getValue() >= cutOff) {
+               mapEmailLider.put(it.getKey(), true);
+           }else{
+               mapEmailLider.put(it.getKey(), false);
+           }
+
+        }
+        return mapEmailLider;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -94,8 +94,6 @@ public class ClassFragment extends Fragment{
         return view;
     }
 
-
-
     public void initClasses(){
         progressBar.setVisibility(View.VISIBLE);
         new ServerOperationClassFragment(getActivity().getApplication(),

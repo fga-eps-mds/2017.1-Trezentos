@@ -1,5 +1,7 @@
 package fga.mds.gpp.trezentos.Controller;
 
+import android.content.Context;
+import android.support.v4.media.MediaMetadataCompat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +15,19 @@ import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.ClassActivity;
 import fga.mds.gpp.trezentos.View.CreateExamActivity;
+import java.util.concurrent.ExecutionException;
 
+import dalvik.annotation.TestTargetClass;
+import fga.mds.gpp.trezentos.BuildConfig;
+import fga.mds.gpp.trezentos.Exception.UserClassException;
+import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.UserClass;
+import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.ClassActivity;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -21,11 +35,11 @@ import static junit.framework.Assert.assertTrue;
 public class UserExamControlUnitTest {
 
     private UserExamControl testUser;
-    private CreateExamActivity activity;
+    private ClassActivity activity;
 
     @Before
     public void setUp() {
-        activity = Robolectric.buildActivity(CreateExamActivity.class).get();
+        activity = Robolectric.buildActivity(ClassActivity.class).get();
     }
 
     @Test
@@ -37,8 +51,7 @@ public class UserExamControlUnitTest {
 
         isValid = testUser.validateInformation(null, "Usuario", "exemplo@dominio.com");
 
-        assertTrue(isValid.equals("O nome não pode ser vazio"));
-
+        assertEquals(isValid, "O nome não pode ser vazio");
     }
 
     @Test
@@ -50,8 +63,7 @@ public class UserExamControlUnitTest {
 
         isValid = testUser.validateInformation("P1", null, "exemplo@dominio.com");
 
-        assertTrue(isValid.equals("O nome não pode ser vazio"));
-
+        assertEquals(isValid, "O nome não pode ser vazio");
     }
 
     @Test
@@ -63,8 +75,7 @@ public class UserExamControlUnitTest {
 
         isValid = testUser.validateInformation("P1", "Usuario", null);
 
-        assertTrue(isValid.equals("O email não pode estar vazio"));
-
+        assertEquals(isValid, "O email não pode estar vazio");
     }
 
     @Test
@@ -79,7 +90,7 @@ public class UserExamControlUnitTest {
                 "Usuario",
                 "exemplo@dominio.com");
 
-        assertTrue(isValid.equals("O nome da prova deve ter entre 2 e 15 caracteres."));
+        assertEquals(isValid, "O nome da prova deve ter entre 2 e 15 caracteres.");
     }
 
     @Test
@@ -91,8 +102,26 @@ public class UserExamControlUnitTest {
 
         isValid = testUser.validateInformation("P", "Usuario", "exemplo@dominio.com");
 
-        assertTrue(isValid.equals("O nome da prova deve ter entre 2 e 15 caracteres."));
+        assertEquals(isValid, "O nome da prova deve ter entre 2 e 15 caracteres.");
 
     }
+
+//    @Test
+//    public void ShouldValidateAddsFirstGradeNullClassName() throws UserException, InterruptedException, ExecutionException, UserClassException {
+//        Exam exam = new Exam();
+//        UserClass userClass = new UserClass();
+//
+//        exam.setNameExam("Prova 1");
+//        exam.setFirstGrade("icaro@icaro.com=0.00, carol@carol.com=1.00");
+//        exam.setClassOwnerEmail("prova1owner@gmail.com");
+//        userClass.setClassName(null);
+//
+//        testUser = UserExamControl.getInstance(activity.getApplicationContext());
+//
+//        String isValid;
+//
+//        isValid = testUser.validateAddsFirstGrade(userClass, exam);
+//
+//    }
 
 }

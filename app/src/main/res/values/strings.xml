@@ -73,6 +73,7 @@
     <!--Menu-->
     <string name="configuracoes">Configuracoes</string>
     <string name="edit_class">Editar Sala</string>
+    <string name="sort_groups">Ordenar Grupos</string>
 
     <!--Tab-->
     <string name="tab_text_students">Alunos</string>
@@ -108,4 +109,8 @@
     <string name="atualizar_notas">Atualizar Notas</string>
     <string name="update_grades">Atualizar Notas</string>
 
+    <string name="msg_null_name_exam_error_message">O nome não pode ser vazio</string>
+    <string name="msg_null_name_userClass_error_message">O nome não pode ser vazio</string>
+    <string name="msg_null_classOwnerEmail_error_message">O email não pode estar vazio</string>
+    <string name="msg_len_name_exam_error">O nome da prova deve ter entre 2 e 15 caracteres.</string>
 </resources>

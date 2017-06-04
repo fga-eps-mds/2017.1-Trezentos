@@ -4,9 +4,16 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+
         android:id="@+id/action_update_grades"
         android:orderInCategory="100"
         android:title="@string/update_grades"
+        />
+    
+    <item
+        android:id="@+id/action_sort_groups"
+        android:orderInCategory="100"
+        android:title="@string/sort_groups"
         app:showAsAction="never" />
 
 </menu>

@@ -45,7 +45,6 @@ public class SignUpActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<SignUpActivity> rule = new ActivityTestRule<>(SignUpActivity.class);
 
-
     @Before
     public void setUp() {
         UserAccountControl.getInstance(rule.getActivity()).authenticateLogin("teste@gmail.com", "123456");

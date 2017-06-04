@@ -6,15 +6,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.R;
 
 public class Exam implements Serializable {
     private String nameExam;
     private String userClassName;
     private String classOwnerEmail;
+    private String  firstGrades;
 
     public Exam(){
-//An empty constructor is needed to create a new instance of object,
-//in addition is create constructors with arguments.
+        //An empty constructor is needed to create a new instance of object,
+        //in addition is create constructors with arguments.
     }
 
     public Exam(String nameExam, String userClassName, String classOwnerEmail)
@@ -62,7 +64,7 @@ public class Exam implements Serializable {
 
     public void setClassOwnerEmail(String classOwnerEmail)throws UserException {
         if (classOwnerEmail != null && !classOwnerEmail.isEmpty()){
-                    this.classOwnerEmail = classOwnerEmail;
+            this.classOwnerEmail = classOwnerEmail;
         }else{
             throw new UserException("O email não pode estar vazio");
         }
@@ -70,5 +72,13 @@ public class Exam implements Serializable {
 
     public String getClassOwnerEmail() {
         return classOwnerEmail;
+    }
+
+    public String getFirstGrades() {
+        return firstGrades;
+    }
+
+    public void setFirstGrade(String firstGrades) {
+        this.firstGrades = firstGrades;
     }
 }

@@ -26,17 +26,16 @@ public class AddFirstGradesPost extends AsyncTask<String, String, String> {
     private Exam exam;
     private final String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
 
-    public AddFirstGradesPost(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades) {
+    public AddFirstGradesPost(UserClass userClass, Exam exam) {
         this.userClass = userClass;
         this.exam = exam;
-        this.hashFirstGrades = hashFirstGrades;
     }
 
     @Override
     protected String doInBackground(String... params) {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
-        String newBodyFirstGrades = createBody(userClass, exam, hashFirstGrades);
+        String newBodyFirstGrades = createBody(userClass, exam);
         Log.d("newBody", newBodyFirstGrades);
 
         RequestBody body = RequestBody.create(JSON, newBodyFirstGrades);
@@ -55,10 +54,9 @@ public class AddFirstGradesPost extends AsyncTask<String, String, String> {
         return null;
     }
 
-    public String createBody(UserClass userClass, Exam exam, HashMap<String, String> hashFirstGrades) {
-        String firstGrades = hashFirstGrades.toString();
-
+    public String createBody(UserClass userClass, Exam exam) {
         JSONObject jsonBody = new JSONObject();
+
         try {
             jsonBody.put("email", exam.getClassOwnerEmail());
             Log.d("JSON", exam.getClassOwnerEmail());
@@ -68,7 +66,7 @@ public class AddFirstGradesPost extends AsyncTask<String, String, String> {
         }
         try {
             jsonBody.put("userClassName", userClass.getClassName());
-            Log.d("JSON", userClass.getClassName());
+            Log.d("JSONCLASS", userClass.getClassName());
         } catch (JSONException e) {
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
@@ -81,8 +79,8 @@ public class AddFirstGradesPost extends AsyncTask<String, String, String> {
             e.printStackTrace();
         }
         try {
-            jsonBody.put("firstGrades", firstGrades);
-            Log.d("JSON", firstGrades);
+            jsonBody.put("firstGrades", exam.getFirstGrades());
+            Log.d("JSON", exam.getFirstGrades());
         } catch (JSONException e) {
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
