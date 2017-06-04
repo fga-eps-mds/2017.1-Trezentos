@@ -36,4 +36,11 @@ public class ExamTest {
         assertEquals("Calculo 1", exam.getUserClassName());
         assertEquals("Joao123@email.com", exam.getClassOwnerEmail());
     }
+
+    @Test
+    public void shouldValidateSecondGrades() {
+        Exam exam = new Exam();
+        exam.setSecondGrades("Teste300");
+        assertEquals("Teste300", exam.getSecondGrades());
+    }
 }

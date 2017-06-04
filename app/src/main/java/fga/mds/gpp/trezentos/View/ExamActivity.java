@@ -109,8 +109,6 @@ public class ExamActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            return true;
         }else if(ID == R.id.action_update_trezentos_grades) {
             UserExamControl userExamControl;
             userExamControl = UserExamControl.getInstance(getApplicationContext());
@@ -126,8 +124,6 @@ public class ExamActivity extends AppCompatActivity {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

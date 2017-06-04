@@ -36,9 +36,6 @@ public class StudentsFragment extends Fragment {
     private UserClass userClass;
     private Exam userExam;
     private static HashMap<String, String> mapEmailAndGrade = new HashMap<>();
-    private boolean TREZENTOS_OPTION = false;
-    private boolean FIRST_GRADE_OPTION = false;
-
 
     public StudentsFragment() {
         // Required empty public constructor
@@ -220,14 +217,9 @@ public class StudentsFragment extends Fragment {
 
                         mapEmailAndGrade.put(email, grade);
 
-                        if (CLICK == 2) {
-
-                        }
                         userExam.setFirstGrades(mapEmailAndGrade.toString());
 
                         Log.d("TAMANHOMAPA", userExam.getFirstGrades());
-
-                        FIRST_GRADE_OPTION = true;
 
                         d.dismiss();
                     }
@@ -238,7 +230,6 @@ public class StudentsFragment extends Fragment {
                     public void onClick(View v) {
                         String EMAIL;
                         String GRADE;
-
                         secondGradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format
                                         ("%02d", np2.getValue())));
@@ -256,8 +247,6 @@ public class StudentsFragment extends Fragment {
                         userExam.setSecondGrades(mapEmailAndGrade.toString());
 
                         Log.d("TAMANHOMAPA", userExam.getSecondGrades());
-
-                        TREZENTOS_OPTION = true;
 
                         d.dismiss();
                     }
@@ -308,13 +297,5 @@ public class StudentsFragment extends Fragment {
             Log.d("DEBUGMAP", students.toString());
             return students;
         }
-    }
-
-    public boolean button300Pressed(){
-        return TREZENTOS_OPTION;
-    }
-
-    public boolean buttonFirstGradePressed(){
-        return FIRST_GRADE_OPTION;
     }
 }
