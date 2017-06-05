@@ -19,13 +19,10 @@ import fga.mds.gpp.trezentos.R;
 
 public class ExamActivity extends AppCompatActivity {
 
-
-   // private FloatingActionButton floatingActionButton;
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -87,7 +84,6 @@ public class ExamActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         
@@ -102,7 +98,6 @@ public class ExamActivity extends AppCompatActivity {
             Log.d("DATAEXAME", userClass.getClassName());
             Log.d("DATAEXAME", exam.getNameExam());
             Log.d("DATAEXAME", exam.getClassOwnerEmail());
-            Log.d("DATAEXAME", exam.getFirstGrades());
 
             try {
                 userExamControl.validateAddsFirstGrade(userClass, exam);
@@ -113,12 +108,25 @@ public class ExamActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-                return true;
+        }else if(id == R.id.action_update_trezentos_grades) {
+            UserExamControl userExamControl;
+            userExamControl = UserExamControl.getInstance(getApplicationContext());
+
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            exam = (Exam) extras.getSerializable("Exam");
+
+            try {
+                userExamControl.addSecondGrade(userClass, exam);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
         else if(id == R.id.action_sort_groups){
         }
         return super.onOptionsItemSelected(item);
-
 
     }
 }

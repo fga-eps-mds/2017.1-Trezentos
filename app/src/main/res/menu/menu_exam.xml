@@ -16,4 +16,10 @@
         android:title="@string/sort_groups"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_update_trezentos_grades"
+        android:orderInCategory="100"
+        android:title="@string/update_trezentos_grades"
+        app:showAsAction="never" />
+
 </menu>

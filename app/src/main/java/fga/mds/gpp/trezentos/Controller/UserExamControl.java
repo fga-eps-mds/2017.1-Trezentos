@@ -8,10 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-import fga.mds.gpp.trezentos.DAO.AddFirstGradesPost;
+import fga.mds.gpp.trezentos.DAO.AddFirstGrades;
+import fga.mds.gpp.trezentos.DAO.AddSecondGrades;
 import fga.mds.gpp.trezentos.DAO.CreateExamPost;
 import fga.mds.gpp.trezentos.DAO.getExamRequest;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
@@ -73,14 +73,21 @@ public class UserExamControl{
         Log.d("OBJETOS",exam.getClassOwnerEmail());
         Log.d("OBJETOS",exam.getNameExam());
 
-        AddFirstGradesPost addFirstGradesPost = new AddFirstGradesPost(userClass, exam);
-
-        serverResponse = addFirstGradesPost.execute().get();
+        AddFirstGrades addFirstGrades = new AddFirstGrades(userClass, exam);
+        serverResponse = addFirstGrades.execute().get();
 
         Log.d("JSON", serverResponse);
         return serverResponse;
     }
 
+    public String addSecondGrade(UserClass userClass, Exam exam) throws ExecutionException, InterruptedException {
+        String serverResponse;
+
+        AddSecondGrades addSecondGrades = new AddSecondGrades(userClass, exam);
+        serverResponse = addSecondGrades.execute().get();
+
+        return serverResponse;
+    }
 
     //GET FROM API
     public ArrayList<Exam> getExamsFromUser(String email, String userClassName) {
@@ -127,7 +134,7 @@ public class UserExamControl{
             exam.setNameExam(jsonObject.getString("name"));
             exam.setUserClassName(jsonObject.getString("userClassName"));
             exam.setClassOwnerEmail(jsonObject.getString("classOwnerEmail"));
-            exam.setFirstGrade(jsonObject.getString("firstGrades"));
+            exam.setFirstGrades(jsonObject.getString("firstGrades"));
 
         }catch (JSONException | UserException e){
             e.printStackTrace();
@@ -135,5 +142,4 @@ public class UserExamControl{
 
         return exam;
     }
-
 }

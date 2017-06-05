@@ -45,7 +45,7 @@ public class ExamTest {
     @Test
     public void shouldValidadeFirstGrades() throws UserException {
         Exam exam = new Exam();
-        exam.setFirstGrade(populateHashMap().toString());
+        exam.setFirstGrades(populateHashMap().toString());
         assertEquals(populateHashMap().toString(), exam.getFirstGrades());
     }
 
@@ -68,4 +68,9 @@ public class ExamTest {
         return hashMap;
     }
 
+    public void shouldValidateSecondGrades() {
+        Exam exam = new Exam();
+        exam.setSecondGrades("Teste300");
+        assertEquals("Teste300", exam.getSecondGrades());
+    }
 }

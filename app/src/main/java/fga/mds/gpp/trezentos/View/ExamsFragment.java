@@ -78,14 +78,16 @@ public class ExamsFragment extends Fragment{
 
     public void initListView(){
 
-        progressBar.setVisibility(View.GONE);
+        if (getActivity() != null) {
+            progressBar.setVisibility(View.GONE);
 
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerExam);
-        recyclerView.setAdapter(new ExamsFragment.Adapter(userExams, getActivity().getApplicationContext(), recyclerView));
+            RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recyclerExam);
+            recyclerView.setAdapter(new ExamsFragment.Adapter(userExams, getActivity().getApplicationContext(), recyclerView));
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+        }
     }
 
     @Override
