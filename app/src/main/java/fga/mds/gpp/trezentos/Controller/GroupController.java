@@ -15,6 +15,7 @@ import java.util.Map;
 
 import fga.mds.gpp.trezentos.Controller.Util.SortStudentsUtil;
 import fga.mds.gpp.trezentos.DAO.GetFirstGrades;
+import fga.mds.gpp.trezentos.DAO.GetGroups;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.Groups;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -53,15 +54,15 @@ public class GroupController {
         return myHashMap;
     }
 
-    private static HashMap<String, Integer> convertToHashMapInt(String firstGrades) {
+    private static HashMap<String, Integer> convertToHashMapInt(String groups) {
 
         HashMap<String, Integer> myHashMap = new HashMap<>();
 
-        if (firstGrades == null) return null;
+        if (groups == null) return null;
 
         try {
 
-            JSONArray jArray = new JSONArray(firstGrades);
+            JSONArray jArray = new JSONArray(groups);
             JSONObject jObject = null;
             String keyString=null;
 
@@ -86,4 +87,14 @@ public class GroupController {
         return firstGrades;
     }
 
+    public HashMap<String, Integer>getGroups
+            (String name, String userClassName, String classOwnerEmail) {
+
+        GetGroups getGroups = new GetGroups(name, userClassName, classOwnerEmail);
+
+        String serverResponse = getGroups.get();
+        groups = convertToHashMapInt(serverResponse);
+
+        return groups;
+    }
 }
