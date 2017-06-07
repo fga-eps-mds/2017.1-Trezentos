@@ -1,8 +1,6 @@
 package fga.mds.gpp.trezentos.DAO;
 
 
-import android.os.AsyncTask;
-
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -10,12 +8,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class getAllClassRequest {
+public class GetAllClassRequest {
 
 
     private final String url = "https://trezentos-api.herokuapp.com/api/class/find";
 
-    public getAllClassRequest(){}
+    public GetAllClassRequest(){}
 
 
     public String get(){

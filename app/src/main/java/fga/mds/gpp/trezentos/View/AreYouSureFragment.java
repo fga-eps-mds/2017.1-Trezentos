@@ -23,7 +23,7 @@ import fga.mds.gpp.trezentos.R;
 public class AreYouSureFragment extends DialogFragment implements View.OnClickListener{
     private HashMap<String, Double> firstGrades;
     private UserClass userClass;
-    private Exam exam
+    private Exam exam;
 
     @Nullable
     @Override

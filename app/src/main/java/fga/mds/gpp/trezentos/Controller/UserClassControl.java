@@ -9,7 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-import fga.mds.gpp.trezentos.DAO.getAllClassRequest;
+
+import fga.mds.gpp.trezentos.DAO.GetAllClassRequest;
 import fga.mds.gpp.trezentos.DAO.AddStudentToClassRequest;
 import fga.mds.gpp.trezentos.DAO.CreateClassPost;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
@@ -70,7 +71,7 @@ public class UserClassControl {
     }
 
     public ArrayList<UserClass> getClasses() {
-        getAllClassRequest classRequest = new getAllClassRequest();
+        GetAllClassRequest classRequest = new GetAllClassRequest();
         String serverResponse = "404";
         serverResponse = classRequest.get();
         ArrayList<UserClass> userClasses = new ArrayList<UserClass>();

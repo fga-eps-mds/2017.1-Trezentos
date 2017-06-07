@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -23,72 +22,70 @@ import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserAccount;
+import fga.mds.gpp.trezentos.Controller.UserExamControl;
+import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 import static fga.mds.gpp.trezentos.R.id.gradeLayout;
-import static fga.mds.gpp.trezentos.R.id.no_presence;
-import static fga.mds.gpp.trezentos.R.id.presence;
 import static fga.mds.gpp.trezentos.R.id.student_name;
 import static fga.mds.gpp.trezentos.R.id.text_view_grade;
 
 
 public class StudentsFragment extends Fragment {
 
-    private ArrayList<UserAccount> userAccounts;
+    private ArrayList<String> students;
     private UserClass userClass;
     private Exam userExam;
     private static HashMap<String, Double> mapEmailAndGrade = new HashMap<>();
 
-    public StudentsFragment(){
+    public StudentsFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_students, container, false);
         Intent intent = getActivity().getIntent();
-
-        //creates a new array of students that are enrolled at this class
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
         ArrayList<String> students = userClass.getStudents();
-        //Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
         //if first item is null it will be removed
 //        if (students.get(0).length() == 0){
   //          students.remove(0);
     //    }
       //      Log.d("ARRAYSTUDENTS", students.toString());
 
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
-            recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
+        userExam = (Exam) intent.getSerializableExtra("Exam");
+                students = userClass.getStudents();
 
-            final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            recyclerView.setLayoutManager(layoutManager);
+        students = userClass.getStudents();
+        populateMapValues(students); //clear map and populates it
+        arrangeMap(students);//creates a new array of students that are enrolled at this class
 
-     return view;
+        View view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
+        recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        return view;
     }
-
-    public static HashMap<String, Double> getMapEmailAndGrade() {
-        return mapEmailAndGrade;
-    }
-
-    private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
+        private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
         private final ArrayList<String> userAccounts;
         private Context context;
-        private  RecyclerView recyclerView;
-        private  StudentsFragment.ViewHolder holder;
+        private RecyclerView recyclerView;
+        private StudentsFragment.ViewHolder holder;
 
 
-        public AdapterStudents(ArrayList<String> userAccounts, Context context,  RecyclerView recyclerView) {
+        public AdapterStudents(ArrayList<String> userAccounts, Context context, RecyclerView recyclerView) {
             this.userAccounts = userAccounts;
             this.context = context;
             this.recyclerView = recyclerView;
@@ -102,8 +99,6 @@ public class StudentsFragment extends Fragment {
 
             if(!(getActivity() instanceof ExamActivity)){
 
-                view.findViewById(presence).setVisibility(View.GONE);
-                view.findViewById(no_presence).setVisibility(View.GONE);
                 view.findViewById(gradeLayout).setVisibility(View.GONE);
                 view.findViewById(text_view_grade).setVisibility(View.GONE);
 
@@ -123,8 +118,7 @@ public class StudentsFragment extends Fragment {
             holder = (StudentsFragment.ViewHolder) viewHolder;
 
             String userAccount = userAccounts.get(position);
-            holder.userAccountName.setText(userAccount);//
-            //holder.circleImageView.setImageResource(userAccount.getPhoto());
+            holder.userAccountName.setText(userAccount);
         }
 
         @Override
@@ -140,121 +134,171 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            int itemPosition = recyclerView.getChildLayoutPosition(v);
-
-//            if(v.getId() == R.id.presence){
-//                holder.noPresence.setVisibility(View.VISIBLE);
-//                holder.presence.setVisibility(View.GONE);
-//            }
-//            if(v.getId() == R.id.no_presence){
-//                holder.noPresence.setVisibility(View.GONE);
-//                holder.presence.setVisibility(View.VISIBLE);
-//            }
-            //Exam exam = exams.get(itemPosition);
 
         }
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, NumberPicker.OnValueChangeListener {
+    public class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, NumberPicker.OnValueChangeListener {
+
         final TextView userAccountName;
-        final ImageView presence;
-        final ImageView noPresence;
-      //  final CircleImageView circleImageView;
-        final LinearLayout gradeLayout;
         final TextView gradeTextView;
+        final TextView secondGradeTextView;
+        final LinearLayout gradeLayout;
+        final LinearLayout secondGradeLayout;
 
         public ViewHolder(View view) {
             super(view);
             userAccountName = (TextView) view.findViewById(student_name);
-            presence = (ImageView) view.findViewById(R.id.presence);
-            noPresence= (ImageView) view.findViewById(no_presence);
-           // circleImageView = (CircleImageView) view.findViewById(R.id.profile_image);
             gradeLayout = (LinearLayout) view.findViewById(R.id.gradeLayout);
+            secondGradeLayout = (LinearLayout) view
+                    .findViewById(R.id.second_grade_layout);
             gradeTextView = (TextView) view.findViewById(R.id.text_view_grade);
+            secondGradeTextView = (TextView) view
+                    .findViewById(R.id.text_view_second_grade);
 
-            presence.setOnClickListener(this);
-            noPresence.setOnClickListener(this);
             gradeLayout.setOnClickListener(this);
-
+            secondGradeLayout.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
-
-                case R.id.presence:
-                    noPresence.setVisibility(View.VISIBLE);
-                    presence.setVisibility(View.GONE);
-
-                    break;
-
-                case no_presence:
-                    noPresence.setVisibility(View.GONE);
-                    presence.setVisibility(View.VISIBLE);
-
-                    break;
-
+            switch (v.getId()) {
 
                 case R.id.gradeLayout:
-                    showGradePicker();
+                    showGradePicker(1);
                     break;
 
+                case R.id.second_grade_layout:
+                    showGradePicker(2);
+                    break;
             }
         }
 
         @Override
-        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {}
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 
-        public void showGradePicker(){
+        }
 
+        public int showGradePicker(final int CLICK) {
             final Dialog d = new Dialog(getContext());
-            d.setTitle("NumberPicker");
             d.setContentView(R.layout.dialog);
-            Button b1 = (Button) d.findViewById(R.id.button1);
-            Button b2 = (Button) d.findViewById(R.id.button2);
 
             final NumberPicker np1 = (NumberPicker) d.findViewById(R.id.numberPicker1);
+            final NumberPicker np2 = (NumberPicker) d.findViewById(R.id.numberPicker2);
+
+            Button b1 = (Button) d.findViewById(R.id.button1);
+            Button b2 = (Button) d.findViewById(R.id.button2);
+            Button buttonOK300 = (Button) d.findViewById(R.id.button1);
+
             np1.setMinValue(0);  // min value 0
             np1.setMaxValue(10); // max value 100
             np1.setWrapSelectorWheel(false);
             np1.setOnValueChangedListener(this);
 
-
-            final NumberPicker np2 = (NumberPicker) d.findViewById(R.id.numberPicker2);
             np2.setMinValue(0); // min value 0
             np2.setMaxValue(99); // max value 100
             np2.setWrapSelectorWheel(false);
             np2.setOnValueChangedListener(this);
 
-
-            b1.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v) {
-                    gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
+            if(CLICK == 1) {
+                b1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                             String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
 
-                    Double grade = Double.valueOf(gradeTextView.getText().toString());
-                    String email = userAccountName.getText().toString();
+                        Double grade = Double.valueOf(gradeTextView.getText().toString());
+                        String email = userAccountName.getText().toString();
 
-                    Log.i("MAP", email);
-                    mapEmailAndGrade.put(email, grade);
-                    Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
-                    userExam.setFirstGrade(mapEmailAndGrade.toString());
-                    Log.d("TAMANHOMAPA", userExam.getFirstGrades());
+                        mapEmailAndGrade.put(email, grade);
+                        userExam.setFirstGrades(mapEmailAndGrade.toString());
 
-                    d.dismiss();
-                }
-            });
-            b2.setOnClickListener(new View.OnClickListener()
-            {
+                        grade = Double.valueOf(gradeTextView.getText().toString());
+                        email = userAccountName.getText().toString();
+
+                        Log.i("MAP", email);
+                        Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
+
+                        mapEmailAndGrade.put(email, grade);
+
+                        userExam.setFirstGrades(mapEmailAndGrade.toString());
+
+                        Log.d("TAMANHOMAPA", userExam.getFirstGrades());
+
+                        d.dismiss();
+                    }
+                });
+            }else {
+                buttonOK300.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String EMAIL;
+                        Double GRADE;
+                        secondGradeTextView.setText(String.valueOf(np1.getValue()) + "." +
+                                String.valueOf(String.format
+                                        ("%02d", np2.getValue())));
+
+                        GRADE = Double.valueOf(secondGradeTextView.getText().toString());
+
+                        EMAIL = userAccountName.getText().toString();
+
+                        Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
+
+                        mapEmailAndGrade.put(EMAIL, GRADE);
+
+                        userExam.setSecondGrades(mapEmailAndGrade.toString());
+
+                        Log.d("TAMANHOMAPA", userExam.getSecondGrades());
+
+                        d.dismiss();
+                    }
+                });
+            }
+
+            b2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     d.dismiss(); // dismiss the dialog
                 }
             });
             d.show();
+
+            return CLICK;
         }
+
     }
 
+    public HashMap<String, Double> populateMapValues(ArrayList<String> students) {
+        mapEmailAndGrade.clear();
+
+        for (int i = 0; i < students.size(); i++) {
+            mapEmailAndGrade.put(students.get(i), 0.00);
+        }
+        Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
+        return mapEmailAndGrade;
+    }
+
+    public static HashMap<String, Double> getHashEmailAndGrade() {
+        Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
+        return mapEmailAndGrade;
+    }
+
+    public ArrayList<String> arrangeMap(ArrayList<String> students) {
+        //if item is null it will be removed
+        int i = 0;
+        if (students.size() == 0) {
+            return students;
+        }else{
+            do {
+                if (students.get(i).length() == 0) {
+                    students.remove(i);
+                }
+                ++i;
+            } while (i < students.size());
+            Log.d("DEBUGMAP", Integer.toString(students.size()));
+            Log.d("DEBUGMAP", students.toString());
+            return students;
+        }
+    }
 }

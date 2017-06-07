@@ -2,17 +2,19 @@ package fga.mds.gpp.trezentos.View;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 public class ClassViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    final TextView name;
-    final TextView institution;
+    public TextView name;
+    public TextView institution;
     // Define listener member variable
     private OnItemClickListener listener;
 
@@ -32,7 +34,6 @@ public class ClassViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
         itemView.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {

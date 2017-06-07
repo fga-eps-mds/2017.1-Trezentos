@@ -20,8 +20,6 @@ import fga.mds.gpp.trezentos.R;
 
 public class ExamActivity extends AppCompatActivity {
 
-
-   // private FloatingActionButton floatingActionButton;
     private UserClass userClass;
     private ViewPager viewPager;
     private Toolbar toolbar;
@@ -86,7 +84,6 @@ public class ExamActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case  R.id.action_update_grades: {
@@ -100,7 +97,6 @@ public class ExamActivity extends AppCompatActivity {
                 Log.d("DATAEXAME", userClass.getClassName());
                 Log.d("DATAEXAME", exam.getNameExam());
                 Log.d("DATAEXAME", exam.getClassOwnerEmail());
-                Log.d("DATAEXAME", exam.getFirstGrades());
 
                 try {
                     userExamControl.validateAddsFirstGrade(userClass, exam);
@@ -115,9 +111,28 @@ public class ExamActivity extends AppCompatActivity {
                 break;
             }
 
+            case R.id.action_update_trezentos_grades: {
+                UserExamControl userExamControl;
+                userExamControl = UserExamControl.getInstance(getApplicationContext());
+
+                Intent intent = getIntent();
+                Bundle extras = intent.getExtras();
+                exam = (Exam) extras.getSerializable("Exam");
+
+                try {
+                    userExamControl.addSecondGrade(userClass, exam);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            }
+
             case R.id.action_sort_groups: {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("firstGrades", StudentsFragment.getMapEmailAndGrade());
+                bundle.putSerializable("firstGrades", StudentsFragment.getHashEmailAndGrade());
                 bundle.putSerializable("userClass", userClass);
                 bundle.putSerializable("exam", exam);
 
@@ -125,10 +140,13 @@ public class ExamActivity extends AppCompatActivity {
                 AreYouSureFragment areYouSureFragment = new AreYouSureFragment();
                 areYouSureFragment.setArguments(bundle);
                 areYouSureFragment.show(fragmentTransaction, "areYouSure");
+
+                break;
             }
+
         }
-
         return super.onOptionsItemSelected(item);
-    }
 
+    }
 }
+

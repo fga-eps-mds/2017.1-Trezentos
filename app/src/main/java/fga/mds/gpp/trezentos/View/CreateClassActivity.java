@@ -147,23 +147,23 @@ public class CreateClassActivity extends AppCompatActivity {
         if (errorMessage.equals("Preencha todos os campos!")) {
             classNameField.setError("Preencha todos os campos!");
             isValid = false;
-        }else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
+        }else if(errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
             classNameField.requestFocus();
             classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
             isValid = false;
-        }else if (errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {
+        }else if(errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {
             passwordField.requestFocus();
             passwordField.setError("A senha deve ter entre 6 e 16 caracteres");
             isValid = false;
-        }else if (errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
+        }else if(errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
             sizeGroupsField.requestFocus();
             sizeGroupsField.setError("O tamanho do grupo nao pode ser zero.");
             isValid = false;
-        }else if (errorMessage.equals("O acrescimo nao pode ser zero.")) {
+        }else if(errorMessage.equals("O acrescimo nao pode ser zero.")) {
             additionField.requestFocus();
             additionField.setError("O acrescimo nao pode ser zero.");
             isValid = false;
-        }else if (errorMessage.equals("A nota de corte nao pode ser zero.")) {
+        }else if(errorMessage.equals("A nota de corte nao pode ser zero.")) {
             cutOffField.requestFocus();
             cutOffField.setError("A nota de corte nao pode ser zero.");
             isValid = false;

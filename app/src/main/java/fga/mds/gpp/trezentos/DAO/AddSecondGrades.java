@@ -7,25 +7,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
-import fga.mds.gpp.trezentos.View.StudentsFragment;
-import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AddFirstGrades extends AsyncTask<String, String, String> {
+public class AddSecondGrades extends AsyncTask<String, String, String>{
     private UserClass userClass;
     private Exam exam;
-    private final String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
+    private final String url = "https://trezentos-api.herokuapp.com/api/exam/second_grades";
 
-    public AddFirstGrades(UserClass userClass, Exam exam) {
+    public AddSecondGrades(UserClass userClass, Exam exam) {
         this.userClass = userClass;
         this.exam = exam;
     }
@@ -34,10 +30,10 @@ public class AddFirstGrades extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
-        String newBodyFirstGrades = createBody(userClass, exam);
-        Log.d("newBody", newBodyFirstGrades);
+        String newBodySecondGrades = createBody(userClass, exam);
+        Log.d("newBody", newBodySecondGrades);
 
-        RequestBody body = RequestBody.create(JSON, newBodyFirstGrades);
+        RequestBody body = RequestBody.create(JSON, newBodySecondGrades);
         Request request = new Request.Builder()
                 .url(url)
                 .put(body)
@@ -54,8 +50,8 @@ public class AddFirstGrades extends AsyncTask<String, String, String> {
     }
 
     public String createBody(UserClass userClass, Exam exam) {
-        JSONObject jsonBody = new JSONObject();
 
+        JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("email", exam.getClassOwnerEmail());
             Log.d("JSON", exam.getClassOwnerEmail());
@@ -78,8 +74,8 @@ public class AddFirstGrades extends AsyncTask<String, String, String> {
             e.printStackTrace();
         }
         try {
-            jsonBody.put("firstGrades", exam.getFirstGrades());
-            Log.d("JSON", exam.getFirstGrades());
+            jsonBody.put("secondGrades", exam.getSecondGrades());
+            Log.d("JSON", exam.getSecondGrades());
         } catch (JSONException e) {
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();

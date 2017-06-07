@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v7.widget.RecyclerView;
+import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -20,9 +21,11 @@ import org.junit.runners.JUnit4;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static fga.mds.gpp.trezentos.R.id.frame;
@@ -33,12 +36,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(JUnit4.class)
-public class ClassFragmentInstrumentedTest {
+public class ClassFragmentInstrumentedTest extends
+        ActivityInstrumentationTestCase2<MainActivity> {
 
     @Rule
     public ActivityTestRule<MainActivity> mainRule =
             new ActivityTestRule<>(MainActivity.class);
 
+    public ClassFragmentInstrumentedTest(){
+        super(MainActivity.class);
+    }
 
     @Before
     public void setUp() {
@@ -46,6 +53,7 @@ public class ClassFragmentInstrumentedTest {
                 .authenticateLogin("teste@gmail.com", "123456");
         UserAccountControl.getInstance(mainRule.getActivity())
                 .validateSignInResponse();
+
     }
 
     @Test
@@ -58,9 +66,6 @@ public class ClassFragmentInstrumentedTest {
     @Test
     public void shouldClickOnClassCreated(){
 
-        onView(ViewMatchers.withId(R.id.salas_item))
-                .perform(click());
-
         ClassFragment classFragment;
         classFragment = (ClassFragment) mainRule.getActivity()
                 .getSupportFragmentManager()
@@ -71,6 +76,12 @@ public class ClassFragmentInstrumentedTest {
                         .findViewById(R.id.recycler);
 
         if(recyclerView.getAdapter().getItemCount() > 0) {
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             onView(ViewMatchers.withId(R.id.recycler))
                     .perform(click());

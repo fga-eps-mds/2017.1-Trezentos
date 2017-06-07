@@ -10,16 +10,11 @@ public abstract class HidingScrollListener extends RecyclerView.OnScrollListener
     private int scrolledDistance = 0;
     private boolean controlsVisible = true;
 
-
-
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
-
         int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-
-
 
         if (firstVisibleItem == 0) {
             if(!controlsVisible) {

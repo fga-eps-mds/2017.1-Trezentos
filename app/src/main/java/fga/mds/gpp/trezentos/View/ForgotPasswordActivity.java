@@ -20,7 +20,10 @@ public class ForgotPasswordActivity extends AppCompatActivity{
     private UserDialog dialog = new UserDialog();
     private String activityName = this.getClass().getSimpleName();
     private Handler mHandler = new Handler();
-    
+    private EditText forgotPassText;
+    private Button buttonForgotPass;
+    private Button buttonReturn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -28,9 +31,7 @@ public class ForgotPasswordActivity extends AppCompatActivity{
         setContentView(R.layout.activity_forgotpassword);
         dialog.setContext(this);
 
-        EditText forgotPassText = (EditText) findViewById(R.id.forgot_pass_text_email);
-        Button buttonForgotPass = (Button) findViewById(R.id.button_forgot_pass_email);
-        Button buttonReturn = (Button) findViewById(R.id.button_return_login);
+        initVariables();
 
         buttonForgotPass.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -47,4 +48,12 @@ public class ForgotPasswordActivity extends AppCompatActivity{
             }
         });
     }
+
+    public void initVariables(){
+        forgotPassText = (EditText) findViewById(R.id.forgot_pass_text_email);
+        buttonForgotPass = (Button) findViewById(R.id.button_forgot_pass_email);
+        buttonReturn = (Button) findViewById(R.id.button_return_login);
+    }
+
+
 }

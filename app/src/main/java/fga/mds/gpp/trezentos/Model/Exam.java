@@ -1,15 +1,23 @@
 package fga.mds.gpp.trezentos.Model;
 
+
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.R;
 import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.View.StudentsFragment;
 
 public class Exam implements Serializable {
     private String nameExam;
     private String userClassName;
     private String classOwnerEmail;
-    private String  firstGrades;
+    private String firstGrades;
+    private String secondGrades;
 
     public Exam(){
         //An empty constructor is needed to create a new instance of object,
@@ -17,7 +25,7 @@ public class Exam implements Serializable {
     }
 
     public Exam(String nameExam, String userClassName, String classOwnerEmail)
-            throws UserException{
+            throws UserException {
         setNameExam(nameExam);
         setUserClassName(userClassName);
         setClassOwnerEmail(classOwnerEmail);
@@ -40,31 +48,50 @@ public class Exam implements Serializable {
         }
     }
 
-    public String getNameExam(){
+    public String getNameExam() {
         return nameExam;
     }
 
     public void setUserClassName(String userClassName) throws UserException{
-        this.userClassName = userClassName;
+
+        if(userClassName != null && !userClassName.isEmpty()){
+            this.userClassName = userClassName;
+
+        }else{
+            throw new UserException("O nome não pode ser vazio");
+        }
+
     }
 
-    public String getUserClassName(){
+    public String getUserClassName() {
         return userClassName;
     }
 
     public void setClassOwnerEmail(String classOwnerEmail)throws UserException {
-        this.classOwnerEmail = classOwnerEmail;
+        if (classOwnerEmail != null && !classOwnerEmail.isEmpty()){
+            this.classOwnerEmail = classOwnerEmail;
+        }else{
+            throw new UserException("O email não pode estar vazio");
+        }
     }
 
     public String getClassOwnerEmail() {
         return classOwnerEmail;
     }
 
+    public void setFirstGrades(String firstGrades) {
+        this.firstGrades = firstGrades;
+    }
+
     public String getFirstGrades() {
         return firstGrades;
     }
 
-    public void setFirstGrade(String firstGrades) {
-        this.firstGrades = firstGrades;
+    public void setSecondGrades(String secondGrades) {
+        this.secondGrades = secondGrades;
+    }
+
+    public String getSecondGrades() {
+        return secondGrades;
     }
 }

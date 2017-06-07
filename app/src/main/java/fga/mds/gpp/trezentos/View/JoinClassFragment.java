@@ -76,11 +76,8 @@ public class JoinClassFragment extends DialogFragment implements View.OnClickLis
         } catch (UserClassException e) {
             password.setError(e.getMessage());
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (InterruptedException | ExecutionException e) {
+//            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }

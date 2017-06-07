@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +18,11 @@ import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-
-public class CreateExamActivity extends AppCompatActivity {
+public class CreateExamActivity extends AppCompatActivity implements View.OnClickListener {
 
     public UserClass userClass;
     public UserAccount userAccount;
+    public EditText examNameField;
     public String userClassName;
     public String classOwnnerEmail;
 
@@ -29,64 +30,82 @@ public class CreateExamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_exam);
 
+        recoverIntent();
+        recoverSharedPreferences();
+
+        userClassName = userClass.getClassName();
+
+//        Toast.makeText(CreateExamActivity.this," Usuario: "
+//                + classOwnnerEmail + " "
+//                    + "Nome Sala: " + userClassName, Toast.LENGTH_SHORT).show();
+
+        final Button buttonOk = (Button) findViewById(R.id.ok_create_button);
+        examNameField = (EditText) findViewById(R.id.exam_name);
+
+        buttonOk.setOnClickListener(this);
+
+    }
+
+    /*
+    Purpose: Recover the last intent initiated before this class.
+    Without @params and @return
+     */
+
+    private void recoverIntent(){
         Intent intent = getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
+    }
 
+    /*
+    Purpose: this method recover SharedPreferences about userEmail.
+    Without @params and @return
+     */
 
+    private void recoverSharedPreferences(){
         SharedPreferences session = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
         classOwnnerEmail = session.getString("userEmail","");
-        UserClassControl userClassControl = UserClassControl
-                .getInstance(getApplicationContext());
+    }
 
-        userClassName = userClass.getClassName();
+    /*
+    Purpose: Overriding method onClick to improve AMLOC metric.
+    @params: View where button pressed exists.
+     */
 
+    @Override
+    public void onClick(View v) {
 
-        Toast.makeText(CreateExamActivity.this," Usuario: "
-                + classOwnnerEmail + " "
-                    + "Nome Sala: " + userClassName, Toast.LENGTH_SHORT).show();
+            boolean isValid = false;
 
-        final Button buttonOk = (Button) findViewById(R.id.ok_create_button);
-        final EditText examNameField = (EditText) findViewById(R.id.exam_name);
+            UserExamControl userExamControl = UserExamControl
+                    .getInstance(getApplicationContext());
 
+            try {
+                isValid = confirmInformation(userExamControl,
+                        examNameField, userClassName, classOwnnerEmail);
 
-        buttonOk.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                boolean isValid;
-                isValid = false;
-
-                UserExamControl userExamControl = UserExamControl
-                        .getInstance(getApplicationContext());
-
-                try {
-
-                    isValid = confirmInformation(userExamControl,
-                            examNameField, userClassName, classOwnnerEmail);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    isValid = false;
-                }
-
-                if (isValid) {
-
+                if(isValid){
                     String examName = examNameField.getText().toString();
 
-                    try {
-                        userExamControl.validateCreateExam
-                                (examName, userClassName, classOwnnerEmail);
-                    } catch (UserException e) {
-                        e.printStackTrace();
-                    }
+                    userExamControl.validateCreateExam
+                            (examName, userClassName, classOwnnerEmail);
 
                     onBackPressed();
                 }
+
+            } catch (UserException e) {
+                e.printStackTrace();
             }
-        });
+
     }
+
+    /*
+    Purpose: Method to validate information about Exam params
+    @params: Controller of Exam, field of exam name and Strings about the class
+    where a exam will be created and the owner email.
+    @return: boolean to confirm all fields of parameters.
+     */
 
     public boolean confirmInformation
             (UserExamControl userExamControl,
@@ -97,7 +116,7 @@ public class CreateExamActivity extends AppCompatActivity {
         String examName = examNameField.getText().toString();
         String errorMessage;
 
-        if(examName.isEmpty() == true){
+        if(examName.isEmpty()){
             examNameField.setError("Preencha todos os campos!");
             isValid = false;
         }
@@ -105,21 +124,16 @@ public class CreateExamActivity extends AppCompatActivity {
         errorMessage = userExamControl
                 .validateInformation(examName,userClassName, classOwnnerEmail );
 
-
         if (errorMessage.equals("Preencha todos os campos!")) {
             examNameField.setError("Preencha todos os campos!");
             isValid = false;
-        }
-
-        if (errorMessage.equals("O nome da prova " +
+        }else if (errorMessage.equals("O nome da prova " +
                 "deve ter entre 2 e 15 caracteres.")){
             examNameField.requestFocus();
             examNameField.setError("O nome da prova " +
                     "deve ter entre 2 e 15 caracteres.");
             isValid = false;
-        }
-
-        if (errorMessage.equals("Sucesso")) {
+        }else if (errorMessage.equals("Sucesso")) {
             isValid = true;
         }
 
