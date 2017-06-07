@@ -11,10 +11,13 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import fga.mds.gpp.trezentos.BuildConfig;
+import fga.mds.gpp.trezentos.DAO.AddSecondGrades;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.ClassActivity;
 import fga.mds.gpp.trezentos.View.CreateExamActivity;
+
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import dalvik.annotation.TestTargetClass;
@@ -28,6 +31,7 @@ import fga.mds.gpp.trezentos.View.ClassActivity;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -52,6 +56,17 @@ public class UserExamControlUnitTest {
         isValid = testUser.validateInformation(null, "Usuario", "exemplo@dominio.com");
 
         assertEquals(isValid, "O nome não pode ser vazio");
+    }
+
+    @Test
+    public void ShouldValidateExam()throws  UserException{
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
+
+        String isValid;
+
+        isValid = testUser.validateInformation("Teste", "Usuario", "exemplo@dominio.com");
+
+        assertEquals(isValid, "Sucesso");
     }
 
     @Test
@@ -106,22 +121,75 @@ public class UserExamControlUnitTest {
 
     }
 
+    @Test
+    public void ShouldValidateAddSecondGrade() throws ExecutionException, InterruptedException, UserException {
+        Exam exam = new Exam();
+        UserClass userClass = new UserClass();
+        ArrayList<String> arrayTeste = new ArrayList<String>();
+
+        arrayTeste.add("Carol");
+        arrayTeste.add("Ana");
+        arrayTeste.add("Pedro");
+
+        exam.setNameExam("teste");
+        exam.setClassOwnerEmail("teste@teste1.com");
+        exam.setFirstGrades("icaro@icaro.com=0.00, carol@carol.com=1.00");
+        exam.setSecondGrades("um@carol.com=7.00, carol@carol.com=8.00");
+        exam.setUserClassName("Pedro");
+
+        userClass.setClassName("Ana Linda");
+        userClass.setAddition(7.8f);
+        userClass.setCutOff(5.3f);
+        userClass.setInstitution("Unb");
+        userClass.setOwnerEmail("teste@teste1.com");
+        userClass.setPassword("123456");
+        userClass.setSizeGroups(3);
+        userClass.setStudents(arrayTeste);
+
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
+        String serverResponse = testUser.addSecondGrade(userClass,exam);
+        assertTrue(serverResponse, true);
+
+    }
+
+    @Test
+    public void ShouldValidateAddsFirstGrade() throws UserException, InterruptedException, ExecutionException, UserClassException {
+        Exam exam = new Exam();
+        UserClass userClass = new UserClass();
+        ArrayList<String> arrayTeste = new ArrayList<String>();
+
+        arrayTeste.add("Carol");
+        arrayTeste.add("Ana");
+        arrayTeste.add("Pedro");
+
+        exam.setNameExam("teste");
+        exam.setClassOwnerEmail("teste@teste1.com");
+        exam.setFirstGrades("icaro@icaro.com=0.00, carol@carol.com=1.00");
+        exam.setUserClassName("Pedro");
+
+        userClass.setClassName("Ana Linda");
+        userClass.setAddition(7.8f);
+        userClass.setCutOff(5.3f);
+        userClass.setInstitution("Unb");
+        userClass.setOwnerEmail("teste@teste1.com");
+        userClass.setPassword("123456");
+        userClass.setSizeGroups(3);
+        userClass.setStudents(arrayTeste);
+
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
+        String serverResponse = testUser.validateAddsFirstGrade(userClass,exam);
+        assertTrue(serverResponse, true);
+    }
+
 //    @Test
-//    public void ShouldValidateAddsFirstGradeNullClassName() throws UserException, InterruptedException, ExecutionException, UserClassException {
-//        Exam exam = new Exam();
-//        UserClass userClass = new UserClass();
-//
-//        exam.setNameExam("Prova 1");
-//        exam.setFirstGrade("icaro@icaro.com=0.00, carol@carol.com=1.00");
-//        exam.setClassOwnerEmail("prova1owner@gmail.com");
-//        userClass.setClassName(null);
+//    public void ShouldValidateGetExamsFromUser(){
+//        String email = "teste@gmail.com";
+//        String userClassName = "Teste";
+//        ArrayList<Exam> userExams = new ArrayList<Exam>();
 //
 //        testUser = UserExamControl.getInstance(activity.getApplicationContext());
+//        userExams = testUser.getExamsFromUser(email, userClassName);
 //
-//        String isValid;
-//
-//        isValid = testUser.validateAddsFirstGrade(userClass, exam);
-//
+//        assertEquals(userExams, userExamsTest);
 //    }
-
 }

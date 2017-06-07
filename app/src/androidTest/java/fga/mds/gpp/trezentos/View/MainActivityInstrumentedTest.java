@@ -35,13 +35,13 @@ public class MainActivityInstrumentedTest {
         UserAccountControl.getInstance(rule.getActivity()).validateSignInResponse();
     }
 
-    @Test
-    public void shouldCallClassFragment(){
-
-        onView(withId(R.id.salas_item))
-                .perform(click());
-
-    }
+//    @Test
+//    public void shouldCallClassFragment(){
+//
+//        onView(withId(R.id.salas_item))
+//                .perform(click());
+//
+//    }
 
     @Test
     public void shouldCallUserFragment(){
