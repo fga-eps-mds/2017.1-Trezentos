@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import fga.mds.gpp.trezentos.Controller.Util.SortStudentsUtil;
@@ -50,7 +52,7 @@ public class SortStudentsUtilUnitTest{
         });
 
         Map<String, Integer> mapOut = sortStudentsUtil.newMapStudents(list, 3, 10);
-        Map<String, Double> expected = populateOrderedMapByGroupNumber();
+        Map<String, Integer> expected = populateOrderedMapByGroupNumber();
 
         assertThat(mapOut, is(expected));
     }
@@ -58,8 +60,8 @@ public class SortStudentsUtilUnitTest{
     // Tested method: sortGroups();
     @Test
     public void shouldOrdenateGroup(){
-        Map<String, Double> mapOut = sortStudentsUtil.sortGroups(populateMap());
-        Map<String, Double> expected = populateOrderedMapByGroupNumber();
+        Map<String, Integer> mapOut = sortStudentsUtil.sortGroups(populateMap(), 3, 10);
+        Map<String, Integer> expected = populateOrderedMapByGroupNumber();
 
         assertThat(mapOut, is(expected));
     }
@@ -102,21 +104,21 @@ public class SortStudentsUtilUnitTest{
         return mapOut;
     }
 
-    public Map <String, Double> populateOrderedMapByGroupNumber(){
-        Map<String, Double> map = new HashMap<>();
+    public Map <String, Integer> populateOrderedMapByGroupNumber(){
+        Map<String, Integer> map = new HashMap<>();
 
-        map.put("emailG@hotmail.com", 1.0);
-        map.put("emailB@hotmail.com", 2.0);
-        map.put("emailE@hotmail.com", 3.0);
+        map.put("emailG@hotmail.com", 1);
+        map.put("emailB@hotmail.com", 2);
+        map.put("emailE@hotmail.com", 3);
 
-        map.put("emailJ@hotmail.com", 3.0);
-        map.put("emailC@hotmail.com", 2.0);
-        map.put("emailF@hotmail.com", 1.0);
+        map.put("emailJ@hotmail.com", 4);
+        map.put("emailC@hotmail.com", 4);
+        map.put("emailF@hotmail.com", 3);
 
-        map.put("emailA@hotmail.com", 3.0);
-        map.put("emailI@hotmail.com", 2.0);
-        map.put("emailH@hotmail.com", 1.0);
-        map.put("emailD@hotmail.com", 3.0);
+        map.put("emailA@hotmail.com", 2);
+        map.put("emailI@hotmail.com", 1);
+        map.put("emailH@hotmail.com", 4);
+        map.put("emailD@hotmail.com", 3);
 
         return map;
     }
