@@ -12,9 +12,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.Controller.Util.SortStudentsUtil;
 import fga.mds.gpp.trezentos.DAO.GetFirstGrades;
+import fga.mds.gpp.trezentos.DAO.RetrieveGroups;
+import fga.mds.gpp.trezentos.DAO.SaveGroupsRequest;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.Groups;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -86,4 +89,40 @@ public class GroupController {
         return firstGrades;
     }
 
+    public static HashMap<String, Integer> getGroups (String name, String userClassName,
+                                                      String classOwnerEmail, Double cutOff) {
+
+
+        String serverResponse = new RetrieveGroups(name, userClassName, classOwnerEmail).get();
+        groups = convertToHashMapInt(serverResponse);
+
+        return groups;
+    }
+
+    public boolean sortAndSaveGroups(HashMap<String, Double> grades, UserClass userClass, String email, Exam exam) {
+
+        Map<String, Integer> sortedGroups = SortStudentsUtil.sortGroups(grades,
+                userClass.getSizeGroups(), userClass.getStudents().size());
+        Log.d("sorted students", sortedGroups.toString());
+
+        boolean success = saveGroups(sortedGroups.toString(), userClass, email, exam);
+
+        return success;
+    }
+
+    private boolean saveGroups(String groups, UserClass userClass, String email, Exam exam) {
+
+        String response = "false";
+
+        try {
+            response = new SaveGroupsRequest(email, userClass.getClassName(), exam.getNameExam(),
+                    groups).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return response.equals("true");
+    }
 }

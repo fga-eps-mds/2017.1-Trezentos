@@ -5,6 +5,8 @@ package fga.mds.gpp.trezentos.Controller.Util;
 * Purpose: Sort students within the room groups
 * */
 
+import android.util.Log;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -20,11 +22,12 @@ public class SortStudentsUtil {
     * @return: Map representing key(String) being the email and the
     *                           value(Double) being the groups number
     * */
-    public static Map<String, Double> sortGroups(Map<String, Double> map){
+    public static Map<String, Integer> sortGroups(Map<String, Double> map, Integer groupSize,
+                                                 Integer totalStudents){
 
         List<Map.Entry<String, Double>> mapSortedByScore = sortByTestScore(map);
         // Note: Size of the group and total of students must be coming from the database
-        Map<String, Double> newMap = newMapStudents(mapSortedByScore, 3, 10);
+        Map<String, Integer> newMap = newMapStudents(mapSortedByScore, groupSize, totalStudents);
 
         return newMap;
     }
@@ -35,15 +38,21 @@ public class SortStudentsUtil {
     *          Integer - total number of students in the room
     * @return: Map - email(key) and student group number(Double)
     * */
-    public static Map<String, Double> newMapStudents (List<Map.Entry<String, Double>> unsortList,
+    public static Map<String, Integer> newMapStudents (List<Map.Entry<String, Double>> unsortList,
                                                       Integer groupSize, Integer totalStudents){
 
-        Map<String, Double> newMap = new LinkedHashMap<>();
+        Map<String, Integer> newMap = new LinkedHashMap<>();
 
-        Double it = 1.0; // Iterator to number the groups
+        Integer it = 1; // Iterator to number the groups
         int sentinel = 0; // Sentinel to coordinate the logic
         Double leftoverStudents = (totalStudents*1.0) % groupSize;
-        Double totalGroups = (totalStudents-leftoverStudents) / groupSize;
+        Integer totalGroups = (int) (totalStudents-leftoverStudents) / groupSize;
+
+        if (leftoverStudents > 0) {
+            totalGroups++;
+        } else {
+
+        }
 
         // Assignment of group numbers
         for (Map.Entry<String, Double> entry : unsortList) {
@@ -90,26 +99,7 @@ public class SortStudentsUtil {
 
         return list;
     }
-
-    public static Map<String, Boolean>determinateLiders
-            (Map<String, Float> mapEmailGrade, Float cutOff){
-
-        Map<String, Boolean> mapEmailLider = new HashMap<>();
-
-        List<Map.Entry<String, Float>> list = new LinkedList<>
-                (mapEmailGrade.entrySet());
-
-        for (Map.Entry<String,Float> it : list){
-           if(it.getValue() >= cutOff) {
-               mapEmailLider.put(it.getKey(), true);
-           }else{
-               mapEmailLider.put(it.getKey(), false);
-           }
-
-        }
-        return mapEmailLider;
-    }
-}git 
+}
 
 
 
