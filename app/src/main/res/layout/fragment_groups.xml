@@ -22,4 +22,12 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/not_defined_groups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:text="@string/not_defined_groups"
+        android:visibility="gone"/>
 </FrameLayout>

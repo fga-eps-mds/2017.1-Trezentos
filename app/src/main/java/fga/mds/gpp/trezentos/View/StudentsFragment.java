@@ -38,7 +38,7 @@ public class StudentsFragment extends Fragment {
     private ArrayList<UserAccount> userAccounts;
     private UserClass userClass;
     private Exam userExam;
-    private static HashMap<String, String> mapEmailAndGrade = new HashMap<>();
+    private static HashMap<String, Double> mapEmailAndGrade = new HashMap<>();
 
     public StudentsFragment(){
         // Required empty public constructor
@@ -60,12 +60,12 @@ public class StudentsFragment extends Fragment {
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
         ArrayList<String> students = userClass.getStudents();
-        Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
+        //Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
         //if first item is null it will be removed
-        if (students.get(0).length() == 0){
-            students.remove(0);
-        }
-            Log.d("ARRAYSTUDENTS", students.toString());
+//        if (students.get(0).length() == 0){
+  //          students.remove(0);
+    //    }
+      //      Log.d("ARRAYSTUDENTS", students.toString());
 
             RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
             recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
@@ -77,6 +77,9 @@ public class StudentsFragment extends Fragment {
      return view;
     }
 
+    public static HashMap<String, Double> getMapEmailAndGrade() {
+        return mapEmailAndGrade;
+    }
 
     private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
         private final ArrayList<String> userAccounts;
@@ -231,10 +234,9 @@ public class StudentsFragment extends Fragment {
                     gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                             String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
 
-                    String grade = gradeTextView.getText().toString();
+                    Double grade = Double.valueOf(gradeTextView.getText().toString());
                     String email = userAccountName.getText().toString();
 
-                    Log.i("MAP", grade);
                     Log.i("MAP", email);
                     mapEmailAndGrade.put(email, grade);
                     Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));

@@ -1,5 +1,6 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -25,7 +26,6 @@ public class ExamActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -68,7 +68,6 @@ public class ExamActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
         adapter.addFragment(new StudentsFragment(), "STUDENTS");
         adapter.addFragment(new GroupsFragment(), "GROUPS");
         viewPager.setAdapter(adapter);
@@ -89,35 +88,44 @@ public class ExamActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case  R.id.action_update_grades: {
+                UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-        if (id == R.id.action_update_grades) {
-            UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
+                // Update exam with grades set in NumberPicker
+                Intent intent = getIntent();
+                Bundle extras = intent.getExtras();
+                exam = (Exam) extras.getSerializable("Exam");
 
-            // Update exam with grades set in NumberPicker
-            Intent intent = getIntent();
-            Bundle extras = intent.getExtras();
-            exam = (Exam) extras.getSerializable("Exam");
+                Log.d("DATAEXAME", userClass.getClassName());
+                Log.d("DATAEXAME", exam.getNameExam());
+                Log.d("DATAEXAME", exam.getClassOwnerEmail());
+                Log.d("DATAEXAME", exam.getFirstGrades());
 
-            Log.d("DATAEXAME", userClass.getClassName());
-            Log.d("DATAEXAME", exam.getNameExam());
-            Log.d("DATAEXAME", exam.getClassOwnerEmail());
-            Log.d("DATAEXAME", exam.getFirstGrades());
+                try {
+                    userExamControl.validateAddsFirstGrade(userClass, exam);
+                } catch (UserClassException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                userExamControl.validateAddsFirstGrade(userClass, exam);
-            } catch (UserClassException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                break;
             }
-            return true;
 
+            case R.id.action_sort_groups: {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("firstGrades", StudentsFragment.getMapEmailAndGrade());
+                bundle.putSerializable("userClass", userClass);
+                bundle.putSerializable("exam", exam);
 
-        }else if(id == R.id.action_sort_groups){
-
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                AreYouSureFragment areYouSureFragment = new AreYouSureFragment();
+                areYouSureFragment.setArguments(bundle);
+                areYouSureFragment.show(fragmentTransaction, "areYouSure");
+            }
         }
 
         return super.onOptionsItemSelected(item);

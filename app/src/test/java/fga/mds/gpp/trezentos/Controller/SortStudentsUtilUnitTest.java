@@ -49,7 +49,7 @@ public class SortStudentsUtilUnitTest{
             }
         });
 
-        Map<String, Double> mapOut = sortStudentsUtil.newMapStudents(list, 3, 10);
+        Map<String, Integer> mapOut = sortStudentsUtil.newMapStudents(list, 3, 10);
         Map<String, Double> expected = populateOrderedMapByGroupNumber();
 
         assertThat(mapOut, is(expected));
