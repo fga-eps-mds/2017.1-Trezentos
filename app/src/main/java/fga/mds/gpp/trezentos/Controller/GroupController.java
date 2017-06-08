@@ -63,7 +63,7 @@ public class GroupController {
 
             JSONArray jArray = new JSONArray(firstGrades);
             JSONObject jObject = null;
-            String keyString=null;
+            String keyString = null;
 
             for (int i = 0; i < jArray.length(); i++) {
                 jObject = jArray.getJSONObject(i);

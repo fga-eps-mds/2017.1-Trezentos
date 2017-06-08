@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -14,14 +15,18 @@ public class StudentsAdapter  extends RecyclerView.Adapter implements View.OnCli
 
     private final ArrayList<String> userAccounts;
     private Context context;
-    private  RecyclerView recyclerView;
-    private  StudentsViewHolder holder;
+    private RecyclerView recyclerView;
+    private StudentsViewHolder holder;
+    private ArrayList<String> className;
+    private ArrayList<String> examName;
 
-
-    public StudentsAdapter(ArrayList<String> userAccounts, Context context,  RecyclerView recyclerView) {
+    public StudentsAdapter(ArrayList<String> userAccounts, ArrayList<String> className
+            , ArrayList<String> examName, Context context, RecyclerView recyclerView) {
         this.userAccounts = userAccounts;
         this.context = context;
         this.recyclerView = recyclerView;
+        this.className = className;
+        this.examName = examName;
     }
 
     @Override
@@ -37,10 +42,14 @@ public class StudentsAdapter  extends RecyclerView.Adapter implements View.OnCli
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
         holder = (StudentsViewHolder) viewHolder;
-
+        String classEvaluationName = className.get(position);
         String userAccount = userAccounts.get(position);
+        String examEvaluationName = examName.get(position);
+
         holder.userAccountName.setText("Avalie a ajuda do aluno " + userAccount);//
         //holder.circleImageView.setImageResource(userAccount.getPhoto());
+        holder.className.setText(classEvaluationName);
+        holder.examName.setText(examEvaluationName);
     }
 
     @Override

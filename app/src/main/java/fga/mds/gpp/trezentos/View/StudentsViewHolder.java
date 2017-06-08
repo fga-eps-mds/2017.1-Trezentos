@@ -13,10 +13,14 @@ public class StudentsViewHolder extends RecyclerView.ViewHolder
         implements RatingBar.OnRatingBarChangeListener{
 
     final TextView userAccountName;
+    final TextView className;
+    final TextView examName;
     final RatingBar ratingBar;
 
     public StudentsViewHolder(View view) {
         super(view);
+        className = (TextView) view.findViewById(R.id.student_class);
+        examName = (TextView) view.findViewById(R.id.student_exam);
         userAccountName = (TextView) view.findViewById(R.id.student_name);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener(this);
