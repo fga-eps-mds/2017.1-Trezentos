@@ -80,7 +80,7 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
         userClasses = populateArrayListClasses(userClasses);
         userExams = userExam.getExamsFromUser(email, userClass.getClassName());
 
-        ArrayList<String> students = populateArrayListStudents(userClasses, userExam);
+        ArrayList<String> students = populateArrayListStudents(userClasses, userExams);
 
         recyclerView.setAdapter(new StudentsAdapter
                 (students, classNames, examName, EvaluationFragment.getInstance().getContext(), recyclerView));
