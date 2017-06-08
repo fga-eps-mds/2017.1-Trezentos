@@ -31,9 +31,10 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     private UserClassControl userClassControl;
     private ArrayList<Exam> userExams;
     private Groups userGroups;
-    private UserExamControl userExam;
+    private UserExamControl userExamControl;
     ArrayList<String> examName;
     ArrayList<String> classNames;
+    ArrayList<String> studentsList;
 
     public ServerOperationEvaluationFragment
             (Application application, TextView className, TextView examName){
@@ -44,14 +45,31 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     protected String doInBackground(String... params) {
         if(isInternetAvailable() ){ //If internet is ok
             userClasses = new ArrayList<>();
-            ArrayList<UserClass> allClasses = userClassControl.getClasses();
+            userExams = new ArrayList<>();
+            studentsList = new ArrayList<>();
+            classNames = new ArrayList<>();
+            examName = new ArrayList<>();
 
+            ArrayList<UserClass> allClasses = userClassControl.getClasses();
             for (UserClass userClass : allClasses) {
-                if (userClass.getOwnerEmail().equals(email) ||
-                        userClass.getStudents().contains(email)) {
+                ArrayList<Exam> allExams = userExamControl.getExamsFromUser(email, userClass.getClassName());
+                if (userClass.getStudents().contains(email)) {
                     userClasses.add(userClass);
+                    for(Exam exam : allExams){
+                        for(int i = 0; i < userClass.getStudents().size(); i++) {
+                            if(exam.getFirstGrades() != null &&
+                                    !userClass.getStudents().get(i).equals("")) {
+                                classNames.add(userClass.getClassName());
+                                examName.add(exam.getNameExam());
+                                studentsList.add(userClass.getStudents().get(i));
+                            }else{
+                                Log.d("TESTANDO", "passou");
+                            }
+                        }
+                    }
                 }
             }
+
             return "true";
 
         }else{
@@ -63,6 +81,7 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     protected void onPreExecute(){
         userClassControl =
                 UserClassControl.getInstance(getApplicationContext());
+        userExamControl = UserExamControl.getInstance(getApplicationContext());
         SharedPreferences session = PreferenceManager
                 .getDefaultSharedPreferences(EvaluationFragment.getInstance().getActivity());
         email = session.getString("userEmail","");
@@ -75,68 +94,24 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
                         .getActivity()
                         .findViewById(R.id.recyclerEvaluation);
 
-
         initSharedPreferences();
-        userClasses = populateArrayListClasses(userClasses);
-        userExams = userExam.getExamsFromUser(email, userClass.getClassName());
-
-        ArrayList<String> students = populateArrayListStudents(userClasses, userExams);
 
         recyclerView.setAdapter(new StudentsAdapter
-                (students, classNames, examName, EvaluationFragment.getInstance().getContext(), recyclerView));
+                (studentsList, classNames, examName, EvaluationFragment.getInstance().getContext(), recyclerView));
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(application);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private ArrayList<UserClass> populateArrayListClasses(ArrayList<UserClass> userClasses){
-
-        ArrayList<UserClass> tempList = new ArrayList<>();
-
-        //Pegar arraylist de classes em que o usuario pertence como aluno
-
-        if(userClasses != null) {
-
-            for (UserClass userClass : userClasses) {
-                if (userClass.getStudents().contains(email)){
-                    //COLOCAR && + get para os grupos (sendo diferente de nulo)
-                    tempList.add(userClass);
-                    Log.d("CLASSFILTERED", userClass.getClassName());
-                }
-            }
-        }
-        return tempList;
-    }
-
     private void initSharedPreferences(){
         userClassControl =
                 UserClassControl.getInstance(getApplicationContext());
+        userExamControl = UserExamControl.getInstance(getApplicationContext());
         SharedPreferences session = PreferenceManager
                 .getDefaultSharedPreferences(EvaluationFragment.getInstance().getActivity());
         email = session.getString("userEmail","");
     }
-
-    private ArrayList<String> populateArrayListStudents(ArrayList<UserClass> filteredClasses
-            , ArrayList<Exam> evaluationExam){
-        ArrayList<String> studentsList = new ArrayList<>();
-        classNames = new ArrayList<>();
-        examName = new ArrayList<>();
-
-        for(UserClass userClass : filteredClasses){
-            for(Exam exam : evaluationExam){
-                for(int i = 0; i < userClass.getStudents().size(); i++){
-                    classNames.add(userClass.getClassName());
-                    examName.add(exam.getNameExam());
-                    studentsList.add(userClass.getStudents().get(i));
-                }
-            }
-        }
-
-        return studentsList;
-    }
-
-
 
     private boolean isInternetAvailable() {
         try {
