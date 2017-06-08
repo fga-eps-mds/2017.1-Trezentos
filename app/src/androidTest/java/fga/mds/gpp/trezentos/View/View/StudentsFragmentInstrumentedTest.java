@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.View;
+package fga.mds.gpp.trezentos.View.View;
 
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -17,6 +17,7 @@ import org.junit.runners.JUnit4;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.MainActivity;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;

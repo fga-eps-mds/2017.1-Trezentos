@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.View;
+package fga.mds.gpp.trezentos.View.View;
 
 
 import android.content.Intent;
@@ -15,6 +15,8 @@ import org.junit.runners.JUnit4;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.AboutFragment;
+import fga.mds.gpp.trezentos.View.AboutOnLogin;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

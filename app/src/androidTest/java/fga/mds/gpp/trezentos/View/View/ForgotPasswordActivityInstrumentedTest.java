@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.View;
+package fga.mds.gpp.trezentos.View.View;
 
 import android.support.test.rule.ActivityTestRule;
 
@@ -10,6 +10,7 @@ import org.junit.runners.JUnit4;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.ForgotPasswordActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -17,16 +18,15 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static fga.mds.gpp.trezentos.R.id.frame;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(JUnit4.class)
-public class MainActivityInstrumentedTest {
+public class ForgotPasswordActivityInstrumentedTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> rule
-            = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<ForgotPasswordActivity> rule
+            = new ActivityTestRule<>(ForgotPasswordActivity.class);
 
 
     @Before
@@ -36,18 +36,9 @@ public class MainActivityInstrumentedTest {
     }
 
     @Test
-    public void shouldCallClassFragment(){
+    public void shouldAssertNotNull(){
 
-        onView(withId(R.id.salas_item))
-                .perform(click());
-
-    }
-
-    @Test
-    public void shouldCallUserFragment(){
-
-        onView(withId(R.id.usuario_item))
-                .perform(click());
+        assertNotNull(rule);
 
     }
 

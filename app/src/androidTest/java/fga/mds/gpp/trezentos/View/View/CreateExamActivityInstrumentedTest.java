@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.View;
+package fga.mds.gpp.trezentos.View.View;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.MainActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;

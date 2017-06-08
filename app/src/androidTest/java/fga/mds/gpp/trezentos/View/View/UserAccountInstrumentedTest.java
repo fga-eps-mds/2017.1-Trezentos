@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.View;
+package fga.mds.gpp.trezentos.View.View;
 
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;

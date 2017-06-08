@@ -45,69 +45,54 @@ public class UserExamControlUnitTest {
     @Test
     public void ShouldValidateNullExamName() throws UserException{
 
-        testUser = UserExamControl.getInstance(activity.getApplicationContext());
-
         String isValid;
-
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
         isValid = testUser.validateInformation(null, "Usuario", "exemplo@dominio.com");
-
         assertEquals(isValid, "O nome não pode ser vazio");
     }
 
     @Test
     public void ShouldValidateNullUserClassName() throws UserException{
 
-        testUser = UserExamControl.getInstance(activity.getApplicationContext());
-
         String isValid;
-
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
         isValid = testUser.validateInformation("P1", null, "exemplo@dominio.com");
-
         assertEquals(isValid, "O nome não pode ser vazio");
     }
 
     @Test
     public void ShouldValidateNullClassOwnerEmail() throws UserException{
 
-        testUser = UserExamControl.getInstance(activity.getApplicationContext());
-
         String isValid;
-
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
         isValid = testUser.validateInformation("P1", "Usuario", null);
-
         assertEquals(isValid, "O email não pode estar vazio");
     }
 
     @Test
     public void ShouldValidateExamNameMaxLength() throws UserException{
 
-        testUser = UserExamControl.getInstance(activity.getApplicationContext());
-
         String isValid;
-
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
         isValid = testUser.validateInformation(
                 "Prova 1 do professor Fragelli da UnB",
                 "Usuario",
                 "exemplo@dominio.com");
-
         assertEquals(isValid, "O nome da prova deve ter entre 2 e 15 caracteres.");
     }
 
     @Test
     public void ShouldValidateExamNameMinLength() throws UserException{
 
-        testUser = UserExamControl.getInstance(activity.getApplicationContext());
-
         String isValid;
-
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
         isValid = testUser.validateInformation("P", "Usuario", "exemplo@dominio.com");
-
         assertEquals(isValid, "O nome da prova deve ter entre 2 e 15 caracteres.");
-
     }
 
 //    @Test
 //    public void ShouldValidateAddsFirstGradeNullClassName() throws UserException, InterruptedException, ExecutionException, UserClassException {
+//
 //        Exam exam = new Exam();
 //        UserClass userClass = new UserClass();
 //
@@ -116,12 +101,8 @@ public class UserExamControlUnitTest {
 //        exam.setClassOwnerEmail("prova1owner@gmail.com");
 //        userClass.setClassName(null);
 //
-//        testUser = UserExamControl.getInstance(activity.getApplicationContext());
-//
 //        String isValid;
-//
+//        testUser = UserExamControl.getInstance(activity.getApplicationContext());
 //        isValid = testUser.validateAddsFirstGrade(userClass, exam);
-//
 //    }
-
 }

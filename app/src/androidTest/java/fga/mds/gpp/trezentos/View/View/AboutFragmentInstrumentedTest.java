@@ -1,3 +1,4 @@
+/*
 package fga.mds.gpp.trezentos.View;
 
 import android.app.Activity;
@@ -78,4 +79,4 @@ public class AboutFragmentInstrumentedTest {
         ListView listview = (ListView) frag.getActivity().findViewById(R.id.about_list_view);
         assertThat(listview.getAdapter().getCount(), is(NUMBER_OF_ITENS_LISTVIEW));
     }
-}
+}*/
