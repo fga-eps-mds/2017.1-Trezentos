@@ -1,12 +1,16 @@
 package fga.mds.gpp.trezentos.Model;
 
+import java.util.ArrayList;
+
 public class Groups {
     private String groupNumber;
-    private String leaderName;
+    private ArrayList<String> helpers;
+    private ArrayList<String> helped;
 
-    public Groups(String groupNumber, String leaderName){
+    public Groups(String groupNumber, ArrayList<String> helpers, ArrayList<String> helped){
         this.groupNumber = groupNumber;
-        this.leaderName = leaderName;
+        this.helpers = helpers;
+        this.helped = helped;
     }
 
     public void setGroupNumber(String groupNumber){
@@ -17,11 +21,19 @@ public class Groups {
         return groupNumber;
     }
 
-    public void setLeaderName(String leaderName){
-        this.leaderName = leaderName;
+    public ArrayList<String> getHelpers() {
+        return helpers;
     }
 
-    public String getLeaderName(){
-        return leaderName;
+    public void addHelpers(String helpers) {
+        this.helpers.add(helpers);
+    }
+
+    public ArrayList<String> getHelped() {
+        return helped;
+    }
+
+    public void addHelped(String helped) {
+        this.helped.add(helped);
     }
 }
