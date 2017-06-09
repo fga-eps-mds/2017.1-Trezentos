@@ -38,8 +38,6 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         viewHolder.groupNumber.setText(groupses.get(position).getGroupNumber());
-        viewHolder.leaderName.setText(groupses.get(position).getLeaderName());
-
     }
 
     @Override
@@ -56,10 +54,10 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         mRecyclerViewOnClickListener = recyclerViewOnClickListener;
     }
 
-    public void addListItem(Groups group, int position){
-        groupses.add(group);
-        notifyItemInserted(position);
-    }
+//    public void addListItem(Groups group, int position){
+//        groupses.add(group);
+//        notifyItemInserted(position);
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
