@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.Groups;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -35,6 +36,7 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     ArrayList<String> examName;
     ArrayList<String> classNames;
     ArrayList<String> studentsList;
+    ArrayList<Evaluation> evaluations;
 
     public ServerOperationEvaluationFragment
             (Application application, TextView className, TextView examName){
@@ -45,30 +47,33 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     protected String doInBackground(String... params) {
         if(isInternetAvailable() ){ //If internet is ok
             userClasses = new ArrayList<>();
-            userExams = new ArrayList<>();
-            studentsList = new ArrayList<>();
-            classNames = new ArrayList<>();
-            examName = new ArrayList<>();
+            //userExams = new ArrayList<>();
+            //studentsList = new ArrayList<>();
+            //classNames = new ArrayList<>();
+            //examName = new ArrayList<>();
+            evaluations = new ArrayList<Evaluation>();
+            evaluations.add(new Evaluation("testeteste@teste.com", "teste", "teste"));
 
-            ArrayList<UserClass> allClasses = userClassControl.getClasses();
-            for (UserClass userClass : allClasses) {
-                ArrayList<Exam> allExams = userExamControl.getExamsFromUser(email, userClass.getClassName());
-                if (userClass.getStudents().contains(email)) {
-                    userClasses.add(userClass);
-                    for(Exam exam : allExams){
-                        for(int i = 0; i < userClass.getStudents().size(); i++) {
-                            if(exam.getFirstGrades() != null &&
-                                    !userClass.getStudents().get(i).equals("")) {
-                                classNames.add(userClass.getClassName());
-                                examName.add(exam.getNameExam());
-                                studentsList.add(userClass.getStudents().get(i));
-                            }else{
-                                Log.d("TESTANDO", "passou");
-                            }
-                        }
-                    }
-                }
-            }
+//            ArrayList<UserClass> allClasses = userClassControl.getClasses();
+//            for (UserClass userClass : allClasses) {
+//                ArrayList<Exam> allExams = userExamControl.getExamsFromUser(email, userClass.getClassName());
+//                if (userClass.getStudents().contains(email)) {
+//                    userClasses.add(userClass);
+//                    for(Exam exam : allExams){
+//                        for(int i = 0; i < userClass.getStudents().size(); i++) {
+//                            if(exam.getFirstGrades() != null &&
+//                                    !userClass.getStudents().get(i).equals("")) {
+//                                //classNames.add(userClass.getClassName());
+//                                //examName.add(exam.getNameExam());
+//                                //studentsList.add(userClass.getStudents().get(i));
+//                                evaluations.add(new Evaluation(userClass.getClassName(), exam.getNameExam(), userClass.getStudents().get(i)));
+//                            }else{
+//                                Log.d("TESTANDO", "passou");
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
             return "true";
 
@@ -97,7 +102,7 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
         initSharedPreferences();
 
         recyclerView.setAdapter(new StudentsAdapter
-                (studentsList, classNames, examName, EvaluationFragment.getInstance().getContext(), recyclerView));
+                (evaluations, EvaluationFragment.getInstance().getContext(), recyclerView));
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(application);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

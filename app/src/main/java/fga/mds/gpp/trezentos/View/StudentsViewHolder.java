@@ -7,10 +7,11 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import fga.mds.gpp.trezentos.Model.Student;
 import fga.mds.gpp.trezentos.R;
 
 public class StudentsViewHolder extends RecyclerView.ViewHolder
-        implements RatingBar.OnRatingBarChangeListener{
+        implements View.OnClickListener{
 
     final TextView userAccountName;
     final TextView className;
@@ -23,9 +24,20 @@ public class StudentsViewHolder extends RecyclerView.ViewHolder
         examName = (TextView) view.findViewById(R.id.student_exam);
         userAccountName = (TextView) view.findViewById(R.id.student_name);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
-        ratingBar.setOnRatingBarChangeListener(this);
+        //ratingBar.setOnRatingBarChangeListener(this);
+        view.setOnClickListener(this);
     }
 
+//    @Override
+//    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//        showConfirm(rating);
+//    }
+
+    @Override
+    public void onClick(View v) {
+        // Triggers click upwards to the adapter on click
+        //showConfirm(1f);
+    }
     private void showConfirm(float rate){
 
         final Dialog evaluationDialog =
@@ -57,8 +69,6 @@ public class StudentsViewHolder extends RecyclerView.ViewHolder
 
     }
 
-    @Override
-    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-        showConfirm(rating);
-    }
+
+
 }
