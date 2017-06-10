@@ -96,6 +96,10 @@ public class StudentsFragment extends Fragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+            Exam exam = new Exam();
+
+            exam.getFirstGrades();
+
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.student_item, parent, false);
 
@@ -204,26 +208,31 @@ public class StudentsFragment extends Fragment {
             np2.setOnValueChangedListener(this);
 
             if(CLICK == 1) {
+
+                gradeTextView.setText(userExam.getFirstGrades().toString());
+
                 b1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String email;
                         String grade;
+                        String secondGrade;
 
                         gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
 
                         grade = gradeTextView.getText().toString();
-
+                        secondGrade = secondGradeTextView.getText().toString();
                         email = userAccountName.getText().toString();
 
-                        Log.i("MAP", grade);
+                        Log.i("GRADE", grade);
                         Log.i("MAP", email);
                         Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
 
                         mapEmailAndGrade.put(email, grade);
 
                         userExam.setFirstGrades(mapEmailAndGrade.toString());
+                        userExam.setSecondGrades(mapEmailAndGrade.toString());
 
                         Log.d("TAMANHOMAPA", userExam.getFirstGrades());
 
@@ -231,6 +240,9 @@ public class StudentsFragment extends Fragment {
                     }
                 });
             }else {
+
+                secondGradeTextView.setText(userExam.getSecondGrades().toString());
+
                 buttonOK300.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

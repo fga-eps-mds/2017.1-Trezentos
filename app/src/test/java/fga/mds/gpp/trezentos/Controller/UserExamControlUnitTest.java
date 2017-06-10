@@ -60,9 +60,7 @@ public class UserExamControlUnitTest {
         testUser = UserExamControl.getInstance(activity.getApplicationContext());
 
         String isValid;
-
         isValid = testUser.validateInformation("Teste", "Usuario", "exemplo@dominio.com");
-
         assertEquals(isValid, "Sucesso");
     }
 
@@ -164,4 +162,14 @@ public class UserExamControlUnitTest {
         String serverResponse = testUser.validateAddsFirstGrade(userClass,exam);
         assertTrue(serverResponse, true);
     }
+/*
+    @Test
+    public void ShouldValidateGetExamsFromUser() throws UserException{
+
+        ArrayList<String> arrayTeste = new ArrayList<String>();
+        //String isValid;
+        testUser = UserExamControl.getInstance(activity.getApplicationContext());
+        String serverResponse = testUser.getExamsFromUser();
+
+    }*/
 }
