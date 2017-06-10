@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ShareCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,12 +67,13 @@ public class JoinClassFragment extends DialogFragment implements View.OnClickLis
             String email = preferences.getString("userEmail", null);
 
             String result = userClassControl.validateJoinClass(userClass, password.getText().toString(), email);
-            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+            Log.d("RESULT", result);
             if (result.contains("true")) {
                 Toast.makeText(getActivity(), getActivity().getString(R.string.join_class_success), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getActivity(), getActivity().getString(R.string.join_class_failed), Toast.LENGTH_SHORT).show();
             }
+
             getDialog().dismiss();
         } catch (UserClassException e) {
             password.setError(e.getMessage());

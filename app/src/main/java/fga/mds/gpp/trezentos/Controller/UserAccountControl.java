@@ -8,12 +8,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.logging.Logger;
 import java.util.concurrent.ExecutionException;
-import fga.mds.gpp.trezentos.DAO.SignInRequest;
-import fga.mds.gpp.trezentos.DAO.SignUpRequest;
+
+import fga.mds.gpp.trezentos.DAO.GetDao;
+import fga.mds.gpp.trezentos.DAO.PostDao;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
 import fga.mds.gpp.trezentos.R;
+import okhttp3.HttpUrl;
 
 public class UserAccountControl {
     private static final String TAG = UserAccountControl.class.getSimpleName();
@@ -47,11 +49,15 @@ public class UserAccountControl {
     }
 
     public String validateSignUpResponse (){
-        SignUpRequest signUpRequest = new SignUpRequest(userAccount, false);
+        String urlWithParameters = getUserUrlWithParameters(userAccount, false);
+        PostDao postDao = new PostDao(urlWithParameters, null, "");
+
         String serverResponse = "404";
 
         try{
-            serverResponse = signUpRequest.execute().get();
+            serverResponse = postDao.execute().get();
+            Log.d("SERVERRESPONSE", serverResponse);
+
         }catch (InterruptedException e) {
 //            Log.d(TAG,e.toString());
             e.printStackTrace();
@@ -59,7 +65,23 @@ public class UserAccountControl {
 //            LOGGER.info(e.getMessage());
             e.printStackTrace();
         }
+
         return serverResponse;
+    }
+
+    public String getUserUrlWithParameters (UserAccount userAccount, Boolean isFromFacebook) {
+        String url = "https://trezentos-api.herokuapp.com/api/user/register";
+        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+
+        builder.addQueryParameter("email", userAccount.getEmail());
+        builder.addQueryParameter("salt", userAccount.getSalt());
+        builder.addQueryParameter("password", userAccount.getPassword());
+        builder.addQueryParameter("name", userAccount.getName());
+        builder.addQueryParameter("facebook", isFromFacebook.toString());
+        Log.d("SERVERRESPONSE", builder.build().toString());
+
+        return builder.build().toString();
+
     }
 
     public void authenticateLoginFb(JSONObject object){
@@ -67,11 +89,12 @@ public class UserAccountControl {
         try{
             String name = object.getString("name");
             String fEmail = object.getString("email");
+            UserAccount fbUserAccount = getUserWithInfo(name, fEmail);
 
-            UserAccount userAccountFb = getUserWithInfo(fEmail, name);
+            String urlWithParameters = getUserUrlWithParameters(fbUserAccount, false);
+            PostDao postDao = new PostDao(urlWithParameters, null, "");
 
-            SignUpRequest signUprequest = new SignUpRequest(userAccountFb, true);
-            signUprequest.execute();
+            postDao.execute();
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -106,11 +129,13 @@ public class UserAccountControl {
     }
 
     public String validateSignInResponse(){
-        SignInRequest signInRequest = new SignInRequest(userAccount);
+        String urlWithParameters = getSignInUrlWithParameters(userAccount);
+        PostDao postDao = new PostDao(urlWithParameters, null, "");
+
         String serverResponse = "404";
 
         try{
-            serverResponse = signInRequest.execute().get();
+            serverResponse = postDao.execute().get();
         }catch (InterruptedException e){
             e.printStackTrace();
         }catch (ExecutionException e){
@@ -120,6 +145,17 @@ public class UserAccountControl {
         return serverResponse;
     }
 
+    private String getSignInUrlWithParameters(UserAccount userAccount){
+        String url = "https://trezentos-api.herokuapp.com/api/user/login";
+
+        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+        builder.addQueryParameter("email", userAccount.getEmail());
+        builder.addQueryParameter("password", userAccount.getPassword());
+
+        return builder.build().toString();
+    }
+
+
     public void validatePassword(String serverResponse, String password) throws UserException {
         JSONObject object = getObjectFromServerResponse(serverResponse);
 
@@ -127,9 +163,9 @@ public class UserAccountControl {
 
         try{
             hashedPassword = object.getString("password");
- //           Log.d("Password", hashedPassword);
+            //           Log.d("Password", hashedPassword);
             salt = object.getString("salt");
- //           Log.d("Salt", salt);
+            //           Log.d("Salt", salt);
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -172,4 +208,5 @@ public class UserAccountControl {
                 .putString("userName", "")
                 .apply();
     }
+
 }
