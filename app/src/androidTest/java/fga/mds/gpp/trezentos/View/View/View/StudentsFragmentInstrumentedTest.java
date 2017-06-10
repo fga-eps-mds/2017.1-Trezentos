@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.View.View;
+package fga.mds.gpp.trezentos.View.View.View;
 
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
