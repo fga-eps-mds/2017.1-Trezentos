@@ -18,8 +18,10 @@ import fga.mds.gpp.trezentos.Controller.Util.SortStudentsUtil;
 import fga.mds.gpp.trezentos.DAO.GetFirstGrades;
 import fga.mds.gpp.trezentos.DAO.RetrieveGroups;
 import fga.mds.gpp.trezentos.DAO.SaveGroupsRequest;
+import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.Groups;
+import fga.mds.gpp.trezentos.Model.Student;
 import fga.mds.gpp.trezentos.Model.UserClass;
 
 public class GroupController {
@@ -124,5 +126,59 @@ public class GroupController {
         }
 
         return response.equals("true");
+    }
+
+    public ArrayList<Student> setSpecificGroupAndGrades (String userEmail,
+                                                 HashMap<String, Double> firstGrades,
+                                                 HashMap<String, Double> secondGrades,
+                                                 HashMap<String, Integer> groups){
+
+        ArrayList<Student> groupAndGrades = new ArrayList<>();
+        Integer userNumberGroup = groups.get(userEmail);
+
+        int it = 0;
+
+        for (Map.Entry<String, Integer> entry : groups.entrySet()){
+            if (entry.getValue().equals(userNumberGroup)){
+                Student student = new Student();
+
+                try {
+                    student.setEmail(entry.getKey());
+                } catch (UserException e) {
+                    e.printStackTrace();
+                }
+
+                groupAndGrades.add(it, student);
+                it++;
+            }
+        }
+
+        it = 0;
+
+        for (Student studentGroup : groupAndGrades){
+            for (Map.Entry<String, Double> entry : firstGrades.entrySet()){
+                if (studentGroup.getStudentEmail().equals(entry.getKey())){
+                    studentGroup.setFirstGrade(entry.getValue());
+
+                    groupAndGrades.add(it, studentGroup);
+                    it++;
+                }
+            }
+        }
+
+        it = 0;
+
+        for (Student studentGroup : groupAndGrades){
+            for (Map.Entry<String, Double> entry : secondGrades.entrySet()){
+                if (studentGroup.getStudentEmail().equals(entry.getKey())){
+                    studentGroup.setSecondGrade(entry.getValue());
+
+                    groupAndGrades.add(it, studentGroup);
+                    it++;
+                }
+            }
+        }
+
+        return groupAndGrades;
     }
 }
