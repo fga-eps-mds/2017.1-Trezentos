@@ -38,32 +38,30 @@ public class UserExamControl{
 
     public String validateInformation(String examName, String userClassName, String classOwnerEmail)
             throws UserException{
-        String erro;
+        String error;
 
         try{
             exam = new Exam(examName, userClassName, classOwnerEmail);
-            erro = "Sucesso";
-            return erro;
+            error = "Sucesso";
+            return error;
 
-        }catch (UserException userException){
-            erro = userException.getMessage();
-            return erro;
+        }catch(UserException userException){
+            error = userException.getMessage();
+            return error;
         }
     }
 
     public void validateCreateExam(String examName, String userClassName, String classOwnerEmail)
             throws UserException{
-
         try{
             String url = "https://trezentos-api.herokuapp.com/api/exam/register";
 
             Exam exam = new Exam(examName, userClassName, classOwnerEmail);
-            String urlWithParameters = getExamUrlWithParameters(url, exam);
+            String urlWithParameters = getExamUrl(url, exam);
 
             PostDao postDao = new PostDao(urlWithParameters, null, "");
             postDao.execute();
-
-        }catch (UserException userException){
+        }catch(UserException userException){
             userException.printStackTrace();
         }
     }
@@ -97,7 +95,8 @@ public class UserExamControl{
         return serverResponse;
     }
 
-    private String getExamUrlWithParameters(String url, Exam exam){
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    private String getExamUrl(String url, Exam exam){
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
         builder.addQueryParameter("name", exam.getNameExam());
@@ -108,12 +107,12 @@ public class UserExamControl{
         return builder.build().toString();
     }
 
-    //GET FROM API
+    // Get from api
     public ArrayList<Exam> getExamsFromUser(String email, String userClassName){
         String url = "https://trezentos-api.herokuapp.com/api/exam/class/user/find";
-        String returnedExamUrlWithParameters = getReturnedExamUrlWithParameters(email, userClassName, url);
+        String returnExamUrlWithParameters = getExamAvaiableUrl(email, userClassName, url);
 
-        GetDao getDao = new GetDao(returnedExamUrlWithParameters);
+        GetDao getDao = new GetDao(returnExamUrlWithParameters);
 
         String serverResponse = "404";
         serverResponse = getDao.get();
@@ -122,14 +121,15 @@ public class UserExamControl{
 
         try{
             userExams = getArrayList(serverResponse);
-        }catch (JSONException e){
+        }catch(JSONException e){
             e.printStackTrace();
         }
 
         return userExams;
     }
 
-    private String getReturnedExamUrlWithParameters(String email, String userClassName, String url){
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    private String getExamAvaiableUrl(String email, String userClassName, String url){
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
         builder.addQueryParameter("email", email);
@@ -142,7 +142,7 @@ public class UserExamControl{
 
         try{
             array = new JSONArray(serverResponse);
-        }catch (JSONException e){
+        }catch(JSONException e){
             e.printStackTrace();
         }
 
@@ -164,7 +164,7 @@ public class UserExamControl{
             exam.setUserClassName(jsonObject.getString("userClassName"));
             exam.setClassOwnerEmail(jsonObject.getString("classOwnerEmail"));
             exam.setFirstGrades(jsonObject.getString("firstGrades"));
-        }catch (JSONException | UserException e){
+        }catch(JSONException | UserException e){
             e.printStackTrace();
         }
 
@@ -175,31 +175,31 @@ public class UserExamControl{
     public String createFirstGradesBody(UserClass userClass, Exam exam) {
         JSONObject jsonBody = new JSONObject();
 
-        try {
+        try{
             jsonBody.put("email", exam.getClassOwnerEmail());
             Log.d("JSON", exam.getClassOwnerEmail());
-        } catch (JSONException e) {
+        }catch(JSONException e){
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
         }
-        try {
+        try{
             jsonBody.put("userClassName", userClass.getClassName());
             Log.d("JSONCLASS", userClass.getClassName());
-        } catch (JSONException e) {
+        }catch(JSONException e){
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
         }
-        try {
+        try{
             jsonBody.put("name", exam.getNameExam());
             Log.d("JSON", exam.getNameExam());
-        } catch (JSONException e) {
+        }catch(JSONException e){
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
         }
-        try {
+        try{
             jsonBody.put("firstGrades", exam.getFirstGrades());
             Log.d("JSON", exam.getFirstGrades());
-        } catch (JSONException e) {
+        }catch(JSONException e){
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
         }
@@ -210,31 +210,31 @@ public class UserExamControl{
     public String createSecondGradesBody(UserClass userClass, Exam exam) {
         JSONObject jsonBody = new JSONObject();
 
-        try {
+        try{
             jsonBody.put("email", exam.getClassOwnerEmail());
             Log.d("JSON", exam.getClassOwnerEmail());
-        } catch (JSONException e) {
+        }catch(JSONException e){
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
         }
-        try {
+        try{
             jsonBody.put("userClassName", userClass.getClassName());
             Log.d("JSONCLASS", userClass.getClassName());
-        } catch (JSONException e) {
+        }catch(JSONException e){
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
         }
-        try {
+        try{
             jsonBody.put("name", exam.getNameExam());
             Log.d("JSON", exam.getNameExam());
-        } catch (JSONException e) {
+        }catch(JSONException e){
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
         }
-        try {
+        try{
             jsonBody.put("secondGrades", exam.getSecondGrades());
             Log.d("JSON", exam.getSecondGrades());
-        } catch (JSONException e) {
+        }catch(JSONException e){
             Log.d("JSONEXCEPTION", e.toString());
             e.printStackTrace();
         }

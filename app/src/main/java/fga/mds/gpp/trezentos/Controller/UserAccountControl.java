@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import java.util.logging.Logger;
 import java.util.concurrent.ExecutionException;
 
-import fga.mds.gpp.trezentos.DAO.GetDao;
 import fga.mds.gpp.trezentos.DAO.PostDao;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
@@ -30,7 +29,7 @@ public class UserAccountControl {
     }
 
     public static UserAccountControl getInstance(final Context context){
-        if (instance == null){
+        if(instance == null){
             instance = new UserAccountControl(context);
         }
         return instance;
@@ -42,14 +41,14 @@ public class UserAccountControl {
 
         try{
             userAccount = new UserAccount(name, email, password, passwordConfirmation);
-        }catch (UserException userException){
+        }catch(UserException userException){
             errorMessage = userException.getMessage();
         }
         return errorMessage;
     }
 
-    public String validateSignUpResponse (){
-        String urlWithParameters = getUserUrlWithParameters(userAccount, false);
+    public String validateSignUpResponse(){
+        String urlWithParameters = getUserUrl(userAccount, false);
         PostDao postDao = new PostDao(urlWithParameters, null, "");
 
         String serverResponse = "404";
@@ -57,11 +56,10 @@ public class UserAccountControl {
         try{
             serverResponse = postDao.execute().get();
             Log.d("SERVERRESPONSE", serverResponse);
-
-        }catch (InterruptedException e) {
+        }catch(InterruptedException e){
 //            Log.d(TAG,e.toString());
             e.printStackTrace();
-        }catch (ExecutionException e) {
+        }catch(ExecutionException e){
 //            LOGGER.info(e.getMessage());
             e.printStackTrace();
         }
@@ -69,7 +67,8 @@ public class UserAccountControl {
         return serverResponse;
     }
 
-    public String getUserUrlWithParameters (UserAccount userAccount, Boolean isFromFacebook) {
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    public String getUserUrl(UserAccount userAccount, Boolean isFromFacebook) {
         String url = "https://trezentos-api.herokuapp.com/api/user/register";
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
@@ -91,11 +90,11 @@ public class UserAccountControl {
             String fEmail = object.getString("email");
             UserAccount fbUserAccount = getUserWithInfo(name, fEmail);
 
-            String urlWithParameters = getUserUrlWithParameters(fbUserAccount, false);
+            String urlWithParameters = getUserUrl(fbUserAccount, false);
             PostDao postDao = new PostDao(urlWithParameters, null, "");
 
             postDao.execute();
-        }catch (JSONException e){
+        }catch(JSONException e){
             e.printStackTrace();
         }
     }
@@ -106,7 +105,7 @@ public class UserAccountControl {
         try{
             userAccountWithInfo.setEmail(email);
             userAccountWithInfo.setName(name);
-        }catch (UserException e){
+        }catch(UserException e){
             e.printStackTrace();
         }
         return userAccountWithInfo;
@@ -121,7 +120,7 @@ public class UserAccountControl {
             userAccount.setEmail(email);
             //Verify the password
             userAccount.authenticatePassword(password);
-        }catch (UserException userException){
+        }catch(UserException userException){
             errorMessage = userException.getMessage();
         }
 
@@ -129,23 +128,24 @@ public class UserAccountControl {
     }
 
     public String validateSignInResponse(){
-        String urlWithParameters = getSignInUrlWithParameters(userAccount);
+        String urlWithParameters = getSignInUrl(userAccount);
         PostDao postDao = new PostDao(urlWithParameters, null, "");
 
         String serverResponse = "404";
 
         try{
             serverResponse = postDao.execute().get();
-        }catch (InterruptedException e){
+        }catch(InterruptedException e){
             e.printStackTrace();
-        }catch (ExecutionException e){
+        }catch(ExecutionException e){
             e.printStackTrace();
         }
 
         return serverResponse;
     }
 
-    private String getSignInUrlWithParameters(UserAccount userAccount){
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    private String getSignInUrl(UserAccount userAccount){
         String url = "https://trezentos-api.herokuapp.com/api/user/login";
 
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
@@ -163,14 +163,14 @@ public class UserAccountControl {
 
         try{
             hashedPassword = object.getString("password");
-            //           Log.d("Password", hashedPassword);
+            // Log.d("Password", hashedPassword);
             salt = object.getString("salt");
-            //           Log.d("Salt", salt);
-        }catch (JSONException e){
+            // Log.d("Salt", salt);
+        }catch(JSONException e){
             e.printStackTrace();
         }
 
-        if (PasswordUtil.decryptPass(hashedPassword, salt, password)){
+        if(PasswordUtil.decryptPass(hashedPassword, salt, password)){
             logInUser();
         }else{
             logOutUser();
@@ -183,7 +183,7 @@ public class UserAccountControl {
 
         try{
             object = new JSONObject(serverResponse);
-        }catch (JSONException e){
+        }catch(JSONException e){
             e.printStackTrace();
         }
 

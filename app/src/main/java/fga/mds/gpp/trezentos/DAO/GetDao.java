@@ -20,12 +20,13 @@ public class GetDao {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        try {
+        try{
             Response response = client.newCall(request).execute();
             return response.body().string();
-        } catch (IOException e) {
+        }catch(IOException e){
             e.printStackTrace();
         }
+
         return null;
     }
 }

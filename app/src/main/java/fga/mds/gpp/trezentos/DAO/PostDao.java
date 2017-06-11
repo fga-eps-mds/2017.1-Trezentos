@@ -32,10 +32,11 @@ public class PostDao extends AsyncTask<String, String, String> {
             Response response = client.newCall(request).execute();
             Log.d("SERVERRESPONSEDAO", response.body().toString());
             return response.body().string();
-        }catch (IOException e){
+        }catch(IOException e){
             e.printStackTrace();
             Log.i("LOG", "IOException in doInBackground method");
         }
+
         return null;
     }
 
