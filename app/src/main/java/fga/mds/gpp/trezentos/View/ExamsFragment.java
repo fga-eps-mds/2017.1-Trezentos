@@ -41,15 +41,7 @@ public class ExamsFragment extends Fragment{
     public ProgressBar progressBar;
     public  String userEmail;
 
-    public ExamsFragment() {
-
-    }
-
-    public static ExamsFragment newInstance(String param1, String param2) {
-        ExamsFragment fragment = new ExamsFragment();
-        Bundle args = new Bundle();
-        return fragment;
-    }
+    public ExamsFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState){

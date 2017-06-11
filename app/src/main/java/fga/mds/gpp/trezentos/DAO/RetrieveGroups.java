@@ -3,6 +3,7 @@ package fga.mds.gpp.trezentos.DAO;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;

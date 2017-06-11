@@ -54,15 +54,7 @@ public class StudentsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
-        ArrayList<String> students = userClass.getStudents();
-        //if first item is null it will be removed
-//        if (students.get(0).length() == 0){
-  //          students.remove(0);
-    //    }
-      //      Log.d("ARRAYSTUDENTS", students.toString());
-
         userExam = (Exam) intent.getSerializableExtra("Exam");
-                students = userClass.getStudents();
 
         students = userClass.getStudents();
         populateMapValues(students); //clear map and populates it
@@ -78,7 +70,8 @@ public class StudentsFragment extends Fragment {
 
         return view;
     }
-        private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
+
+    private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
         private final ArrayList<String> userAccounts;
         private Context context;
         private RecyclerView recyclerView;
