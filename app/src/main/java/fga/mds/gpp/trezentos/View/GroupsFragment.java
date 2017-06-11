@@ -28,7 +28,6 @@ import java.util.Map;
 import fga.mds.gpp.trezentos.Controller.GroupController;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.Exam;
-import fga.mds.gpp.trezentos.Model.Groups;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 

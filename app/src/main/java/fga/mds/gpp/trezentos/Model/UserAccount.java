@@ -153,7 +153,9 @@ public class UserAccount{
         return salt;
     }
 
-
-
     public int getPhoto() {return  photo;}
+
+    public void setPhoto (int photo){
+        this.photo = photo;
+    }
 }

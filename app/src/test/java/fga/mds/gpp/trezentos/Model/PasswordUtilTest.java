@@ -24,4 +24,14 @@ public class PasswordUtilTest {
         String hashedPass = PasswordUtil.stringToMD5(toBeHashed);
         assertTrue(PasswordUtil.decryptPass(hashedPass, salt, "123456"));
     }
+
+    @Test
+    public void shouldValidateStringToMD5(){
+
+        String password = "123456";
+        String newPassword;
+
+        newPassword = PasswordUtil.stringToMD5(password);
+        assertNotEquals(password, newPassword);
+    }
 }

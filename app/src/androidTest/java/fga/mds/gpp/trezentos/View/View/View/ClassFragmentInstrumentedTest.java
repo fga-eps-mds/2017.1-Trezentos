@@ -1,4 +1,4 @@
-package fga.mds.gpp.trezentos.View;
+package fga.mds.gpp.trezentos.View.View.View;
 
 
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +20,8 @@ import org.junit.runners.JUnit4;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.ClassFragment;
+import fga.mds.gpp.trezentos.View.MainActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;

@@ -87,6 +87,10 @@ public class StudentsFragment extends Fragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+            Exam exam = new Exam();
+
+            exam.getFirstGrades();
+
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.student_item, parent, false);
 
@@ -216,6 +220,7 @@ public class StudentsFragment extends Fragment {
                         mapEmailAndGrade.put(email, grade);
 
                         userExam.setFirstGrades(mapEmailAndGrade.toString());
+                        userExam.setSecondGrades(mapEmailAndGrade.toString());
 
                         Log.d("TAMANHOMAPA", userExam.getFirstGrades());
 
@@ -223,6 +228,9 @@ public class StudentsFragment extends Fragment {
                     }
                 });
             }else {
+
+                secondGradeTextView.setText(userExam.getSecondGrades().toString());
+
                 buttonOK300.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

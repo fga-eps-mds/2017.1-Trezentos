@@ -1,7 +1,9 @@
 package fga.mds.gpp.trezentos.Controller;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
@@ -12,6 +14,7 @@ import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.View.LoginActivity;
 
+import static junit.framework.Assert.assertNotSame;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 
@@ -93,6 +96,36 @@ public class    UserAccountControlTest {
                 , "aluno@email.com", "Senha1", "Senha");
         assertEquals(errorMessage, "Senhas não coincidem, tente novamente");
     }
+
+    @Test
+    public void shoulValidateSignUp(){
+        String name = "test";
+        String email = "teste@testando.com";
+        String password = "123456";
+        String passwordConfirmation = "123456";
+        String errorMessageExpected = "";
+        String errorMessage;
+
+        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+        errorMessage = testUser.validateSignUp(name, email, password, passwordConfirmation);
+
+        assertEquals(errorMessageExpected, errorMessage);
+    }
+
+//    @Rule
+//    public ExpectedException expected = ExpectedException.none();
+//
+//    @Test (expected = RuntimeException.class)
+//    public void shouldValidateSignUpResponse(){
+//        String serverResponseExpected = "404";
+//        String serverResponse;
+//
+//        testUser = UserAccountControl.getInstance(activity.getApplicationContext());
+//        serverResponse = testUser.validateSignUpResponse();
+//
+//       assertNotSame(serverResponseExpected, serverResponse);
+//    }
+
 }
 
 

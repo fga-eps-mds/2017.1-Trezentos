@@ -2,6 +2,7 @@ package fga.mds.gpp.trezentos.Controller;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -147,6 +148,7 @@ public class UserClassControl {
             if(password.equals(userClass.getPassword())){
                 AddStudentToClassRequest addStudentToClassRequest = new AddStudentToClassRequest(userClass, studentEmail);
                 serverResponse = addStudentToClassRequest.execute().get();
+//                Log.i("LOG", serverResponse);
             } else {
                 throw new UserClassException(context.getString(R.string.join_class_wrong_password_error));
             }
@@ -156,5 +158,4 @@ public class UserClassControl {
 
         return serverResponse;
     }
-
 }
