@@ -13,11 +13,15 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Controller.EvaluationControl;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
+import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.Groups;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -32,9 +36,10 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     private ArrayList<Exam> userExams;
     private Groups userGroups;
     private UserExamControl userExamControl;
-    ArrayList<String> examName;
-    ArrayList<String> classNames;
-    ArrayList<String> studentsList;
+    //private ArrayList<Evaluation> evaluationList;
+    private Evaluation evaluation;
+    private ArrayList<Evaluation> evaluationList;
+    private UserAccount userAccount;
 
     public ServerOperationEvaluationFragment
             (Application application, TextView className, TextView examName){
@@ -44,31 +49,19 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     @Override
     protected String doInBackground(String... params) {
         if(isInternetAvailable() ){ //If internet is ok
-            userClasses = new ArrayList<>();
-            userExams = new ArrayList<>();
-            studentsList = new ArrayList<>();
-            classNames = new ArrayList<>();
-            examName = new ArrayList<>();
 
-            ArrayList<UserClass> allClasses = userClassControl.getClasses();
-            for (UserClass userClass : allClasses) {
-                ArrayList<Exam> allExams = userExamControl.getExamsFromUser(email, userClass.getClassName());
-                if (userClass.getStudents().contains(email)) {
-                    userClasses.add(userClass);
-                    for(Exam exam : allExams){
-                        for(int i = 0; i < userClass.getStudents().size(); i++) {
-                            if(exam.getFirstGrades() != null &&
-                                    !userClass.getStudents().get(i).equals("")) {
-                                classNames.add(userClass.getClassName());
-                                examName.add(exam.getNameExam());
-                                studentsList.add(userClass.getStudents().get(i));
-                            }else{
-                                Log.d("TESTANDO", "passou");
-                            }
-                        }
-                    }
-                }
+            userAccount = new UserAccount();
+
+            try {
+                userAccount.setEmail(email);
+            } catch (UserException e) {
+                e.printStackTrace();
             }
+
+            evaluationList = EvaluationControl.getInstance
+                    (getApplicationContext()).getEvaluations(userAccount);
+
+            Log.d("EVALUATIONLIST", evaluationList.toString());
 
             return "true";
 
@@ -96,8 +89,8 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
 
         initSharedPreferences();
 
-        recyclerView.setAdapter(new StudentsAdapter
-                (studentsList, classNames, examName, EvaluationFragment.getInstance().getContext(), recyclerView));
+        recyclerView.setAdapter(new EvaluationAdapter
+                (evaluationList, EvaluationFragment.getInstance().getContext(), recyclerView));
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(application);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

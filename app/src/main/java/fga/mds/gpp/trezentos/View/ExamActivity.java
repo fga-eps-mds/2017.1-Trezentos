@@ -2,6 +2,8 @@ package fga.mds.gpp.trezentos.View;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +12,24 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.Controller.EvaluationControl;
+import fga.mds.gpp.trezentos.Controller.GroupController;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.Groups;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
@@ -24,6 +39,10 @@ public class ExamActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
+    private UserAccount userAccount;
+    private Groups groups;
+    private Evaluation evaluation;
+    private ArrayList<JSONObject> studentGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -84,9 +103,9 @@ public class ExamActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case  R.id.action_update_grades: {
+            case R.id.action_update_grades: {
                 UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
                 // Update exam with grades set in NumberPicker
@@ -140,6 +159,33 @@ public class ExamActivity extends AppCompatActivity {
                 AreYouSureFragment areYouSureFragment = new AreYouSureFragment();
                 areYouSureFragment.setArguments(bundle);
                 areYouSureFragment.show(fragmentTransaction, "areYouSure");
+
+                break;
+            }
+
+            case R.id.action_send_evaluation: {
+
+
+                EvaluationControl evaluationControl =
+                        EvaluationControl.getInstance(getApplication());
+
+                HashMap<String, Integer> groups = new HashMap<>();
+
+//                groups = new GroupController().getGroups
+//                                (exam.getNameExam(),
+//                                userClass.getClassName(),
+//                                userClass.getOwnerEmail(),
+//                                Double.valueOf(userClass.getCutOff()));
+
+                groups.put("teste@gmail.com", 1);
+                groups.put("testandosedamerda@email.com", 1);
+
+                for(Map.Entry <String, Integer> entry : groups.entrySet()) {
+                    evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
+                            userClass.getClassName(),
+                            groups, StudentsFragment.getHashEmailAndGrade(),
+                            String.valueOf(userClass.getCutOff()));
+                }
 
                 break;
             }

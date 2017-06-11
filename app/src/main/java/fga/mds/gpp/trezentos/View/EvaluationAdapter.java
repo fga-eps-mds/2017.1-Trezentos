@@ -9,18 +9,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import fga.mds.gpp.trezentos.Model.Util.Evaluation;
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.R;
 
 public class EvaluationAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
-    private ArrayList<String> evaluationList;
+    private ArrayList<Evaluation> evaluationList;
     private Context context;
     private RecyclerView recyclerView;
     private EvaluationViewHolder holder;
     private Evaluation evaluation;
 
-    public EvaluationAdapter(ArrayList<String> evaluationList, Context context, RecyclerView recyclerView) {
+    public EvaluationAdapter(ArrayList<Evaluation> evaluationList, Context context, RecyclerView recyclerView) {
         this.evaluationList = evaluationList;
         this.context = context;
         this.recyclerView = recyclerView;
@@ -39,12 +39,12 @@ public class EvaluationAdapter extends RecyclerView.Adapter implements View.OnCl
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
         holder = (EvaluationViewHolder) viewHolder;
-        String evaluation = evaluationList.get(position);
-        String[] itemsEvaluation = evaluation.split(" - ");
 
-        String classEvaluationName = itemsEvaluation[0];
-        String examEvaluationName = itemsEvaluation[1];
-        String userAccount = itemsEvaluation[2];
+
+
+        String classEvaluationName = evaluationList.get(position).getClassName();
+        String examEvaluationName = evaluationList.get(position).getExamName();
+        String userAccount = evaluationList.get(position).getStudentEmail();
 
         holder.userAccountName.setText("Avalie a ajuda do aluno: " + userAccount);//
         //holder.circleImageView.setImageResource(userAccount.getPhoto());

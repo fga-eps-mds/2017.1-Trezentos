@@ -22,4 +22,11 @@
         android:title="@string/update_trezentos_grades"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_send_evaluation"
+        android:orderInCategory="200"
+        android:title="@string/send_evaluation"
+        app:showAsAction="never"
+        />
+
 </menu>

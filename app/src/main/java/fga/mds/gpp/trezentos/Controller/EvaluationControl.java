@@ -193,32 +193,4 @@ public class EvaluationControl {
         return evaluation;
     }
 
-//    private Evaluation getEvaluationsFromJson(JSONObject jsonObject){
-//        Evaluation evaluation = new Evaluation();
-//
-//        JSONObject evaluationJson = getEvaluationJsonFromJson(jsonObject);
-//
-//        try {
-//            evaluation.setClassName(evaluationJson.getString("userClassName"));
-//            evaluation.setStudentEmail(evaluationJson.getString("studentToEvaluate"));
-//            evaluation.setExamName(evaluationJson.getString("examName"));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return evaluation;
-//    }
-//
-//    private JSONObject getEvaluationJsonFromJson(JSONObject jsonObject){
-//        JSONObject evaluationJson = new JSONObject();
-//
-//        try {
-//            evaluationJson.getJSONObject(jsonObject.getString("rateToDo"));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return evaluationJson;
-//    }
-
 }

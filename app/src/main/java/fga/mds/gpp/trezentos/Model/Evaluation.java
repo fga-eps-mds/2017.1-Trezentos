@@ -2,19 +2,19 @@ package fga.mds.gpp.trezentos.Model;
 
 public class Evaluation {
 
-    private String studentName;
+    private String studentEmail;
     private String examName;
     private String className;
 
     public Evaluation(){
     }
 
-    public String getStudentName() {
-        return studentName;
+    public String getStudentEmail() {
+        return studentEmail;
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
+    public void setStudentEmail(String studentName) {
+        this.studentEmail = studentName;
     }
 
     public String getExamName() {
@@ -32,4 +32,5 @@ public class Evaluation {
     public void setClassName(String className) {
         this.className = className;
     }
+
 }
