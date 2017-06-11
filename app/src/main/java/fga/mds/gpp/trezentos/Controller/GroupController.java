@@ -142,25 +142,26 @@ public class GroupController {
             if (entry.getValue().equals(userNumberGroup)){
                 Student student = new Student();
 
-                try {
-                    student.setEmail(entry.getKey());
-                } catch (UserException e) {
-                    e.printStackTrace();
-                }
+                student.setStudentEmail(entry.getKey());
 
                 groupAndGrades.add(it, student);
                 it++;
             }
         }
 
+        int groupsAndGradesSize = it;
+
         it = 0;
 
-        for (Student studentGroup : groupAndGrades){
+        for (int i = 0; i < groupsAndGradesSize; i++){
+
+            Student studentGroup = groupAndGrades.get(i);
+
             for (Map.Entry<String, Double> entry : firstGrades.entrySet()){
                 if (studentGroup.getStudentEmail().equals(entry.getKey())){
                     studentGroup.setFirstGrade(entry.getValue());
 
-                    groupAndGrades.add(it, studentGroup);
+                    groupAndGrades.set(it, studentGroup);
                     it++;
                 }
             }
