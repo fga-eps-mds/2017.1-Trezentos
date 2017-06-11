@@ -120,7 +120,7 @@ public class ExamActivity extends AppCompatActivity {
                 Log.d("DATAEXAME", exam.getClassOwnerEmail());
 
                 try {
-                    userExamControl.validateAddsFirstGrade(userClass, exam);
+                    userExamControl.validateAddsFirstGrades(userClass, exam);
                 } catch (UserClassException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -141,7 +141,7 @@ public class ExamActivity extends AppCompatActivity {
                 exam = (Exam) extras.getSerializable("Exam");
 
                 try {
-                    userExamControl.addSecondGrade(userClass, exam);
+                    userExamControl.validateAddsSecondGrades(userClass, exam);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -225,4 +225,3 @@ public class ExamActivity extends AppCompatActivity {
         mNotificationManager.notify(0, mBuilder.build());
     }
 }
-

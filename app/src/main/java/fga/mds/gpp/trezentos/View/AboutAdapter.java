@@ -34,7 +34,7 @@ public class AboutAdapter extends ArrayAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        // Get the data item for this position
+        // PostDao the data item for this position
         About about = (About) getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder;
