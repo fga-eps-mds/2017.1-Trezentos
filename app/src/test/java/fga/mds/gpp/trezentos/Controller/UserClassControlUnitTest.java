@@ -3,20 +3,32 @@ package fga.mds.gpp.trezentos.Controller;
 
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
 
+import org.json.JSONException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 import fga.mds.gpp.trezentos.BuildConfig;
+import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.View.ClassActivity;
 import fga.mds.gpp.trezentos.View.LoginActivity;
 import fga.mds.gpp.trezentos.View.MainActivity;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertTrue;
 
 
@@ -98,7 +110,6 @@ public class UserClassControlUnitTest {
 
 
     }
-
 
     @Test
     public void ShouldValidateZeroGroupSize() throws UserException {
@@ -187,4 +198,95 @@ public class UserClassControlUnitTest {
         assertTrue(isValid.equals("O nome da instituicao deve ter de 3 a 20 caracteres."));
 
     }
+
+
+    @Test
+    public void shouldValidateJoinClass() throws UserException, InterruptedException, ExecutionException, UserClassException {
+        UserClass userClass = new UserClass();
+        String password = "123456";
+        String studentEmail = "testJoinClass@gmail.com";
+        ArrayList <String> arrayStudents = new ArrayList<String>();
+
+        arrayStudents.add("ana");
+        arrayStudents.add("pedro");
+
+        userClass.setStudents(arrayStudents);
+        userClass.setSizeGroups(4);
+        userClass.setPassword("123456");
+        userClass.setAddition(5.5f);
+        userClass.setClassName("Test Join Class");
+        userClass.setCutOff(3.5f);
+        userClass.setInstitution("UNB");
+        userClass.setOwnerEmail("testOwner@gmail.com");
+
+        String expectedResponse = null;
+        String serverResponse;
+
+        testUser = UserClassControl.getInstance(activity.getApplicationContext());
+        serverResponse= testUser.validateJoinClass(userClass, password, studentEmail);
+
+        assertNotSame(serverResponse, expectedResponse  );
+    }
+
+
+    @Rule
+    public ExpectedException expected = ExpectedException.none();
+
+    @Test (expected = UserClassException.class)
+    public void shouldValidateJoinClassExceptionWrongPassword() throws UserException, InterruptedException, ExecutionException, UserClassException {
+        UserClass userClass = new UserClass();
+        String password = "1353";
+        String studentEmail = "testJoinClass@gmail.com";
+        ArrayList <String> arrayStudents = new ArrayList<String>();
+
+        arrayStudents.add("ana");
+        arrayStudents.add("pedro");
+
+        userClass.setStudents(arrayStudents);
+        userClass.setSizeGroups(4);
+        userClass.setPassword("123456");
+        userClass.setAddition(5.5f);
+        userClass.setClassName("Test Join Class");
+        userClass.setCutOff(3.5f);
+        userClass.setInstitution("UNB");
+        userClass.setOwnerEmail("testOwner@gmail.com");
+
+        String expectedResponse = null;
+        String serverResponse;
+
+        testUser = UserClassControl.getInstance(activity.getApplicationContext());
+        serverResponse = testUser.validateJoinClass(userClass, password, studentEmail);
+
+        assertNotSame(expectedResponse, serverResponse);
+    }
+
+    @Test (expected = UserClassException.class)
+    public void shouldValidateJoinClassExceptionEmptyPassword() throws UserException, InterruptedException, ExecutionException, UserClassException {
+        UserClass userClass = new UserClass();
+        String password = "";
+        String studentEmail = "testJoinClass@gmail.com";
+        ArrayList <String> arrayStudents = new ArrayList<String>();
+
+        arrayStudents.add("ana");
+        arrayStudents.add("pedro");
+
+        userClass.setStudents(arrayStudents);
+        userClass.setSizeGroups(4);
+        userClass.setPassword("123456");
+        userClass.setAddition(5.5f);
+        userClass.setClassName("Test Join Class");
+        userClass.setCutOff(3.5f);
+        userClass.setInstitution("UNB");
+        userClass.setOwnerEmail("testOwner@gmail.com");
+
+        String expectedResponse = null;
+        String serverResponse;
+
+        testUser = UserClassControl.getInstance(activity.getApplicationContext());
+        serverResponse = testUser.validateJoinClass(userClass, password, studentEmail);
+
+        assertNotSame(expectedResponse, serverResponse);
+    }
+
+
 }
