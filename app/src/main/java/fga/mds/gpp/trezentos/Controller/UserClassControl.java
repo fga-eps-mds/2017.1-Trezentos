@@ -88,20 +88,20 @@ public class UserClassControl {
 
     private ArrayList<UserClass> getArrayList(String serverResponse) throws JSONException{
 
-        JSONArray array = null;
+        ArrayList<UserClass> userClasses = new ArrayList<>();
+
 
         try {
-            array = new JSONArray(serverResponse);
+            JSONArray array = new JSONArray(serverResponse);
+
+            for (int i = 0; i < array.length(); i++) {
+                UserClass userClass = getUserClassFromJson(array.getJSONObject(i));
+                userClasses.add(userClass);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        ArrayList<UserClass> userClasses = new ArrayList<>();
-
-        for (int i = 0; i < array.length(); i++) {
-            UserClass userClass = getUserClassFromJson(array.getJSONObject(i));
-            userClasses.add(userClass);
-        }
 
         return userClasses;
     }

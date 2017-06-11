@@ -20,7 +20,7 @@ import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class AreYouSureFragment extends DialogFragment implements View.OnClickListener{
+public class AreYouSureFragment extends DialogFragment implements View.OnClickListener {
     private HashMap<String, Double> firstGrades;
     private UserClass userClass;
     private Exam exam;
@@ -46,7 +46,7 @@ public class AreYouSureFragment extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.cancel_are_you_sure: {
                 dismiss();
                 break;

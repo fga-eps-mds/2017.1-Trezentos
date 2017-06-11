@@ -1,6 +1,5 @@
 package fga.mds.gpp.trezentos.DAO;
 
-
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,27 +8,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
-import fga.mds.gpp.trezentos.Model.Evaluation;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SaveGroupsRequest extends AsyncTask<String, String, String>{
+public class SendEvaluationRequest extends AsyncTask<String, String, String> {
 
-    private String email;
-    private String userClassName;
-    private String name;
-    private String groups;
-    private String url = "https://trezentos-api.herokuapp.com/api/exam/groups";
+    private UserAccount userAccount;
+    private JSONObject evaluation;
+    private String url = "https://trezentos-api.herokuapp.com/api/user/rateToDo";
 
-    public SaveGroupsRequest(String email, String userClassName, String name, String groups) {
-        this.email = email;
-        this.userClassName = userClassName;
-        this.name = name;
-        this.groups = groups;
+    public SendEvaluationRequest(UserAccount userAccount, JSONObject evaluation){
+        this.userAccount = userAccount;
+        this.evaluation = evaluation;
     }
 
     @Override
@@ -43,7 +37,7 @@ public class SaveGroupsRequest extends AsyncTask<String, String, String>{
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
-                .put(body)
+                .post(body)
                 .build();
 
         try {
@@ -57,18 +51,21 @@ public class SaveGroupsRequest extends AsyncTask<String, String, String>{
         return null;
     }
 
-    private String getJsonBody() {
+    private String getJsonBody(){
+
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("email", email);
-            jsonObject.put("userClassName", userClassName);
-            jsonObject.put("name", name);
-            jsonObject.put("groups", groups);
+            jsonObject.put("email", userAccount.getEmail());
+            jsonObject.put("rateToDo", evaluation);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        Log.d("JSONARRAY", jsonObject.toString());
+
         return jsonObject.toString();
     }
+
 }

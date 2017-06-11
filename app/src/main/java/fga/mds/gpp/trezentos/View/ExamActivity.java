@@ -1,8 +1,14 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +16,23 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.Controller.EvaluationControl;
+import fga.mds.gpp.trezentos.Controller.GroupController;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
@@ -24,6 +42,9 @@ public class ExamActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
+    private UserAccount userAccount;
+    private Evaluation evaluation;
+    private ArrayList<JSONObject> studentGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -84,9 +105,9 @@ public class ExamActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case  R.id.action_update_grades: {
+            case R.id.action_update_grades: {
                 UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
                 // Update exam with grades set in NumberPicker
@@ -144,9 +165,64 @@ public class ExamActivity extends AppCompatActivity {
                 break;
             }
 
+            case R.id.action_send_evaluation: {
+
+
+                EvaluationControl evaluationControl =
+                        EvaluationControl.getInstance(getApplication());
+
+                HashMap<String, Integer> groups;
+                HashMap<String, Double> grades;
+
+                groups = GroupController.getGroups
+                                (exam.getNameExam(),
+                                userClass.getClassName(),
+                                userClass.getOwnerEmail());
+
+                grades = GroupController.getFirstGrades(exam.getNameExam(),
+                        userClass.getClassName(), userClass.getOwnerEmail());
+
+
+                for(Map.Entry <String, Integer> entry : groups.entrySet()) {
+                    evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
+                            userClass.getClassName(),
+                            groups, grades,
+                            String.valueOf(userClass.getCutOff()));
+                }
+
+                sendEvaluationNotification();
+
+                break;
+            }
+
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    private void sendEvaluationNotification() {
+        NotificationCompat.Builder mBuilder =
+                (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.trezentos_icon)
+                        .setContentTitle("Avaliação")
+                        .setContentText("Você tem avaliações à serem feitas!")
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources()
+                                , R.drawable.trezentos_icon));
+
+        Intent resultIntent = new Intent(this, MainActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, mBuilder.build());
     }
 }
 
