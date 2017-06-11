@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
