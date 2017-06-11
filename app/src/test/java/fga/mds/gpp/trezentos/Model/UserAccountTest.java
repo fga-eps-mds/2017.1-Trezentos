@@ -56,4 +56,11 @@ public class UserAccountTest {
         assertEquals("123456", userAccount.getPasswordConfirmation());
         assertTrue(PasswordUtil.decryptPass(userAccount.getPassword(), userAccount.getSalt(), "123456"));
     }
+
+    @Test
+    public void shouldValidatePhoto(){
+        UserAccount userAccount = new UserAccount();
+        userAccount.setPhoto(10);
+        assertEquals(10, userAccount.getPhoto());
+    }
 }
