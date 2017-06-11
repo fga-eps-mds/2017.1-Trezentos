@@ -3,8 +3,12 @@ package fga.mds.gpp.trezentos.Controller;
 import android.content.Context;
 import android.support.v4.media.MediaMetadataCompat;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
@@ -31,6 +35,7 @@ import fga.mds.gpp.trezentos.View.ClassActivity;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertTrue;
 
@@ -162,14 +167,17 @@ public class UserExamControlUnitTest {
         String serverResponse = testUser.validateAddsFirstGrade(userClass,exam);
         assertTrue(serverResponse, true);
     }
-/*
+
     @Test
-    public void ShouldValidateGetExamsFromUser() throws UserException{
+    public void shouldValidateGetExamsFromUser() throws UserException{
+        ArrayList <Exam> arrayList = new ArrayList<Exam>();
+        String email = "teste@gmail.com";
+        String pasword = "123456";
 
-        ArrayList<String> arrayTeste = new ArrayList<String>();
-        //String isValid;
         testUser = UserExamControl.getInstance(activity.getApplicationContext());
-        String serverResponse = testUser.getExamsFromUser();
+        arrayList = testUser.getExamsFromUser(email, pasword);
 
-    }*/
+        assertNotNull(arrayList);
+    }
+
 }

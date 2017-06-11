@@ -64,6 +64,7 @@ public class SortStudentsUtilUnitTest{
         assertThat(mapOut, is(expected));
     }
 
+
     public Map <String, Double> populateMap(){
         Map<String, Double> map = new HashMap<>();
 
@@ -120,4 +121,5 @@ public class SortStudentsUtilUnitTest{
 
         return map;
     }
+
 }
