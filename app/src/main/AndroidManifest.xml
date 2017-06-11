@@ -43,6 +43,8 @@
         <activity android:name=".View.ExamActivity"/>
         <activity android:name=".View.StudentClassActivity">
         </activity>
+        <activity android:name=".View.StudentExamActivity">
+        </activity>
     </application>
 
 </manifest>
