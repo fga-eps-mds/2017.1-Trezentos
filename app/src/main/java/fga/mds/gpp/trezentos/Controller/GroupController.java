@@ -92,7 +92,7 @@ public class GroupController {
     }
 
     public static HashMap<String, Integer> getGroups (String name, String userClassName,
-                                                      String classOwnerEmail, Double cutOff) {
+                                                      String classOwnerEmail) {
 
 
         String serverResponse = new RetrieveGroups(name, userClassName, classOwnerEmail).get();
@@ -130,7 +130,7 @@ public class GroupController {
 
     public ArrayList<Student> setSpecificGroupAndGrades (String userEmail,
                                                  HashMap<String, Double> firstGrades,
-                                                 HashMap<String, Double> secondGrades,
+                                                /* HashMap<String, Double> secondGrades,*/
                                                  HashMap<String, Integer> groups){
 
         ArrayList<Student> groupAndGrades = new ArrayList<>();
@@ -168,6 +168,7 @@ public class GroupController {
 
         it = 0;
 
+/*
         for (Student studentGroup : groupAndGrades){
             for (Map.Entry<String, Double> entry : secondGrades.entrySet()){
                 if (studentGroup.getStudentEmail().equals(entry.getKey())){
@@ -178,6 +179,7 @@ public class GroupController {
                 }
             }
         }
+*/
 
         return groupAndGrades;
     }
