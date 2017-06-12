@@ -12,8 +12,10 @@ import java.util.concurrent.ExecutionException;
 import fga.mds.gpp.trezentos.DAO.GetDao;
 import fga.mds.gpp.trezentos.DAO.PostDao;
 import fga.mds.gpp.trezentos.DAO.PutDao;
+import fga.mds.gpp.trezentos.DAO.SaveRatePost;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 import okhttp3.HttpUrl;
@@ -198,6 +200,20 @@ public class UserClassControl {
         }
 
         return students;
+    }
+
+    public String validateRate(Evaluation evaluation) throws UserClassException, ExecutionException, InterruptedException {
+        String serverResponse;
+        if (!evaluation.getStudentEmail().isEmpty()){
+
+                SaveRatePost saveRatePost = new SaveRatePost(evaluation);
+                serverResponse = saveRatePost.execute().get();
+
+        } else {
+            throw new UserClassException(context.getString(R.string.join_class_null_password_error));
+        }
+
+        return serverResponse;
     }
 
 }
