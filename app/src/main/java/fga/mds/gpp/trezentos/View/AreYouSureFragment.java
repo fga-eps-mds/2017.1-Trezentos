@@ -45,18 +45,17 @@ public class AreYouSureFragment extends DialogFragment implements View.OnClickLi
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.cancel_are_you_sure: {
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.cancel_are_you_sure:{
                 dismiss();
                 break;
             }
-            case R.id.confirm_are_you_sure: {
-                if (firstGrades == null || firstGrades.isEmpty()) {
+            case R.id.confirm_are_you_sure:{
+                if(firstGrades == null || firstGrades.isEmpty()){
                     Toast.makeText(getActivity(), "Preencha as notas antes de montar os grupos",
                             Toast.LENGTH_LONG).show();
-                } else {
-
+                }else{
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                     String email = preferences.getString("userEmail", "");
 

@@ -29,7 +29,7 @@ public class ExamsFragmentInstrumentedTest extends
         ActivityInstrumentationTestCase2<MainActivity> {
 
     @Rule
-    public ActivityTestRule<MainActivity> classRule =
+    public ActivityTestRule<MainActivity> examRule =
             new ActivityTestRule<>(MainActivity.class);
 
     public ExamsFragmentInstrumentedTest() {
@@ -39,9 +39,9 @@ public class ExamsFragmentInstrumentedTest extends
 
     @Before
     public void setUp() {
-        UserAccountControl.getInstance(classRule.getActivity())
+        UserAccountControl.getInstance(examRule.getActivity())
                 .authenticateLogin("teste@gmail.com", "123456");
-        UserAccountControl.getInstance(classRule.getActivity())
+        UserAccountControl.getInstance(examRule.getActivity())
                 .validateSignInResponse();
     }
 
@@ -54,41 +54,8 @@ public class ExamsFragmentInstrumentedTest extends
         onView(ViewMatchers.withText("EXAMS"))
                 .perform(click());
 
-        assertNotNull(classRule);
-
+        assertNotNull(examRule);
     }
-
-//    @Test
-//    public void shouldClickOnExamRegistered(){
-//        onView(withId(R.id.salas_item))
-//                .perform(click());
-//        onData(anything()).inAdapterView(withId(R.id.recycler))
-//                .atPosition(0).perform(click());
-//
-//        ListView listView;
-//
-//        ExamsFragment examsFragment;
-//
-//        examsFragment = (ExamsFragment) classRule.getActivity()
-//                .getSupportFragmentManager()
-//                .findFragmentById(R.id.view_pager);
-//
-//        onView(ViewMatchers.withText("EXAMS"))
-//                .perform(click());
-//
-//        listView = (ListView) examsFragment.getActivity()
-//                .findViewById(R.id.list);
-//
-//        Log.d("Quantidade", String.valueOf(listView.getAdapter().getCount()));
-//
-//        if(listView.getAdapter().getCount() > 0) {
-//
-//            onView(withId(R.id.list))
-//                    .perform(click());
-//        }
-//
-//        assertNotNull(examsFragment);
-//    }
 
     @Test
     public void shouldClickOnExamButton(){
@@ -101,8 +68,7 @@ public class ExamsFragmentInstrumentedTest extends
 
         onView(withId(R.id.floating_btn)).perform(click());
 
-        assertNotNull(classRule);
-
+        assertNotNull(examRule);
     }
 
 }
