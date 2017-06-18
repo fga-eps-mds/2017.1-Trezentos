@@ -87,7 +87,7 @@ public class ExamActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         
-        if (id == R.id.action_update_grades) {
+        if(id == R.id.action_update_grades){
             UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
             // Update exam with grades set in NumberPicker
@@ -99,16 +99,16 @@ public class ExamActivity extends AppCompatActivity {
             Log.d("DATAEXAME", exam.getNameExam());
             Log.d("DATAEXAME", exam.getClassOwnerEmail());
 
-            try {
+            try{
                 userExamControl.validateAddsFirstGrade(userClass, exam);
-            } catch (UserClassException e) {
+            }catch (UserClassException e){
                 e.printStackTrace();
-            } catch (ExecutionException e) {
+            }catch(ExecutionException e){
                 e.printStackTrace();
-            } catch (InterruptedException e) {
+            }catch(InterruptedException e){
                 e.printStackTrace();
             }
-        }else if(id == R.id.action_update_trezentos_grades) {
+        }else if(id == R.id.action_update_trezentos_grades){
             UserExamControl userExamControl;
             userExamControl = UserExamControl.getInstance(getApplicationContext());
 
@@ -116,11 +116,11 @@ public class ExamActivity extends AppCompatActivity {
             Bundle extras = intent.getExtras();
             exam = (Exam) extras.getSerializable("Exam");
 
-            try {
+            try{
                 userExamControl.addSecondGrade(userClass, exam);
-            } catch (InterruptedException e) {
+            }catch(InterruptedException e){
                 e.printStackTrace();
-            } catch (ExecutionException e) {
+            }catch(ExecutionException e){
                 e.printStackTrace();
             }
         }
