@@ -26,12 +26,6 @@ public class EvaluationControl {
 
     private static EvaluationControl instance;
     final Context context;
-    private String email;
-    private String userClassName;
-    private String ownerEmail;
-    private String evaluateEmail;
-    private String ownerGrade;
-    private String otherGrade;
     private UserAccount userAccount;
     private Evaluation evaluation = new Evaluation();
 
@@ -50,62 +44,47 @@ public class EvaluationControl {
 
     public boolean sendEvaluation(String examName, String email, String userClassName,
                                   HashMap<String, Integer> groups,
-                                  HashMap<String, Double> grades, String cutOff){
+                                  HashMap<String, Double> grades, Double cutOff){
 
         userAccount = getUserWithInfo(email);
 
         evaluation.setClassName(userClassName);
         evaluation.setExamName(examName);
 
-        Log.d("groups", groups.toString());
-        Log.d("grades", grades.toString());
-
-        boolean response = false;
-
-        Log.d("email", email);
-
         Double nota = grades.get(email);
         Integer group = groups.get(email);
-
-        Double notaDeCorte = Double.valueOf(cutOff);
 
         for (Map.Entry<String, Integer> entry : groups.entrySet()) {
             if (!email.equals(entry.getKey()) &&
                     group.equals(entry.getValue())) {
-                response = sendToDao(examName, userClassName, group.toString(), email, entry.getKey());
+
+                return sendToDao(examName, userClassName, group.toString(), email, entry.getKey());
             }
         }
 
-
-//        if(nota < notaDeCorte) {
-//
-//            for (Map.Entry<String, Integer> entry : groups.entrySet()) {
-//                if (!email.equals(entry.getKey()) &&
-//                        group.equals(entry.getValue()) && entry.getValue() >= notaDeCorte) {
-//                    response = sendToDao(examName, userClassName, group.toString(), email, entry.getKey());
-//                }
-//            }
-//
-//        }else{
-//
-//            for (Map.Entry<String, Integer> entry : groups.entrySet()) {
-//                if (!email.equals(entry.getKey()) &&
-//                        group.equals(entry.getValue()) && entry.getValue() < notaDeCorte) {
-//                    response = sendToDao(examName, userClassName, group.toString(), email, entry.getKey());
-//                }
-//            }
-//
-//        }
-
-        return response;
+        return false;
     }
 
     private boolean sendToDao(String examName, String userClassName, String groupNumber,
                                   String email, String emailToEvaluate){
 
-        String response = "false";
-
         evaluation.setStudentEmail(emailToEvaluate);
+
+        JSONObject jsonObject = buildJSONObject();
+
+        try {
+
+            return (new SendEvaluationRequest(userAccount, jsonObject)
+                            .execute().get()).equals("true");
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    private JSONObject buildJSONObject(){
 
         JSONObject jsonObject = new JSONObject();
 
@@ -118,19 +97,7 @@ public class EvaluationControl {
             e.printStackTrace();
         }
 
-        try {
-            response =
-                    new SendEvaluationRequest(userAccount, jsonObject)
-                            .execute()
-                            .get();
-
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        Log.d("RESULT", response);
-
-        return response.equals("true");
+        return jsonObject;
     }
 
     private UserAccount getUserWithInfo(String email){
@@ -157,10 +124,12 @@ public class EvaluationControl {
             e.printStackTrace();
         }
 
+
         return evaluationList;
     }
 
     private ArrayList<Evaluation> getEvaluationsList(String serverResponse) throws JSONException{
+
         JSONArray jsonArray = null;
 
         try {
