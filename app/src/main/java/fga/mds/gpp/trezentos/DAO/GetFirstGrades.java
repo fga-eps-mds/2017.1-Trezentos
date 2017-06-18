@@ -1,57 +1,52 @@
 package fga.mds.gpp.trezentos.DAO;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
-import fga.mds.gpp.trezentos.Model.UserAccount;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SignInRequest extends AsyncTask<String, String, String>{
+public class GetFirstGrades {
+    private final String classOwnerEmail;
+    private final String userClassName;
+    private final String name;
+    private final String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
 
-    private UserAccount user;
-    private final static String url = "https://trezentos-api.herokuapp.com/api/user/login";
-    public SignInRequest(UserAccount user){
-        this.user = user;
+    public GetFirstGrades(String name, String userClassName, String classOwnerEmail){
+        this.name = name;
+        this.userClassName = userClassName;
+        this.classOwnerEmail = classOwnerEmail;
     }
 
-    @Override
-    protected String doInBackground(String... params){
+    public String get(){
         OkHttpClient client = new OkHttpClient();
 
         String urlWithParameters = getUrlWithParameters();
 
-        RequestBody body = RequestBody.create(null, "");
         Request request = new Request.Builder()
                 .url(urlWithParameters)
-                .post(body)
                 .build();
 
         try{
             Response response = client.newCall(request).execute();
             return response.body().string();
-        }catch (IOException e) {
+        }catch (IOException e){
             e.printStackTrace();
             Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
+
     }
 
     private String getUrlWithParameters(){
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-        builder.addQueryParameter("email", user.getEmail());
-        builder.addQueryParameter("password", user.getPassword());
 
+        builder.addQueryParameter("classOwnerEmail", classOwnerEmail);
+        builder.addQueryParameter("userClassName", userClassName);
+        builder.addQueryParameter("name", name);
         return builder.build().toString();
-    }
-
-    @Override
-    protected void onPostExecute(String result){
-        super.onPostExecute(result);
     }
 }

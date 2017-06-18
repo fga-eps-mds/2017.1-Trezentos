@@ -1,7 +1,14 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +16,23 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.Controller.EvaluationControl;
+import fga.mds.gpp.trezentos.Controller.GroupController;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
@@ -23,6 +42,9 @@ public class ExamActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
+    private UserAccount userAccount;
+    private Evaluation evaluation;
+    private ArrayList<JSONObject> studentGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -65,7 +87,6 @@ public class ExamActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
         adapter.addFragment(new StudentsFragment(), "STUDENTS");
         adapter.addFragment(new GroupsFragment(), "GROUPS");
         viewPager.setAdapter(adapter);
@@ -84,50 +105,121 @@ public class ExamActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-        
-        if(id == R.id.action_update_grades){
-            UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_update_grades:{
+                UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-            // Update exam with grades set in NumberPicker
-            Intent intent = getIntent();
-            Bundle extras = intent.getExtras();
-            exam = (Exam) extras.getSerializable("Exam");
+                // Update exam with grades set in NumberPicker
+                Intent intent = getIntent();
+                Bundle extras = intent.getExtras();
+                exam = (Exam) extras.getSerializable("Exam");
 
-            Log.d("DATAEXAME", userClass.getClassName());
-            Log.d("DATAEXAME", exam.getNameExam());
-            Log.d("DATAEXAME", exam.getClassOwnerEmail());
+                Log.d("DATAEXAME", userClass.getClassName());
+                Log.d("DATAEXAME", exam.getNameExam());
+                Log.d("DATAEXAME", exam.getClassOwnerEmail());
 
-            try{
-                userExamControl.validateAddsFirstGrade(userClass, exam);
-            }catch (UserClassException e){
-                e.printStackTrace();
-            }catch(ExecutionException e){
-                e.printStackTrace();
-            }catch(InterruptedException e){
-                e.printStackTrace();
+                try{
+                    userExamControl.validateAddsFirstGrades(userClass, exam);
+                }catch(UserClassException e){
+                    e.printStackTrace();
+                }catch(ExecutionException e){
+                    e.printStackTrace();
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+
+                break;
             }
-        }else if(id == R.id.action_update_trezentos_grades){
-            UserExamControl userExamControl;
-            userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-            Intent intent = getIntent();
-            Bundle extras = intent.getExtras();
-            exam = (Exam) extras.getSerializable("Exam");
+            case R.id.action_update_trezentos_grades:{
+                UserExamControl userExamControl;
+                userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-            try{
-                userExamControl.addSecondGrade(userClass, exam);
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }catch(ExecutionException e){
-                e.printStackTrace();
+                Intent intent = getIntent();
+                Bundle extras = intent.getExtras();
+                exam = (Exam) extras.getSerializable("Exam");
+
+                try{
+                    userExamControl.validateAddsSecondGrades(userClass, exam);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }catch(ExecutionException e){
+                    e.printStackTrace();
+                }
+
+                break;
             }
-        }
-        else if(id == R.id.action_sort_groups){
+
+            case R.id.action_sort_groups:{
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("firstGrades", StudentsFragment.getHashEmailAndGrade());
+                bundle.putSerializable("userClass", userClass);
+                bundle.putSerializable("exam", exam);
+
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                AreYouSureFragment areYouSureFragment = new AreYouSureFragment();
+                areYouSureFragment.setArguments(bundle);
+                areYouSureFragment.show(fragmentTransaction, "areYouSure");
+
+                break;
+            }
+
+            case R.id.action_send_evaluation:{
+                EvaluationControl evaluationControl =
+                        EvaluationControl.getInstance(getApplication());
+
+                HashMap<String, Integer> groups;
+                HashMap<String, Double> grades;
+
+                groups = GroupController.getGroups
+                                (exam.getNameExam(),
+                                userClass.getClassName(),
+                                userClass.getOwnerEmail());
+
+                grades = GroupController.getFirstGrades(exam.getNameExam(),
+                        userClass.getClassName(), userClass.getOwnerEmail());
+
+
+                for(Map.Entry <String, Integer> entry : groups.entrySet()){
+                    evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
+                            userClass.getClassName(),
+                            groups, grades,
+                            String.valueOf(userClass.getCutOff()));
+                }
+
+                sendEvaluationNotification();
+
+                break;
+            }
+
         }
         return super.onOptionsItemSelected(item);
 
     }
-}
 
+    private void sendEvaluationNotification(){
+        NotificationCompat.Builder mBuilder =
+                (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.trezentos_icon)
+                        .setContentTitle("Avaliação")
+                        .setContentText("Você tem avaliações à serem feitas!")
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources()
+                                , R.drawable.trezentos_icon));
+
+        Intent resultIntent = new Intent(this, MainActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, mBuilder.build());
+    }
+}

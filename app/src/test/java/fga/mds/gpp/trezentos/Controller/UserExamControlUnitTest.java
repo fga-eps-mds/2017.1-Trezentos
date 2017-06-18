@@ -15,7 +15,6 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import fga.mds.gpp.trezentos.BuildConfig;
-import fga.mds.gpp.trezentos.DAO.AddSecondGrades;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.ClassActivity;
@@ -134,7 +133,7 @@ public class UserExamControlUnitTest {
         userClass.setStudents(arrayTeste);
 
         testUser = UserExamControl.getInstance(activity.getApplicationContext());
-        String serverResponse = testUser.addSecondGrade(userClass,exam);
+        String serverResponse = testUser.validateAddsSecondGrades(userClass,exam);
         assertTrue(serverResponse, true);
 
     }
@@ -164,7 +163,7 @@ public class UserExamControlUnitTest {
         userClass.setStudents(arrayTeste);
 
         testUser = UserExamControl.getInstance(activity.getApplicationContext());
-        String serverResponse = testUser.validateAddsFirstGrade(userClass,exam);
+        String serverResponse = testUser.validateAddsFirstGrades(userClass,exam);
         assertTrue(serverResponse, true);
     }
 

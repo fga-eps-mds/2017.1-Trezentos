@@ -108,10 +108,17 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="atualizar_notas">Atualizar Notas</string>
     <string name="update_grades">Atualizar Notas</string>
+    <string name="not_defined_groups">Grupos ainda não definidos.</string>
+    <string name="this_action_cannot_be_undone">Essa ação não pode ser desfeita</string>
+    <string name="are_you_sure">Você tem certeza que deseja continuar?</string>
+    <string name="confirm">confirmar</string>
     <string name="update_trezentos_grades">Atualizar Notas Trezentos</string>
+    <string name="send_evaluation">Encaminhar Avaliaçoes</string>
 
     <string name="msg_null_name_exam_error_message">O nome não pode ser vazio</string>
     <string name="msg_null_name_userClass_error_message">O nome não pode ser vazio</string>
     <string name="msg_null_classOwnerEmail_error_message">O email não pode estar vazio</string>
     <string name="msg_len_name_exam_error">O nome da prova deve ter entre 2 e 15 caracteres.</string>
+    <string name="helpers">Ajudantes:</string>
+    <string name="helped">Ajudados:</string>
 </resources>

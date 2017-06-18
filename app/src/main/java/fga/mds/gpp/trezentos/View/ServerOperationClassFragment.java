@@ -149,7 +149,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
         userClassControl =
                 UserClassControl.getInstance(getApplicationContext());
         SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(classFragment.getActivity());
+                .getDefaultSharedPreferences(classFragment.getActivity().getApplicationContext());
         email = session.getString("userEmail","");
     }
 

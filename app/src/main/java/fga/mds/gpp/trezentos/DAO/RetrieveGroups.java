@@ -1,40 +1,35 @@
 package fga.mds.gpp.trezentos.DAO;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
-
-import fga.mds.gpp.trezentos.Model.UserAccount;
-import fga.mds.gpp.trezentos.Model.UserClass;
+import java.util.HashMap;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AddStudentToClassRequest extends AsyncTask<String, String, String>{
-    private final String student;
-    private UserClass userClass;
+public class RetrieveGroups {
 
-    private String url = "https://trezentos-api.herokuapp.com/api/class/user/student";
+    private final String classOwnerEmail;
+    private final String userClassName;
+    private final String name;
+    private final String url = "https://trezentos-api.herokuapp.com/api/exam/groups";
 
-    public AddStudentToClassRequest (UserClass userClass, String student){
-        this.userClass = userClass;
-        this.student = student;
+    public RetrieveGroups(String name, String userClassName, String classOwnerEmail) {
+        this.name = name;
+        this.classOwnerEmail = classOwnerEmail;
+        this.userClassName = userClassName;
     }
 
-    @Override
-    protected String doInBackground(String... params){
+    public String get(){
         OkHttpClient client = new OkHttpClient();
 
         String urlWithParameters = getUrlWithParameters();
 
-        RequestBody body = RequestBody.create(null, "");
         Request request = new Request.Builder()
                 .url(urlWithParameters)
-                .put(body)
                 .build();
 
         try{
@@ -45,15 +40,15 @@ public class AddStudentToClassRequest extends AsyncTask<String, String, String>{
             Log.i("LOG", "IOException in doInBackground method");
         }
         return null;
+
     }
 
     private String getUrlWithParameters(){
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
-        builder.addQueryParameter("email", userClass.getOwnerEmail());
-        builder.addQueryParameter("name", userClass.getClassName());
-        builder.addQueryParameter("student", student);
-
+        builder.addQueryParameter("classOwnerEmail", classOwnerEmail);
+        builder.addQueryParameter("userClassName", userClassName);
+        builder.addQueryParameter("name", name);
         return builder.build().toString();
     }
 }

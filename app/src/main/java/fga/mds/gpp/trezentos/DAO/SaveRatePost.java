@@ -1,29 +1,31 @@
 package fga.mds.gpp.trezentos.DAO;
 
+
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
 
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.UserAccount;
-import fga.mds.gpp.trezentos.Model.UserClass;
-
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class CreateClassPost extends AsyncTask<String, String, String>{
-    private final String ownerEmail;
+public class SaveRatePost extends AsyncTask<String, String, String> {
+
+
+
     private UserAccount user;
-    private UserClass userClass;
+    private Evaluation evaluation;
 
-    private String url = "https://trezentos-api.herokuapp.com/api/class/register";
+    private String url = "https://trezentos-api.herokuapp.com/api/user/rate";
 
-    public CreateClassPost(UserClass userClass, String ownerEmail){
-        this.userClass = userClass;
-        this.ownerEmail = ownerEmail;
+    public SaveRatePost(Evaluation evaluation){
+        this.evaluation = evaluation;
+
     }
 
     @Override
@@ -51,14 +53,8 @@ public class CreateClassPost extends AsyncTask<String, String, String>{
     private String getUrlWithParameters(){
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
-        builder.addQueryParameter("ownerEmail", ownerEmail);
-        builder.addQueryParameter("name", userClass.getClassName());
-        builder.addQueryParameter("institution", userClass.getInstitution());
-        builder.addQueryParameter("passingScore", String.valueOf(userClass.getCutOff()));
-        builder.addQueryParameter("additionScore", String.valueOf(userClass.getAddition()));
-        builder.addQueryParameter("password", userClass.getPassword());
-        builder.addQueryParameter("students", "");
-        builder.addQueryParameter("numberOfStudentsPerGroup", String.valueOf(userClass.getSizeGroups()));
+        builder.addQueryParameter("email", evaluation.getStudentEmail());
+        builder.addQueryParameter("rate", String.valueOf(evaluation.getRateEvaluation()));
 
         return builder.build().toString();
     }

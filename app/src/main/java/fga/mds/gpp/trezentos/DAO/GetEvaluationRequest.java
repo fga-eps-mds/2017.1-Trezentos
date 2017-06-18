@@ -1,26 +1,22 @@
 package fga.mds.gpp.trezentos.DAO;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
 
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+public class GetEvaluationRequest {
 
-public class getExamRequest {
+    private UserAccount userAccount;
+    private final String url = "https://trezentos-api.herokuapp.com/api/user/rateToDo";
 
-    private final String email;
-    private final String userClassName;
-    private final String url = "https://trezentos-api.herokuapp.com/api/exam/class/user/find";
-
-    public getExamRequest(String email, String userClassName){
-        this.email = email;
-        this.userClassName = userClassName;
-
+    public GetEvaluationRequest(UserAccount userAccount){
+        this.userAccount = userAccount;
     }
 
     public String get(){
@@ -46,8 +42,9 @@ public class getExamRequest {
     private String getUrlWithParameters(){
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
-        builder.addQueryParameter("email", email);
-        builder.addQueryParameter("userClassName", userClassName);
+        builder.addQueryParameter("email", userAccount.getEmail());
+
         return builder.build().toString();
     }
+
 }

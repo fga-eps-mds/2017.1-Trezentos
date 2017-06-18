@@ -37,7 +37,7 @@ public class StudentsFragment extends Fragment {
     private ArrayList<String> students;
     private UserClass userClass;
     private Exam userExam;
-    private static HashMap<String, String> mapEmailAndGrade = new HashMap<>();
+    private static HashMap<String, Double> mapEmailAndGrade = new HashMap<>();
 
     public StudentsFragment() {
         // Required empty public constructor
@@ -54,17 +54,7 @@ public class StudentsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
-        ArrayList<String> students = userClass.getStudents();
-        Log.d("ARRAYSTUDENTS", Integer.toString(students.get(0).length()));
-
-        //if first item is null it will be removed
-        if (students.get(0).length() == 0){
-            students.remove(0);
-        }
-            Log.d("ARRAYSTUDENTS", students.toString());
-
         userExam = (Exam) intent.getSerializableExtra("Exam");
-                students = userClass.getStudents();
 
         students = userClass.getStudents();
         populateMapValues(students); //clear map and populates it
@@ -80,7 +70,8 @@ public class StudentsFragment extends Fragment {
 
         return view;
     }
-        private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
+
+    private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
         private final ArrayList<String> userAccounts;
         private Context context;
         private RecyclerView recyclerView;
@@ -208,24 +199,21 @@ public class StudentsFragment extends Fragment {
             np2.setOnValueChangedListener(this);
 
             if(CLICK == 1) {
-
-                gradeTextView.setText(userExam.getFirstGrades().toString());
-
                 b1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String email;
-                        String grade;
-                        String secondGrade;
-
                         gradeTextView.setText(String.valueOf(np1.getValue()) + "." +
-                                String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
+                            String.valueOf(String.format("%02d", np2.getValue()))); //set the value to textview
 
-                        grade = gradeTextView.getText().toString();
-                        secondGrade = secondGradeTextView.getText().toString();
+                        Double grade = Double.valueOf(gradeTextView.getText().toString());
+                        String email = userAccountName.getText().toString();
+
+                        mapEmailAndGrade.put(email, grade);
+                        userExam.setFirstGrades(mapEmailAndGrade.toString());
+
+                        grade = Double.valueOf(gradeTextView.getText().toString());
                         email = userAccountName.getText().toString();
 
-                        Log.i("GRADE", grade);
                         Log.i("MAP", email);
                         Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
 
@@ -247,17 +235,15 @@ public class StudentsFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String EMAIL;
-                        String GRADE;
+                        Double GRADE;
                         secondGradeTextView.setText(String.valueOf(np1.getValue()) + "." +
                                 String.valueOf(String.format
                                         ("%02d", np2.getValue())));
 
-                        GRADE = secondGradeTextView.getText().toString();
+                        GRADE = Double.valueOf(secondGradeTextView.getText().toString());
 
                         EMAIL = userAccountName.getText().toString();
 
-                        Log.i("MAP", GRADE);
-                        Log.i("MAP", EMAIL);
                         Log.d("TAMANHOMAPA", Integer.toString(mapEmailAndGrade.size()));
 
                         mapEmailAndGrade.put(EMAIL, GRADE);
@@ -284,17 +270,17 @@ public class StudentsFragment extends Fragment {
 
     }
 
-    public HashMap<String, String> populateMapValues(ArrayList<String> students) {
+    public HashMap<String, Double> populateMapValues(ArrayList<String> students) {
         mapEmailAndGrade.clear();
 
         for (int i = 0; i < students.size(); i++) {
-            mapEmailAndGrade.put(students.get(i), "0.00");
+            mapEmailAndGrade.put(students.get(i), 0.00);
         }
         Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
         return mapEmailAndGrade;
     }
 
-    public HashMap<String, String> getHashEmailAndGrade() {
+    public static HashMap<String, Double> getHashEmailAndGrade() {
         Log.d("DEBUGMAP", Integer.toString(mapEmailAndGrade.size()));
         return mapEmailAndGrade;
     }

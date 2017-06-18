@@ -9,21 +9,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import fga.mds.gpp.trezentos.DAO.AddFirstGrades;
-import fga.mds.gpp.trezentos.DAO.AddSecondGrades;
-import fga.mds.gpp.trezentos.DAO.CreateExamPost;
-import fga.mds.gpp.trezentos.DAO.getExamRequest;
+
+import fga.mds.gpp.trezentos.DAO.GetDao;
+import fga.mds.gpp.trezentos.DAO.PostDao;
+import fga.mds.gpp.trezentos.DAO.PutDao;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 
 public class UserExamControl{
     private static UserExamControl instance;
     private final Context context;
     private Exam exam;
 
-    private UserExamControl(final Context context){
+    public UserExamControl(final Context context){
         this.context = context;
     }
 
@@ -34,76 +36,105 @@ public class UserExamControl{
         return instance;
     }
 
-    public void validateCreateExam(String examName, String userClassName, String classOwnnerEmail)
+    public String validateInformation(String examName, String userClassName, String classOwnerEmail)
             throws UserException{
+        String error;
 
         try{
-            Exam exam = new Exam(examName, userClassName, classOwnnerEmail);
+            exam = new Exam(examName, userClassName, classOwnerEmail);
+            error = "Sucesso";
+            return error;
 
-            CreateExamPost createExamPost = new CreateExamPost(exam);
-            createExamPost.execute();
+        }catch(UserException userException){
+            error = userException.getMessage();
+            return error;
+        }
+    }
 
-        }catch (UserException userException){
+    public void validateCreateExam(String examName, String userClassName, String classOwnerEmail)
+            throws UserException{
+        try{
+            String url = "https://trezentos-api.herokuapp.com/api/exam/register";
+
+            Exam exam = new Exam(examName, userClassName, classOwnerEmail);
+            String urlWithParameters = getExamUrl(url, exam);
+
+            PostDao postDao = new PostDao(urlWithParameters, null, "");
+            postDao.execute();
+        }catch(UserException userException){
             userException.printStackTrace();
         }
     }
 
-    public String validateInformation(String examName, String userClassName, String classOwnerEmail)
-            throws UserException{
-        String erro;
-
-        try{
-            exam = new Exam(examName, userClassName, classOwnerEmail);
-            erro = "Sucesso";
-            return erro;
-
-        }catch (UserException userException){
-            erro = userException.getMessage();
-            return erro;
-        }
-    }
-
-    public String validateAddsFirstGrade(UserClass userClass, Exam exam)
+    public String validateAddsFirstGrades(UserClass userClass, Exam exam)
             throws UserClassException, ExecutionException, InterruptedException{
+        Log.d("DADOS", exam.getNameExam() + " " + userClass.getClassName() + exam.getFirstGrades());
+        MediaType json = MediaType.parse("application/json; charset=utf-8");
 
-        String serverResponse;
-        Log.d("OBJETOS",exam.getFirstGrades());
-        Log.d("OBJETOS",userClass.getClassName());
-        Log.d("OBJETOS",exam.getClassOwnerEmail());
-        Log.d("OBJETOS",exam.getNameExam());
+        String body = createFirstGradesBody(userClass, exam);
 
-        AddFirstGrades addFirstGrades = new AddFirstGrades(userClass, exam);
-        serverResponse = addFirstGrades.execute().get();
-
-        Log.d("JSON", serverResponse);
-        return serverResponse;
-    }
-
-    public String addSecondGrade(UserClass userClass, Exam exam) throws ExecutionException, InterruptedException {
-        String serverResponse;
-
-        AddSecondGrades addSecondGrades = new AddSecondGrades(userClass, exam);
-        serverResponse = addSecondGrades.execute().get();
+        String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
+        PutDao putDao = new PutDao(url, json, body);
+        String serverResponse = putDao.execute().get();
+        Log.d("SERVERRESPONSECONTROL", serverResponse);
 
         return serverResponse;
     }
 
-    //GET FROM API
-    public ArrayList<Exam> getExamsFromUser(String email, String userClassName) {
+    public String validateAddsSecondGrades(UserClass userClass, Exam exam)
+            throws ExecutionException, InterruptedException {
 
-        getExamRequest examRequest = new getExamRequest(email, userClassName);
+        MediaType json = MediaType.parse("application/json; charset=utf-8");
+        String body = createSecondGradesBody(userClass, exam);
+        String url = "https://trezentos-api.herokuapp.com/api/exam/second_grades";
+        PutDao putDao = new PutDao(url, json, body);
+
+        String serverResponse = putDao.execute().get();
+
+        Log.d("SERVERRESPONSECONTROL", serverResponse);
+        return serverResponse;
+    }
+
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    private String getExamUrl(String url, Exam exam){
+        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+
+        builder.addQueryParameter("name", exam.getNameExam());
+        builder.addQueryParameter("userClassName", exam.getUserClassName());
+        builder.addQueryParameter("classOwnerEmail", exam.getClassOwnerEmail());
+
+        Log.d("JSONBUILDER", builder.build().toString());
+        return builder.build().toString();
+    }
+
+    // Get from api
+    public ArrayList<Exam> getExamsFromUser(String email, String userClassName){
+        String url = "https://trezentos-api.herokuapp.com/api/exam/class/user/find";
+        String returnExamUrlWithParameters = getExamAvaiableUrl(email, userClassName, url);
+
+        GetDao getDao = new GetDao(returnExamUrlWithParameters);
 
         String serverResponse = "404";
-        serverResponse = examRequest.get();
+        serverResponse = getDao.get();
+
         ArrayList<Exam> userExams = new ArrayList<Exam>();
 
         try{
             userExams = getArrayList(serverResponse);
-        }catch (JSONException e){
+        }catch(JSONException e){
             e.printStackTrace();
         }
 
         return userExams;
+    }
+
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    private String getExamAvaiableUrl(String email, String userClassName, String url){
+        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+
+        builder.addQueryParameter("email", email);
+        builder.addQueryParameter("userClassName", userClassName);
+        return builder.build().toString();
     }
 
     private ArrayList<Exam> getArrayList(String serverResponse) throws JSONException{
@@ -111,7 +142,7 @@ public class UserExamControl{
 
         try{
             array = new JSONArray(serverResponse);
-        }catch (JSONException e){
+        }catch(JSONException e){
             e.printStackTrace();
         }
 
@@ -126,7 +157,6 @@ public class UserExamControl{
     }
 
     private Exam getUserExamFromJson(JSONObject jsonObject) {
-
         Exam exam = new Exam();
 
         try{
@@ -134,11 +164,80 @@ public class UserExamControl{
             exam.setUserClassName(jsonObject.getString("userClassName"));
             exam.setClassOwnerEmail(jsonObject.getString("classOwnerEmail"));
             exam.setFirstGrades(jsonObject.getString("firstGrades"));
-
-        }catch (JSONException | UserException e){
+        }catch(JSONException | UserException e){
             e.printStackTrace();
         }
 
         return exam;
+    }
+
+
+    public String createFirstGradesBody(UserClass userClass, Exam exam) {
+        JSONObject jsonBody = new JSONObject();
+
+        try{
+            jsonBody.put("email", exam.getClassOwnerEmail());
+            Log.d("JSON", exam.getClassOwnerEmail());
+        }catch(JSONException e){
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try{
+            jsonBody.put("userClassName", userClass.getClassName());
+            Log.d("JSONCLASS", userClass.getClassName());
+        }catch(JSONException e){
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try{
+            jsonBody.put("name", exam.getNameExam());
+            Log.d("JSON", exam.getNameExam());
+        }catch(JSONException e){
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try{
+            jsonBody.put("firstGrades", exam.getFirstGrades());
+            Log.d("JSON", exam.getFirstGrades());
+        }catch(JSONException e){
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+
+        return jsonBody.toString();
+    }
+
+    public String createSecondGradesBody(UserClass userClass, Exam exam) {
+        JSONObject jsonBody = new JSONObject();
+
+        try{
+            jsonBody.put("email", exam.getClassOwnerEmail());
+            Log.d("JSON", exam.getClassOwnerEmail());
+        }catch(JSONException e){
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try{
+            jsonBody.put("userClassName", userClass.getClassName());
+            Log.d("JSONCLASS", userClass.getClassName());
+        }catch(JSONException e){
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try{
+            jsonBody.put("name", exam.getNameExam());
+            Log.d("JSON", exam.getNameExam());
+        }catch(JSONException e){
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        try{
+            jsonBody.put("secondGrades", exam.getSecondGrades());
+            Log.d("JSON", exam.getSecondGrades());
+        }catch(JSONException e){
+            Log.d("JSONEXCEPTION", e.toString());
+            e.printStackTrace();
+        }
+        return jsonBody.toString();
     }
 }

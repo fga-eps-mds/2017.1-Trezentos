@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:weightSum="1"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:layout_margin="4dp"
+    card_view:cardBackgroundColor="#444444"
+    card_view:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/student_class"
+                            android:textColor="#FFF"
+                            android:textSize="20sp"
+                            android:text="Sala  ->"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:maxLines="1"
+                            android:maxLength="20"
+                            android:ellipsize="marquee"/>
+
+                        <TextView
+                            android:id="@+id/student_exam"
+                            android:text="Prova"
+                            android:textColor="#FFF"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:maxLines="1"
+                            android:maxLength="20"
+                            android:ellipsize="marquee"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/student_name"
+                    android:textColor="#FFF"
+                    android:text="Avalie a ajuda do aluno teste@teste.com"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:maxLength="40"
+                    android:ellipsize="marquee"/>
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+        </LinearLayout>
+
+</android.support.v7.widget.CardView>

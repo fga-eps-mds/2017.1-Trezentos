@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,8 +23,6 @@ public class UserAccount{
     private String passwordConfirmation;
     private String salt;
 
-    public int photo;
-
     private PasswordUtil passwordUtil;
 
     private Context context;
@@ -33,9 +32,8 @@ public class UserAccount{
         //in addition is create constructors with arguments.
     }
 
-    public UserAccount(String name, int photo){
+    public UserAccount(String name){
         this.name = name;
-        this.photo = photo;
     }
 
     public UserAccount(String name, String email, String password,
@@ -151,11 +149,5 @@ public class UserAccount{
 
     public String getSalt(){
         return salt;
-    }
-
-    public int getPhoto() {return  photo;}
-
-    public void setPhoto (int photo){
-        this.photo = photo;
     }
 }
