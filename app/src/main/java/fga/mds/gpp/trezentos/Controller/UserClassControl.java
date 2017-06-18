@@ -33,7 +33,6 @@ public class UserClassControl {
         if(instance == null){
             instance = new UserClassControl(context);
         }
-
         return instance;
     }
 
@@ -42,7 +41,6 @@ public class UserClassControl {
                                     Integer sizeGroups, String email) throws UserException {
         try{
             String url = "https://trezentos-api.herokuapp.com/api/class/register";
-
             UserClass userClass = new UserClass(className, institution, cutOff, password, addition, sizeGroups);
             String urlWithParameters = getClassUrl(url, userClass, email);
 
@@ -56,18 +54,15 @@ public class UserClassControl {
     public String validateInformation(String className, String institution,
                                       String cutOff, String password,
                                       String addition, String sizeGroups) throws UserException {
-        String error;
         try{
             UserClass userClass = new UserClass(className, institution,
                     Float.parseFloat(cutOff), password, Float.parseFloat(addition),
                     Integer.parseInt(sizeGroups));
             //Just to pass on Sonar
             System.out.println(userClass.getClassName());
-            error = "Sucesso";
-            return error;
+            return "Sucesso";
         }catch(UserException userException){
-            error = userException.getMessage();
-            return error;
+            return userException.getMessage();
         }
     }
 
@@ -93,15 +88,9 @@ public class UserClassControl {
 
         if(!password.isEmpty()){
             if(password.equals(userClass.getPassword())){
-                Log.d("SERVERRESPONSEpassword", password+" "+userClass.getClassName()+" "+studentEmail);
-
                 String urlWithParameters = getStudentUrl(userClass, studentEmail);
-                Log.d("SERVERRESPONSEurl", urlWithParameters);
-
-                PutDao putDao = new PutDao(urlWithParameters, null, "");
-
-                serverResponse = putDao.execute().get();
-                Log.d("SERVERRESPONSEresponse", serverResponse.toString());
+                serverResponse = new PutDao(urlWithParameters, null, "")
+                        .execute().get();
             }else{
                 throw new UserClassException(context.getString(R.string.join_class_wrong_password_error));
             }
@@ -127,10 +116,8 @@ public class UserClassControl {
         String url = "https://trezentos-api.herokuapp.com/api/class/find";
         String returnAllClassesUrlWithParameters = getAllClassesAviableUrl(url);
 
-        GetDao getDao = new GetDao(returnAllClassesUrlWithParameters);
-
         String serverResponse = "404";
-        serverResponse = getDao.get();
+        serverResponse = new GetDao(returnAllClassesUrlWithParameters).get();
 
         ArrayList<UserClass> userClasses = new ArrayList<>();
         try{
@@ -158,7 +145,6 @@ public class UserClassControl {
         }
 
         ArrayList<UserClass> userClasses = new ArrayList<>();
-
         for(int i = 0; i < array.length(); i++){
             UserClass userClass = getUserClassFromJson(array.getJSONObject(i));
             userClasses.add(userClass);
@@ -179,9 +165,7 @@ public class UserClassControl {
             userClass.setSizeGroups(Integer.parseInt(jsonObject.getString("numberOfStudentsPerGroup")));
             userClass.setOwnerEmail(jsonObject.getString("ownerEmail"));
             userClass.setStudents(getStudentsFromJson(jsonObject.getJSONArray("students")));
-        }catch(JSONException e){
-            e.printStackTrace();
-        }catch(UserException e){
+        }catch(JSONException | UserException e){
             e.printStackTrace();
         }
 
@@ -190,7 +174,6 @@ public class UserClassControl {
 
     private ArrayList<String> getStudentsFromJson(JSONArray jsonArray) {
         ArrayList<String> students = new ArrayList<>();
-
         for(int i = 0; i < jsonArray.length(); i++){
             try{
                 students.add(jsonArray.getString(i));
@@ -205,15 +188,12 @@ public class UserClassControl {
     public String validateRate(Evaluation evaluation) throws UserClassException, ExecutionException, InterruptedException {
         String serverResponse;
         if (!evaluation.getStudentEmail().isEmpty()){
-
                 SaveRatePost saveRatePost = new SaveRatePost(evaluation);
                 serverResponse = saveRatePost.execute().get();
-
         } else {
             throw new UserClassException(context.getString(R.string.join_class_null_password_error));
         }
 
         return serverResponse;
     }
-
 }
