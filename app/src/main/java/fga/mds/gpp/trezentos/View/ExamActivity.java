@@ -120,7 +120,7 @@ public class ExamActivity extends AppCompatActivity {
                 Log.d("DATAEXAME", exam.getClassOwnerEmail());
 
                 try {
-                    userExamControl.validateAddsFirstGrades(userClass, exam);
+                    userExamControl.validateAddsGrades(userClass, exam, "first_grades");
                 } catch (UserClassException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -141,10 +141,12 @@ public class ExamActivity extends AppCompatActivity {
                 exam = (Exam) extras.getSerializable("Exam");
 
                 try {
-                    userExamControl.validateAddsSecondGrades(userClass, exam);
+                    userExamControl.validateAddsGrades(userClass, exam, "second_grades");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (UserClassException e) {
                     e.printStackTrace();
                 }
 
@@ -187,7 +189,7 @@ public class ExamActivity extends AppCompatActivity {
                     evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
                             userClass.getClassName(),
                             groups, grades,
-                            String.valueOf(userClass.getCutOff()));
+                            Double.valueOf(userClass.getCutOff()));
                 }
 
                 sendEvaluationNotification();
