@@ -24,7 +24,6 @@ public class SortStudentsUtil {
     * */
     public static Map<String, Integer> sortGroups(Map<String, Double> map, Integer groupSize,
                                                  Integer totalStudents){
-
         List<Map.Entry<String, Double>> mapSortedByScore = sortByTestScore(map);
         // Note: Size of the group and total of students must be coming from the database
         Map<String, Integer> newMap = newMapStudents(mapSortedByScore, groupSize, totalStudents);
@@ -40,43 +39,12 @@ public class SortStudentsUtil {
     * */
     public static Map<String, Integer> newMapStudents (List<Map.Entry<String, Double>> unsortList,
                                                       Integer groupSize, Integer totalStudents){
-
-        Map<String, Integer> newMap = new LinkedHashMap<>();
-
-        Integer it = 1; // Iterator to number the groups
-        int sentinel = 0; // Sentinel to coordinate the logic
         Double leftoverStudents = (totalStudents*1.0) % groupSize;
-        Integer totalGroups = (int) (totalStudents-leftoverStudents) / groupSize;
+        Integer totalGroups = (leftoverStudents > 0) ?
+                ((int) (totalStudents-leftoverStudents) / groupSize) + 1 :
+                (int) (totalStudents-leftoverStudents) / groupSize;
 
-        if (leftoverStudents > 0) {
-            totalGroups++;
-        } else {
-
-        }
-
-        // Assignment of group numbers
-        for (Map.Entry<String, Double> entry : unsortList) {
-            newMap.put(entry.getKey(), it);
-            // Logic for numbers in ascending order
-            if (sentinel == 0) {
-                it++;
-                if (it > totalGroups) {
-                    sentinel++; it--;
-                } else {
-                    // do nothing
-                }
-            // Logic for numbers in descending order
-            } else {
-                it--;
-                if (it == 0) {
-                    it = totalGroups;
-                } else {
-                    // do nothing
-                }
-            }
-        }
-
-        return newMap;
+        return saveNumberGroup(unsortList, 0, 1, totalGroups);
     }
 
     /*
@@ -86,7 +54,6 @@ public class SortStudentsUtil {
     * @return: List
     * */
     public static List<Map.Entry<String,Double>> sortByTestScore(Map<String, Double> mapStudents){
-
         // Convert Map to list of Map
         List<Map.Entry<String, Double>> list = new LinkedList<>(mapStudents.entrySet());
 
@@ -99,22 +66,24 @@ public class SortStudentsUtil {
 
         return list;
     }
+
+    private static Map<String, Integer> saveNumberGroup(List<Map.Entry<String, Double>> unsortList,
+                                                 int sentinel, Integer it, Integer totalGroups){
+        Map<String, Integer> newMap = new LinkedHashMap<>();
+
+        // Assignment of group numbers
+        for (Map.Entry<String, Double> entry : unsortList) {
+            newMap.put(entry.getKey(), it);
+
+            it = (sentinel == 0) ? it++ : it--;
+            if(it > totalGroups){
+                sentinel++; it--;
+            }else if(it == 0){
+                it = totalGroups;
+            }
+        }
+
+        return newMap;
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
