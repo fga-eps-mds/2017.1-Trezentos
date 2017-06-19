@@ -75,7 +75,7 @@ public class SortStudentsUtil {
         for (Map.Entry<String, Double> entry : unsortList) {
             newMap.put(entry.getKey(), it);
 
-            it = (sentinel == 0) ? it++ : it--;
+            it = (sentinel == 0) ? it+1 : it-1;
             if(it > totalGroups){
                 sentinel++; it--;
             }else if(it == 0){
