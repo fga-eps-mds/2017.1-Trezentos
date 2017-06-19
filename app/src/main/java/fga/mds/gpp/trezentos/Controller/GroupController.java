@@ -31,6 +31,8 @@ public class GroupController {
 
     private static HashMap<String, Double> convertToHashMapDouble(String value) {
 
+        if (value.length() < 2) return null;
+
         value = value.substring(1, value.length()-1);           //remove curly brackets
         String[] keyValuePairs = value.split(",");              //split the string to creat key-value pairs
         HashMap<String, Double> map = new HashMap<>();
@@ -45,6 +47,8 @@ public class GroupController {
     }
 
     private static HashMap<String, Integer> convertToHashMapInt(String value) {
+
+        if (value.length() < 2) return null;
 
         value = value.substring(1, value.length()-1);           //remove curly brackets
         String[] keyValuePairs = value.split(",");              //split the string to creat key-value pairs

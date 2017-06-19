@@ -82,7 +82,6 @@ public class UserClassControl {
         builder.addQueryParameter("passingScore", String.valueOf(userClass.getCutOff()));
         builder.addQueryParameter("additionScore", String.valueOf(userClass.getAddition()));
         builder.addQueryParameter("password", userClass.getPassword());
-        builder.addQueryParameter("students", "");
         builder.addQueryParameter("numberOfStudentsPerGroup", String.valueOf(userClass.getSizeGroups()));
 
         return builder.build().toString();
