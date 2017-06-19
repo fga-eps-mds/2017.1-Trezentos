@@ -33,14 +33,9 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     private UserClass userClass;
     private String email;
     private UserClassControl userClassControl;
-    private ArrayList<Exam> userExams;
     private UserExamControl userExamControl;
     private ArrayList<Evaluation> evaluationList;
     private UserAccount userAccount;
-    ArrayList<String> examName;
-    ArrayList<String> classNames;
-    ArrayList<String> studentsList;
-    ArrayList<Evaluation> evaluations;
 
     public ServerOperationEvaluationFragment
             (Application application, TextView className, TextView examName){
@@ -50,43 +45,12 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
     @Override
     protected String doInBackground(String... params) {
         if(isInternetAvailable() ){ //If internet is ok
-
             userAccount = new UserAccount();
-
             try {
                 userAccount.setEmail(email);
             } catch (UserException e) {
                 e.printStackTrace();
             }
-//            userClasses = new ArrayList<>();
-//            //userExams = new ArrayList<>();
-//            //studentsList = new ArrayList<>();
-//            //classNames = new ArrayList<>();
-//            //examName = new ArrayList<>();
-//            evaluations = new ArrayList<Evaluation>();
-//            evaluations.add(new Evaluation("testeteste@teste.com", "teste", "teste"));
-//
-//            ArrayList<UserClass> allClasses = userClassControl.getClasses();
-//            for (UserClass userClass : allClasses) {
-//                ArrayList<Exam> allExams = userExamControl.getExamsFromUser(email, userClass.getClassName());
-//                if (userClass.getStudents().contains(email)) {
-//                    userClasses.add(userClass);
-//                    for(Exam exam : allExams){
-//                        for(int i = 0; i < userClass.getStudents().size(); i++) {
-//                            if(exam.getFirstGrades() != null &&
-//                                    !userClass.getStudents().get(i).equals("")) {
-//                                //classNames.add(userClass.getClassName());
-//                                //examName.add(exam.getNameExam());
-//                                //studentsList.add(userClass.getStudents().get(i));
-//                                evaluations.add(new Evaluation(userClass.getClassName(), exam.getNameExam(), userClass.getStudents().get(i)));
-//                            }else{
-//                                Log.d("TESTANDO", "passou");
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-
             evaluationList = EvaluationControl.getInstance
                     (getApplicationContext()).getEvaluations(userAccount);
 
@@ -114,23 +78,12 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
                         .getActivity()
                         .findViewById(R.id.recyclerEvaluation);
 
-        initSharedPreferences();
-
 //        recyclerView.setAdapter(new EvaluationAdapter
 //                (evaluationList, EvaluationFragment.getInstance().getContext(), recyclerView));
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(application);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-    }
-
-    private void initSharedPreferences(){
-        userClassControl =
-                UserClassControl.getInstance(getApplicationContext());
-        userExamControl = UserExamControl.getInstance(getApplicationContext());
-        SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(EvaluationFragment.getInstance().getActivity());
-        email = session.getString("userEmail","");
     }
 
     private boolean isInternetAvailable() {
