@@ -24,21 +24,18 @@ public class AreYouSureFragment extends DialogFragment implements View.OnClickLi
     private HashMap<String, Double> firstGrades;
     private UserClass userClass;
     private Exam exam;
+    private String email;
+    private Button cancelButton;
+    private Button confirmButton;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        firstGrades = (HashMap<String, Double>) getArguments().getSerializable("firstGrades");
-        userClass = (UserClass) getArguments().getSerializable("userClass");
-        exam = (Exam) getArguments().getSerializable("exam");
-
-        Log.d("first grades", firstGrades.toString());
+        getBundleArguments();
 
         final View view = inflater.inflate(R.layout.fragment_are_you_sure, container, false);
 
-        Button cancelButton = (Button) view.findViewById(R.id.cancel_are_you_sure);
         cancelButton.setOnClickListener(this);
-        Button confirmButton = (Button) view.findViewById(R.id.confirm_are_you_sure);
         confirmButton.setOnClickListener(this);
 
         return view;
@@ -56,17 +53,33 @@ public class AreYouSureFragment extends DialogFragment implements View.OnClickLi
                     Toast.makeText(getActivity(), "Preencha as notas antes de montar os grupos",
                             Toast.LENGTH_LONG).show();
                 } else {
-
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                    String email = preferences.getString("userEmail", "");
-
+                    getSharedPreferences();
                     new GroupController().sortAndSaveGroups(firstGrades, userClass, email, exam);
-
-                    Intent intent = getActivity().getIntent();
-                    getActivity().finish();
-                    startActivity(intent);
+                    turnOffAreYouSureFragment();
                 }
             }
         }
+    }
+
+    private void getSharedPreferences(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        email = preferences.getString("userEmail", "");
+    }
+
+    private void turnOffAreYouSureFragment(){
+        Intent intent = getActivity().getIntent();
+        getActivity().finish();
+        startActivity(intent);
+    }
+
+    private void getBundleArguments(){
+        firstGrades = (HashMap<String, Double>) getArguments().getSerializable("firstGrades");
+        userClass = (UserClass) getArguments().getSerializable("userClass");
+        exam = (Exam) getArguments().getSerializable("exam");
+    }
+
+    private void initButtons(View view){
+        cancelButton = (Button) view.findViewById(R.id.cancel_are_you_sure);
+        confirmButton = (Button) view.findViewById(R.id.confirm_are_you_sure);
     }
 }
