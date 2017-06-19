@@ -24,6 +24,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
+            android:maxLines="1"
+            android:maxLength="10"
+            android:ellipsize="end"
             android:text="Nome"
             android:textColor="#FFF"
             android:textSize="18dp"/>
