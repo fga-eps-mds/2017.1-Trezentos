@@ -42,11 +42,9 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-        logoutButton = (Button) view.findViewById(R.id.button_loggout);
-        classButton = (Button) view.findViewById(R.id.button_class);
+        //logoutButton = (Button) view.findViewById(R.id.button_loggout);
 
-        logoutButton.setOnClickListener(this);
-        classButton.setOnClickListener(this);
+        //logoutButton.setOnClickListener(this);
 
         return view;
     }
@@ -54,18 +52,14 @@ public class UserFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.button_loggout: {
-                LoginManager.getInstance().logOut();
-
-                UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
-                userAccountControl.logOutUser();
-                goLoginScreen();
-                break;
-            }
-            case R.id.button_class: {
-                goClassScreen();
-                break;
-            }
+//            case R.id.button_loggout: {
+//                LoginManager.getInstance().logOut();
+//
+//                UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+//                userAccountControl.logOutUser();
+//                goLoginScreen();
+//                break;
+//            }
         }
     }
 

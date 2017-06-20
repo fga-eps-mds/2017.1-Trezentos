@@ -121,4 +121,7 @@
     <string name="msg_len_name_exam_error">O nome da prova deve ter entre 2 e 15 caracteres.</string>
     <string name="helpers">Ajudantes:</string>
     <string name="helped">Ajudados:</string>
+    <string name="exit_text">Sair</string>
+    <string name="profile_email">Profile Email</string>
+    <string name="profile_name">Profile Name</string>
 </resources>
