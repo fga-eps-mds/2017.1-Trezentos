@@ -124,4 +124,5 @@
     <string name="exit_text">Sair</string>
     <string name="profile_email">Profile Email</string>
     <string name="profile_name">Profile Name</string>
+    <string name="exit_text_view">Sair</string>
 </resources>

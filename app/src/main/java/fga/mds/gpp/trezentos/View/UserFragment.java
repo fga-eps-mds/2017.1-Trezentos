@@ -8,8 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+
+import org.w3c.dom.Text;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
@@ -18,9 +22,9 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserFragment extends Fragment implements View.OnClickListener{
 
-
-    private Button logoutButton;
-    private Button classButton;
+    private ImageView exitButton;
+    private TextView profileName;
+    private TextView profileEmail;
     private OnFragmentInteractionListener mListener;
     private static UserFragment fragment;
 
@@ -42,9 +46,12 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-        //logoutButton = (Button) view.findViewById(R.id.button_loggout);
 
-        //logoutButton.setOnClickListener(this);
+        exitButton = (ImageView) view.findViewById(R.id.exit_button);
+        profileName = (TextView) view.findViewById(R.id.profile_name);
+        profileEmail = (TextView) view.findViewById(R.id.profile_email);
+
+        exitButton.setOnClickListener(this);
 
         return view;
     }
@@ -52,14 +59,16 @@ public class UserFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view){
         switch (view.getId()){
-//            case R.id.button_loggout: {
-//                LoginManager.getInstance().logOut();
-//
-//                UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
-//                userAccountControl.logOutUser();
-//                goLoginScreen();
-//                break;
-//            }
+            case R.id.exit_button: {
+                LoginManager.getInstance().logOut();
+
+                UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+                userAccountControl.logOutUser();
+
+                goLoginScreen();
+
+                break;
+            }
         }
     }
 
@@ -72,11 +81,6 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-    private void goClassScreen() {
-        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
         startActivity(intent);
     }
 }

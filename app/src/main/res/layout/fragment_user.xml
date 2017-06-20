@@ -67,7 +67,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Sair"
+        android:text="@string/exit_text_view"
         android:textSize="20sp"
         android:textColor="#000"
         android:gravity="bottom|center"
