@@ -165,7 +165,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
         userClassControl =
                 UserClassControl.getInstance(getApplicationContext());
         SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(classFragment.getActivity());
+                .getDefaultSharedPreferences(getApplicationContext());
         email = session.getString("userEmail","");
     }
 
