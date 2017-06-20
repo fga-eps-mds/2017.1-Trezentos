@@ -65,37 +65,28 @@ public class EvaluationControl {
         Log.d("email", email);
 
         Double nota = grades.get(email);
+        Log.d("nota", nota.toString());
         Integer group = groups.get(email);
+        Log.d("grupo", group.toString());
 
         Double notaDeCorte = Double.valueOf(cutOff);
+        Log.d("notaDeCorte", notaDeCorte.toString());
 
         for (Map.Entry<String, Integer> entry : groups.entrySet()) {
             if (!email.equals(entry.getKey()) &&
                     group.equals(entry.getValue())) {
-                response = sendToDao(examName, userClassName, group.toString(), email, entry.getKey());
+                Double gradeToEvaluate = grades.get(entry.getKey());
+
+                if(gradeToEvaluate >= notaDeCorte && nota < notaDeCorte){
+                    response = sendToDao(examName, userClassName,
+                            group.toString(), email, entry.getKey());
+                }
+                if(gradeToEvaluate > notaDeCorte && nota <= notaDeCorte){
+                    response = sendToDao(examName, userClassName,
+                            group.toString(), email, entry.getKey());
+                }
             }
         }
-
-
-//        if(nota < notaDeCorte) {
-//
-//            for (Map.Entry<String, Integer> entry : groups.entrySet()) {
-//                if (!email.equals(entry.getKey()) &&
-//                        group.equals(entry.getValue()) && entry.getValue() >= notaDeCorte) {
-//                    response = sendToDao(examName, userClassName, group.toString(), email, entry.getKey());
-//                }
-//            }
-//
-//        }else{
-//
-//            for (Map.Entry<String, Integer> entry : groups.entrySet()) {
-//                if (!email.equals(entry.getKey()) &&
-//                        group.equals(entry.getValue()) && entry.getValue() < notaDeCorte) {
-//                    response = sendToDao(examName, userClassName, group.toString(), email, entry.getKey());
-//                }
-//            }
-//
-//        }
 
         return response;
     }
