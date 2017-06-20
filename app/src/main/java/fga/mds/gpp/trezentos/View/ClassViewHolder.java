@@ -30,7 +30,7 @@ public class ClassViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public ClassViewHolder(View itemView) {
         super(itemView);
         name = (TextView) itemView.findViewById(R.id.name);
-        institution = (TextView) itemView.findViewById(R.id.type);
+        institution = (TextView) itemView.findViewById(R.id.institution);
 
         itemView.setOnClickListener(this);
     }
