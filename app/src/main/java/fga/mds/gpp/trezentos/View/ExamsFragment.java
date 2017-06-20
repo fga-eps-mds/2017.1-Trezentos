@@ -111,7 +111,7 @@ public class ExamsFragment extends Fragment{
         @Override
         protected String doInBackground(String... params) {
 
-            userExams = userExamControl.getExamsFromUser(userEmail, userClass.getClassName());
+            userExams = userExamControl.getExamsFromUser(userClass.getOwnerEmail(), userClass.getClassName());
             return null;
         }
 

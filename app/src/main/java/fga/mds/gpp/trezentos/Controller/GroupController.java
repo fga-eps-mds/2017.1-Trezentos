@@ -36,53 +36,37 @@ public class GroupController {
 
     }
 
-    private static HashMap<String, Double> convertToHashMapDouble(String firstGrades) {
+    private static HashMap<String, Double> convertToHashMapDouble(String value) {
 
-        HashMap<String, Double> myHashMap = new HashMap<>();
+        value = value.substring(1, value.length()-1);           //remove curly brackets
+        String[] keyValuePairs = value.split(",");              //split the string to creat key-value pairs
+        HashMap<String, Double> map = new HashMap<>();
 
-        try {
-
-            JSONArray jArray = new JSONArray(firstGrades);
-            JSONObject jObject = null;
-            String keyString=null;
-
-            for (int i = 0; i < jArray.length(); i++) {
-                jObject = jArray.getJSONObject(i);
-                keyString = (String)jObject.names().get(0);
-                myHashMap.put(keyString, jObject.getDouble(keyString));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        for(String pair : keyValuePairs) {                      //iterate over the pairs
+            String[] entry = pair.split("=");                   //split the pairs to get key and value
+            map.put(entry[0].trim(),
+                    Double.valueOf(entry[1].trim()));           //add them to the hashmap and trim whitespaces
         }
 
-        return myHashMap;
+        return map;
     }
 
-    private static HashMap<String, Integer> convertToHashMapInt(String firstGrades) {
+    private static HashMap<String, Integer> convertToHashMapInt(String value) {
 
-        HashMap<String, Integer> myHashMap = new HashMap<>();
+        value = value.substring(1, value.length()-1);           //remove curly brackets
+        String[] keyValuePairs = value.split(",");              //split the string to creat key-value pairs
+        HashMap<String,Integer> map = new HashMap<>();
 
-        if (firstGrades == null) return null;
-
-        try {
-
-            JSONArray jArray = new JSONArray(firstGrades);
-            JSONObject jObject = null;
-            String keyString=null;
-
-            for (int i = 0; i < jArray.length(); i++) {
-                jObject = jArray.getJSONObject(i);
-                keyString = (String)jObject.names().get(0);
-                myHashMap.put(keyString, jObject.getInt(keyString));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        for(String pair : keyValuePairs) {                      //iterate over the pairs
+            String[] entry = pair.split("=");                   //split the pairs to get key and value
+            map.put(entry[0].trim(),
+                    Integer.valueOf(entry[1].trim()));          //add them to the hashmap and trim whitespaces
         }
 
-        return myHashMap;
+        return map;
     }
 
-    public HashMap<String, Double> getFirstGrades (String name, String userClassName, String classOwnerEmail) {
+    public static HashMap<String, Double> getFirstGrades (String name, String userClassName, String classOwnerEmail) {
         GetFirstGrades getFirstGrades = new GetFirstGrades(name, userClassName, classOwnerEmail);
 
         String serverResponse = getFirstGrades.get();
@@ -128,7 +112,7 @@ public class GroupController {
         return response.equals("true");
     }
 
-    public ArrayList<Student> setSpecificGroupAndGrades (String userEmail,
+    public static ArrayList<Student> setSpecificGroupAndGrades (String userEmail,
                                                  HashMap<String, Double> firstGrades,
                                                 /* HashMap<String, Double> secondGrades,*/
                                                  HashMap<String, Integer> groups){
