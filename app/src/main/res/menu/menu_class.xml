@@ -4,9 +4,9 @@
 
         xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
-            android:id="@+id/action_edit_class"
+            android:id="@+id/action_class_information"
             android:orderInCategory="100"
-            android:title="@string/edit_class"
+            android:title="@string/class_information"
             app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
