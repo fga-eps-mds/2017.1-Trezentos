@@ -125,4 +125,6 @@
     <string name="profile_email">Profile Email</string>
     <string name="profile_name">Profile Name</string>
     <string name="exit_text_view">Sair</string>
+    <string name="enter_class">Entrar</string>
+    <string name="put_class_password">Insira a Senha da Sala</string>
 </resources>
