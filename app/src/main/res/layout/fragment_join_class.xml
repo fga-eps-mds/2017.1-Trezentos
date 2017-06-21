@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="180dp"
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:gravity="center"
-        android:backgroundTint="#FAFAFA"
-        >
+        android:background="@drawable/backgroundtrezentos">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Insira a senha da sala"
+            android:text="@string/put_class_password"
             android:textSize="20dp"
+            android:textColor="#000"
             />
 
         <EditText
+            android:id="@+id/join_password_editText"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:id="@+id/join_password_editText"
+            android:gravity="center"
+            android:ellipsize="start"
             />
 
         <Button
+            android:id="@+id/join_class_button"
+            android:background="@drawable/selector_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registrar"
-            android:background="@drawable/selector_button"
-            android:id="@+id/join_class_button"
+            android:layout_marginTop="15dp"
+            android:text="@string/enter_class"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>

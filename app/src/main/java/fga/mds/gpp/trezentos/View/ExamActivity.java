@@ -45,6 +45,8 @@ public class ExamActivity extends AppCompatActivity {
     private UserAccount userAccount;
     private Evaluation evaluation;
     private ArrayList<JSONObject> studentGroup;
+    private HashMap<String, Integer> groups;
+    private HashMap<String, Double> grades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -142,9 +144,7 @@ public class ExamActivity extends AppCompatActivity {
 
                 try{
                     userExamControl.validateAddsSecondGrades(userClass, exam);
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }catch(ExecutionException e){
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
 
@@ -165,28 +165,11 @@ public class ExamActivity extends AppCompatActivity {
                 break;
             }
 
-            case R.id.action_send_evaluation:{
+            case R.id.action_send_evaluation: {
                 EvaluationControl evaluationControl =
                         EvaluationControl.getInstance(getApplication());
 
-                HashMap<String, Integer> groups;
-                HashMap<String, Double> grades;
-
-                groups = GroupController.getGroups
-                                (exam.getNameExam(),
-                                userClass.getClassName(),
-                                userClass.getOwnerEmail());
-
-                grades = GroupController.getFirstGrades(exam.getNameExam(),
-                        userClass.getClassName(), userClass.getOwnerEmail());
-
-
-                for(Map.Entry <String, Integer> entry : groups.entrySet()){
-                    evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
-                            userClass.getClassName(),
-                            groups, grades,
-                            String.valueOf(userClass.getCutOff()));
-                }
+                new ServerOperationExamsActivity(exam, userClass, evaluationControl);
 
                 sendEvaluationNotification();
 

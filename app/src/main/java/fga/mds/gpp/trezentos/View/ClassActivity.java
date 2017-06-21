@@ -87,7 +87,7 @@ public class ClassActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new ExamsFragment(), "EXAMS");
-        adapter.addFragment(new StudentsFragment(), "STUDENTS");
+        adapter.addFragment(new ShowClassComponentsFragment(), "STUDENTS");
         viewPager.setAdapter(adapter);
     }
 
@@ -112,9 +112,9 @@ public class ClassActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Log.d("MAP", "settings");
             return true;
-        } else if (id == R.id.action_edit_class) {
+        } else if (id == R.id.action_class_information) {
             Intent intentEditClass = new Intent(getApplicationContext(), EditClassActivity.class);
-            UserClass userClassCalled = (UserClass) userClass;
+            UserClass userClassCalled = userClass;
             intentEditClass.putExtra("Class", userClassCalled);
             Log.d("MAP", "editclass");
             startActivity(intentEditClass);

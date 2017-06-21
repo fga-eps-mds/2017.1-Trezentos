@@ -126,10 +126,26 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
     }
 
     private void showJoinClassFragment(UserClass userClass){
-        Intent goClass = new  Intent(getApplicationContext(), ClassActivity.class);
-        goClass.putExtra("Class", userClass);
-        goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getApplicationContext().startActivity(goClass);
+        if(userClass.getOwnerEmail().equals(email)){
+            Log.d("INTENT","ClassOwner");
+            Log.d("INTENT",userClass.getOwnerEmail());
+            Intent goClass = new  Intent(getApplicationContext(),
+                    ClassActivity.class);
+            goClass.putExtra("Class", userClass);
+            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(goClass);
+        }else{
+            Log.d("INTENT","Student");
+            Log.d("INTENT",email);
+            Log.d("INTENT",userClass.getOwnerEmail());
+
+            Intent goClass = new  Intent(getApplicationContext(),
+                    StudentClassActivity.class);
+            goClass.putExtra("Class", userClass);
+            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(goClass);
+        }
+
     }
 
     private ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){
@@ -149,7 +165,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
         userClassControl =
                 UserClassControl.getInstance(getApplicationContext());
         SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(classFragment.getActivity().getApplicationContext());
+                .getDefaultSharedPreferences(getApplicationContext());
         email = session.getString("userEmail","");
     }
 

@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         // Noinspection SimplifiableIfStatement
-        if(id == R.id.action_settings){
-            Toast.makeText(MainActivity.this, "Configurações", Toast.LENGTH_SHORT).show();
-            return true;
-        }
         if(id == R.id.search_classes){
             goClassScreen();
             return true;

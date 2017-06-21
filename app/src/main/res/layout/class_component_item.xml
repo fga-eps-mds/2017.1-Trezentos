@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    card_view:cardBackgroundColor="@color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
     android:layout_margin="4dp"
     android:weightSum="1"
+    card_view:cardBackgroundColor="@color/transparent"
     card_view:cardCornerRadius="10dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@drawable/shape_item"
         >
 
-
         <TextView
-            android:id="@+id/class_name"
+            android:id="@+id/student_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Classe"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="18dp"
+            android:text="Nome"
             android:textColor="#FFF"
-            android:textSize="20dp"
-            android:textStyle="bold"
-
-            android:layout_marginLeft="50dp"/>
-
-    </RelativeLayout>
-
-
-
+            android:textSize="24dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+    </LinearLayout>
 </android.support.v7.widget.CardView>

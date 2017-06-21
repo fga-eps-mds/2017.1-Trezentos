@@ -72,12 +72,14 @@
 
     <!--Menu-->
     <string name="configuracoes">Configuracoes</string>
-    <string name="edit_class">Editar Sala</string>
+    <string name="class_information">Informações da Sala</string>
     <string name="sort_groups">Ordenar Grupos</string>
 
     <!--Tab-->
     <string name="tab_text_students">Alunos</string>
     <string name="tab_text_tests">Salas</string>
+    <string name="tab_group_number">Grupo 1</string>
+
 
     <!--ExamFragment-->
     <string name="name_exam">Nome da Prova</string>
@@ -121,4 +123,10 @@
     <string name="msg_len_name_exam_error">O nome da prova deve ter entre 2 e 15 caracteres.</string>
     <string name="helpers">Ajudantes:</string>
     <string name="helped">Ajudados:</string>
+    <string name="exit_text">Sair</string>
+    <string name="profile_email">Profile Email</string>
+    <string name="profile_name">Profile Name</string>
+    <string name="exit_text_view">Sair</string>
+    <string name="enter_class">Entrar</string>
+    <string name="put_class_password">Insira a Senha da Sala</string>
 </resources>

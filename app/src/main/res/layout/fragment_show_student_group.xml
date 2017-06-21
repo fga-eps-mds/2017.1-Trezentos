@@ -1,23 +1,23 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="fga.mds.gpp.trezentos.View.ExamsFragment"
-    android:background="@drawable/backgroundtrezentos">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             tools:context="fga.mds.gpp.trezentos.View.ShowStudentGroupFragment">
 
     <ProgressBar
-        android:id="@+id/progressBarExam"
+        android:id="@+id/progress_bar_student_group"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerExam"
+        android:id="@+id/recycler_student_group"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         />
+
 </FrameLayout>

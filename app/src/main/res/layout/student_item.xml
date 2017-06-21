@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="110dp"
-    card_view:cardBackgroundColor="#444444"
+    card_view:cardBackgroundColor="@color/transparent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
     android:layout_margin="4dp"
@@ -18,7 +18,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/shape_item"
+            >
 
             <TextView
                 android:id="@+id/student_name"
@@ -31,18 +33,24 @@
                 android:layout_marginLeft="20dp"/>
 
             <View
-                android:background="#FFF"
-
+                android:background="#4000"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="2dp">
-
             </View>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginLeft="0dp">
+                android:layout_marginLeft="0dp"
+                android:layout_gravity="center">
+
+                <View
+                    android:background="#4000"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent">
+                </View>
 
                 <LinearLayout
                     android:id="@+id/gradeLayout"
@@ -51,15 +59,13 @@
                     android:orientation="vertical">
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nota"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:textColor="#FFF"
                         android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="5dp"/>
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/text_view_grade"
@@ -75,18 +81,11 @@
 
 
                 <View
-                    android:background="#FFF"
-
+                    android:id="@+id/view_grade"
+                    android:background="#4000"
                     android:layout_width="2dp"
                     android:layout_height="match_parent">
                 </View>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    >
-                </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/second_grade_layout"
@@ -97,8 +96,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="center"
                             android:text="Nota 300"
                             android:textColor="#FFF"
                             android:textSize="15dp"
@@ -117,7 +115,7 @@
                     </LinearLayout>
 
                     <View
-                        android:background="#FFF"
+                        android:background="#4000"
                         android:layout_width="2dp"
                         android:layout_height="match_parent">
                     </View>

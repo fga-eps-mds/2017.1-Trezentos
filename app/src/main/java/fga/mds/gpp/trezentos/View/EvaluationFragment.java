@@ -38,14 +38,8 @@ public class EvaluationFragment extends Fragment {
 
         //Generates students static
         ArrayList<String> students;
-//        students.add("Arthur Diniz");
-//        students.add("Cafe");
 
         initClasses();
-
-        //Pegar as classes em que os grupos ja foram formados
-        //Definir uma estrutura para mostrar quem e ajudante e quem e ajudado
-        //Colocar ajudantes ou ajudados em uma recyclerview com o layout ja feito
 
         return view;
     }

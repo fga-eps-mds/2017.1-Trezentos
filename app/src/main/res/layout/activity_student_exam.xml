@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.ExamActivity"
+    tools:context="fga.mds.gpp.trezentos.View.StudentExamActivity"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -30,17 +30,13 @@
             android:id="@+id/tab_layout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:background="@drawable/backgroundtrezentos">
+            android:background="@color/white">
             <android.support.design.widget.TabItem
 
-                android:icon="@drawable/ic_tests"
+                android:text="@string/tab_group_number"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"/>
 
-            <android.support.design.widget.TabItem
-                android:icon="@drawable/ic_students"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"/>
 
         </android.support.design.widget.TabLayout>
 

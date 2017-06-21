@@ -7,11 +7,15 @@
         android:state_pressed="true"/>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#2000"/>
+            <solid android:color="#5000"/>
 
             <stroke android:width="1dp"
-                    android:color="#4000"/>
+                    android:color="#9000"/>
+
+            <corners android:radius="10dp"/>
         </shape>
     </item>
+
+
 
 </selector>
