@@ -12,13 +12,14 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.Controller.Util.SortStudentsUtil;
-import fga.mds.gpp.trezentos.DAO.GetFirstGrades;
-import fga.mds.gpp.trezentos.DAO.RetrieveGroups;
-import fga.mds.gpp.trezentos.DAO.SaveGroupsRequest;
+import fga.mds.gpp.trezentos.DAO.GetDao;
+import fga.mds.gpp.trezentos.DAO.PutDao;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.Student;
 import fga.mds.gpp.trezentos.Model.UserClass;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 
 public class GroupController {
     private Integer groupSize = 0;
@@ -66,24 +67,67 @@ public class GroupController {
         return map;
     }
 
-    public static HashMap<String, Double> getFirstGrades (String name, String userClassName,
-                                                          String classOwnerEmail) {
-        GetFirstGrades getFirstGrades = new GetFirstGrades(name, userClassName, classOwnerEmail);
+//    public static HashMap<String, Double> getFirstGrades (String name, String userClassName,
+//                                                          String classOwnerEmail) {
+//        GetFirstGrades getFirstGrades = new GetFirstGrades(name, userClassName, classOwnerEmail);
+//
+//        String serverResponse = getFirstGrades.get();
+//        firstGrades = convertToHashMapDouble(serverResponse);
+//
+//        return firstGrades;
+//    }
 
-        String serverResponse = getFirstGrades.get();
+    public static HashMap<String, Double> getFirstGrades(String name, String userClassName, String classOwnerEmail) {
+        String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
+        String urlWithParameters = getFirstGradesUrlWithParameters(url, userClassName, classOwnerEmail, name);
+        GetDao getDao = new GetDao(urlWithParameters);
+        String serverResponse = getDao.get();
         firstGrades = convertToHashMapDouble(serverResponse);
+        Log.d("hashMap", firstGrades.toString());
 
         return firstGrades;
+    }
+
+    private static String getFirstGradesUrlWithParameters(String url, String userClassName, String classOwnerEmail, String name){
+        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+
+        builder.addQueryParameter("classOwnerEmail", classOwnerEmail);
+        builder.addQueryParameter("userClassName", userClassName);
+        builder.addQueryParameter("name", name);
+        return builder.build().toString();
     }
 
     public static HashMap<String, Integer> getGroups (String name, String userClassName,
                                                       String classOwnerEmail) {
 
-        String serverResponse = new RetrieveGroups(name, userClassName, classOwnerEmail).get();
+        String url = "https://trezentos-api.herokuapp.com/api/exam/groups";
+        String urlWithParameters = getUrlWithParameters(url, name, userClassName, classOwnerEmail);
+
+        String serverResponse = new GetDao(urlWithParameters).get();
         groups = convertToHashMapInt(serverResponse);
 
         return groups;
     }
+
+    private static String getUrlWithParameters(String url, String name, String userClassName,
+                                               String classOwnerEmail){
+        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+
+        builder.addQueryParameter("classOwnerEmail", classOwnerEmail);
+        builder.addQueryParameter("userClassName", userClassName);
+        builder.addQueryParameter("name", name);
+        return builder.build().toString();
+    }
+
+
+//    public static HashMap<String, Integer> getGroups (String name, String userClassName,
+//                                                      String classOwnerEmail) {
+//
+//        String serverResponse = new RetrieveGroups(name, userClassName, classOwnerEmail).get();
+//        groups = convertToHashMapInt(serverResponse);
+//
+//        return groups;
+//    }
 
     public boolean sortAndSaveGroups(HashMap<String, Double> grades, UserClass userClass, String email, Exam exam) {
 
@@ -96,13 +140,34 @@ public class GroupController {
         return success;
     }
 
+//    private boolean saveGroups(String groups, UserClass userClass, String email, Exam exam) {
+//
+//        String response = "false";
+//
+//        try {
+//            response = new SaveGroupsRequest(email, userClass.getClassName(), exam.getNameExam(),
+//                    groups).execute().get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return response.equals("true");
+//    }
+
+
     private boolean saveGroups(String groups, UserClass userClass, String email, Exam exam) {
 
         String response = "false";
+        String url = "https://trezentos-api.herokuapp.com/api/exam/groups";
+        MediaType json = MediaType.parse("application/json; charset=utf-8");
+        String body = getJsonBody(email, userClass.getClassName(), exam.getNameExam(), groups);
+
+        PutDao putDao = new PutDao(url, json, body);
 
         try {
-            response = new SaveGroupsRequest(email, userClass.getClassName(), exam.getNameExam(),
-                    groups).execute().get();
+            response = putDao.execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -111,6 +176,22 @@ public class GroupController {
 
         return response.equals("true");
     }
+
+    private String getJsonBody(String email, String className, String examName, String groupsClass) {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("email", email);
+            jsonObject.put("userClassName", className);
+            jsonObject.put("name", examName);
+            jsonObject.put("groups", groupsClass);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject.toString();
+    }
+
 
     public static ArrayList<Student> setSpecificGroupAndGrades (String userEmail,
                                                                 HashMap<String, Double> firstGrades,

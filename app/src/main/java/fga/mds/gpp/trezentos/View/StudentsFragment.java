@@ -222,7 +222,7 @@ public class StudentsFragment extends Fragment {
                 });
             }else {
 
-                secondGradeTextView.setText(userExam.getSecondGrades().toString());
+                secondGradeTextView.setText(userExam.getSecondGrades());
 
                 buttonOK300.setOnClickListener(new View.OnClickListener() {
                     @Override

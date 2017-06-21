@@ -14,11 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import fga.mds.gpp.trezentos.DAO.GetEvaluationRequest;
-import fga.mds.gpp.trezentos.DAO.SendEvaluationRequest;
+import fga.mds.gpp.trezentos.DAO.GetDao;
+import fga.mds.gpp.trezentos.DAO.PostDao;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.UserAccount;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 
 import static fga.mds.gpp.trezentos.R.drawable.group;
 
@@ -91,8 +93,41 @@ public class EvaluationControl {
         return response;
     }
 
+//    private boolean sendToDao(String examName, String userClassName, String groupNumber,
+//                                  String email, String emailToEvaluate){
+//
+//        String response = "false";
+//
+//        evaluation.setStudentEmail(emailToEvaluate);
+//
+//        JSONObject jsonObject = new JSONObject();
+//
+//        try {
+//            jsonObject.put("userClassName", evaluation.getClassName());
+//            jsonObject.put("examName", evaluation.getExamName());
+//            jsonObject.put("studentToEvaluate", evaluation.getStudentEmail());
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try {
+//            response =
+//                    new SendEvaluationRequest(userAccount, jsonObject)
+//                            .execute()
+//                            .get();
+//
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Log.d("RESULT", response);
+//
+//        return response.equals("true");
+//    }
+
     private boolean sendToDao(String examName, String userClassName, String groupNumber,
-                                  String email, String emailToEvaluate){
+                              String email, String emailToEvaluate){
 
         String response = "false";
 
@@ -110,10 +145,16 @@ public class EvaluationControl {
         }
 
         try {
-            response =
-                    new SendEvaluationRequest(userAccount, jsonObject)
-                            .execute()
-                            .get();
+            String urlWithParameters = getJsonBody(jsonObject);
+            response = new PostDao(urlWithParameters, null, "")
+                    .execute()
+                    .get();
+
+//
+//            response =
+//                    new SendEvaluationRequest(userAccount, jsonObject)
+//                            .execute()
+//                            .get();
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -123,6 +164,22 @@ public class EvaluationControl {
 
         return response.equals("true");
     }
+
+    private String getJsonBody(JSONObject json){
+
+        try {
+            json.put("email", userAccount.getEmail());
+            json.put("rateToDo", evaluation);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("JSONARRAY", json.toString());
+
+        return json.toString();
+    }
+
 
     private UserAccount getUserWithInfo(String email){
         UserAccount userAccountWithInfo = new UserAccount();
@@ -135,10 +192,28 @@ public class EvaluationControl {
         return userAccountWithInfo;
     }
 
+//    public ArrayList<Evaluation> getEvaluations(UserAccount userAccount){
+//        GetEvaluationRequest evaluationRequest = new GetEvaluationRequest(userAccount);
+//        String serverResponse = "404";
+//        serverResponse = evaluationRequest.get();
+//
+//        ArrayList<Evaluation> evaluationList = new ArrayList<>();
+//
+//        try {
+//            evaluationList = getEvaluationsList(serverResponse);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return evaluationList;
+//    }
+
     public ArrayList<Evaluation> getEvaluations(UserAccount userAccount){
-        GetEvaluationRequest evaluationRequest = new GetEvaluationRequest(userAccount);
+        String urlWithParameters = getEvaluationsUrlWithParameters(userAccount);
+        GetDao getDao = new GetDao(urlWithParameters);
+
         String serverResponse = "404";
-        serverResponse = evaluationRequest.get();
+        serverResponse = getDao.get();
 
         ArrayList<Evaluation> evaluationList = new ArrayList<>();
 
@@ -150,6 +225,16 @@ public class EvaluationControl {
 
         return evaluationList;
     }
+
+    private String getEvaluationsUrlWithParameters(UserAccount userAccount){
+        String url = "https://trezentos-api.herokuapp.com/api/user/rateToDo";
+        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+
+        builder.addQueryParameter("email", userAccount.getEmail());
+
+        return builder.build().toString();
+    }
+
 
     private ArrayList<Evaluation> getEvaluationsList(String serverResponse) throws JSONException{
         JSONArray jsonArray = null;
