@@ -87,7 +87,7 @@ public class ClassActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new ExamsFragment(), "EXAMS");
-        adapter.addFragment(new StudentsFragment(), "STUDENTS");
+        adapter.addFragment(new ShowClassComponentsFragment(), "STUDENTS");
         viewPager.setAdapter(adapter);
     }
 

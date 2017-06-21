@@ -8,8 +8,6 @@
     tools:context="fga.mds.gpp.trezentos.View.ClassFragment"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-
     <LinearLayout
         android:id="@+id/no_internet_layout"
         android:layout_width="300dp"

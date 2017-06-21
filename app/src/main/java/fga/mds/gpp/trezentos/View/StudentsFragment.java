@@ -30,6 +30,7 @@ import fga.mds.gpp.trezentos.R;
 import static fga.mds.gpp.trezentos.R.id.gradeLayout;
 import static fga.mds.gpp.trezentos.R.id.student_name;
 import static fga.mds.gpp.trezentos.R.id.text_view_grade;
+import static fga.mds.gpp.trezentos.R.id.view_grade;
 
 
 public class StudentsFragment extends Fragment {
@@ -94,14 +95,6 @@ public class StudentsFragment extends Fragment {
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.student_item, parent, false);
 
-            if(!(getActivity() instanceof ExamActivity)){
-
-                view.findViewById(gradeLayout).setVisibility(View.GONE);
-                view.findViewById(text_view_grade).setVisibility(View.GONE);
-
-            }else{
-                // do nothing
-            }
             StudentsFragment.ViewHolder holder =
                     new StudentsFragment.ViewHolder(view);
             view.setOnClickListener(this);

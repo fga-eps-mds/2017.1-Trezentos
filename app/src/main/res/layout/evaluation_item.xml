@@ -61,7 +61,7 @@
                     android:layout_marginLeft="10dp"
                     android:maxLines="1"
                     android:maxLength="40"
-                    android:ellipsize="marquee"/>
+                    android:ellipsize="end"/>
 
                 <RatingBar
                     android:id="@+id/ratingBar"

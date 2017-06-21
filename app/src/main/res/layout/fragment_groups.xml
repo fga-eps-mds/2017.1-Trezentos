@@ -11,10 +11,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_groups"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:background="@drawable/backgroundtrezentos"/>
 
     <ProgressBar
         android:id="@+id/progressBarGroups"

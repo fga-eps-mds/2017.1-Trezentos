@@ -34,7 +34,7 @@ public class EditClassActivity extends AppCompatActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("Editar Sala");
+        setTitle("Informações Sobre a Sala");
 
         Intent intent = getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="fga.mds.gpp.trezentos.View.ExamsFragment">
+    tools:context="fga.mds.gpp.trezentos.View.ExamsFragment"
+    android:background="@drawable/backgroundtrezentos">
 
     <ProgressBar
         android:id="@+id/progressBarExam"
@@ -19,7 +20,4 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         />
-
-
-
 </FrameLayout>

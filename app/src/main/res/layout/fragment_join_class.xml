@@ -12,8 +12,7 @@
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/backgroundtrezentos"
-        >
+        android:background="@drawable/backgroundtrezentos">
 
         <TextView
             android:layout_width="wrap_content"
