@@ -1,30 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.CreateExamActivity"
-    android:orientation="vertical">
+    tools:context="fga.mds.gpp.trezentos.View.CreateClassActivity"
+    android:id="@+id/relativeLayout">
 
-    <EditText
-        android:id="@+id/exam_name"
-        android:textSize="25dp"
-        android:layout_marginTop="225dp"
-        android:layout_marginLeft="0dp"
-        android:hint="Nome do teste"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/ok_create_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Salvar"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="2dp"
-        android:background="@color/cardview_dark_background"
-        android:textColor="@color/cardview_light_background" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/create_class_bg"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
+
+            <!--Inputs-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="300dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/grade"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"/>
+
+                    <EditText
+                        android:id="@+id/exam_name"
+                        android:textSize="25dp"
+                        android:hint="Nome do teste"
+                        android:inputType="text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="15dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/ok_create_button"
+                        android:background="@drawable/shape_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/save_exam"
+                        android:textColor="@color/cardview_light_background" />
+                    <Button
+                        android:id="@+id/return_exam_button"
+                        android:background="@drawable/shape_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/return_exam"
+                        android:textColor="@color/cardview_light_background" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

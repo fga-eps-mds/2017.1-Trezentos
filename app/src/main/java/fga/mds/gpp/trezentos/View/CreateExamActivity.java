@@ -35,16 +35,15 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
 
         userClassName = userClass.getClassName();
 
-//        Toast.makeText(CreateExamActivity.this," Usuario: "
-//                + classOwnnerEmail + " "
-//                    + "Nome Sala: " + userClassName, Toast.LENGTH_SHORT).show();
-
         final Button buttonOk = (Button) findViewById(R.id.ok_create_button);
+        final Button buttonReturn = (Button) findViewById(R.id.return_exam_button);
+
         examNameField = (EditText) findViewById(R.id.exam_name);
 
         buttonOk.setOnClickListener(this);
-
+        buttonReturn.setOnClickListener(this);
     }
+
 
     /*
     Purpose: Recover the last intent initiated before this class.
@@ -76,28 +75,38 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
 
-            boolean isValid = false;
+        boolean isValid = false;
 
-            UserExamControl userExamControl = UserExamControl
-                    .getInstance(getApplicationContext());
+        UserExamControl userExamControl = UserExamControl
+                .getInstance(getApplicationContext());
 
-            try {
-                isValid = confirmInformation(userExamControl,
-                        examNameField, userClassName, classOwnnerEmail);
-
-                if(isValid){
-                    String examName = examNameField.getText().toString();
-
-                    userExamControl.validateCreateExam
-                            (examName, userClassName, classOwnnerEmail);
-
-                    onBackPressed();
-                }
-
-            } catch (UserException e) {
-                e.printStackTrace();
+        switch (v.getId()){
+            case R.id.return_exam_button:{
+                Intent returnToClass = new Intent(CreateExamActivity.this, ClassActivity.class);
+                startActivity(returnToClass);
+                finish();
+                break;
             }
+            case R.id.ok_create_button:{
+                try {
+                    isValid = confirmInformation(userExamControl,
+                            examNameField, userClassName, classOwnnerEmail);
 
+                    if(isValid){
+                        String examName = examNameField.getText().toString();
+
+                        userExamControl.validateCreateExam
+                                (examName, userClassName, classOwnnerEmail);
+
+                        onBackPressed();
+                    }
+
+                } catch (UserException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
     }
 
     /*
