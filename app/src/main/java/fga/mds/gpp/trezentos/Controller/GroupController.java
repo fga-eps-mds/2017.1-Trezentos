@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -14,7 +15,9 @@ import fga.mds.gpp.trezentos.Controller.Util.SortStudentsUtil;
 import fga.mds.gpp.trezentos.DAO.GetFirstGrades;
 import fga.mds.gpp.trezentos.DAO.RetrieveGroups;
 import fga.mds.gpp.trezentos.DAO.SaveGroupsRequest;
+import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.Student;
 import fga.mds.gpp.trezentos.Model.UserClass;
 
 public class GroupController {
@@ -63,7 +66,8 @@ public class GroupController {
         return map;
     }
 
-    public static HashMap<String, Double> getFirstGrades(String name, String userClassName, String classOwnerEmail) {
+    public static HashMap<String, Double> getFirstGrades (String name, String userClassName,
+                                                          String classOwnerEmail) {
         GetFirstGrades getFirstGrades = new GetFirstGrades(name, userClassName, classOwnerEmail);
 
         String serverResponse = getFirstGrades.get();
@@ -106,5 +110,62 @@ public class GroupController {
         }
 
         return response.equals("true");
+    }
+
+    public static ArrayList<Student> setSpecificGroupAndGrades (String userEmail,
+                                                                HashMap<String, Double> firstGrades,
+                                                /* HashMap<String, Double> secondGrades,*/
+                                                 HashMap<String, Integer> groups){
+
+        ArrayList<Student> groupAndGrades = new ArrayList<>();
+        Integer userNumberGroup = groups.get(userEmail);
+
+        int it = 0;
+
+        for (Map.Entry<String, Integer> entry : groups.entrySet()){
+            if (entry.getValue().equals(userNumberGroup)){
+                Student student = new Student();
+
+                student.setStudentEmail(entry.getKey());
+
+                groupAndGrades.add(it, student);
+                it++;
+            }
+        }
+
+        int groupsAndGradesSize = it;
+
+        it = 0;
+
+        for (int i = 0; i < groupsAndGradesSize; i++){
+
+            Student studentGroup = groupAndGrades.get(i);
+
+            for (Map.Entry<String, Double> entry : firstGrades.entrySet()){
+                if (studentGroup.getStudentEmail().equals(entry.getKey())){
+                    studentGroup.setFirstGrade(entry.getValue());
+
+                    groupAndGrades.set(it, studentGroup);
+                    it++;
+                }
+            }
+        }
+
+        it = 0;
+
+/*
+        for (Student studentGroup : groupAndGrades){
+            for (Map.Entry<String, Double> entry : secondGrades.entrySet()){
+                if (studentGroup.getStudentEmail().equals(entry.getKey())){
+                    studentGroup.setSecondGrade(entry.getValue());
+
+                    groupAndGrades.add(it, studentGroup);
+                    it++;
+                }
+            }
+        }
+*/
+
+        return groupAndGrades;
     }
 }

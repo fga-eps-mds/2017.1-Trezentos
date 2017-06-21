@@ -175,7 +175,7 @@ public class UserClassControl {
             userClass.setCutOff(Float.parseFloat(jsonObject.getString("passingScore")));
             userClass.setAddition(Float.parseFloat(jsonObject.getString("additionScore")));
             userClass.setPassword(jsonObject.getString("password"));
-            userClass.setSizeGroups(Integer.parseInt(jsonObject.getString("numberOfStudentsPerGroup")));
+            userClass.setSizeGroups(Integer.valueOf(jsonObject.getString("numberOfStudentsPerGroup")));
             userClass.setOwnerEmail(jsonObject.getString("ownerEmail"));
             userClass.setStudents(getStudentsFromJson(jsonObject.getJSONArray("students")));
         }catch(JSONException e){
