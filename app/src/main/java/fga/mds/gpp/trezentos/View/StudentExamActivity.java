@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.Controller.GroupController;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Model.Exam;
@@ -22,6 +23,7 @@ import fga.mds.gpp.trezentos.R;
 public class StudentExamActivity extends AppCompatActivity {
 
     private UserClass userClass;
+    private GroupController groups;
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
@@ -30,13 +32,14 @@ public class StudentExamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_exam);
+
         initToolbar();
         initViewPager();
         initTabLayout();
         initRecover();
 
         if(exam != null){
-            setTitle(exam.getNameExam());
+            setTitle(exam.getNameExam() );
         }
     }
 
@@ -54,7 +57,6 @@ public class StudentExamActivity extends AppCompatActivity {
 
     public void initTabLayout(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
 

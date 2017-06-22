@@ -12,13 +12,30 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:visibility="gone" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_student_group"
-        android:layout_marginTop="10dp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/group_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:background="@drawable/shape_item"
+            android:text="@string/mine_group"
+            android:textSize="25sp"
+            android:textColor="#FFF"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_student_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:clipToPadding="false"
+            />
+    </LinearLayout>
 
 </FrameLayout>

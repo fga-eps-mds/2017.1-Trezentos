@@ -1,5 +1,6 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.renderscript.Double2;
@@ -29,7 +30,7 @@ import fga.mds.gpp.trezentos.R;
 public class CreateClassActivity extends AppCompatActivity {
 
     private Button buttonOk;
-
+    private Button buttonReturn;
     public UserClass userClass;
     public UserAccount userAccount;
     private ProgressBar progressBar;
@@ -40,20 +41,14 @@ public class CreateClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_class);
 
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        setTitle("Criar Sala");
-
         final EditText classNameField = (EditText) findViewById(R.id.edit_text_class_name);
         final EditText institutionField = (EditText) findViewById(R.id.edit_text_institution);
         final EditText passwordField = (EditText) findViewById(R.id.edit_text_class_password);
         final EditText cutOffField = (EditText) findViewById(R.id.edit_text_cut_grade);
         final EditText sizeGroupsField = (EditText) findViewById(R.id.edit_text_size_groups);
         final EditText additionField = (EditText) findViewById(R.id.edit_text_addition);
+
+        buttonReturn = (Button) findViewById(R.id.button_return);
         buttonOk = (Button) findViewById(R.id.button_save);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -66,29 +61,22 @@ public class CreateClassActivity extends AppCompatActivity {
 
                 UserClassControl userClassControl = UserClassControl.getInstance(CreateClassActivity.this);
 
-
                 try {
-
                     isValid = confirmInformation(userClassControl,
                             classNameField, institutionField, passwordField,
                             cutOffField, sizeGroupsField, additionField);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     return;
                 }
 
-
-
                 if (isValid) {
-
                     String className = classNameField.getText().toString();
                     String institution = institutionField.getText().toString();
                     String cutOff = cutOffField.getText().toString();
                     String password = passwordField.getText().toString();
                     String addition = additionField.getText().toString();
                     String sizeGroups = sizeGroupsField.getText().toString();
-
 
                     try {
 
@@ -107,8 +95,14 @@ public class CreateClassActivity extends AppCompatActivity {
                     onBackPressed();
 
                 }
+            }
+        });
 
-
+        buttonReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToMain = new Intent(CreateClassActivity.this, MainActivity.class);
+                startActivity(goToMain);
             }
         });
 

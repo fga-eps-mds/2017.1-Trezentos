@@ -131,4 +131,7 @@
     <string name="put_class_password">Insira a Senha da Sala</string>
     <string name="return_exam">Voltar</string>
     <string name="save_exam">Salvar</string>
+    <string name="mine_group">Meu Grupo</string>
+    <string name="return_to_class">Voltar</string>
+    <string name="save_class">Salvar</string>
 </resources>
