@@ -39,12 +39,13 @@
             >
 
             <android.support.design.widget.TabItem
-
+                android:id="@+id/class_exam"
                 android:icon="@drawable/ic_tests"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"/>
 
             <android.support.design.widget.TabItem
+                android:id="@+id/student_exam"
                 android:icon="@drawable/ic_students"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"/>

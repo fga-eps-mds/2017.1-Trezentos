@@ -44,8 +44,9 @@ public class ShowStudentGroupFragment extends Fragment {
     public UserExamControl userExamControl;
     private UserClass userClass;
     public ProgressBar progressBar;
-    public String userEmail;
+    private TextView groupTextView;
     private GroupController groupController;
+    public String userEmail;
     private ArrayList<Student> groupAndGrades;
 
     public ShowStudentGroupFragment() {
@@ -99,21 +100,25 @@ public class ShowStudentGroupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        new ServerOperation().execute();
+
         final View view = inflater.inflate(R.layout.fragment_show_student_group, container, false);
+
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar_student_group);
+
         progressBar.setVisibility(View.VISIBLE);
 
-        new ServerOperation().execute();
         return view;
     }
 
     class ServerOperation extends AsyncTask<String, Void, String> {
 
         public ServerOperation() {
+
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... params){
 
             HashMap<String, Double> firstGrades = groupController.getFirstGrades(userExam.getNameExam(),
                     userClass.getClassName(), userExam.getClassOwnerEmail());
@@ -128,7 +133,6 @@ public class ShowStudentGroupFragment extends Fragment {
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.GONE);
             initListView();
-
         }
 
         @Override
@@ -141,23 +145,28 @@ public class ShowStudentGroupFragment extends Fragment {
         }
     }
 
-    private class StudentGroupAdapter extends RecyclerView.Adapter implements View.OnClickListener {
+    private class StudentGroupAdapter extends RecyclerView.Adapter
+            implements View.OnClickListener {
 
         private final ArrayList<Student> groupAndGrades;
         private Context context;
         private RecyclerView recyclerView;
 
 
-        public StudentGroupAdapter(ArrayList<Student> groupAndGrades, Context context, RecyclerView recyclerView) {
+        public StudentGroupAdapter(ArrayList<Student> groupAndGrades
+                , Context context, RecyclerView recyclerView) {
             this.groupAndGrades = groupAndGrades;
             this.context = context;
             this.recyclerView = recyclerView;
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.student_in_groups_item, parent, false);
-            ShowStudentGroupFragment.ViewHolder holder = new ShowStudentGroupFragment.ViewHolder(view);
+        public RecyclerView.ViewHolder onCreateViewHolder
+                (ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(context)
+                    .inflate(R.layout.student_in_groups_item, parent, false);
+            ShowStudentGroupFragment.ViewHolder holder
+                    = new ShowStudentGroupFragment.ViewHolder(view);
             view.setOnClickListener(this);
 
             return holder;
@@ -165,7 +174,8 @@ public class ShowStudentGroupFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            ShowStudentGroupFragment.ViewHolder holder = (ShowStudentGroupFragment.ViewHolder) viewHolder;
+            ShowStudentGroupFragment.ViewHolder holder
+                    = (ShowStudentGroupFragment.ViewHolder) viewHolder;
 
             Student student = groupAndGrades.get(position);
             holder.studentEmail.setText(student.getStudentEmail());

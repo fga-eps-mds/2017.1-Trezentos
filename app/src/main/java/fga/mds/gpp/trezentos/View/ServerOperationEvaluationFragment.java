@@ -58,34 +58,6 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
             } catch (UserException e) {
                 e.printStackTrace();
             }
-//            userClasses = new ArrayList<>();
-//            //userExams = new ArrayList<>();
-//            //studentsList = new ArrayList<>();
-//            //classNames = new ArrayList<>();
-//            //examName = new ArrayList<>();
-//            evaluations = new ArrayList<Evaluation>();
-//            evaluations.add(new Evaluation("testeteste@teste.com", "teste", "teste"));
-//
-//            ArrayList<UserClass> allClasses = userClassControl.getClasses();
-//            for (UserClass userClass : allClasses) {
-//                ArrayList<Exam> allExams = userExamControl.getExamsFromUser(email, userClass.getClassName());
-//                if (userClass.getStudents().contains(email)) {
-//                    userClasses.add(userClass);
-//                    for(Exam exam : allExams){
-//                        for(int i = 0; i < userClass.getStudents().size(); i++) {
-//                            if(exam.getFirstGrades() != null &&
-//                                    !userClass.getStudents().get(i).equals("")) {
-//                                //classNames.add(userClass.getClassName());
-//                                //examName.add(exam.getNameExam());
-//                                //studentsList.add(userClass.getStudents().get(i));
-//                                evaluations.add(new Evaluation(userClass.getClassName(), exam.getNameExam(), userClass.getStudents().get(i)));
-//                            }else{
-//                                Log.d("TESTANDO", "passou");
-//                            }
-//                        }
-//                    }
-//                }
-//            }
 
             evaluationList = EvaluationControl.getInstance
                     (getApplicationContext()).getEvaluations(userAccount);
@@ -109,19 +81,21 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
 
     @Override
     protected void onPostExecute(String result){
-        RecyclerView recyclerView = (RecyclerView) EvaluationFragment
-                        .getInstance()
-                        .getActivity()
-                        .findViewById(R.id.recyclerEvaluation);
+        if(result.equals("true")) {
+            RecyclerView recyclerView = (RecyclerView) EvaluationFragment
+                    .getInstance()
+                    .getActivity()
+                    .findViewById(R.id.recyclerEvaluation);
 
-        initSharedPreferences();
+            initSharedPreferences();
 
-//        recyclerView.setAdapter(new EvaluationAdapter
-//                (evaluationList, EvaluationFragment.getInstance().getContext(), recyclerView));
+            recyclerView.setAdapter(new EvaluationAdapter
+                    (evaluationList, EvaluationFragment.getInstance().getContext(), recyclerView));
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(application);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(application);
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+        }
     }
 
     private void initSharedPreferences(){
@@ -139,12 +113,11 @@ public class ServerOperationEvaluationFragment extends AsyncTask<String, Void, S
             if(!address.equals("")){
                 return true;
             }
-            //return !address.equals("");
+            return !address.equals("");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
 
         return false;
     }
-
 }

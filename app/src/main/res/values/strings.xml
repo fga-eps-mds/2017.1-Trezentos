@@ -109,12 +109,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="atualizar_notas">Atualizar Notas</string>
-    <string name="update_grades">Atualizar Notas</string>
+    <string name="update_grades">Salvar Notas</string>
     <string name="not_defined_groups">Grupos ainda não definidos.</string>
     <string name="this_action_cannot_be_undone">Essa ação não pode ser desfeita</string>
     <string name="are_you_sure">Você tem certeza que deseja continuar?</string>
     <string name="confirm">confirmar</string>
-    <string name="update_trezentos_grades">Atualizar Notas Trezentos</string>
+    <string name="update_trezentos_grades">Salvar Notas Trezentos</string>
     <string name="send_evaluation">Encaminhar Avaliaçoes</string>
 
     <string name="msg_null_name_exam_error_message">O nome não pode ser vazio</string>
@@ -129,4 +129,9 @@
     <string name="exit_text_view">Sair</string>
     <string name="enter_class">Entrar</string>
     <string name="put_class_password">Insira a Senha da Sala</string>
+    <string name="return_exam">Voltar</string>
+    <string name="save_exam">Salvar</string>
+    <string name="mine_group">Meu Grupo</string>
+    <string name="return_to_class">Voltar</string>
+    <string name="save_class">Salvar</string>
 </resources>

@@ -56,6 +56,7 @@ public class ClassActivity extends AppCompatActivity {
 
     public void initViewPager() {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
+
         setupViewPager(viewPager);
     }
 
@@ -67,6 +68,7 @@ public class ClassActivity extends AppCompatActivity {
     public void initFloatingButton() {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn);
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent goCreateExam = new Intent(getApplicationContext(), CreateExamActivity.class);
@@ -109,16 +111,15 @@ public class ClassActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            Log.d("MAP", "settings");
-            return true;
-        } else if (id == R.id.action_class_information) {
+        if (id == R.id.action_class_information) {
             Intent intentEditClass = new Intent(getApplicationContext(), EditClassActivity.class);
             UserClass userClassCalled = userClass;
             intentEditClass.putExtra("Class", userClassCalled);
             Log.d("MAP", "editclass");
             startActivity(intentEditClass);
             return true;
+        }else{
+            //Does nothing
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,8 +1,10 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +26,10 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
     private ImageView exitButton;
     private TextView profileName;
+    private String userEmail;
+    private String userName;
     private TextView profileEmail;
+    private UserAccountControl userAccountControl;
     private OnFragmentInteractionListener mListener;
     private static UserFragment fragment;
 
@@ -52,6 +57,11 @@ public class UserFragment extends Fragment implements View.OnClickListener{
         profileEmail = (TextView) view.findViewById(R.id.profile_email);
 
         exitButton.setOnClickListener(this);
+
+        initSharedPreference();
+
+        profileName.setText(userName);
+        profileEmail.setText(userEmail);
 
         return view;
     }
@@ -82,5 +92,12 @@ public class UserFragment extends Fragment implements View.OnClickListener{
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    private void initSharedPreference(){
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        userEmail = session.getString("userEmail", "");
+        userName = session.getString("userName", "");
     }
 }

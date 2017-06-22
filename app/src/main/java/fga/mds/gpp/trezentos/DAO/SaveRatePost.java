@@ -16,8 +16,6 @@ import okhttp3.Response;
 
 public class SaveRatePost extends AsyncTask<String, String, String> {
 
-
-
     private UserAccount user;
     private Evaluation evaluation;
 

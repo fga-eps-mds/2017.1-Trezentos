@@ -3,6 +3,8 @@ package fga.mds.gpp.trezentos.View;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -95,6 +97,13 @@ public class StudentsFragment extends Fragment {
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.student_item, parent, false);
 
+            if(!(getActivity() instanceof ExamActivity)){
+
+                view.findViewById(gradeLayout).setVisibility(View.GONE);
+                view.findViewById(text_view_grade).setVisibility(View.GONE);
+            }else{
+                // do nothing
+            }
             StudentsFragment.ViewHolder holder =
                     new StudentsFragment.ViewHolder(view);
             view.setOnClickListener(this);
@@ -172,6 +181,7 @@ public class StudentsFragment extends Fragment {
 
         public int showGradePicker(final int CLICK) {
             final Dialog d = new Dialog(getContext());
+            d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             d.setContentView(R.layout.dialog);
 
             final NumberPicker np1 = (NumberPicker) d.findViewById(R.id.numberPicker1);
@@ -222,7 +232,7 @@ public class StudentsFragment extends Fragment {
                 });
             }else {
 
-                secondGradeTextView.setText(userExam.getSecondGrades().toString());
+                secondGradeTextView.setText(userExam.getSecondGrades());
 
                 buttonOK300.setOnClickListener(new View.OnClickListener() {
                     @Override
