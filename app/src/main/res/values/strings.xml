@@ -56,7 +56,7 @@
     <string name="btn_login">Login</string>
     <string name="btn_fb_login">CONTINUAR COM FACEBOOK</string>
     <string name="btn_signup">Cadastrar</string>
-    <string name="btn_forgot_password">Esqueci a senha</string>
+    <string name="btn_about">Sobre</string>
     <string name="btn_send_to_email">ENVIAR</string>
     <string name="btn_return_to_login">Retornar</string>
     <string name="cancel">Cancelar</string>

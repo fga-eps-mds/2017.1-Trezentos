@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity{
         final Button login = (Button) findViewById(R.id.button_login);
 
         Button register = (Button) findViewById(R.id.button_register);
-        Button forgotPass = (Button) findViewById(R.id.button_forgot_password);
         Button about = (Button) findViewById(R.id.button_about);
 
         final EditText email = (EditText) findViewById(R.id.edit_text_email);
@@ -117,14 +116,6 @@ public class LoginActivity extends AppCompatActivity{
 
                 startActivity(intent);
                 finish();
-            }
-        });
-
-        forgotPass.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent forgotIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(forgotIntent);
             }
         });
 
