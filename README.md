@@ -45,4 +45,4 @@ git clone https://github.com/fga-gpp-mds/2017.1-Trezentos.git
 
 ### Licença
 
-<p align="justify">&emsp;&emsp; Trezentos é distribuído sob a licença [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html). Consulte [LICENSE](https://github.com/fga-gpp-mds/2017.1-Trezentos/blob/master/LICENSE) para obter detalhes.</p>
+<p align="justify">&emsp;&emsp; Trezentos é distribuído sob a licença <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL 3.0</a>. Consulte <a href="https://github.com/fga-gpp-mds/2017.1-Trezentos/blob/master/LICENSE">LICENSE</a> para obter detalhes.</p>
