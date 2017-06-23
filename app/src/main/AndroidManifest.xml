@@ -27,7 +27,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.LoginActivity"/>
-        <activity android:name=".View.ForgotPasswordActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
