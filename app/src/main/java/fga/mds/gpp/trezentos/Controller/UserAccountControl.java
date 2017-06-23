@@ -22,6 +22,7 @@ public class UserAccountControl {
     private static UserAccountControl instance;
     final Context context;
     private UserAccount userAccount;
+    private UserAccount fbUserAccount;
     private static Logger LOGGER = Logger.getLogger("InfoLogging");
 
     private UserAccountControl(final Context context){
@@ -88,10 +89,16 @@ public class UserAccountControl {
         try{
             String name = object.getString("name");
             String fEmail = object.getString("email");
-            UserAccount fbUserAccount = getUserWithInfo(name, fEmail);
+            fbUserAccount = getUserWithInfo(name, fEmail);
+            Log.d("NOME",name);
+//            userAccount = fbUserAccount;
+//
+//            String nomeDeDeus = userAccount.getName();
+//            Log.d("NOMED", nomeDeDeus);
 
             String urlWithParameters = getUserUrl(fbUserAccount, false);
             PostDao postDao = new PostDao(urlWithParameters, null, "");
+
 
             postDao.execute();
         }catch(JSONException e){
@@ -169,8 +176,14 @@ public class UserAccountControl {
         }catch(JSONException e){
             e.printStackTrace();
         }
+        try {
+            userAccount.setName(object.getString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         if(PasswordUtil.decryptPass(hashedPassword, salt, password)){
+            Log.d("NOME", userAccount.getName());
             logInUser();
         }else{
             logOutUser();
@@ -206,6 +219,26 @@ public class UserAccountControl {
         session.edit()
                 .putBoolean("IsUserLogged", false)
                 .putString("userName", "")
+                .apply();
+    }
+
+
+
+    public void logInUserFromFacebook(JSONObject object){
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+        String nome = null;
+        String email = null;
+        try {
+            nome = object.getString("name");
+            email = object.getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d("NOME", nome);
+        session.edit()
+                .putBoolean("IsUserLogged", true)
+                .putString("userEmail", email)
+                .putString("userName", nome)
                 .apply();
     }
 

@@ -54,23 +54,22 @@ public class ShowClassComponentsFragment extends Fragment {
         students = userClass.getStudents();
 
 
-        if (students.get(0).equals("")){
-            students.remove(0);
-        }
 
         View view = inflater.inflate(R.layout.fragment_show_class_components
                 , container, false); // Inflate the layout for this fragment
 
-        RecyclerView recyclerView = (RecyclerView) view
-                .findViewById(R.id.recycler_class_components);
-        recyclerView.setAdapter(new ShowClassComponentsFragment
-                .ShowClassComponentAdapter(students, getActivity()
-                .getApplicationContext(), recyclerView));
+        if(students != null) {
 
+            RecyclerView recyclerView = (RecyclerView) view
+                    .findViewById(R.id.recycler_class_components);
+            recyclerView.setAdapter(new ShowClassComponentsFragment
+                    .ShowClassComponentAdapter(students, getActivity()
+                    .getApplicationContext(), recyclerView));
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+        }
 
         return view;
     }

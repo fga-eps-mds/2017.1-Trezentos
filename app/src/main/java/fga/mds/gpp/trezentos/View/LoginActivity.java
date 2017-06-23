@@ -62,8 +62,8 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void onSuccess(LoginResult loginResult){
-                goMainScreen();
                 facebookLogin(loginResult);
+                goMainScreen();
             }
 
             @Override
@@ -144,9 +144,11 @@ public class LoginActivity extends AppCompatActivity{
                 new GraphRequest.GraphJSONObjectCallback(){
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response){
+                        JSONObject jsonObject = response.getJSONObject();
                         UserAccountControl userAccountControl = UserAccountControl
                                 .getInstance(getApplicationContext());
                         userAccountControl.authenticateLoginFb(object);
+                        userAccountControl.logInUserFromFacebook(jsonObject);
                     }
                 });
 
@@ -154,6 +156,7 @@ public class LoginActivity extends AppCompatActivity{
         parameters.putString("fields", "id,name,email,gender");
         request.setParameters(parameters);
         request.executeAsync();
+
     }
 
     private void loginErrorMessage(String errorMessage, EditText email, EditText password){
