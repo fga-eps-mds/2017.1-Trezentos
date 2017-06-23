@@ -1,19 +1,12 @@
 package fga.mds.gpp.trezentos.Controller;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.robolectric.Robolectric;
+import junit.framework.Assert;
 
+import org.junit.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
 import fga.mds.gpp.trezentos.Model.Student;
-import fga.mds.gpp.trezentos.View.ClassActivity;
-import fga.mds.gpp.trezentos.View.ExamActivity;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class GroupControllerUnitTest {
 
@@ -54,4 +47,50 @@ public class GroupControllerUnitTest {
 
         return map;
     }
+
+    @Test
+    public void shouldGetGroups(){
+        HashMap<String, Integer> groups;
+        String classOwnerEmail = "teste@gmail.com";
+        String examName = "P1";
+        String userClassName = "testeteste";
+
+        groups = GroupController.getGroups(examName, userClassName, classOwnerEmail);
+
+        boolean isValid = false;
+
+        if(groups.containsKey("teste@email.com") ||
+                groups.containsKey("testandosedamerda@email.com") ||
+                groups.containsKey("agora@da.com") ||
+                groups.containsKey("gui.988@hotmail.com")){
+
+            isValid = true;
+        }
+
+        Assert.assertEquals(isValid, true);
+
+    }
+
+    @Test
+    public void shouldGetFirstGrades(){
+        HashMap<String, Double> grades;
+        String classOwnerEmail = "teste@gmail.com";
+        String examName = "P1";
+        String userClassName = "testeteste";
+
+        boolean isValid = false;
+
+        grades = GroupController.getFirstGrades(examName, userClassName, classOwnerEmail);
+
+        if(grades.containsKey("teste@email.com") ||
+                grades.containsKey("testandosedamerda@email.com") ||
+                grades.containsKey("agora@da.com") ||
+                grades.containsKey("gui.988@hotmail.com")){
+
+            isValid = true;
+        }
+
+        Assert.assertEquals(isValid, true);
+    }
+
 }

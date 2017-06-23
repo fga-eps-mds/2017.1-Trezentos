@@ -83,7 +83,7 @@ public class EvaluationControl {
                     response = sendToDao(examName, userClassName,
                             group.toString(), email, entry.getKey());
                 }
-                if(gradeToEvaluate > notaDeCorte && nota <= notaDeCorte){
+                if(gradeToEvaluate < notaDeCorte && nota >= notaDeCorte){
                     response = sendToDao(examName, userClassName,
                             group.toString(), email, entry.getKey());
                 }
@@ -145,8 +145,9 @@ public class EvaluationControl {
         }
 
         try {
-            String urlWithParameters = getJsonBody(jsonObject);
-            response = new PostDao(urlWithParameters, null, "")
+            String url = "https://trezentos-api.herokuapp.com/api/user/rateToDo";
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            response = new PostDao(url, JSON, getJsonBody(jsonObject))
                     .execute()
                     .get();
 
@@ -165,17 +166,17 @@ public class EvaluationControl {
         return response.equals("true");
     }
 
-    private String getJsonBody(JSONObject json){
+    private String getJsonBody(JSONObject jsonObject){
+
+        JSONObject json = new JSONObject();
 
         try {
             json.put("email", userAccount.getEmail());
-            json.put("rateToDo", evaluation);
+            json.put("rateToDo", jsonObject);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        Log.d("JSONARRAY", json.toString());
 
         return json.toString();
     }
