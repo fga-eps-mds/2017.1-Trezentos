@@ -38,30 +38,24 @@ public class UserAccountControl {
 
     public String validateSignUp(String name, String email, String password,
                                  String passwordConfirmation){
-        String errorMessage = "";
-
         try{
             userAccount = new UserAccount(name, email, password, passwordConfirmation);
         }catch(UserException userException){
-            errorMessage = userException.getMessage();
+            return userException.getMessage();
         }
-        return errorMessage;
+
+        return "";
     }
 
     public String validateSignUpResponse(){
-        String urlWithParameters = getUserUrl(userAccount, false);
-        PostDao postDao = new PostDao(urlWithParameters, null, "");
-
+        PostDao postDao = new PostDao(getUserUrl(userAccount, false), null, "");
         String serverResponse = "404";
 
         try{
             serverResponse = postDao.execute().get();
-            Log.d("SERVERRESPONSE", serverResponse);
         }catch(InterruptedException e){
-//            Log.d(TAG,e.toString());
             e.printStackTrace();
         }catch(ExecutionException e){
-//            LOGGER.info(e.getMessage());
             e.printStackTrace();
         }
 
@@ -78,28 +72,18 @@ public class UserAccountControl {
         builder.addQueryParameter("password", userAccount.getPassword());
         builder.addQueryParameter("name", userAccount.getName());
         builder.addQueryParameter("facebook", isFromFacebook.toString());
-        Log.d("SERVERRESPONSE", builder.build().toString());
 
         return builder.build().toString();
 
     }
 
     public void authenticateLoginFb(JSONObject object){
-
         try{
             String name = object.getString("name");
             String fEmail = object.getString("email");
             fbUserAccount = getUserWithInfo(name, fEmail);
-            Log.d("NOME",name);
-//            userAccount = fbUserAccount;
-//
-//            String nomeDeDeus = userAccount.getName();
-//            Log.d("NOMED", nomeDeDeus);
-
-            String urlWithParameters = getUserUrl(fbUserAccount, false);
-            PostDao postDao = new PostDao(urlWithParameters, null, "");
-
-
+            PostDao postDao = new PostDao(
+                                    getUserUrl(fbUserAccount, false), null, "");
             postDao.execute();
         }catch(JSONException e){
             e.printStackTrace();
@@ -115,29 +99,25 @@ public class UserAccountControl {
         }catch(UserException e){
             e.printStackTrace();
         }
+
         return userAccountWithInfo;
     }
 
     public String authenticateLogin(String email, String password){
-        String errorMessage = "";
-
         try{
             userAccount = new UserAccount();
-            //Verify email
             userAccount.setEmail(email);
-            //Verify the password
             userAccount.authenticatePassword(password);
         }catch(UserException userException){
-            errorMessage = userException.getMessage();
+            return userException.getMessage();
         }
 
-        return errorMessage;
+        return "";
     }
 
     public String validateSignInResponse(){
         String urlWithParameters = getSignInUrl(userAccount);
         PostDao postDao = new PostDao(urlWithParameters, null, "");
-
         String serverResponse = "404";
 
         try{
@@ -165,14 +145,11 @@ public class UserAccountControl {
 
     public void validatePassword(String serverResponse, String password) throws UserException {
         JSONObject object = getObjectFromServerResponse(serverResponse);
-
         String hashedPassword = null, salt = null;
 
         try{
             hashedPassword = object.getString("password");
-            // Log.d("Password", hashedPassword);
             salt = object.getString("salt");
-            // Log.d("Salt", salt);
         }catch(JSONException e){
             e.printStackTrace();
         }
@@ -183,7 +160,6 @@ public class UserAccountControl {
         }
 
         if(PasswordUtil.decryptPass(hashedPassword, salt, password)){
-            Log.d("NOME", userAccount.getName());
             logInUser();
         }else{
             logOutUser();
@@ -226,15 +202,14 @@ public class UserAccountControl {
 
     public void logInUserFromFacebook(JSONObject object){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
-        String nome = null;
-        String email = null;
+        String nome = null, email = null;
+
         try {
             nome = object.getString("name");
             email = object.getString("email");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("NOME", nome);
         session.edit()
                 .putBoolean("IsUserLogged", true)
                 .putString("userEmail", email)
