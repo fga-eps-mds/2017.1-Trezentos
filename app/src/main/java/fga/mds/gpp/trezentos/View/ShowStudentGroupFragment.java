@@ -25,6 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import fga.mds.gpp.trezentos.Controller.GroupController;
@@ -67,7 +69,10 @@ public class ShowStudentGroupFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        new ServerOperation().execute();
+
+        if(userClass.getStudents().size() > 1) {
+            new ServerOperation().execute();
+        }
     }
 
     private void loadRecover() {
@@ -83,7 +88,6 @@ public class ShowStudentGroupFragment extends Fragment {
     }
 
     public void initListView() {
-
         if (getActivity() != null) {
             progressBar.setVisibility(View.GONE);
 
@@ -99,14 +103,13 @@ public class ShowStudentGroupFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        new ServerOperation().execute();
-
         final View view = inflater.inflate(R.layout.fragment_show_student_group, container, false);
+        loadRecover();
 
-        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar_student_group);
-
-        progressBar.setVisibility(View.VISIBLE);
+        if(userClass.getStudents().size() > 1) {
+            progressBar = (ProgressBar) view.findViewById(R.id.progress_bar_student_group);
+            progressBar.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
@@ -125,7 +128,21 @@ public class ShowStudentGroupFragment extends Fragment {
             HashMap<String, Integer> groups = groupController.getGroups(userExam.getNameExam(),
                     userClass.getClassName(), userClass.getOwnerEmail());
 
-            groupAndGrades = groupController.setSpecificGroupAndGrades(userEmail, firstGrades, groups);
+            ArrayList<Student> auxGroupsAndGrades =
+                    groupController.setSpecificGroupAndGrades
+                            (userEmail, firstGrades, groups);
+
+//            //esse metodo bloco de codigo ordena os grupos por ordem de nota crescente
+//            Collections.sort(auxGroupsAndGrades, new Comparator<Student>() {
+//                @Override
+//                public int compare(Student o1, Student o2) {
+//                return o1.getFirstGrade() < o2.getFirstGrade() ? +1 :
+//                         (o1.getFirstGrade() > o2.getFirstGrade() ? -1 : 0);
+//                }
+//            });
+
+            groupAndGrades = auxGroupsAndGrades;
+
             return null;
         }
 
@@ -152,7 +169,6 @@ public class ShowStudentGroupFragment extends Fragment {
         private Context context;
         private RecyclerView recyclerView;
 
-
         public StudentGroupAdapter(ArrayList<Student> groupAndGrades
                 , Context context, RecyclerView recyclerView) {
             this.groupAndGrades = groupAndGrades;
@@ -178,7 +194,7 @@ public class ShowStudentGroupFragment extends Fragment {
                     = (ShowStudentGroupFragment.ViewHolder) viewHolder;
 
             Student student = groupAndGrades.get(position);
-            holder.studentEmail.setText(student.getStudentEmail());
+            holder.studentEmail.setText(student.getEmail());
             holder.studentFirstGrade.setText(student.getFirstGrade().toString());
             holder.studentSecondGrade.setText(" - ");
         }
@@ -193,7 +209,6 @@ public class ShowStudentGroupFragment extends Fragment {
             return super.getItemId(position);
         }
 
-
         @Override
         public void onClick(View v) {
         }
@@ -205,17 +220,12 @@ public class ShowStudentGroupFragment extends Fragment {
             final TextView studentFirstGrade;
             final TextView studentSecondGrade;
 
-
             public ViewHolder(View view) {
                 super(view);
                 studentEmail = (TextView) view.findViewById(R.id.student_email);
                 studentFirstGrade = (TextView) view.findViewById(R.id.student_first_grade);
                 studentSecondGrade = (TextView) view.findViewById(R.id.student_second_grade);
-
             }
         }
 
 }
-
-
-

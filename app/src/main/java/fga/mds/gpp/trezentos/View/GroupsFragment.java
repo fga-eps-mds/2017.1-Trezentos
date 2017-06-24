@@ -46,7 +46,9 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
     @Override
     public void onResume() {
         super.onResume();
-        new ServerOperation().execute();
+        if(userClass.getStudents() != null) {
+            new ServerOperation().execute();
+        }
     }
 
     @Override
@@ -65,15 +67,14 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
 
     private class ServerOperation extends AsyncTask<String, Void, String> {
 
-
         ServerOperation(){
         }
 
         @Override
         protected String doInBackground(String... params) {
             if(isNetworkAvailable(getContext()) && isInternetAvailable()){ //If internet is ok
-                groupses = GroupController.getGroups(exam.getNameExam(), exam.getUserClassName(),
-                        exam.getClassOwnerEmail());
+                groupses = GroupController.getGroups(exam.getNameExam(),
+                        exam.getUserClassName(), exam.getClassOwnerEmail());
                 firstGrades = GroupController.getFirstGrades(exam.getNameExam(),
                         userClass.getClassName(), userClass.getOwnerEmail());
                 return "true";
@@ -92,12 +93,12 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
                 RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_groups);
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(new GroupsFragment.Adapter(groupses,
-                        getActivity().getApplicationContext(), userClass, recyclerView, firstGrades));
+                        getActivity().getApplicationContext(), userClass,
+                        recyclerView, firstGrades));
 
                 final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(layoutManager);
-
             }
         }
 
