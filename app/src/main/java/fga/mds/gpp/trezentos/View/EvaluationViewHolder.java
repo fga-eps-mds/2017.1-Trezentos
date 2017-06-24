@@ -28,7 +28,6 @@ public class EvaluationViewHolder extends RecyclerView.ViewHolder
     }
 
     private void showConfirm(float rate){
-
         final Dialog evaluationDialog =
                 new Dialog(EvaluationFragment.getInstance().getContext());
         evaluationDialog.setTitle("EvaluationConfirmation");
@@ -37,15 +36,12 @@ public class EvaluationViewHolder extends RecyclerView.ViewHolder
         Button cancelEvaluation = (Button) evaluationDialog.findViewById(R.id.button2);
         RatingBar ratingBarDialog = (RatingBar) evaluationDialog.findViewById(R.id.ratingBarDialog);
         ratingBarDialog.setRating(rate);
-
         evaluationDialog.show();
 
         confirmEvaluation.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                //Send API
-                // evaluationDialog.dismiss();
             }
         });
         cancelEvaluation.setOnClickListener(new View.OnClickListener()
@@ -55,7 +51,6 @@ public class EvaluationViewHolder extends RecyclerView.ViewHolder
                 evaluationDialog.dismiss(); // dismiss the dialog
             }
         });
-
     }
 
     @Override

@@ -49,11 +49,15 @@ public class UserExamControl{
     public void validateCreateExam(String examName, String userClassName, String classOwnerEmail)
             throws UserException{
         try{
-            String url = "https://trezentos-api.herokuapp.com/api/exam/register";
             Exam exam = new Exam(examName, userClassName, classOwnerEmail);
-            String urlWithParameters = getExamUrl(url, exam);
+            HttpUrl.Builder builder = HttpUrl.parse(
+                    "https://trezentos-api.herokuapp.com/api/exam/register").newBuilder();
 
-            PostDao postDao = new PostDao(urlWithParameters, null, "");
+            builder.addQueryParameter("name", exam.getNameExam());
+            builder.addQueryParameter("userClassName", exam.getUserClassName());
+            builder.addQueryParameter("classOwnerEmail", exam.getClassOwnerEmail());
+
+            PostDao postDao = new PostDao(builder.build().toString(), null, "");
             postDao.execute();
         }catch(UserException userException){
             userException.printStackTrace();
@@ -71,17 +75,6 @@ public class UserExamControl{
 
         // return response
         return new PutDao(url + gradeType, json, body).execute().get();
-    }
-
-    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
-    private String getExamUrl(String url, Exam exam){
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-
-        builder.addQueryParameter("name", exam.getNameExam());
-        builder.addQueryParameter("userClassName", exam.getUserClassName());
-        builder.addQueryParameter("classOwnerEmail", exam.getClassOwnerEmail());
-
-        return builder.build().toString();
     }
 
     // Get from api

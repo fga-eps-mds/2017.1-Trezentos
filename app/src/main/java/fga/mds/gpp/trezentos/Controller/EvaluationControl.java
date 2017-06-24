@@ -33,7 +33,6 @@ public class EvaluationControl {
 
     public EvaluationControl(final Context context){
         this.context = context;
-
     }
 
     public static EvaluationControl getInstance(final Context context){
@@ -69,20 +68,17 @@ public class EvaluationControl {
         return false;
     }
 
+
     private boolean sendToDao(String examName, String userClassName, String groupNumber,
                               String email, String emailToEvaluate){
-
         evaluation.setStudentEmail(emailToEvaluate);
-
         JSONObject jsonObject = buildJSONObject();
 
         try {
             String url = "https://trezentos-api.herokuapp.com/api/user/rateToDo";
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             return (new PostDao(url, JSON, getJsonBody(jsonObject))
-                .execute()
-                .get().equals("true"));
-
+                .execute().get().equals("true"));
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -91,7 +87,6 @@ public class EvaluationControl {
     }
 
     private JSONObject buildJSONObject(){
-
         JSONObject jsonObject = new JSONObject();
 
         try {
@@ -106,20 +101,17 @@ public class EvaluationControl {
     }
 
     private String getJsonBody(JSONObject jsonObject){
-
         JSONObject json = new JSONObject();
 
         try {
             json.put("email", userAccount.getEmail());
             json.put("rateToDo", jsonObject);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return json.toString();
     }
-
 
     private UserAccount getUserWithInfo(String email){
         UserAccount userAccountWithInfo = new UserAccount();
@@ -149,20 +141,15 @@ public class EvaluationControl {
 //    }
 
     public ArrayList<Evaluation> getEvaluations(UserAccount userAccount){
-        String urlWithParameters = getEvaluationsUrlWithParameters(userAccount);
-        GetDao getDao = new GetDao(urlWithParameters);
-
         String serverResponse = "404";
-        serverResponse = getDao.get();
+        serverResponse = new GetDao(getEvaluationsUrlWithParameters(userAccount)).get();
 
         ArrayList<Evaluation> evaluationList = new ArrayList<>();
-
         try {
             evaluationList = getEvaluationsList(serverResponse);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         return evaluationList;
     }
@@ -170,7 +157,6 @@ public class EvaluationControl {
     private String getEvaluationsUrlWithParameters(UserAccount userAccount){
         String url = "https://trezentos-api.herokuapp.com/api/user/rateToDo";
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-
         builder.addQueryParameter("email", userAccount.getEmail());
 
         return builder.build().toString();
@@ -178,7 +164,6 @@ public class EvaluationControl {
 
 
     private ArrayList<Evaluation> getEvaluationsList(String serverResponse) throws JSONException{
-
         JSONArray jsonArray = null;
 
         try {
@@ -188,7 +173,6 @@ public class EvaluationControl {
         }
 
         ArrayList<Evaluation> evaluations = new ArrayList<>();
-
         for(int i = 0; i < jsonArray.length(); i++){
             Evaluation evaluation = getEvaluationsFromJson(jsonArray.getJSONObject(i));
             evaluations.add(evaluation);
@@ -210,5 +194,4 @@ public class EvaluationControl {
 
         return evaluation;
     }
-
 }

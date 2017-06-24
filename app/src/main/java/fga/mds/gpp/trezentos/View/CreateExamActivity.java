@@ -61,7 +61,6 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
     private void recoverSharedPreferences(){
         SharedPreferences session = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
-
         classOwnnerEmail = session.getString("userEmail","");
     }
 
@@ -72,13 +71,7 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-
-        boolean isValid;
-
-
-        UserExamControl userExamControl = UserExamControl
-                .getInstance(getApplicationContext());
-
+        UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
         switch (v.getId()) {
             case R.id.return_exam_button: {
                 Intent returnToClass = new Intent(CreateExamActivity.this, ClassActivity.class);
@@ -87,14 +80,11 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
                 break;
             }
             case R.id.ok_create_button: {
-
                 try {
-                    isValid = confirmInformation(userExamControl,
-                            examNameField, userClassName, classOwnnerEmail);
-                    if (isValid) {
+                    if (confirmInformation(userExamControl,
+                            examNameField, userClassName, classOwnnerEmail)) {
                         String examName = examNameField.getText().toString();
-                        userExamControl.validateCreateExam
-                                (examName, userClassName, classOwnnerEmail);
+                        userExamControl.validateCreateExam(examName, userClassName, classOwnnerEmail);
                         onBackPressed();
                     }
                 } catch (UserException e) {
@@ -111,15 +101,13 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
     @return: boolean to confirm all fields of parameters.
      */
 
-    public boolean confirmInformation
-            (UserExamControl userExamControl,
+    public boolean confirmInformation(UserExamControl userExamControl,
                 EditText examNameField, String userClassName,
                     String classOwnnerEmail) throws UserException {
         String examName = examNameField.getText().toString();
-        String errorMessage = userExamControl
-                .validateInformation(examName,userClassName, classOwnnerEmail);
 
-        return verifyValidMessage(errorMessage);
+        return verifyValidMessage(userExamControl
+                .validateInformation(examName,userClassName, classOwnnerEmail));
     }
 
     private boolean verifyValidMessage(String errorMessage){
@@ -137,5 +125,4 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
 
         return false;
     }
-
 }

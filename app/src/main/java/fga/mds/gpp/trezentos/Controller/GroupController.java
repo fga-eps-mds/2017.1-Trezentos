@@ -34,34 +34,26 @@ public class GroupController {
     }
 
     private static HashMap<String, Double> convertToHashMapDouble(String value) {
-
         if (value.length() < 2) return null;
-
-        value = value.substring(1, value.length()-1);           //remove curly brackets
-        String[] keyValuePairs = value.split(",");              //split the string to creat key-value pairs
+        String[] keyValuePairs = value.substring(1, value.length()-1).split(",");              //split the string to creat key-value pairs
         HashMap<String, Double> map = new HashMap<>();
 
         for(String pair : keyValuePairs) {                      //iterate over the pairs
             String[] entry = pair.split("=");                   //split the pairs to get key and value
-            map.put(entry[0].trim(),
-                    Double.valueOf(entry[1].trim()));           //add them to the hashmap and trim whitespaces
+            map.put(entry[0].trim(), Double.valueOf(entry[1].trim()));
         }
 
         return map;
     }
 
     private static HashMap<String, Integer> convertToHashMapInt(String value) {
-
         if (value.length() < 2) return null;
-
-        value = value.substring(1, value.length()-1);           //remove curly brackets
-        String[] keyValuePairs = value.split(",");              //split the string to creat key-value pairs
+        String[] keyValuePairs = value.substring(1, value.length()-1).split(",");              //split the string to creat key-value pairs
         HashMap<String,Integer> map = new HashMap<>();
 
         for(String pair : keyValuePairs) {                      //iterate over the pairs
             String[] entry = pair.split("=");                   //split the pairs to get key and value
-            map.put(entry[0].trim(),
-                    Integer.valueOf(entry[1].trim()));          //add them to the hashmap and trim whitespaces
+            map.put(entry[0].trim(), Integer.valueOf(entry[1].trim()));
         }
 
         return map;
@@ -79,29 +71,17 @@ public class GroupController {
 
     public static HashMap<String, Double> getFirstGrades(String name, String userClassName, String classOwnerEmail) {
         String url = "https://trezentos-api.herokuapp.com/api/exam/first_grades";
-        String urlWithParameters = getFirstGradesUrlWithParameters(url, userClassName, classOwnerEmail, name);
-        GetDao getDao = new GetDao(urlWithParameters);
-        String serverResponse = getDao.get();
+        String urlWithParameters = getUrlWithParameters(url, name, userClassName, classOwnerEmail);
+        String serverResponse = new GetDao(urlWithParameters).get();
         firstGrades = convertToHashMapDouble(serverResponse);
 
         return firstGrades;
     }
 
-    private static String getFirstGradesUrlWithParameters(String url, String userClassName, String classOwnerEmail, String name){
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-
-        builder.addQueryParameter("classOwnerEmail", classOwnerEmail);
-        builder.addQueryParameter("userClassName", userClassName);
-        builder.addQueryParameter("name", name);
-        return builder.build().toString();
-    }
-
     public static HashMap<String, Integer> getGroups (String name, String userClassName,
                                                       String classOwnerEmail) {
-
         String url = "https://trezentos-api.herokuapp.com/api/exam/groups";
         String urlWithParameters = getUrlWithParameters(url, name, userClassName, classOwnerEmail);
-
         String serverResponse = new GetDao(urlWithParameters).get();
         groups = convertToHashMapInt(serverResponse);
 
@@ -111,10 +91,10 @@ public class GroupController {
     private static String getUrlWithParameters(String url, String name, String userClassName,
                                                String classOwnerEmail){
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-
         builder.addQueryParameter("classOwnerEmail", classOwnerEmail);
         builder.addQueryParameter("userClassName", userClassName);
         builder.addQueryParameter("name", name);
+
         return builder.build().toString();
     }
 
@@ -129,14 +109,10 @@ public class GroupController {
 //    }
 
     public boolean sortAndSaveGroups(HashMap<String, Double> grades, UserClass userClass, String email, Exam exam) {
-
         Map<String, Integer> sortedGroups = SortStudentsUtil.sortGroups(grades,
                 userClass.getSizeGroups(), userClass.getStudents().size());
-        Log.d("sorted students", sortedGroups.toString());
 
-        boolean success = saveGroups(sortedGroups.toString(), userClass, email, exam);
-
-        return success;
+        return saveGroups(sortedGroups.toString(), userClass, email, exam);
     }
 
 //    private boolean saveGroups(String groups, UserClass userClass, String email, Exam exam) {
@@ -157,13 +133,11 @@ public class GroupController {
 
 
     private boolean saveGroups(String groups, UserClass userClass, String email, Exam exam) {
-
         String response = "false";
-        String url = "https://trezentos-api.herokuapp.com/api/exam/groups";
         MediaType json = MediaType.parse("application/json; charset=utf-8");
         String body = getJsonBody(email, userClass.getClassName(), exam.getNameExam(), groups);
-
-        PutDao putDao = new PutDao(url, json, body);
+        PutDao putDao = new PutDao("https://trezentos-api.herokuapp.com/api/exam/groups",
+                                        json, body);
 
         try {
             response = putDao.execute().get();
@@ -191,60 +165,33 @@ public class GroupController {
         return jsonObject.toString();
     }
 
-
     public static ArrayList<Student> setSpecificGroupAndGrades (String userEmail,
                                                                 HashMap<String, Double> firstGrades,
                                                 /* HashMap<String, Double> secondGrades,*/
                                                  HashMap<String, Integer> groups){
-
         ArrayList<Student> groupAndGrades = new ArrayList<>();
-        Integer userNumberGroup = groups.get(userEmail);
-
-        int it = 0;
-
+        int userNumberGroup = groups.get(userEmail), it = 0;
         for (Map.Entry<String, Integer> entry : groups.entrySet()){
             if (entry.getValue().equals(userNumberGroup)){
                 Student student = new Student();
-
                 student.setStudentEmail(entry.getKey());
-
                 groupAndGrades.add(it, student);
                 it++;
             }
         }
 
-        int groupsAndGradesSize = it;
-
-        it = 0;
-
+        int groupsAndGradesSize = it; it = 0;
         for (int i = 0; i < groupsAndGradesSize; i++){
-
             Student studentGroup = groupAndGrades.get(i);
 
             for (Map.Entry<String, Double> entry : firstGrades.entrySet()){
                 if (studentGroup.getStudentEmail().equals(entry.getKey())){
                     studentGroup.setFirstGrade(entry.getValue());
-
                     groupAndGrades.set(it, studentGroup);
                     it++;
                 }
             }
         }
-
-        it = 0;
-
-/*
-        for (Student studentGroup : groupAndGrades){
-            for (Map.Entry<String, Double> entry : secondGrades.entrySet()){
-                if (studentGroup.getStudentEmail().equals(entry.getKey())){
-                    studentGroup.setSecondGrade(entry.getValue());
-
-                    groupAndGrades.add(it, studentGroup);
-                    it++;
-                }
-            }
-        }
-*/
 
         return groupAndGrades;
     }
