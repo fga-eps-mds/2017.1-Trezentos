@@ -15,8 +15,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import fga.mds.gpp.trezentos.R;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 
 public class MainActivity extends AppCompatActivity{
