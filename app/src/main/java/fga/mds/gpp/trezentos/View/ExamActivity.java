@@ -30,6 +30,7 @@ import fga.mds.gpp.trezentos.Controller.EvaluationControl;
 import fga.mds.gpp.trezentos.Controller.GroupController;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
+import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserAccount;
@@ -150,7 +151,11 @@ public class ExamActivity extends AppCompatActivity {
                 grades = GroupController.getFirstGrades(exam.getNameExam(),
                         userClass.getClassName(), userClass.getOwnerEmail());
 
-                addEvaluationToUser(grades, groups, evaluationControl);
+                try {
+                    addEvaluationToUser(grades, groups, evaluationControl);
+                } catch (UserException e) {
+                    e.printStackTrace();
+                }
                 sendEvaluationNotification();
 
                 break;
@@ -210,7 +215,7 @@ public class ExamActivity extends AppCompatActivity {
 
     private void addEvaluationToUser(HashMap<String, Double> grades,
                                      HashMap<String, Integer> groups,
-                                     EvaluationControl evaluationControl){
+                                     EvaluationControl evaluationControl) throws UserException{
         for(Map.Entry <String, Integer> entry : groups.entrySet()) {
             evaluationControl.sendEvaluation(exam.getNameExam(),
                     entry.getKey(), userClass.getClassName(),

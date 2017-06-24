@@ -8,6 +8,7 @@ import java.util.Map;
 
 import fga.mds.gpp.trezentos.Controller.EvaluationControl;
 import fga.mds.gpp.trezentos.Controller.GroupController;
+import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -40,9 +41,13 @@ public class ServerOperationExamsActivity extends AsyncTask<String, Void, String
                     userClass.getClassName(), userClass.getOwnerEmail());
 
             for(Map.Entry <String, Integer> entry : groups.entrySet()) {
-                evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
-                        userClass.getClassName(), groups, grades,
-                        Double.valueOf(userClass.getCutOff()));
+                try {
+                    evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
+                            userClass.getClassName(), groups, grades,
+                            Double.valueOf(userClass.getCutOff()));
+                } catch (UserException e) {
+                    e.printStackTrace();
+                }
             }
 
             return "true";
