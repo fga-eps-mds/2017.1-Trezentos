@@ -34,6 +34,7 @@ public class AreYouSureFragment extends DialogFragment implements View.OnClickLi
         getBundleArguments();
 
         final View view = inflater.inflate(R.layout.fragment_are_you_sure, container, false);
+        initButtons(view);
 
         cancelButton.setOnClickListener(this);
         confirmButton.setOnClickListener(this);

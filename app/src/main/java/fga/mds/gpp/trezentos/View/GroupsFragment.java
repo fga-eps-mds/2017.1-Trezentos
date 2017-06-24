@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -31,9 +33,6 @@ import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-import static android.content.Intent.getIntent;
-import static fga.mds.gpp.trezentos.R.id.progressBar;
-
 public class GroupsFragment  extends Fragment implements RecyclerViewOnClickListener{
     private RecyclerView mRecyclerView;
     private GroupController groupController;
@@ -42,6 +41,7 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
     private Exam exam;
     private ProgressBar progressBar;
     private UserClass userClass;
+    private TextView groupWarning;
 
     @Override
     public void onResume() {
@@ -62,7 +62,29 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
         progressBar = (ProgressBar) view.findViewById(R.id.progressBarGroups);
         progressBar.setVisibility(View.VISIBLE);
 
+        groupWarning = (TextView) view.findViewById(R.id.not_defined_groups);
+
+        checkGroups();
+
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if(userClass.getStudents().size() < userClass.getSizeGroups()) {
+            menu.findItem(R.id.action_sort_groups).setVisible(false);
+        } else {
+            menu.findItem(R.id.action_sort_groups).setVisible(true);
+        }
+    }
+
+    private void checkGroups() {
+        if(userClass.getStudents().size() < userClass.getSizeGroups()) {
+            groupWarning.setVisibility(View.VISIBLE);
+        } else {
+            groupWarning.setVisibility(View.GONE);
+        }
     }
 
     private class ServerOperation extends AsyncTask<String, Void, String> {
@@ -89,6 +111,7 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
         protected void onPostExecute(String result) {
             if (getActivity() != null) {
                 progressBar.setVisibility(View.GONE);
+                checkGroups();
 
                 RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_groups);
                 recyclerView.setVisibility(View.VISIBLE);

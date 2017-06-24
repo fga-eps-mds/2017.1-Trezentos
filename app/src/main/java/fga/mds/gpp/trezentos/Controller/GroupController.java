@@ -83,7 +83,6 @@ public class GroupController {
         GetDao getDao = new GetDao(urlWithParameters);
         String serverResponse = getDao.get();
         firstGrades = convertToHashMapDouble(serverResponse);
-        Log.d("hashMap", firstGrades.toString());
 
         return firstGrades;
     }

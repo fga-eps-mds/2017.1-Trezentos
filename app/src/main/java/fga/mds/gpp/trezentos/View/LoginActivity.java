@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookBroadcastReceiver;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;

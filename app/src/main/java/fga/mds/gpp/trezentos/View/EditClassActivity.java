@@ -12,7 +12,7 @@ import android.widget.TextView;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class EditClassActivity extends AppCompatActivity{
+public class EditClassActivity extends AppCompatActivity implements View.OnClickListener {
 
     private UserClass userClass;
     private TextView className;
@@ -49,36 +49,33 @@ public class EditClassActivity extends AppCompatActivity{
     }
 
     private void initFields(){
-        className = (EditText) findViewById(R.id.edit_text_class_name);
-        instituition = (EditText) findViewById(R.id.edit_text_institution);
-        classPassword = (EditText) findViewById(R.id.edit_text_class_password);
-        cutGrade = (EditText) findViewById(R.id.edit_text_cut_grade);
-        groupsSize = (EditText) findViewById(R.id.edit_text_size_groups);
-        addition = (EditText) findViewById(R.id.edit_text_addition);
+        className = (TextView) findViewById(R.id.text_view_class_name_x);
+        instituition = (TextView) findViewById(R.id.text_view_institution_x);
+        classPassword = (TextView) findViewById(R.id.text_view_class_password_x);
+        cutGrade = (TextView) findViewById(R.id.text_view_cut_grade_x);
+        groupsSize = (TextView) findViewById(R.id.text_view_size_groups_x);
+        addition = (TextView) findViewById(R.id.text_view_addition_x);
+        backButton = (Button) findViewById(R.id.button_save);
+        backButton.setOnClickListener(this);
     }
 
     private void initFillFields(){
         className.setText(userClass.getClassName());
         instituition.setText(userClass.getInstitution());
         classPassword.setText(userClass.getPassword());
-//        cutGrade.setText((int) userClass.getCutOff());
-//        groupsSize.setText(userClass.getSizeGroups());
-//        addition.setText((int) userClass.getAddition());
-    }
-
-    private void getTextFromFields(){
-        className.getText();
-        instituition.getText();
-        classPassword.getText();
-        cutGrade.getText();
-        groupsSize.getText();
-        addition.getText();
-        addition.getText();
+        cutGrade.setText(String.valueOf(userClass.getCutOff()));
+        groupsSize.setText(String.valueOf(userClass.getSizeGroups()));
+        addition.setText(String.valueOf(userClass.getAddition()));
     }
 
     @Override
     public boolean onSupportNavigateUp(){
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        finish();
     }
 }

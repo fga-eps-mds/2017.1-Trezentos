@@ -85,37 +85,20 @@ public class UserAccountControl {
     }
 
     public void authenticateLoginFb(JSONObject object){
-
         try{
             String name = object.getString("name");
             String fEmail = object.getString("email");
-            fbUserAccount = getUserWithInfo(name, fEmail);
-            Log.d("NOME",name);
-//            userAccount = fbUserAccount;
-//
-//            String nomeDeDeus = userAccount.getName();
-//            Log.d("NOMED", nomeDeDeus);
+            UserAccount fbUserAccount = new UserAccount();
+            fbUserAccount.setEmail(fEmail);
+            fbUserAccount.setName(name);
 
-            String urlWithParameters = getUserUrl(fbUserAccount, false);
+            String urlWithParameters = getUserUrl(fbUserAccount, true);
             PostDao postDao = new PostDao(urlWithParameters, null, "");
 
-
             postDao.execute();
-        }catch(JSONException e){
+        }catch(JSONException | UserException e){
             e.printStackTrace();
         }
-    }
-
-    private UserAccount getUserWithInfo(String email, String name){
-        UserAccount userAccountWithInfo = new UserAccount();
-
-        try{
-            userAccountWithInfo.setEmail(email);
-            userAccountWithInfo.setName(name);
-        }catch(UserException e){
-            e.printStackTrace();
-        }
-        return userAccountWithInfo;
     }
 
     public String authenticateLogin(String email, String password){

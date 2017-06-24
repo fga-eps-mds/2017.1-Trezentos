@@ -179,7 +179,7 @@ public class StudentsFragment extends Fragment {
 
         }
 
-        public int showGradePicker(final int CLICK) {
+        int showGradePicker(final int CLICK) {
             final Dialog d = new Dialog(getContext());
             d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             d.setContentView(R.layout.dialog);
