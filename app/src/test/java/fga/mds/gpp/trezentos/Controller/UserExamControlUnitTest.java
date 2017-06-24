@@ -133,7 +133,12 @@ public class UserExamControlUnitTest {
         userClass.setStudents(arrayTeste);
 
         testUser = UserExamControl.getInstance(activity.getApplicationContext());
-        String serverResponse = testUser.validateAddsSecondGrades(userClass,exam);
+        String serverResponse = null;
+        try {
+            serverResponse = testUser.validateAddsGrades(userClass,exam,"secondGrades");
+        } catch (UserClassException e) {
+            e.printStackTrace();
+        }
         assertTrue(serverResponse, true);
 
     }
@@ -163,13 +168,13 @@ public class UserExamControlUnitTest {
         userClass.setStudents(arrayTeste);
 
         testUser = UserExamControl.getInstance(activity.getApplicationContext());
-        String serverResponse = testUser.validateAddsFirstGrades(userClass,exam);
+        String serverResponse = testUser.validateAddsGrades(userClass,exam,"firstGrades");
         assertTrue(serverResponse, true);
     }
 
     @Test
     public void shouldValidateGetExamsFromUser() throws UserException{
-        ArrayList <Exam> arrayList = new ArrayList<Exam>();
+        ArrayList <Exam> arrayList;
         String email = "teste@gmail.com";
         String pasword = "123456";
 

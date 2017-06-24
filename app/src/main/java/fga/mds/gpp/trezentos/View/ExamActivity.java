@@ -42,11 +42,6 @@ public class ExamActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Toolbar toolbar;
     private Exam exam;
-    private UserAccount userAccount;
-    private Evaluation evaluation;
-    private ArrayList<JSONObject> studentGroup;
-    private HashMap<String, Integer> groups;
-    private HashMap<String, Double> grades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -100,9 +95,9 @@ public class ExamActivity extends AppCompatActivity {
         return true;
     }
 
+    // Inflate the menu; this adds items to the action bar if it is present.
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_exam, menu);
         return true;
     }
@@ -112,39 +107,24 @@ public class ExamActivity extends AppCompatActivity {
             case R.id.action_update_grades:{
                 UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-                // Update exam with grades set in NumberPicker
-                Intent intent = getIntent();
-                Bundle extras = intent.getExtras();
-                exam = (Exam) extras.getSerializable("Exam");
+                recoverLastIntent();
+                try {
+                    userExamControl.validateAddsGrades(userClass, exam, "first_grades");
+                }catch(UserClassException | ExecutionException | InterruptedException e){
 
-                Log.d("DATAEXAME", userClass.getClassName());
-                Log.d("DATAEXAME", exam.getNameExam());
-                Log.d("DATAEXAME", exam.getClassOwnerEmail());
-
-                try{
-                    userExamControl.validateAddsFirstGrades(userClass, exam);
-                }catch(UserClassException e){
-                    e.printStackTrace();
-                }catch(ExecutionException e){
-                    e.printStackTrace();
-                }catch(InterruptedException e){
                     e.printStackTrace();
                 }
 
                 break;
             }
 
-            case R.id.action_update_trezentos_grades:{
-                UserExamControl userExamControl;
-                userExamControl = UserExamControl.getInstance(getApplicationContext());
+            case R.id.action_update_trezentos_grades: {
+                UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-                Intent intent = getIntent();
-                Bundle extras = intent.getExtras();
-                exam = (Exam) extras.getSerializable("Exam");
-
-                try{
-                    userExamControl.validateAddsSecondGrades(userClass, exam);
-                } catch (InterruptedException | ExecutionException e) {
+                recoverLastIntent();
+                try {
+                    userExamControl.validateAddsGrades(userClass, exam, "second_grades");
+                }catch(InterruptedException | ExecutionException | UserClassException e){
                     e.printStackTrace();
                 }
 
@@ -153,15 +133,8 @@ public class ExamActivity extends AppCompatActivity {
 
             case R.id.action_sort_groups:{
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("firstGrades", StudentsFragment.getHashEmailAndGrade());
-                bundle.putSerializable("userClass", userClass);
-                bundle.putSerializable("exam", exam);
-
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                AreYouSureFragment areYouSureFragment = new AreYouSureFragment();
-                areYouSureFragment.setArguments(bundle);
-                areYouSureFragment.show(fragmentTransaction, "areYouSure");
-
+                bundle = buildBundleToSortGroups(bundle);
+                initFragmentTransation(bundle);
                 break;
             }
 
@@ -169,8 +142,15 @@ public class ExamActivity extends AppCompatActivity {
                 EvaluationControl evaluationControl =
                         EvaluationControl.getInstance(getApplication());
 
-                new ServerOperationExamsActivity(exam, userClass, evaluationControl);
+                HashMap<String, Integer> groups;
+                groups = GroupController.getGroups(exam.getNameExam(),
+                        userClass.getClassName(), userClass.getOwnerEmail());
 
+                HashMap<String, Double> grades;
+                grades = GroupController.getFirstGrades(exam.getNameExam(),
+                        userClass.getClassName(), userClass.getOwnerEmail());
+
+                addEvaluationToUser(grades, groups, evaluationControl);
                 sendEvaluationNotification();
 
                 break;
@@ -205,4 +185,37 @@ public class ExamActivity extends AppCompatActivity {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, mBuilder.build());
     }
+
+    // Update exam with grades set in NumberPicker
+    private void recoverLastIntent(){
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        exam = (Exam) extras.getSerializable("Exam");
+    }
+
+    private void initFragmentTransation(Bundle bundle){
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        AreYouSureFragment areYouSureFragment = new AreYouSureFragment();
+        areYouSureFragment.setArguments(bundle);
+        areYouSureFragment.show(fragmentTransaction, "areYouSure");
+    }
+
+    private Bundle buildBundleToSortGroups(Bundle bundle){
+        bundle.putSerializable("firstGrades", StudentsFragment.getHashEmailAndGrade());
+        bundle.putSerializable("userClass", userClass);
+        bundle.putSerializable("exam", exam);
+
+        return bundle;
+    }
+
+    private void addEvaluationToUser(HashMap<String, Double> grades,
+                                     HashMap<String, Integer> groups,
+                                     EvaluationControl evaluationControl){
+        for(Map.Entry <String, Integer> entry : groups.entrySet()) {
+            evaluationControl.sendEvaluation(exam.getNameExam(),
+                    entry.getKey(), userClass.getClassName(),
+                    groups, grades, (double) userClass.getCutOff());
+        }
+    }
+
 }

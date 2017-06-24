@@ -20,44 +20,57 @@ import static fga.mds.gpp.trezentos.R.id.edit_text_password_register;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "SignUpActivity";
+    private UserAccountControl userAccountControl;
+    private EditText nameEdit;
+    private EditText emailEdit;
+    private EditText passwordEdit;
+    private EditText passwordConfirmationEdit;
+    private Button signUp;
+    private Button alreadySignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Button signUp = (Button) findViewById(R.id.sign_up_button);
-        signUp.setOnClickListener(this);
+        userAccountControl = UserAccountControl
+                .getInstance(getApplicationContext());
 
-        Button alreadySignUp = (Button) findViewById(R.id.already_sign_up);
+        initButtons();
+        signUp.setOnClickListener(this);
         alreadySignUp.setOnClickListener(this);
+    }
+
+    private void initButtons(){
+        signUp = (Button) findViewById(R.id.sign_up_button);
+        alreadySignUp = (Button) findViewById(R.id.already_sign_up);
     }
 
     // Method for confirmation
     public void confirmInformation(){
-        EditText nameEdit = (EditText) findViewById(edit_text_name_register);
-        EditText emailEdit = (EditText) findViewById(edit_text_email_register);
-        EditText passwordEdit = (EditText) findViewById(edit_text_password_register);
-        EditText passwordConfirmationEdit = (EditText) findViewById(edit_text_password_confirmation);
+        initFields();
+        String errorMessage = userAccountControl.validateSignUp(
+                nameEdit.getText().toString(), emailEdit.getText().toString(),
+                passwordEdit.getText().toString(),
+                passwordConfirmationEdit.getText().toString());
 
-        String name = nameEdit.getText().toString();
-        String email = emailEdit.getText().toString();
-        String password = passwordEdit.getText().toString();
-        String passwordConfirmation = passwordConfirmationEdit.getText().toString();
+        verifyMessage(errorMessage, userAccountControl);
+    }
 
-        UserAccountControl userAccountControl = UserAccountControl
-                .getInstance(getApplicationContext());
-        String errorMessage = userAccountControl.validateSignUp(name, email,
-                password, passwordConfirmation);
-
+    private void verifyMessage(String errorMessage, UserAccountControl userAccountControl){
         if (errorMessage.equals("")){
-            String response = userAccountControl.validateSignUpResponse();
-            goToMain(response);
-        }
-        else{
+            goToMain(userAccountControl.validateSignUpResponse());
+        }else{
             signUpErrorMessage(nameEdit, emailEdit, passwordEdit,
                     passwordConfirmationEdit, errorMessage);
         }
+    }
+
+    private void initFields(){
+        nameEdit = (EditText) findViewById(edit_text_name_register);
+        emailEdit = (EditText) findViewById(edit_text_email_register);
+        passwordEdit = (EditText) findViewById(edit_text_password_register);
+        passwordConfirmationEdit = (EditText) findViewById(edit_text_password_confirmation);
     }
 
     private void signUpErrorMessage(EditText nameEdit, EditText emailEdit, EditText passwordEdit,
@@ -94,10 +107,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     public void goToMain(String response){
         if (response.contains("\"code\":\"200\"")){
-            UserAccountControl userAccountControl = UserAccountControl
-                    .getInstance(getApplicationContext());
             userAccountControl.logInUser();
-
             Toast.makeText(getApplicationContext(),getString(R.string.msg_signup_success),
                     Toast.LENGTH_SHORT).show();
 
@@ -107,23 +117,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(getApplicationContext(), "Email inválido, tente novamente",
                     Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(getApplicationContext(), "Ocorreu um erro", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Ocorreu um erro",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onClick(View view){
-        switch (view.getId()){
-            case R.id.already_sign_up:{
-                Intent returnToLogin = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(returnToLogin);
-
-                finish();
-                break;
-            }
-            case R.id.sign_up_button:{
-                confirmInformation();
-            }
+        int i = view.getId();
+        if(i == R.id.already_sign_up){
+            Intent returnToLogin = new Intent(SignUpActivity.this, LoginActivity.class);
+            startActivity(returnToLogin);
+            finish();
+        }else if (i == R.id.sign_up_button){
+            confirmInformation();
         }
     }
 }

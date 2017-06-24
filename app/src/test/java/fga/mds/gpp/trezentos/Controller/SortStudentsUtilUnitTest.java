@@ -19,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import fga.mds.gpp.trezentos.Controller.Util.SortStudentsUtil;
 
 public class SortStudentsUtilUnitTest{
-    SortStudentsUtil sortStudentsUtil = new SortStudentsUtil();
+    private SortStudentsUtil sortStudentsUtil = new SortStudentsUtil();
 
     // Tested method: sortByTestScore();
     @Test
@@ -51,7 +51,7 @@ public class SortStudentsUtilUnitTest{
             }
         });
 
-        Map<String, Integer> mapOut = sortStudentsUtil.newMapStudents(list, 3, 10);
+        Map<String, Integer> mapOut = SortStudentsUtil.newMapStudents(list, 3, 10);
         Map<String, Integer> expected = populateOrderedMapByGroupNumber();
 
         assertThat(mapOut, is(expected));
@@ -60,7 +60,7 @@ public class SortStudentsUtilUnitTest{
     // Tested method: sortGroups();
     @Test
     public void shouldOrdenateGroup(){
-        Map<String, Integer> mapOut = sortStudentsUtil.sortGroups(populateMap(), 3, 10);
+        Map<String, Integer> mapOut = SortStudentsUtil.sortGroups(populateMap(), 3, 10);
         Map<String, Integer> expected = populateOrderedMapByGroupNumber();
 
         assertThat(mapOut, is(expected));

@@ -1,24 +1,16 @@
 package fga.mds.gpp.trezentos.View;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.renderscript.Double2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
@@ -30,146 +22,127 @@ import fga.mds.gpp.trezentos.R;
 public class CreateClassActivity extends AppCompatActivity {
 
     private Button buttonOk;
-    private Button buttonReturn;
     public UserClass userClass;
     public UserAccount userAccount;
     private ProgressBar progressBar;
-
+    private EditText classNameField;
+    private EditText institutionField;
+    private EditText passwordField;
+    private EditText sizeGroupsField;
+    private EditText additionField;
+    private EditText cutOffField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_class);
-
-        final EditText classNameField = (EditText) findViewById(R.id.edit_text_class_name);
-        final EditText institutionField = (EditText) findViewById(R.id.edit_text_institution);
-        final EditText passwordField = (EditText) findViewById(R.id.edit_text_class_password);
-        final EditText cutOffField = (EditText) findViewById(R.id.edit_text_cut_grade);
-        final EditText sizeGroupsField = (EditText) findViewById(R.id.edit_text_size_groups);
-        final EditText additionField = (EditText) findViewById(R.id.edit_text_addition);
-
-        buttonReturn = (Button) findViewById(R.id.button_return);
-        buttonOk = (Button) findViewById(R.id.button_save);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        initFields();
+        initButtonAndProgressBar();
 
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isValid;
-
                 progressBar.setVisibility(View.VISIBLE);
 
                 UserClassControl userClassControl = UserClassControl.getInstance(CreateClassActivity.this);
 
-                try {
-                    isValid = confirmInformation(userClassControl,
-                            classNameField, institutionField, passwordField,
-                            cutOffField, sizeGroupsField, additionField);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
-
-                if (isValid) {
-                    String className = classNameField.getText().toString();
-                    String institution = institutionField.getText().toString();
-                    String cutOff = cutOffField.getText().toString();
-                    String password = passwordField.getText().toString();
-                    String addition = additionField.getText().toString();
-                    String sizeGroups = sizeGroupsField.getText().toString();
-
+                if (validateFields(userClassControl)){
                     try {
-
-                        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(
-                                CreateClassActivity.this.getApplicationContext());
-                        String userEmail = session.getString("userEmail", "");
-
-                        userClassControl.validateCreateClass(className,
-                                institution, Float.parseFloat(cutOff), password,
-                                Float.parseFloat(addition), Integer.parseInt(sizeGroups), userEmail);
+                        userClassControl.validateCreateClass(
+                                classNameField.getText().toString(),
+                                institutionField.getText().toString(),
+                                Float.valueOf(cutOffField.getText().toString()),
+                                passwordField.getText().toString(),
+                                Float.valueOf(additionField.getText().toString()),
+                                Integer.valueOf(sizeGroupsField.getText().toString()),
+                                initSharedPreferences());
                     } catch (UserException e) {
                         e.printStackTrace();
                     }
-
                     progressBar.setVisibility(View.GONE);
                     onBackPressed();
-
                 }
             }
         });
-
-        buttonReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToMain = new Intent(CreateClassActivity.this, MainActivity.class);
-                startActivity(goToMain);
-            }
-        });
-
     }
 
+    private void initFields(){
+        classNameField = (EditText) findViewById(R.id.edit_text_class_name);
+        institutionField = (EditText) findViewById(R.id.edit_text_institution);
+        passwordField = (EditText) findViewById(R.id.edit_text_class_password);
+        cutOffField = (EditText) findViewById(R.id.edit_text_cut_grade);
+        sizeGroupsField = (EditText) findViewById(R.id.edit_text_size_groups);
+        additionField = (EditText) findViewById(R.id.edit_text_addition);
+    }
 
-    public boolean confirmInformation(UserClassControl userClassControl, EditText classNameField,
-                                      EditText institutionField, EditText passwordField,
-                                      EditText cutOffField, EditText sizeGroupsField,
-                                      EditText additionField) throws UserException {
+    private void initButtonAndProgressBar(){
+        buttonOk = (Button) findViewById(R.id.button_save);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+    }
 
-        String className = classNameField.getText().toString();
-        String institution = institutionField.getText().toString();
-        String cutOff = cutOffField.getText().toString();
-        String password = passwordField.getText().toString();
-        String addition = additionField.getText().toString();
-        String sizeGroups = sizeGroupsField.getText().toString();
-
-        boolean isValid = false;
-
-
-        if(cutOff.isEmpty() == true || addition.isEmpty() == true || sizeGroups.isEmpty() == true){
-
-            classNameField.setError("Preencha todos os campos!");
-            isValid = false;
+    private boolean validateFields(UserClassControl userClassControl){
+        try{
+            return confirmInformation(userClassControl,
+                    classNameField.getText().toString(),
+                    institutionField.getText().toString(),
+                    passwordField.getText().toString(),
+                    cutOffField.getText().toString(),
+                    sizeGroupsField.getText().toString(),
+                    additionField.getText().toString());
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
+        return false;
+    }
 
+    private String initSharedPreferences(){
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(
+                CreateClassActivity.this.getApplicationContext());
+        return session.getString("userEmail", "");
+    }
 
-        String errorMessage;
-
+    public boolean confirmInformation(UserClassControl userClassControl, String className,
+                                      String institution, String password,
+                                      String cutOff, String sizeGroups,
+                                      String addition) throws UserException {
+        if(cutOff.isEmpty() || addition.isEmpty() || sizeGroups.isEmpty()){
+            classNameField.setError("Preencha todos os campos!");
+        }
         progressBar.setVisibility(View.GONE);
+        String errorMessage;
         errorMessage = userClassControl.validateInformation(className, institution,
                 cutOff, password, addition, sizeGroups);
 
+        return verifyValidMessage(errorMessage);
+    }
+
+    private boolean verifyValidMessage(String errorMessage){
+        boolean isValid = false;
+
         if (errorMessage.equals("Preencha todos os campos!")) {
             classNameField.setError("Preencha todos os campos!");
-            isValid = false;
-        }else if(errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
+        } else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
             classNameField.requestFocus();
             classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
-            isValid = false;
-        }else if(errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {
+        } else if (errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {
             passwordField.requestFocus();
             passwordField.setError("A senha deve ter entre 6 e 16 caracteres");
-            isValid = false;
-        }else if(errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
+        } else if (errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
             sizeGroupsField.requestFocus();
             sizeGroupsField.setError("O tamanho do grupo nao pode ser zero.");
-            isValid = false;
-        }else if(errorMessage.equals("O acrescimo nao pode ser zero.")) {
+        } else if (errorMessage.equals("O acrescimo nao pode ser zero.")) {
             additionField.requestFocus();
             additionField.setError("O acrescimo nao pode ser zero.");
-            isValid = false;
-        }else if(errorMessage.equals("A nota de corte nao pode ser zero.")) {
+        } else if (errorMessage.equals("A nota de corte nao pode ser zero.")) {
             cutOffField.requestFocus();
             cutOffField.setError("A nota de corte nao pode ser zero.");
-            isValid = false;
-        }else if(errorMessage.equals("O nome da instituicao deve ter de 3 a 20 caracteres.")){
+        } else if (errorMessage.equals("O nome da instituicao deve ter de 3 a 20 caracteres.")) {
             institutionField.requestFocus();
             institutionField.setError("O nome da instituicao deve ter de 3 a 20 caracteres.");
-            isValid = false;
-        }else if (errorMessage.equals("Sucesso")) {
-
+        } else if (errorMessage.equals("Sucesso")) {
             isValid = true;
         }
-
 
         return isValid;
     }
@@ -179,8 +152,6 @@ public class CreateClassActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-
 
     //Setting upp
     public void moveName(View view){
@@ -195,15 +166,4 @@ public class CreateClassActivity extends AppCompatActivity {
         image.startAnimation(animation1);
     }
 
-
-
-
 }
-
-
-
-
-
-
-
-

@@ -48,7 +48,7 @@ public class EvaluationControlUnitTest {
 
         boolean test =
                 evaluationControl.sendEvaluation(examName, email,
-                        userClassName, groups, grades, String.valueOf(cutOff));
+                        userClassName, groups, grades, cutOff);
 
         assertEquals(test, false);
     }
@@ -57,7 +57,8 @@ public class EvaluationControlUnitTest {
     public void shouldValidateSendEvaluationWithNullVariables(){
         evaluationControl = EvaluationControl.getInstance(fragment.getContext());
 
-        String examName, email, cutOff;
+        String examName, email;
+        Double cutOff;
         HashMap<String, Integer> groups = new HashMap<>();
         HashMap<String, Double> grades = new HashMap<>();
 
@@ -73,7 +74,7 @@ public class EvaluationControlUnitTest {
 
         examName = "P1";
         email = "teste@email.com";
-        cutOff = "5.0";
+        cutOff = 5.0;
 
         boolean test =
                 evaluationControl.sendEvaluation(examName, email, null, groups, grades, cutOff);

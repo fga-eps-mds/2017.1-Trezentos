@@ -42,7 +42,7 @@ public class ServerOperationExamsActivity extends AsyncTask<String, Void, String
             for(Map.Entry <String, Integer> entry : groups.entrySet()) {
                 evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
                         userClass.getClassName(), groups, grades,
-                        String.valueOf(userClass.getCutOff()));
+                        Double.valueOf(userClass.getCutOff()));
             }
 
             return "true";

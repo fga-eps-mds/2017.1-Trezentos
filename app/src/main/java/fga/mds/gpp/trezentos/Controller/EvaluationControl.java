@@ -28,12 +28,6 @@ public class EvaluationControl {
 
     private static EvaluationControl instance;
     final Context context;
-    private String email;
-    private String userClassName;
-    private String ownerEmail;
-    private String evaluateEmail;
-    private String ownerGrade;
-    private String otherGrade;
     private UserAccount userAccount;
     private Evaluation evaluation = new Evaluation();
 
@@ -52,86 +46,51 @@ public class EvaluationControl {
 
     public boolean sendEvaluation(String examName, String email, String userClassName,
                                   HashMap<String, Integer> groups,
-                                  HashMap<String, Double> grades, String cutOff){
+                                  HashMap<String, Double> grades, Double cutOff){
 
         userAccount = getUserWithInfo(email);
 
         evaluation.setClassName(userClassName);
         evaluation.setExamName(examName);
 
-        Log.d("groups", groups.toString());
-        Log.d("grades", grades.toString());
-
-        boolean response = false;
-
-        Log.d("email", email);
-
         Double nota = grades.get(email);
         Log.d("nota", nota.toString());
         Integer group = groups.get(email);
         Log.d("grupo", group.toString());
 
-        Double notaDeCorte = Double.valueOf(cutOff);
-        Log.d("notaDeCorte", notaDeCorte.toString());
-
         for (Map.Entry<String, Integer> entry : groups.entrySet()) {
             if (!email.equals(entry.getKey()) &&
                     group.equals(entry.getValue())) {
-                Double gradeToEvaluate = grades.get(entry.getKey());
 
-                if(gradeToEvaluate >= notaDeCorte && nota < notaDeCorte){
-                    response = sendToDao(examName, userClassName,
-                            group.toString(), email, entry.getKey());
-                }
-                if(gradeToEvaluate < notaDeCorte && nota >= notaDeCorte){
-                    response = sendToDao(examName, userClassName,
-                            group.toString(), email, entry.getKey());
-                }
+                return sendToDao(examName, userClassName, group.toString(), email, entry.getKey());
             }
         }
 
-        return response;
+        return false;
     }
-
-//    private boolean sendToDao(String examName, String userClassName, String groupNumber,
-//                                  String email, String emailToEvaluate){
-//
-//        String response = "false";
-//
-//        evaluation.setStudentEmail(emailToEvaluate);
-//
-//        JSONObject jsonObject = new JSONObject();
-//
-//        try {
-//            jsonObject.put("userClassName", evaluation.getClassName());
-//            jsonObject.put("examName", evaluation.getExamName());
-//            jsonObject.put("studentToEvaluate", evaluation.getStudentEmail());
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            response =
-//                    new SendEvaluationRequest(userAccount, jsonObject)
-//                            .execute()
-//                            .get();
-//
-//        } catch (InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Log.d("RESULT", response);
-//
-//        return response.equals("true");
-//    }
 
     private boolean sendToDao(String examName, String userClassName, String groupNumber,
                               String email, String emailToEvaluate){
 
-        String response = "false";
-
         evaluation.setStudentEmail(emailToEvaluate);
+
+        JSONObject jsonObject = buildJSONObject();
+
+        try {
+            String url = "https://trezentos-api.herokuapp.com/api/user/rateToDo";
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            return (new PostDao(url, JSON, getJsonBody(jsonObject))
+                .execute()
+                .get().equals("true"));
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    private JSONObject buildJSONObject(){
 
         JSONObject jsonObject = new JSONObject();
 
@@ -139,31 +98,11 @@ public class EvaluationControl {
             jsonObject.put("userClassName", evaluation.getClassName());
             jsonObject.put("examName", evaluation.getExamName());
             jsonObject.put("studentToEvaluate", evaluation.getStudentEmail());
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        try {
-            String url = "https://trezentos-api.herokuapp.com/api/user/rateToDo";
-            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            response = new PostDao(url, JSON, getJsonBody(jsonObject))
-                    .execute()
-                    .get();
-
-//
-//            response =
-//                    new SendEvaluationRequest(userAccount, jsonObject)
-//                            .execute()
-//                            .get();
-
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        Log.d("RESULT", response);
-
-        return response.equals("true");
+        return jsonObject;
     }
 
     private String getJsonBody(JSONObject jsonObject){
@@ -224,6 +163,7 @@ public class EvaluationControl {
             e.printStackTrace();
         }
 
+
         return evaluationList;
     }
 
@@ -238,6 +178,7 @@ public class EvaluationControl {
 
 
     private ArrayList<Evaluation> getEvaluationsList(String serverResponse) throws JSONException{
+
         JSONArray jsonArray = null;
 
         try {

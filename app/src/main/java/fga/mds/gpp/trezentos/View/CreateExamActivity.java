@@ -34,14 +34,12 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
         recoverSharedPreferences();
 
         userClassName = userClass.getClassName();
-
         final Button buttonOk = (Button) findViewById(R.id.ok_create_button);
         final Button buttonReturn = (Button) findViewById(R.id.return_exam_button);
 
         examNameField = (EditText) findViewById(R.id.exam_name);
 
         buttonOk.setOnClickListener(this);
-        buttonReturn.setOnClickListener(this);
     }
 
 
@@ -75,36 +73,33 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
 
-        boolean isValid = false;
+        boolean isValid;
+
 
         UserExamControl userExamControl = UserExamControl
                 .getInstance(getApplicationContext());
 
-        switch (v.getId()){
-            case R.id.return_exam_button:{
+        switch (v.getId()) {
+            case R.id.return_exam_button: {
                 Intent returnToClass = new Intent(CreateExamActivity.this, ClassActivity.class);
                 startActivity(returnToClass);
                 finish();
                 break;
             }
-            case R.id.ok_create_button:{
+            case R.id.ok_create_button: {
+
                 try {
                     isValid = confirmInformation(userExamControl,
                             examNameField, userClassName, classOwnnerEmail);
-
-                    if(isValid){
+                    if (isValid) {
                         String examName = examNameField.getText().toString();
-
                         userExamControl.validateCreateExam
                                 (examName, userClassName, classOwnnerEmail);
-
                         onBackPressed();
                     }
-
                 } catch (UserException e) {
                     e.printStackTrace();
                 }
-                break;
             }
         }
     }
@@ -120,32 +115,27 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
             (UserExamControl userExamControl,
                 EditText examNameField, String userClassName,
                     String classOwnnerEmail) throws UserException {
-
-        boolean isValid = false;
         String examName = examNameField.getText().toString();
-        String errorMessage;
+        String errorMessage = userExamControl
+                .validateInformation(examName,userClassName, classOwnnerEmail);
 
-        if(examName.isEmpty()){
-            examNameField.setError("Preencha todos os campos!");
-            isValid = false;
-        }
-
-        errorMessage = userExamControl
-                .validateInformation(examName,userClassName, classOwnnerEmail );
-
-        if (errorMessage.equals("Preencha todos os campos!")) {
-            examNameField.setError("Preencha todos os campos!");
-            isValid = false;
-        }else if (errorMessage.equals("O nome da prova " +
-                "deve ter entre 2 e 15 caracteres.")){
-            examNameField.requestFocus();
-            examNameField.setError("O nome da prova " +
-                    "deve ter entre 2 e 15 caracteres.");
-            isValid = false;
-        }else if (errorMessage.equals("Sucesso")) {
-            isValid = true;
-        }
-
-        return isValid;
+        return verifyValidMessage(errorMessage);
     }
+
+    private boolean verifyValidMessage(String errorMessage){
+        switch (errorMessage) {
+            case "Preencha todos os campos!":
+                examNameField.setError("Preencha todos os campos!"); break;
+            case "O nome da prova " +
+                    "deve ter entre 2 e 15 caracteres.":
+                examNameField.requestFocus();
+                examNameField.setError("O nome da prova " +
+                        "deve ter entre 2 e 15 caracteres."); break;
+            case "Sucesso":
+                return true;
+        }
+
+        return false;
+    }
+
 }

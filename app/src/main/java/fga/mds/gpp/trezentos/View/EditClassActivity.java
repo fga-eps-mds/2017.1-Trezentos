@@ -23,46 +23,57 @@ public class EditClassActivity extends AppCompatActivity{
     private TextView addition;
     private Button backButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_class);
 
+        initToolbar();
+        recoverLastIntent();
+        initFields();
+        initFillFields();
+
+    }
+
+    private void initToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("Informações Sobre a Sala");
+    }
 
+    private void recoverLastIntent(){
         Intent intent = getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
+    }
 
-        className = (TextView) findViewById(R.id.text_view_class_name_x);
-        instituition = (TextView) findViewById(R.id.text_view_institution_x);
-        classPassword = (TextView) findViewById(R.id.text_view_class_password_x);
-        cutGrade = (TextView) findViewById(R.id.text_view_cut_grade_x);
-        groupsSize = (TextView) findViewById(R.id.text_view_size_groups_x);
-        addition = (TextView) findViewById(R.id.text_view_addition_x);
-        backButton = (Button) findViewById(R.id.button_save);
+    private void initFields(){
+        className = (EditText) findViewById(R.id.edit_text_class_name);
+        instituition = (EditText) findViewById(R.id.edit_text_institution);
+        classPassword = (EditText) findViewById(R.id.edit_text_class_password);
+        cutGrade = (EditText) findViewById(R.id.edit_text_cut_grade);
+        groupsSize = (EditText) findViewById(R.id.edit_text_size_groups);
+        addition = (EditText) findViewById(R.id.edit_text_addition);
+    }
 
+    private void initFillFields(){
         className.setText(userClass.getClassName());
         instituition.setText(userClass.getInstitution());
         classPassword.setText(userClass.getPassword());
-        cutGrade.setText(String.valueOf(userClass.getCutOff()));
-        groupsSize.setText(String.valueOf(userClass.getSizeGroups()));
-        addition.setText(String.valueOf(userClass.getAddition()));
+//        cutGrade.setText((int) userClass.getCutOff());
+//        groupsSize.setText(userClass.getSizeGroups());
+//        addition.setText((int) userClass.getAddition());
+    }
 
-
-        backButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent goToClassActivity = new Intent(EditClassActivity.this, ClassActivity.class);
-                startActivity(goToClassActivity);
-            }
-
-        });
+    private void getTextFromFields(){
+        className.getText();
+        instituition.getText();
+        classPassword.getText();
+        cutGrade.getText();
+        groupsSize.getText();
+        addition.getText();
+        addition.getText();
     }
 
     @Override
