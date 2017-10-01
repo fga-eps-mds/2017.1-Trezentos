@@ -6,10 +6,14 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.logging.Logger;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.DAO.PostDao;
+import fga.mds.gpp.trezentos.DAO.RequestHandler;
+import fga.mds.gpp.trezentos.DAO.URLs;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
@@ -48,34 +52,74 @@ public class UserAccountControl {
     }
 
     public String validateSignUpResponse(){
-        PostDao postDao = new PostDao(getUserUrl(userAccount, false), null, "");
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_REGISTER, getRegisterParams(userAccount, false));
+
         String serverResponse = "404";
 
         try{
-            serverResponse = postDao.execute().get();
+            serverResponse = requestHandler.execute().get();
         }catch(InterruptedException e){
             e.printStackTrace();
         }catch(ExecutionException e){
             e.printStackTrace();
         }
-
+        Log.d("RESPONSE", ""+serverResponse);
         return serverResponse;
     }
 
-    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
-    public String getUserUrl(UserAccount userAccount, Boolean isFromFacebook) {
-        String url = "https://trezentos-api.herokuapp.com/api/user/register";
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+    public String validateForgotPasswordResponse(String recoverEmail){
 
-        builder.addQueryParameter("email", userAccount.getEmail());
-        builder.addQueryParameter("salt", userAccount.getSalt());
-        builder.addQueryParameter("password", userAccount.getPassword());
-        builder.addQueryParameter("name", userAccount.getName());
-        builder.addQueryParameter("facebook", isFromFacebook.toString());
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_RESET_PASSWORD, getForgotPasswordParams(recoverEmail));
 
-        return builder.build().toString();
+        String serverResponse = "";
+
+        try{
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
+        }
+        Log.d("RESPONSE", ""+serverResponse);
+        return serverResponse;
+    }
+
+
+    public HashMap<String, String>  getLoginParams(UserAccount userAccount, Boolean isFromFacebook) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("email", userAccount.getEmail());
+        params.put("password", userAccount.getPassword());
+
+
+        return params;
 
     }
+
+    public HashMap<String, String>  getRegisterParams(UserAccount userAccount, Boolean isFromFacebook) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", userAccount.getName());
+        params.put("email", userAccount.getEmail());
+        params.put("password", userAccount.getPassword());
+        params.put("gender", "male");
+
+        return params;
+
+    }
+
+    public HashMap<String, String>  getForgotPasswordParams(String recoverEmail) {
+
+        HashMap<String, String> params = new HashMap<>();
+
+        params.put("email", recoverEmail);
+
+
+        return params;
+
+    }
+
 
     public void authenticateLoginFb(JSONObject object){
         try{
@@ -85,10 +129,10 @@ public class UserAccountControl {
             fbUserAccount.setEmail(fEmail);
             fbUserAccount.setName(name);
 
-            String urlWithParameters = getUserUrl(fbUserAccount, true);
-            PostDao postDao = new PostDao(urlWithParameters, null, "");
+            //String urlWithParameters = getUserUrl(fbUserAccount, true);
+            //PostDao postDao = new PostDao(urlWithParameters, null, "");
 
-            postDao.execute();
+            //postDao.execute();
         }catch(JSONException | UserException e){
             e.printStackTrace();
         }
@@ -107,12 +151,13 @@ public class UserAccountControl {
     }
 
     public String validateSignInResponse(){
-        String urlWithParameters = getSignInUrl(userAccount);
-        PostDao postDao = new PostDao(urlWithParameters, null, "");
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_LOGIN, getLoginParams(userAccount, false));
+
         String serverResponse = "404";
 
         try{
-            serverResponse = postDao.execute().get();
+            serverResponse = requestHandler.execute().get();
         }catch(InterruptedException e){
             e.printStackTrace();
         }catch(ExecutionException e){
@@ -134,28 +179,52 @@ public class UserAccountControl {
     }
 
 
-    public void validatePassword(String serverResponse, String password) throws UserException {
+    public void validatePassword(String serverResponse, String password) throws UserException, JSONException {
         JSONObject object = getObjectFromServerResponse(serverResponse);
-        String hashedPassword = null, salt = null;
 
+        JSONObject userJson = object.getJSONObject("user");
+
+        //creating a new user object
+                /*
+                User user = new User(
+                        userJson.getInt("id"),
+                        userJson.getString("username"),
+                        userJson.getString("email"),
+                        userJson.getString("gender")
+                );
+                */
+        String hashedPassword = null, salt = null;
+        /*
         try{
             hashedPassword = object.getString("password");
-            salt = object.getString("salt");
+            //salt = object.getString("salt");
         }catch(JSONException e){
             e.printStackTrace();
         }
+        */
         try {
-            userAccount.setName(object.getString("name"));
+            userAccount.setName(userJson.getString("username"));
+            userAccount.setEmail(userJson.getString("email"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        if(!object.getBoolean("error")){
+            logInUser();
+        }else{
+            logOutUser();
+        }
+
+
+        /*
         if(PasswordUtil.decryptPass(hashedPassword, salt, password)){
             logInUser();
         }else{
             logOutUser();
             throw new UserException(context.getString(R.string.invalid_login));
         }
+        */
+
     }
 
     private JSONObject getObjectFromServerResponse(String serverResponse){
