@@ -21,10 +21,12 @@ public class MainActivity extends AppCompatActivity{
 
     private BottomNavigationView bottomNavigationView;
     private Fragment selectedFragment;
+    private Toolbar toolbar = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
@@ -47,12 +49,14 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         selectedFragment = null;
 
+
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if(AccessToken.getCurrentAccessToken() == null && !session.getBoolean("IsUserLogged", false)){
             goLoginScreen();
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Salas");
         setSupportActionBar(toolbar);
 
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_nav);
@@ -62,18 +66,22 @@ public class MainActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.salas_item:
+                        toolbar.setTitle("Salas");
                         selectedFragment = ClassFragment.getInstance();
                         break;
 
                     case R.id.usuario_item:
+                        toolbar.setTitle("Perfil");
                         selectedFragment = UserFragment.getInstance();
                         break;
 
                     case R.id.about_item:
+                        toolbar.setTitle("Sobre");
                         selectedFragment = AboutFragment.getInstance();
                         break;
 
                     case R.id.avaliacao_item:
+                        toolbar.setTitle("Avaliação");
                         selectedFragment = EvaluationFragment.getInstance();
                         break;
                 }

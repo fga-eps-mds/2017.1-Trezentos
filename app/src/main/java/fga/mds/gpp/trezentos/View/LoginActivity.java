@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity{
         dialog.setContext(this);
 
         final Button login = (Button) findViewById(R.id.button_login);
+        final Button forgotPassword = (Button) findViewById(R.id.button_forgot_password);
 
         Button register = (Button) findViewById(R.id.button_register);
         Button about = (Button) findViewById(R.id.button_about);
@@ -92,7 +93,10 @@ public class LoginActivity extends AppCompatActivity{
                         passwordString);
 
                 if(errorMessage.isEmpty()){
+
                     String serverResponse = userAccountControl.validateSignInResponse();
+                    Log.d("RESPONSE", ""+serverResponse);
+
                     try {
                         validatePasswordAndLogsUser(serverResponse, passwordString);
                     } catch (JSONException e) {
@@ -125,11 +129,20 @@ public class LoginActivity extends AppCompatActivity{
                 startActivity(showAbout);
             }
         });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent showForgotPassword = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivity(showForgotPassword);
+            }
+        });
     }
 
     private void validatePasswordAndLogsUser(String serverResponse, String passwordString) throws JSONException, UserException {
         JSONObject responseJson = new JSONObject(serverResponse);
-        if(responseJson.getString("name") != null) {
+        Log.d("TEST", serverResponse);
+        if(!responseJson.getBoolean("error")) {
             userAccountControl.validatePassword(serverResponse, passwordString);
             goToMain(serverResponse);
         } else {
@@ -185,8 +198,13 @@ public class LoginActivity extends AppCompatActivity{
         }
     }
 
-    private void goToMain(String response){
-        if (response.contains("true")){
+    private void goToMain(String response) throws JSONException {
+        //converting response to json object
+        JSONObject obj = null;
+
+        obj = new JSONObject(response);
+
+        if (!obj.getBoolean("error")){
             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(goToMain);
         }

@@ -54,6 +54,7 @@
     <string name="btn_already_signed_up"> <u> Já sou cadastrado </u></string>
     <string name="btn_login_to_sign_up">Cadastrar</string>
     <string name="btn_login">Login</string>
+    <string name="btn_forgot_password">Esqueceu a senha?</string>
     <string name="btn_fb_login">CONTINUAR COM FACEBOOK</string>
     <string name="btn_signup">Cadastrar</string>
     <string name="btn_about">Sobre</string>

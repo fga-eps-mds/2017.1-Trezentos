@@ -1,16 +1,24 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
-import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.Model.UserAccount;
+
 import fga.mds.gpp.trezentos.R;
 
 import static fga.mds.gpp.trezentos.R.id.edit_text_email_register;
@@ -37,8 +45,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 .getInstance(getApplicationContext());
 
         initButtons();
+        initFields();
         signUp.setOnClickListener(this);
         alreadySignUp.setOnClickListener(this);
+
+//        IntlPhoneInput phoneInputView = (IntlPhoneInput) findViewById(R.id.my_phone_input);
+//        String myInternationalNumber = null;
+//        if(phoneInputView.isValid()) {
+//            myInternationalNumber = phoneInputView.getNumber();
+//        }
+
+//        Toast.makeText(getApplicationContext(), myInternationalNumber, Toast.LENGTH_LONG).show();
+
     }
 
     private void initButtons(){
@@ -48,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     // Method for confirmation
     public void confirmInformation(){
-        initFields();
+
         String errorMessage = userAccountControl.validateSignUp(
                 nameEdit.getText().toString(), emailEdit.getText().toString(),
                 passwordEdit.getText().toString(),
@@ -71,6 +89,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         emailEdit = (EditText) findViewById(edit_text_email_register);
         passwordEdit = (EditText) findViewById(edit_text_password_register);
         passwordConfirmationEdit = (EditText) findViewById(edit_text_password_confirmation);
+
+
     }
 
     private void signUpErrorMessage(EditText nameEdit, EditText emailEdit, EditText passwordEdit,
@@ -106,6 +126,45 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void goToMain(String response){
+
+        try {
+            //converting response to json object
+            JSONObject obj = new JSONObject(response);
+
+            //if no error in response
+            if (!obj.getBoolean("error")) {
+                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                Intent goToMain = new Intent(this, MainActivity.class);
+                finish();
+                startActivity(goToMain);
+                //getting the user from the response
+                //JSONObject userJson = obj.getJSONObject("user");
+
+                //creating a new user object
+                /*
+                User user = new User(
+                        userJson.getInt("id"),
+                        userJson.getString("username"),
+                        userJson.getString("email"),
+                        userJson.getString("gender")
+                );
+                */
+
+
+                //storing the user in shared preferences
+                //SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+
+                //starting the profile activity
+                //finish();
+                //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+            } else {
+                Toast.makeText(getApplicationContext(), "Some error occurred: " + obj.getString("message"), Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        /*
         if (response.contains("\"code\":\"200\"")){
             userAccountControl.logInUser();
             Toast.makeText(getApplicationContext(),getString(R.string.msg_signup_success),
@@ -120,6 +179,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Toast.makeText(getApplicationContext(), "Ocorreu um erro",
                     Toast.LENGTH_SHORT).show();
         }
+        */
+
     }
 
     @Override
@@ -130,7 +191,54 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(returnToLogin);
             finish();
         }else if (i == R.id.sign_up_button){
+            //executing the async task
+
+
+
+
+            /*JSON Response transform
+
+            try {
+                //converting response to json object
+                JSONObject obj = new JSONObject(response);
+
+                //if no error in response
+                if (!obj.getBoolean("error")) {
+                    Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                    //getting the user from the response
+                    JSONObject userJson = obj.getJSONObject("user");
+
+                    //creating a new user object
+
+                    User user = new User(
+                            userJson.getInt("id"),
+                            userJson.getString("username"),
+                            userJson.getString("email"),
+                            userJson.getString("gender")
+                    );
+
+
+                    //storing the user in shared preferences
+                    //SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+
+                    //starting the profile activity
+                    finish();
+                    //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }*/
+
             confirmInformation();
         }
     }
+
+
+
+
+
+
 }
