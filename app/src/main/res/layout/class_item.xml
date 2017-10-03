@@ -2,42 +2,153 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="4dp"
-    card_view:cardBackgroundColor="@android:color/transparent">
+    card_view:cardElevation="4dp"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="3dp">
 
-    <LinearLayout
-        android:background="@drawable/shape_item"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentTop="true"
-            android:text="Nome Sala"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#FFFFF0" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/institution"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:padding="8dp"
-            android:text="Instituição"
-            android:textColor="#F1F1F0" />
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_gravity="center"
+                                    android:text="Nome Sala"
+                                    android:textStyle="bold"
+                                    android:textSize="20dp"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:textColor="#272727" />
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                        <ImageView
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginRight="20dp"
+                                            android:layout_gravity=""
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_notifications"/>
+
+                                </RelativeLayout>
+
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/institution"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/name"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+
+                            android:text="Instituição"
+                            android:textColor="#A7A7A7" />
+                </LinearLayout>
+
+                <!-- Description -->
+                <LinearLayout
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical">
+                        <TextView
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Nesta parte vem uma breve descrição dessa sala e de onde ela pertence."/>
+
+                </LinearLayout>
+
+
+                <!-- Owner -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_gravity="center"
+                            android:id="@+id/profile_image"
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/avatar"
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="#262626"
+                            android:layout_centerVertical="true"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_view_teacher"
+                            android:layout_toRightOf="@id/profile_image"
+                            android:layout_marginLeft="10dp"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Professor:"
+                            android:textSize="12dp"
+                            android:textColor="#A7A7A7"/>
+                        <TextView
+
+                            android:layout_toRightOf="@id/text_view_teacher"
+                            android:layout_marginLeft="5dp"
+                            android:layout_centerVertical="true"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Arthur Diniz"
+                            android:textSize="12dp"
+                            />
+
+                        <TextView
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="20dp"
+                            android:textSize="11dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#A7A7A7"
+                            android:text="Criado em 15/09/2017"/>
+
+
+                </RelativeLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
 </android.support.v7.widget.CardView>

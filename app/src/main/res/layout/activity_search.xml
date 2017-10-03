@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="fga.mds.gpp.trezentos.View.SearchActivity"
     android:orientation="vertical"
-    android:background="@drawable/backgroundtrezentos">
+    android:background="#ffbd19">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
