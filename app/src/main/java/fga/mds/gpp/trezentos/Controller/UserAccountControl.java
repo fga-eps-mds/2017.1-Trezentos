@@ -41,9 +41,10 @@ public class UserAccountControl {
     }
 
     public String validateSignUp(String name, String email, String password,
-                                 String passwordConfirmation){
+                                 String passwordConfirmation, String telephoneDDI,
+                                 String telephoneDDD, String telephoneNumber){
         try{
-            userAccount = new UserAccount(name, email, password, passwordConfirmation);
+            userAccount = new UserAccount(name, email, password, passwordConfirmation, telephoneDDI, telephoneDDD, telephoneNumber);
         }catch(UserException userException){
             return userException.getMessage();
         }
@@ -89,9 +90,8 @@ public class UserAccountControl {
     public HashMap<String, String>  getLoginParams(UserAccount userAccount, Boolean isFromFacebook) {
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("email", userAccount.getEmail());
-        params.put("password", userAccount.getPassword());
-
+        params.put("PersonEmail", userAccount.getEmail());
+        params.put("PersonPassword", userAccount.getPassword());
 
         return params;
 
@@ -100,10 +100,13 @@ public class UserAccountControl {
     public HashMap<String, String>  getRegisterParams(UserAccount userAccount, Boolean isFromFacebook) {
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("username", userAccount.getName());
-        params.put("email", userAccount.getEmail());
-        params.put("password", userAccount.getPassword());
-        params.put("gender", "male");
+        params.put("PersonName", userAccount.getName());
+        params.put("PersonEmail", userAccount.getEmail());
+        params.put("PersonPassword", userAccount.getPassword());
+        params.put("PersonIsFromFacebook", isFromFacebook.toString());
+        params.put("PersonTelephoneDDI", userAccount.getTelephoneDDI());
+        params.put("PersonTelephoneDDD", userAccount.getTelephoneDDD());
+        params.put("PersonTelephoneNumber", userAccount.getTelephoneNumber());
 
         return params;
 
@@ -113,8 +116,7 @@ public class UserAccountControl {
 
         HashMap<String, String> params = new HashMap<>();
 
-        params.put("email", recoverEmail);
-
+        params.put("PersonEmail", recoverEmail);
 
         return params;
 
@@ -123,8 +125,8 @@ public class UserAccountControl {
 
     public void authenticateLoginFb(JSONObject object){
         try{
-            String name = object.getString("name");
-            String fEmail = object.getString("email");
+            String name = object.getString("PersonName");
+            String fEmail = object.getString("PersonEmail");
             UserAccount fbUserAccount = new UserAccount();
             fbUserAccount.setEmail(fEmail);
             fbUserAccount.setName(name);
@@ -169,11 +171,11 @@ public class UserAccountControl {
 
     // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
     private String getSignInUrl(UserAccount userAccount){
-        String url = "https://trezentos-api.herokuapp.com/api/user/login";
+        String url = "metodo300.com/android/api/user/login.php";
 
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-        builder.addQueryParameter("email", userAccount.getEmail());
-        builder.addQueryParameter("password", userAccount.getPassword());
+        builder.addQueryParameter("PersonEmail", userAccount.getEmail());
+        builder.addQueryParameter("PersonPassword", userAccount.getPassword());
 
         return builder.build().toString();
     }
@@ -182,7 +184,7 @@ public class UserAccountControl {
     public void validatePassword(String serverResponse, String password) throws UserException, JSONException {
         JSONObject object = getObjectFromServerResponse(serverResponse);
 
-        JSONObject userJson = object.getJSONObject("user");
+        JSONObject userJson = object.getJSONObject("person");
 
         //creating a new user object
                 /*
@@ -203,8 +205,13 @@ public class UserAccountControl {
         }
         */
         try {
-            userAccount.setName(userJson.getString("username"));
-            userAccount.setEmail(userJson.getString("email"));
+
+            userAccount.setName(userJson.getString("PersonName"));
+            userAccount.setEmail(userJson.getString("PersonEmail"));
+            userAccount.setIsFromFacebook(userJson.getBoolean("PersonIsFromFacebook"));
+            userAccount.setTelephoneDDI(userJson.getString("PersonTelephoneDDI"));
+            userAccount.setTelephoneDDD(userJson.getString("PersonTelephoneDDD"));
+            userAccount.setTelephoneNumber(userJson.getString("PersonTelephoneNumber"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -18,21 +18,19 @@ import org.json.JSONObject;
 
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
-
 import fga.mds.gpp.trezentos.R;
-
-import static fga.mds.gpp.trezentos.R.id.edit_text_email_register;
-import static fga.mds.gpp.trezentos.R.id.edit_text_name_register;
-import static fga.mds.gpp.trezentos.R.id.edit_text_password_confirmation;
-import static fga.mds.gpp.trezentos.R.id.edit_text_password_register;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "SignUpActivity";
     private UserAccountControl userAccountControl;
     private EditText nameEdit;
+    private EditText lastNameEdit;
     private EditText emailEdit;
     private EditText passwordEdit;
     private EditText passwordConfirmationEdit;
+    private EditText telephoneDDIEdit;
+    private EditText telephoneDDDEdit;
+    private EditText telephoneNumberEdit;
     private Button signUp;
     private Button alreadySignUp;
 
@@ -68,16 +66,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void confirmInformation(){
 
         String errorMessage = userAccountControl.validateSignUp(
-                nameEdit.getText().toString(), emailEdit.getText().toString(),
+                nameEdit.getText().toString() + " " + lastNameEdit.getText().toString(),
+                emailEdit.getText().toString(),
                 passwordEdit.getText().toString(),
-                passwordConfirmationEdit.getText().toString());
+                passwordConfirmationEdit.getText().toString(),
+                "+55",
+                telephoneDDDEdit.getText().toString(),
+                telephoneNumberEdit.getText().toString());
 
         verifyMessage(errorMessage, userAccountControl);
     }
 
     private void verifyMessage(String errorMessage, UserAccountControl userAccountControl){
         if (errorMessage.equals("")){
-            goToMain(userAccountControl.validateSignUpResponse());
+            String serverResponse = userAccountControl.validateSignUpResponse();
+            goToMain(serverResponse);
         }else{
             signUpErrorMessage(nameEdit, emailEdit, passwordEdit,
                     passwordConfirmationEdit, errorMessage);
@@ -85,12 +88,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initFields(){
-        nameEdit = (EditText) findViewById(edit_text_name_register);
-        emailEdit = (EditText) findViewById(edit_text_email_register);
-        passwordEdit = (EditText) findViewById(edit_text_password_register);
-        passwordConfirmationEdit = (EditText) findViewById(edit_text_password_confirmation);
-
-
+        nameEdit = (EditText) findViewById(R.id.edit_text_name_register);
+        lastNameEdit = (EditText) findViewById(R.id.edit_text_last_name_register);
+        emailEdit = (EditText) findViewById(R.id.edit_text_email_register);
+        passwordEdit = (EditText) findViewById(R.id.edit_text_password_register);
+        passwordConfirmationEdit = (EditText) findViewById(R.id.edit_text_password_confirmation);
+        telephoneDDDEdit = (EditText) findViewById(R.id.edit_text_DDD_telephone);
+        telephoneNumberEdit = (EditText) findViewById(R.id.edit_text_telephone);
     }
 
     private void signUpErrorMessage(EditText nameEdit, EditText emailEdit, EditText passwordEdit,
@@ -135,9 +139,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             if (!obj.getBoolean("error")) {
                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                Intent goToMain = new Intent(this, MainActivity.class);
                 finish();
-                startActivity(goToMain);
+                startActivity(new Intent(this, LoginActivity.class));
                 //getting the user from the response
                 //JSONObject userJson = obj.getJSONObject("user");
 
@@ -159,7 +162,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 //finish();
                 //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             } else {
-                Toast.makeText(getApplicationContext(), "Some error occurred: " + obj.getString("message"), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
