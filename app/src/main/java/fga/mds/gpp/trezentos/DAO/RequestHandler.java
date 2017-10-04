@@ -26,7 +26,7 @@ public class RequestHandler extends AsyncTask<String, String, String> {
     //this method will send a post request to the specified url
     //in this app we are using only post request
     //in the hashmap we have the data to be sent to the server in keyvalue pairs
-    String requestURL = "";
+    String requestURL = "metodo300.com/android/api/user/sign_up.php";
     HashMap<String, String> postDataParams;
 
     public RequestHandler(String requestURL, HashMap<String, String> postDataParams) {

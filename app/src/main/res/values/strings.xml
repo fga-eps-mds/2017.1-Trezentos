@@ -23,6 +23,11 @@
     <string name="msg_len_email_error_message">"O email deve ter entre 5 e 50 caracteres válidos"</string>
     <string name="msg_special_characters_email_error_message">"Email com caracteres inválidos. Tente novamente"</string>
 
+    <!-- Telephones -->
+    <string name="telehphone_dd1_error_message">"DDI inválido"</string>
+    <string name="telehphone_ddd_error_message">"DDD inválido"</string>
+    <string name="telehphone_number_error_message">"Número deve ter 9 dígitos"</string>
+
     <!-- Create class -->
     <string name="classname">Nome da sala</string>
     <string name="institution">Instituiçao (opcional)</string>
@@ -65,6 +70,8 @@
 
     <!-- Register -->
     <string name="txt_password">Senha</string>
+    <string name="txt_telephone_DDD">DDD</string>
+    <string name="txt_telephone">Telefone</string>
 
     <!-- Forgot Password -->
     <string name="txt_email">E-mail</string>

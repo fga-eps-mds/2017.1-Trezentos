@@ -95,7 +95,6 @@ public class LoginActivity extends AppCompatActivity{
                 if(errorMessage.isEmpty()){
 
                     String serverResponse = userAccountControl.validateSignInResponse();
-                    Log.d("RESPONSE", ""+serverResponse);
 
                     try {
                         validatePasswordAndLogsUser(serverResponse, passwordString);
@@ -141,7 +140,7 @@ public class LoginActivity extends AppCompatActivity{
 
     private void validatePasswordAndLogsUser(String serverResponse, String passwordString) throws JSONException, UserException {
         JSONObject responseJson = new JSONObject(serverResponse);
-        Log.d("TEST", serverResponse);
+
         if(!responseJson.getBoolean("error")) {
             userAccountControl.validatePassword(serverResponse, passwordString);
             goToMain(serverResponse);

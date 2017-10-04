@@ -21,6 +21,10 @@ public class UserAccount{
     private String name;
     private String password;
     private String passwordConfirmation;
+    private Boolean isFromFacebook;
+    private String telephoneDDI;
+    private String telephoneDDD;
+    private String telephoneNumber;
     private String salt;
 
     private PasswordUtil passwordUtil;
@@ -37,11 +41,15 @@ public class UserAccount{
     }
 
     public UserAccount(String name, String email, String password,
-                       String passwordConfirmation) throws UserException{
+                       String passwordConfirmation, String telephoneDDI,
+                       String telephoneDDD, String telephoneNumber) throws UserException{
         setName(name);
         setEmail(email);
         setPasswordConfirmation(passwordConfirmation);
         setPassword(password);
+        setTelephoneDDI(telephoneDDI);
+        setTelephoneDDD(telephoneDDD);
+        setTelephoneNumber(telephoneNumber);
     }
 
     public void setSalt(String salt){
@@ -61,6 +69,30 @@ public class UserAccount{
             }
         } else {
             throw new UserException("O nome não pode estar vazio");
+        }
+    }
+
+    public void setTelephoneDDI(String telephoneDDI) throws UserException{
+        if(telephoneDDI.length() == 3 ){
+            this.telephoneDDI = telephoneDDI;
+        } else {
+            throw new UserException("DDI inválido");
+        }
+    }
+
+    public void setTelephoneDDD(String telephoneDDD) throws UserException{
+        if(telephoneDDD.length() == 3){
+            this.telephoneDDD = telephoneDDD;
+        } else {
+            throw new UserException("DDD inválido");
+        }
+    }
+
+    public void setTelephoneNumber(String telephoneNumber) throws UserException{
+        if(telephoneNumber.length() == 9){
+            this.telephoneNumber = telephoneNumber;
+        } else {
+            throw new UserException("Número deve ter 9 dígitos");
         }
     }
 
@@ -90,6 +122,10 @@ public class UserAccount{
 
     public void setPassword(String password) throws UserException{
         validatePassword(password);
+    }
+
+    public void setIsFromFacebook(boolean isFromFacebook) throws UserException{
+        this.isFromFacebook = isFromFacebook;
     }
 
     public void authenticatePassword(String password) throws UserException{
@@ -146,6 +182,12 @@ public class UserAccount{
     public String getPasswordConfirmation(){
         return passwordConfirmation;
     }
+
+    public String getTelephoneDDI() { return telephoneDDI; }
+
+    public String getTelephoneDDD() { return telephoneDDD; }
+
+    public String getTelephoneNumber() { return telephoneNumber; }
 
     public String getSalt(){
         return salt;
