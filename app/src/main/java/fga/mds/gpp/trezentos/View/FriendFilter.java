@@ -11,9 +11,9 @@ public class FriendFilter extends Filter {
 
     private ArrayList<UserClass> tempList = null;
     private ArrayList<UserClass> userClasses;
-    private ClassAdapter classAdapter;
+    private ExploreFragmentAdapter classAdapter;
 
-    public FriendFilter(ArrayList<UserClass> userClasses, ClassAdapter classAdapter){
+    public FriendFilter(ArrayList<UserClass> userClasses, ExploreFragmentAdapter classAdapter){
         this.userClasses = userClasses;
         this.classAdapter = classAdapter;
     }

@@ -4,6 +4,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -32,6 +35,33 @@ public class CreateClassActivity extends AppCompatActivity {
     private EditText additionField;
     private EditText cutOffField;
 
+
+    private Toolbar toolbar = null;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.menu_create_class, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        // Noinspection SimplifiableIfStatement
+        if(id == R.id.search_classes){
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +69,14 @@ public class CreateClassActivity extends AppCompatActivity {
         initFields();
         initButtonAndProgressBar();
 
-        buttonOk.setOnClickListener(new View.OnClickListener() {
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Criação de Salas");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        /*buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -64,15 +101,17 @@ public class CreateClassActivity extends AppCompatActivity {
                 }
             }
         });
+
+    */
     }
 
     private void initFields(){
-        classNameField = (EditText) findViewById(R.id.edit_text_class_name);
-        institutionField = (EditText) findViewById(R.id.edit_text_institution);
-        passwordField = (EditText) findViewById(R.id.edit_text_class_password);
-        cutOffField = (EditText) findViewById(R.id.edit_text_cut_grade);
-        sizeGroupsField = (EditText) findViewById(R.id.edit_text_size_groups);
-        additionField = (EditText) findViewById(R.id.edit_text_addition);
+//        classNameField = (EditText) findViewById(R.id.edit_text_class_name);
+//        institutionField = (EditText) findViewById(R.id.edit_text_institution);
+//        passwordField = (EditText) findViewById(R.id.edit_text_class_password);
+//        cutOffField = (EditText) findViewById(R.id.edit_text_cut_grade);
+//        sizeGroupsField = (EditText) findViewById(R.id.edit_text_size_groups);
+//        additionField = (EditText) findViewById(R.id.edit_text_addition);
     }
 
     private void initButtonAndProgressBar(){
@@ -153,17 +192,5 @@ public class CreateClassActivity extends AppCompatActivity {
         return true;
     }
 
-    //Setting upp
-    public void moveName(View view){
-        ImageView image = (ImageView)findViewById(R.id.nameImageView);
-        Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move);
-        image.startAnimation(animation1);
-    }
-
-    public void moveInstituition(View view){
-        ImageView image = (ImageView)findViewById(R.id.institutionImageView);
-        Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move);
-        image.startAnimation(animation1);
-    }
 
 }

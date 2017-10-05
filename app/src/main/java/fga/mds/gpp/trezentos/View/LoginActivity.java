@@ -1,5 +1,8 @@
 package fga.mds.gpp.trezentos.View;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -22,20 +26,30 @@ import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "LoginActivity";
-    private UserDialog dialog = new UserDialog();
-    String activityName = this.getClass().getSimpleName();
-    Handler mHandler = new Handler();
     private CallbackManager callbackManager;
     private LoginButton loginFacebook;
     private UserAccountControl userAccountControl;
+
+    private EditText emailEditText = null;
+    private EditText passwordEditText = null;
+
+    private Button login = null;
+    private Button forgotPassword = null;
+    private Button register = null;
+    private Button about = null;
+
+    private ProgressBar progressBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -43,19 +57,74 @@ public class LoginActivity extends AppCompatActivity{
 
         setContentView(R.layout.activity_login);
 
-        dialog.setContext(this);
+        initView();
+        facebookAPI();
+    }
 
-        final Button login = (Button) findViewById(R.id.button_login);
-        final Button forgotPassword = (Button) findViewById(R.id.button_forgot_password);
+    @Override
+    public void onClick(View view) {
 
-        Button register = (Button) findViewById(R.id.button_register);
-        Button about = (Button) findViewById(R.id.button_about);
+        switch (view.getId()){
 
-        final EditText email = (EditText) findViewById(R.id.edit_text_email);
-        final EditText password = (EditText) findViewById(R.id.edit_text_password);
+            case R.id.button_login:
 
+                if(isNetworkAvailable(getApplicationContext()) && isOnline()){
+                    
+
+                    userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+
+                    String emailString = emailEditText.getText().toString();
+                    String passwordString = passwordEditText.getText().toString();
+
+                    String errorMessage = userAccountControl.authenticateLogin(emailString,
+                            passwordString);
+
+                    if(errorMessage.isEmpty()){
+                        progressBar.setVisibility(View.VISIBLE);
+                        String serverResponse = userAccountControl.validateSignInResponse();
+
+                        try {
+                            validatePasswordAndLogsUser(serverResponse);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (UserException e) {
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    } else{
+                        loginErrorMessage(errorMessage, emailEditText, passwordEditText);
+                    }
+
+                }else{
+                    Toast.makeText(this, "Verifique sua conexão com a internet e tente novamente", Toast.LENGTH_LONG).show();
+                }
+
+
+                break;
+
+            case R.id.button_forgot_password:
+                // Go to forgot password screen
+                Intent showForgotPassword = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivity(showForgotPassword);
+                break;
+
+            case R.id.button_register:
+                // Go to register screen
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.button_about:
+                // Go to about screen
+                Intent showAbout = new Intent(getApplicationContext(), AboutOnLogin.class);
+                startActivity(showAbout);
+                break;
+        }
+    }
+
+    private void facebookAPI(){
         callbackManager = CallbackManager.Factory.create();
-
         loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
         loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
         loginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>(){
@@ -63,7 +132,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onSuccess(LoginResult loginResult){
                 facebookLogin(loginResult);
-                goMainScreen();
+                changeRouteToMain();
             }
 
             @Override
@@ -78,74 +147,33 @@ public class LoginActivity extends AppCompatActivity{
                         Toast.LENGTH_SHORT).show();
             }
         });
-
-        login.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-                Log.d(TAG, email.getText().toString());
-                Log.d(TAG, password.getText().toString());
-
-                userAccountControl = UserAccountControl.getInstance(getApplicationContext());
-                String emailString = email.getText().toString();
-                String passwordString = password.getText().toString();
-                String errorMessage = userAccountControl.authenticateLogin(emailString,
-                        passwordString);
-
-                if(errorMessage.isEmpty()){
-
-                    String serverResponse = userAccountControl.validateSignInResponse();
-
-                    try {
-                        validatePasswordAndLogsUser(serverResponse, passwordString);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (UserException e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                } else{
-                    loginErrorMessage(errorMessage, email, password);
-                }
-            }
-        });
-
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Go to register screen
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        about.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent showAbout = new Intent(getApplicationContext(), AboutOnLogin.class);
-                startActivity(showAbout);
-            }
-        });
-
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent showForgotPassword = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
-                startActivity(showForgotPassword);
-            }
-        });
     }
 
-    private void validatePasswordAndLogsUser(String serverResponse, String passwordString) throws JSONException, UserException {
+    private void initView(){
+        login = (Button) findViewById(R.id.button_login);
+        forgotPassword = (Button) findViewById(R.id.button_forgot_password);
+        register = (Button) findViewById(R.id.button_register);
+        about = (Button) findViewById(R.id.button_about);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        emailEditText = (EditText) findViewById(R.id.edit_text_email);
+        passwordEditText = (EditText) findViewById(R.id.edit_text_password);
+
+        login.setOnClickListener(this);
+        register.setOnClickListener(this);
+        about.setOnClickListener(this);
+        forgotPassword.setOnClickListener(this);
+    }
+
+    private void validatePasswordAndLogsUser(String serverResponse) throws JSONException, UserException {
         JSONObject responseJson = new JSONObject(serverResponse);
 
         if(!responseJson.getBoolean("error")) {
-            userAccountControl.validatePassword(serverResponse, passwordString);
-            goToMain(serverResponse);
+            userAccountControl.validatePerson(serverResponse);
+            changeRouteToMain();
         } else {
-            Toast.makeText(getApplicationContext(), R.string.invalid_login, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), responseJson.getString("message"), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -197,33 +225,47 @@ public class LoginActivity extends AppCompatActivity{
         }
     }
 
-    private void goToMain(String response) throws JSONException {
-        //converting response to json object
-        JSONObject obj = null;
+    private void changeRouteToMain() {
+        Intent intentGoMainActivity = new Intent(LoginActivity.this, MainActivity.class);
 
-        obj = new JSONObject(response);
-
-        if (!obj.getBoolean("error")){
-            Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(goToMain);
-        }
-        else{
-            String tryAgain = "Email ou Senha inválidos, por favor " +
-                    "tente novamente";
-            Toast.makeText(getApplicationContext(), tryAgain, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void goMainScreen() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+        intentGoMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startActivity(intentGoMainActivity);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
+    public boolean isNetworkAvailable(Context context) {
+        final ConnectivityManager connectivityManager =
+                ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+
+        return connectivityManager.getActiveNetworkInfo() != null &&
+                connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    /*
+    private boolean isInternetAvailable() {
+        try {
+            final InetAddress address = InetAddress.getByName("www.google.com");
+            if(!address.equals("")){
+                return true;
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    */
+
+    /* TEST IT IN REAL DEVISE */
 }

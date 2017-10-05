@@ -32,18 +32,15 @@ import static fga.mds.gpp.trezentos.R.id.button_refresh;
 
 public class ClassFragment extends Fragment{
 
-    public ArrayList<UserClass> userClasses;
     private FloatingActionButton floatingActionButton;
-    private  String userEmail;
     public ProgressBar progressBar;
     public UserClassControl userClassControl;
     private static ClassFragment fragment;
     private LinearLayout noInternetLayout;
-    private  Boolean connection;
-    private Button buttonRefresh;
-    private String email;
-    public ClassFragmentAdapter classFragmentAdapter;
 
+    private Button buttonRefresh;
+
+    public ClassFragmentAdapter classFragmentAdapter;
 
     public static ClassFragment getInstance() {
         if(fragment == null){
@@ -60,9 +57,8 @@ public class ClassFragment extends Fragment{
     @Override
     public void onResume(){
         super.onResume();
-        new ServerOperationClassFragment(getActivity().getApplication(),
-                progressBar, noInternetLayout,
-                classFragmentAdapter, fragment, userClasses).execute();
+        //new ServerOperationClassFragment(getActivity().getApplication(),
+          //      progressBar, noInternetLayout, fragment).execute();
     }
 
     @Override
@@ -88,8 +84,8 @@ public class ClassFragment extends Fragment{
             }
         });
 
-            initClasses();
-            initFloatingActionButton(view);
+        initFloatingActionButton(view);
+        initClasses();
 
         return view;
     }
@@ -97,8 +93,8 @@ public class ClassFragment extends Fragment{
     public void initClasses(){
         progressBar.setVisibility(View.VISIBLE);
         new ServerOperationClassFragment(getActivity().getApplication(),
-                progressBar, noInternetLayout, classFragmentAdapter,
-                fragment, userClasses)
+                progressBar, noInternetLayout,
+                fragment)
                 .execute();
     }
 

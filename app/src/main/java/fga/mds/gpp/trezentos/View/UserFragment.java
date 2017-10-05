@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 
@@ -25,10 +26,18 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class UserFragment extends Fragment implements View.OnClickListener{
 
     private ImageView exitButton;
-    private TextView profileName;
     private String userEmail;
     private String userName;
+    private String userTelephoneDDI;
+    private String userTelephoneDDD;
+    private String userTelephoneNumber;
+
+    private TextView profileName;
     private TextView profileEmail;
+    private TextView profileTelephoneNumber;
+    private TextView profileTelephoneDDD;
+    private TextView profileTelephoneDDI;
+
     private UserAccountControl userAccountControl;
     private OnFragmentInteractionListener mListener;
     private static UserFragment fragment;
@@ -53,8 +62,12 @@ public class UserFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
         exitButton = (ImageView) view.findViewById(R.id.exit_button);
+
         profileName = (TextView) view.findViewById(R.id.profile_name);
         profileEmail = (TextView) view.findViewById(R.id.profile_email);
+        profileTelephoneDDI = (TextView) view.findViewById(R.id.profile_telephone_ddi);
+        profileTelephoneDDD = (TextView) view.findViewById(R.id.profile_telephone_ddd);
+        profileTelephoneNumber = (TextView) view.findViewById(R.id.profile_telephone_number);
 
         exitButton.setOnClickListener(this);
 
@@ -62,6 +75,9 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
         profileName.setText(userName);
         profileEmail.setText(userEmail);
+        profileTelephoneDDD.setText(userTelephoneDDD);
+        profileTelephoneDDI.setText(userTelephoneDDI);
+        profileTelephoneNumber.setText(userTelephoneNumber);
 
         return view;
     }
@@ -99,5 +115,9 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
         userEmail = session.getString("userEmail", "");
         userName = session.getString("userName", "");
+        userTelephoneDDI = session.getString("userTelephoneDDI", "");
+        userTelephoneDDD = session.getString("userTelephoneDDD", "");
+        userTelephoneNumber = session.getString("userTelephoneNumber", "");
+
     }
 }

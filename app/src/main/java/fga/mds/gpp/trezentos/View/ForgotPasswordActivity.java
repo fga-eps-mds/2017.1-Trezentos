@@ -3,6 +3,7 @@ package fga.mds.gpp.trezentos.View;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     private Button sendRecovery;
     private Button returnLogin;
 
+    private Toolbar toolbar = null;
+
     UserAccountControl userAccountControl;
 
     @Override
@@ -37,8 +40,20 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         returnLogin.setOnClickListener(this);
 
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar_forgot_password);
+        setSupportActionBar(toolbar);
+        setTitle("Esqueceu a senha?");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     @Override
     public void onClick(View view) {
@@ -75,7 +90,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                         startActivity(goToLogin);
 
                     } else {
-                        Toast.makeText(getApplicationContext(), "Um erro ocorreu: " + objectJson.getString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), objectJson.getString("message"), Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

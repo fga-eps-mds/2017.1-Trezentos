@@ -29,7 +29,7 @@ public class    UserAccountControlTest {
     public void setUp() {
         activity = Robolectric.buildActivity(LoginActivity.class).get();
     }
-
+/*
     @Test
     public void shouldValitadeNullName() throws UserException {
         testUser = UserAccountControl.getInstance(activity.getApplicationContext());
@@ -111,6 +111,8 @@ public class    UserAccountControlTest {
 
         assertEquals(errorMessageExpected, errorMessage);
     }
+
+    */
 
 //    @Rule
 //    public ExpectedException expected = ExpectedException.none();

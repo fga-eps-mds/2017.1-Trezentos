@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +37,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private Button signUp;
     private Button alreadySignUp;
 
+    private Toolbar toolbar = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -44,6 +50,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         initButtons();
         initFields();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar_signup);
+        setSupportActionBar(toolbar);
+        setTitle("Cadastrar");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
         signUp.setOnClickListener(this);
         alreadySignUp.setOnClickListener(this);
 
@@ -55,6 +69,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 //        Toast.makeText(getApplicationContext(), myInternationalNumber, Toast.LENGTH_LONG).show();
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void initButtons(){

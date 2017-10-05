@@ -31,7 +31,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/create_class_bg"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"/>
 
@@ -54,7 +53,7 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="40dp"
-                        android:src="@drawable/name"
+
                         />
 
                     <LinearLayout
@@ -96,7 +95,6 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="40dp"
-                        android:src="@drawable/institution"
                         />
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -137,7 +135,7 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="40dp"
-                        android:src="@drawable/lock"
+
                         />
 
                     <LinearLayout
@@ -179,7 +177,7 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="40dp"
-                        android:src="@drawable/grade"
+
                         />
 
                     <LinearLayout
@@ -221,7 +219,7 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="40dp"
-                        android:src="@drawable/group"
+
                         />
 
                     <LinearLayout
@@ -263,7 +261,7 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="40dp"
-                        android:src="@drawable/incremento"
+
                         />
 
                     <LinearLayout

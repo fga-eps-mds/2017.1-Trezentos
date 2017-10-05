@@ -46,7 +46,7 @@ class ClassFragmentAdapter extends RecyclerView.Adapter implements View.OnClickL
         UserClass userClass  = userClasses.get(position) ;
         ClassViewHolder classViewHolder = (ClassViewHolder) holder;
 
-        Log.d("CLASSNAME", userClass.getClassName() + " " + position);
+        //Log.d("CLASSNAME", userClass.getClassName() + " " + position);
         classViewHolder.name.setText(userClass.getClassName());
         classViewHolder.institution.setText(userClass.getInstitution());
 

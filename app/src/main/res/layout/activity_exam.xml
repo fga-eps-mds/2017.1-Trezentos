@@ -29,8 +29,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:background="@drawable/backgroundtrezentos">
+            android:layout_width="match_parent">
             <android.support.design.widget.TabItem
 
                 android:icon="@drawable/ic_tests"
