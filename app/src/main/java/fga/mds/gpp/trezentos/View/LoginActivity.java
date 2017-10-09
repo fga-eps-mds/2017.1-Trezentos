@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.button_login:
 
                 if(isNetworkAvailable(getApplicationContext()) && isOnline()){
-                    
+
 
                     userAccountControl = UserAccountControl.getInstance(getApplicationContext());
 
