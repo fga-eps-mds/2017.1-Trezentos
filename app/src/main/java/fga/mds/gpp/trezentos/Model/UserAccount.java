@@ -73,27 +73,27 @@ public class UserAccount{
     }
 
     public void setTelephoneDDI(String telephoneDDI) throws UserException{
-        if(telephoneDDI.length() == 3 ){
+        //if(telephoneDDI.length() == 3 ){
             this.telephoneDDI = telephoneDDI;
-        } else {
-            throw new UserException("DDI inválido");
-        }
+        //} else {
+            //throw new UserException("DDI inválido");
+        //}
     }
 
     public void setTelephoneDDD(String telephoneDDD) throws UserException{
-        if(telephoneDDD.length() == 3){
+        //if(telephoneDDD.length() == 3){
             this.telephoneDDD = telephoneDDD;
-        } else {
-            throw new UserException("DDD inválido");
-        }
+        //} else {
+            //throw new UserException("DDD inválido");
+        //}
     }
 
     public void setTelephoneNumber(String telephoneNumber) throws UserException{
-        if(telephoneNumber.length() == 9){
+        //if(telephoneNumber.length() == 9){
             this.telephoneNumber = telephoneNumber;
-        } else {
-            throw new UserException("Número deve ter 9 dígitos");
-        }
+        //} else {
+         //   throw new UserException("Número deve ter 9 dígitos");
+        //}
     }
 
     public void setEmail(String email) throws UserException{

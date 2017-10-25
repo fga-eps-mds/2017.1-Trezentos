@@ -37,38 +37,54 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
     private Application application;
     private ClassFragment classFragment;
 
+    private RecyclerView recyclerView;
+
     public ServerOperationClassFragment(Application application,
                               ProgressBar progressBar,
                               LinearLayout noInternetLayout,
-                              ClassFragmentAdapter classFragmentAdapter,
-                              ClassFragment classFragment,
-                              ArrayList<UserClass> userClasses){
+                              ClassFragment classFragment){
         this.application = application;
         this.progressBar = progressBar;
         this.noInternetLayout = noInternetLayout;
-        this.classFragmentAdapter = classFragmentAdapter;
+
         this.classFragment = classFragment;
-        this.userClasses = userClasses;
+
     }
 
     @Override
+    protected void onPreExecute() {
+
+
+        userClassControl =
+                UserClassControl.getInstance(getApplicationContext());
+        SharedPreferences session = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        email = session.getString("userEmail","");
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {}
+
+    @Override
     protected String doInBackground(String... params) {
-            if(isInternetAvailable() ){ //If internet is ok
+
+
+        if(isInternetAvailable() ) { //If internet is ok
 
             userClasses = new ArrayList<>();
             ArrayList<UserClass> allClasses = userClassControl.getClasses();
 
             for (UserClass userClass : allClasses) {
                 if (userClass.getOwnerEmail().equals(email) ||
-                userClass.getStudents().contains(email)) {
+                        userClass.getStudents().contains(email)) {
                     userClasses.add(userClass);
                 }
             }
             return "true";
+        }else{
+            return null;
+        }
 
-            }else{
-                return null;
-            }
     }
 
     @Override
@@ -78,35 +94,26 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
         if(result.equals("true")){
                 if (classFragment.getActivity() != null) {
 
-                    RecyclerView recyclerView =
-                            (RecyclerView) classFragment.getActivity()
-                                    .findViewById(R.id.recycler);
+                    recyclerView = (RecyclerView) classFragment.getActivity().findViewById(R.id.recycler_class);
                     recyclerView.setVisibility(View.VISIBLE);
-
-                    recyclerView.setAdapter(classFragmentAdapter);
 
                     userClasses = getFormatedClasses(userClasses);
 
-                    classFragment.classFragmentAdapter =
-                            new ClassFragmentAdapter(userClasses,
-                                    classFragment.getContext(), recyclerView);
+                    classFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses,
+                                                                                    classFragment.getContext(),
+                                                                                        recyclerView);
 
                     classFragmentAdapter = classFragment.classFragmentAdapter;
 
-                    recyclerView.setAdapter(classFragmentAdapter);
 
                     classFragmentAdapter.setOnItemClickListener(callJoinClass());
-
-                    final LinearLayoutManager layoutManager =
-                            new LinearLayoutManager(classFragment
-                            .getActivity());
-                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(layoutManager);
 
                     RecyclerView.LayoutManager layout = new LinearLayoutManager
                             (application, LinearLayoutManager.VERTICAL, false);
                     recyclerView.setLayoutManager(layout);
-            }
+
+                    recyclerView.setAdapter(classFragmentAdapter);
+                }
 
         }else{
 
@@ -160,20 +167,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
         return tempList;
     }
 
-    @Override
-    protected void onPreExecute() {
-        userClassControl =
-                UserClassControl.getInstance(getApplicationContext());
-        SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        email = session.getString("userEmail","");
-    }
-
-    @Override
-    protected void onProgressUpdate(Void... values) {}
-
     public boolean isNetworkAvailable(Context context) {
-
         final ConnectivityManager connectivityManager =
             ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
 
@@ -182,17 +176,15 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
     }
 
     private boolean isInternetAvailable() {
-            try {
-                final InetAddress address = InetAddress.getByName("www.google.com");
+        try {
+            final InetAddress address = InetAddress.getByName("www.google.com");
             if(!address.equals("")){
                 return true;
             }
-            //return !address.equals("");
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-
-            return false;
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

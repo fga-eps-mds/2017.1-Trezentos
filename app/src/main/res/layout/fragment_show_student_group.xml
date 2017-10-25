@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fga.mds.gpp.trezentos.View.ShowStudentGroupFragment"
-    android:background="@drawable/backgroundtrezentos">
+    android:background="#ffbd19">
 
     <ProgressBar
         android:id="@+id/progress_bar_student_group"

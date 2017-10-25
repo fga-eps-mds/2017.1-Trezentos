@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class ClassAdapter extends RecyclerView.Adapter implements Filterable{
+public class ExploreFragmentAdapter extends RecyclerView.Adapter implements Filterable{
     private ArrayList<UserClass> userClasses;
     public ArrayList<UserClass> filteredClasses;
     private Context context;
@@ -32,7 +32,7 @@ public class ClassAdapter extends RecyclerView.Adapter implements Filterable{
     }
 
 
-    public ClassAdapter(ArrayList<UserClass> userClasses, Context context, RecyclerView recyclerView){
+    public ExploreFragmentAdapter(ArrayList<UserClass> userClasses, Context context, RecyclerView recyclerView){
         this.userClasses = userClasses;
         this.filteredClasses = userClasses;
         this.context = context;

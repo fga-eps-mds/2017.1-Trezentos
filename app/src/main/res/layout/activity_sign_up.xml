@@ -8,13 +8,16 @@
     android:background="#ffbd19"
     android:orientation="vertical">
 
-        <!--ImageView
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:id="@+id/logoImage"
-            android:src="@drawable/trezentoslogo"
-            android:layout_gravity="center"
-            android:layout_marginTop="6dp" /-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_signup"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="#FFF"
+            app:subtitleTextColor="#FFF">
+
+
+        </android.support.v7.widget.Toolbar>
 
 
         <LinearLayout
@@ -22,7 +25,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:weightSum="2">
 
 

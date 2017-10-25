@@ -144,7 +144,7 @@ public class UserAccountControl {
         try{
             userAccount = new UserAccount();
             userAccount.setEmail(email);
-            userAccount.authenticatePassword(password);
+            userAccount.authenticatePassword(password); //Set password
         }catch(UserException userException){
             return userException.getMessage();
         }
@@ -156,7 +156,7 @@ public class UserAccountControl {
 
         RequestHandler requestHandler = new RequestHandler(URLs.URL_LOGIN, getLoginParams(userAccount, false));
 
-        String serverResponse = "404";
+        String serverResponse = "";
 
         try{
             serverResponse = requestHandler.execute().get();
@@ -181,41 +181,25 @@ public class UserAccountControl {
     }
 
 
-    public void validatePassword(String serverResponse, String password) throws UserException, JSONException {
+    public void validatePerson(String serverResponse) throws UserException, JSONException {
         JSONObject object = getObjectFromServerResponse(serverResponse);
-
         JSONObject userJson = object.getJSONObject("person");
 
-        //creating a new user object
-                /*
-                User user = new User(
-                        userJson.getInt("id"),
-                        userJson.getString("username"),
-                        userJson.getString("email"),
-                        userJson.getString("gender")
-                );
-                */
-        String hashedPassword = null, salt = null;
-        /*
-        try{
-            hashedPassword = object.getString("password");
-            //salt = object.getString("salt");
-        }catch(JSONException e){
-            e.printStackTrace();
-        }
-        */
         try {
-
             userAccount.setName(userJson.getString("PersonName"));
             userAccount.setEmail(userJson.getString("PersonEmail"));
-            userAccount.setIsFromFacebook(userJson.getBoolean("PersonIsFromFacebook"));
             userAccount.setTelephoneDDI(userJson.getString("PersonTelephoneDDI"));
             userAccount.setTelephoneDDD(userJson.getString("PersonTelephoneDDD"));
             userAccount.setTelephoneNumber(userJson.getString("PersonTelephoneNumber"));
+            userAccount.setIsFromFacebook(userJson.getBoolean("PersonIsFromFacebook"));
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        Log.d("TESTE", userJson.getString("PersonTelephoneDDI"));
+        Log.d("TESTE", userAccount.getTelephoneDDI() + userAccount.getTelephoneDDD() + userAccount.getTelephoneNumber());
         if(!object.getBoolean("error")){
             logInUser();
         }else{
@@ -253,7 +237,14 @@ public class UserAccountControl {
                 .putBoolean("IsUserLogged", true)
                 .putString("userEmail", userAccount.getEmail())
                 .putString("userName", userAccount.getName())
+                .putString("userTelephoneDDI", userAccount.getTelephoneDDI())
+                .putString("userTelephoneDDD", userAccount.getTelephoneDDD())
+                .putString("userTelephoneNumber", userAccount.getTelephoneNumber())
                 .apply();
+
+
+
+
     }
 
     public void logOutUser(){

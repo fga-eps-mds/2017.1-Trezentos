@@ -100,7 +100,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:src="@drawable/avatar"
-                            app:civ_border_width="2dp"
+                            app:civ_border_width="0dp"
                             app:civ_border_color="#262626"
                             android:layout_centerVertical="true"
                             />

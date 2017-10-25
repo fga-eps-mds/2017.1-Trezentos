@@ -3,6 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        android:title="" />
+
     <item
         android:id="@+id/star_image"
         android:icon="@drawable/ic_star"
@@ -14,6 +21,8 @@
         android:icon="@drawable/avatar"
         app:showAsAction="always"
         android:title="" />
+
+
 
     <item
         android:id="@+id/search_classes"

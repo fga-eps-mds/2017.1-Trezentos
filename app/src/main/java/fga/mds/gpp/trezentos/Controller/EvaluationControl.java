@@ -22,7 +22,7 @@ import fga.mds.gpp.trezentos.Model.UserAccount;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 
-import static fga.mds.gpp.trezentos.R.drawable.group;
+
 
 public class EvaluationControl {
 

@@ -3,5 +3,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/colorClick"
           android:state_selected="true"/>
-    <item android:drawable="@drawable/backgroundtrezentos"/>
+    <!--item android:drawable="#000"/-->
 </selector>

@@ -3,17 +3,12 @@ package fga.mds.gpp.trezentos.View;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
@@ -24,55 +19,69 @@ import fga.mds.gpp.trezentos.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class ServerOperationSearchActivity extends AsyncTask<String, Void, String>{
+public class ServerOperationSearchFragment extends AsyncTask<String, Void, String>{
 
     private ArrayList<UserClass> userClasses;
-    public RecyclerView recyclerView;
-    public ClassAdapter classAdapter;
-    private Toolbar toolbar;
-    private AppBarLayout appBarLayout;
+
+    public ClassFragmentAdapter classFragmentAdapter;
+
+    LinearLayout noInternetLayout;
     private ProgressBar progressBar;
     private  String userEmail;
     public UserClassControl userClassControl;
     public Application application;
-    private SearchActivity searchActivity;
+    private ExploreFragment exploreFragment;
+    private RecyclerView recyclerView;
 
-    public ServerOperationSearchActivity(Application application, ProgressBar progressBar,
-             SearchActivity searchActivity, AppBarLayout appBarLayout,
-             ClassAdapter classAdapter, ArrayList<UserClass> userClasses){
+    public ServerOperationSearchFragment(Application application,
+                                         ProgressBar progressBar,
+                                         LinearLayout noInternetLayout,
+                                         ExploreFragment exploreFragment,
+                                         ClassFragmentAdapter classFragmentAdapter,
+                                         ArrayList<UserClass> userClasses,
+                                         RecyclerView recyclerView){
+
+
         this.application = application;
         this.progressBar = progressBar;
-        this.searchActivity = searchActivity;
-        this.appBarLayout = appBarLayout;
-        this.classAdapter = classAdapter;
+        this.noInternetLayout = noInternetLayout;
+        this.exploreFragment = exploreFragment;
+        this.classFragmentAdapter = classFragmentAdapter;
         this.userClasses = userClasses;
+        this.recyclerView = recyclerView;
     }
 
     private void initRecyclerView(){
 
-        RecyclerView recyclerView = (RecyclerView) searchActivity.findViewById(R.id.recycler);
-        recyclerView.setAdapter(classAdapter);
+        //RecyclerView recyclerView = (RecyclerView) .findViewById(R.id.recycler_explore);
+        recyclerView.setAdapter(classFragmentAdapter);
 
-        userClasses = getFormatedClasses(userClasses);
-        searchActivity.classAdapter = new ClassAdapter(userClasses, getApplicationContext(), recyclerView);
-        classAdapter = searchActivity.classAdapter;
-        classAdapter.setOnItemClickListener(callJoinClass());
-        recyclerView.setAdapter(classAdapter);
+        //userClasses = getFormatedClasses(userClasses);
+
+        exploreFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses, getApplicationContext(), recyclerView);
+        classFragmentAdapter = exploreFragment.classFragmentAdapter;
+        classFragmentAdapter.setOnItemClickListener(callJoinClass());
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(application,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layout);
 
+        recyclerView.setAdapter(classFragmentAdapter);
+        recyclerView.setVisibility(View.VISIBLE);
+
+
+        /*
         recyclerView.setOnScrollListener(new HidingScrollListener() {
             @Override
             public void onHide() {
-                searchActivity.hideViews();
+                exploreFragment.hideViews();
             }
             @Override
             public void onShow() {
-                searchActivity.showViews();
+                exploreFragment.showViews();
             }
         });
+        */
     }
 
     private ClassViewHolder.OnItemClickListener callJoinClass() {
@@ -80,22 +89,23 @@ public class ServerOperationSearchActivity extends AsyncTask<String, Void, Strin
             @Override
             public void onItemClick(View itemView, int position) {
                 UserClass userClass = userClasses.get(position);
-                showJoinClassFragment(userClass);
+                //showJoinClassFragment(userClass);
             }
         };
     }
-
+/*
     private void showJoinClassFragment(UserClass userClass) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("userClass", userClass);
 
-        FragmentTransaction fragmentTransaction = searchActivity
+        FragmentTransaction fragmentTransaction = exploreFragment
                 .getSupportFragmentManager().beginTransaction();
 
         JoinClassFragment joinClassFragment = new JoinClassFragment();
         joinClassFragment.setArguments(bundle);
         joinClassFragment.show(fragmentTransaction, "joinClass");
     }
+    */
 
     public ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){
         ArrayList<UserClass> tempList = new ArrayList<UserClass>();
@@ -114,12 +124,14 @@ public class ServerOperationSearchActivity extends AsyncTask<String, Void, Strin
     protected String doInBackground(String... params) {
 
         userClasses = userClassControl.getClasses();
+
         return null;
     }
 
     @Override
     protected void onPostExecute(String result) {
         progressBar.setVisibility(View.GONE);
+        Log.d("TEST", userClasses.toString());
         initRecyclerView();
     }
 

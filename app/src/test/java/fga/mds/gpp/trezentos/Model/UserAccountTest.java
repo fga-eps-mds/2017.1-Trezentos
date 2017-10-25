@@ -48,6 +48,7 @@ public class UserAccountTest {
         assertEquals("Password", userAccount.getPassword());
     }
 
+    /*
     @Test
     public void shouldValidateConstructor() throws UserException {
         UserAccount userAccount = new UserAccount("Joao", "Joao123@email.com", "123456", "123456");
@@ -56,5 +57,6 @@ public class UserAccountTest {
         assertEquals("123456", userAccount.getPasswordConfirmation());
         assertTrue(PasswordUtil.decryptPass(userAccount.getPassword(), userAccount.getSalt(), "123456"));
     }
+    */
 
 }

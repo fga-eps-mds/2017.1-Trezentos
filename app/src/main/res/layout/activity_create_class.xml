@@ -1,272 +1,435 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
+
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.CreateClassActivity"
-    android:id="@+id/relativeLayout">
+    android:background="#ffbd19"
+    tools:context="fga.mds.gpp.trezentos.View.CreateClassActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:background="#262626"
+        app:titleTextColor="#FFF"
+        app:subtitleTextColor="#FFF">
+
+
+    </android.support.v7.widget.Toolbar>
+
 
 
     <ScrollView
+
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:orientation="vertical">
 
-        <RelativeLayout
 
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
-            <ImageView
+            <!-- Informações da Sala-->
+            <android.support.v7.widget.CardView
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/create_class_bg"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"/>
+                android:layout_height="wrap_content">
 
-
-                <!--Inputs-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
                     android:orientation="vertical">
 
-
-                    <!--Name Class-->
-                    <LinearLayout
+                    <!-- Title -->
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="230dp"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Informações da Sala"
+                            android:textSize="23dp"
+                            android:textStyle="bold"/>
 
                         <ImageView
-                            android:id="@+id/nameImageView"
-                            android:layout_width="50dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_help"/>
+
+
+                    </RelativeLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"></View>
+
+                    <!-- Class Name -->
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <EditText
+                            android:inputType="text"
+                            android:id="@+id/edit_text_class_name"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/name"
+                            android:hint="Nome da Sala"
+                            android:paddingLeft="10dp" />
 
+                    </android.support.design.widget.TextInputLayout>
+
+                    <!-- Institution -->
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <EditText
+                            android:inputType="textAutoComplete"
+                            android:id="@+id/edit_text_institution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:hint="Instituição"
+                            android:paddingLeft="10dp"
                             />
 
-                        <EditText
-                            android:id="@+id/edit_text_class_name"
-                            android:textSize="25dp"
-                            android:hint="Nome da Sala"
-                            android:inputType="text"
-                            android:layout_width="match_parent"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
+                    </android.support.design.widget.TextInputLayout>
 
-                    <!--Institution-->
-                    <LinearLayout
+                    <!-- Institution -->
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
-
-                        <ImageView
-                            android:id="@+id/institutionImageView"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/institution"
-                            android:layout_marginTop="30dp" />
+                        android:layout_gravity="center">
 
                         <EditText
-                            android:id="@+id/edit_text_institution"
-                            android:textSize="25dp"
-                            android:hint="Instituição"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginLeft="20dp"
-                            android:inputType="text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <!--Password-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
-
-                        <ImageView
-                            android:id="@+id/passImageView"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/lock"
-                            android:layout_marginTop="30dp" />
-
-
-
-                        <EditText
-                            android:id="@+id/edit_text_class_password"
-                            android:textSize="25dp"
-                            android:hint="Senha Sala"
-
-                            android:layout_marginTop="30dp"
-                            android:layout_marginLeft="20dp"
-                            android:inputType="textPassword"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <!--Cut Grade-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/gradeImageView"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/grade"
-                            android:layout_marginTop="30dp" />
-
-
-
-                        <EditText
-                            android:id="@+id/edit_text_cut_grade"
-                            android:textSize="25dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginLeft="20dp"
-                            android:hint="Nota de Corte"
                             android:inputType="numberDecimal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <!--Increase-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/riseImageView"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/incremento"
-                            android:layout_marginTop="30dp" />
-
-
-
-                        <EditText
-                            android:id="@+id/edit_text_addition"
-                            android:textSize="25dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginLeft="20dp"
-                            android:hint="Acrécimo"
-                            android:inputType="numberDecimal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <!--Increase-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/groupImageView"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="30dp"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/group"
-                             />
-
-
-
-                        <EditText
                             android:id="@+id/edit_text_size_groups"
-                            android:textSize="25dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
                             android:hint="Tamanho do Grupo"
-                            android:inputType="numberDecimal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:paddingLeft="10dp"
+                            />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-                        <Button
-                            android:id="@+id/button_save"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/save_class"
-                            android:layout_marginTop="18dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/shape_item"
-                            android:textColor="@color/cardview_light_background" />
-
-                        <Button
-                            android:id="@+id/button_return"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/return_to_class"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="2dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/shape_item"
-                            android:textColor="@color/cardview_light_background" />
-                    </LinearLayout>
-
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="40dp"
-                        android:visibility="gone" />
+                    </android.support.design.widget.TextInputLayout>
 
 
                 </LinearLayout>
 
-        </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+
+
+            <!-- Grade -->
+            <android.support.v7.widget.CardView
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical">
+
+
+                    <!-- Title -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nota"
+                            android:textSize="23dp"
+                            android:textStyle="bold"/>
+
+                        <ImageView
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_help"/>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"></View>
+
+                    <!-- Class Name -->
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        >
+
+                        <EditText
+                            android:inputType="numberDecimal"
+                            android:id="@+id/edit_text_cut_grade"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:hint="Nota de Corte"
+                            android:paddingLeft="10dp"
+                            />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <!-- Institution -->
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <EditText
+                            android:inputType="numberDecimal"
+                            android:id="@+id/edit_text_addition"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:hint="Acrécimo"
+                            android:paddingLeft="10dp"
+                            />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:layout_marginTop="3dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_sobre"/>
+
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="        Acrécimo é a nota maxima em que pode ser adicionada a nota do aluno de acordo com seu rendimento."/>
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!-- Security -->
+            <android.support.v7.widget.CardView
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical">
+
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Segurança"
+                        android:textSize="23dp"
+                        android:textStyle="bold"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"></View>
+
+                    <!-- Class Name -->
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        >
+
+                        <EditText
+                            android:inputType="textPassword"
+                            android:id="@+id/edit_text_class_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:hint="Senha da Sala"
+                            android:paddingLeft="10dp"
+                            />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <!-- Institution -->
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        >
+
+                        <EditText
+                            android:inputType="textPassword"
+                            android:id="@+id/edit_text_class_password_confirmation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:hint="Confirmação Senha Sala"
+                            android:paddingLeft="10dp"
+                            />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Notificação -->
+            <android.support.v7.widget.CardView
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical">
+
+                    <!-- Title -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notificação"
+                            android:textSize="23dp"
+                            android:textStyle="bold"/>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_centerVertical="true"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notificação para alunos"/>
+
+                        <Switch
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:checked="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_centerVertical="true"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notificação para professor"/>
+
+                        <Switch
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:checked="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+
+
+                </LinearLayout>
+
+
+
+            </android.support.v7.widget.CardView>
+
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </ScrollView>
 
+
+
+
+
 </RelativeLayout>
+
+
+
+
+

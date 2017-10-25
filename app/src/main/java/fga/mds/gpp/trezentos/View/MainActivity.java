@@ -22,10 +22,14 @@ public class MainActivity extends AppCompatActivity{
     private BottomNavigationView bottomNavigationView;
     private Fragment selectedFragment;
     private Toolbar toolbar = null;
+    MenuItem itemSeach = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         // Inflate the menu; this adds items to the action bar if it is present.
+
+        itemSeach = (MenuItem) findViewById(R.id.search);
+
 
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+
         int id = item.getItemId();
         // Noinspection SimplifiableIfStatement
         if(id == R.id.search_classes){
@@ -59,6 +64,8 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setTitle("Salas");
         setSupportActionBar(toolbar);
 
+
+
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView
                         .OnNavigationItemSelectedListener(){
@@ -71,18 +78,18 @@ public class MainActivity extends AppCompatActivity{
                         break;
 
                     case R.id.usuario_item:
+                        toolbar.setTitle("Explorar");
+                        selectedFragment = ExploreFragment.getInstance();
+                        break;
+
+                    case R.id.about_item:
                         toolbar.setTitle("Perfil");
                         selectedFragment = UserFragment.getInstance();
                         break;
 
-                    case R.id.about_item:
+                    case R.id.avaliacao_item:
                         toolbar.setTitle("Sobre");
                         selectedFragment = AboutFragment.getInstance();
-                        break;
-
-                    case R.id.avaliacao_item:
-                        toolbar.setTitle("Avaliação");
-                        selectedFragment = EvaluationFragment.getInstance();
                         break;
                 }
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

@@ -18,7 +18,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/create_class_bg"
+
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"/>
 
@@ -38,7 +38,6 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/grade"
                         android:layout_marginLeft="15dp"
                         android:layout_gravity="center"
                         android:adjustViewBounds="true"/>

@@ -102,7 +102,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2') {
 
 
-
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -110,6 +109,12 @@ dependencies {
 
     }
     compile project(':facebook-android-sdk-4.20.0')
+
+
+
+
+
+
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -120,12 +125,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.google.code.gson:gson:2.7'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-
-
-
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.2.2'
-
-
-
 }
