@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <!--de.hdodenhof.circleimageview.CircleImageView
                             xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:layout_gravity="center"
                             android:id="@+id/profile_image"
@@ -103,12 +103,13 @@
                             app:civ_border_width="0dp"
                             app:civ_border_color="#262626"
                             android:layout_centerVertical="true"
-                            />
+                            /-->
 
                         <TextView
+                            android:layout_marginLeft="20dp"
                             android:id="@+id/text_view_teacher"
-                            android:layout_toRightOf="@id/profile_image"
-                            android:layout_marginLeft="10dp"
+
+
                             android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
