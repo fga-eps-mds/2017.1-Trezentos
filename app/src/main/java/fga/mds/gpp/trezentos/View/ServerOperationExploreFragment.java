@@ -1,24 +1,37 @@
 package fga.mds.gpp.trezentos.View;
 
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
+import fga.mds.gpp.trezentos.DAO.RequestHandler;
+import fga.mds.gpp.trezentos.DAO.URLs;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
@@ -36,6 +49,7 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Stri
     private String userId;
     private Application application;
     private ExploreFragment exploreFragment;
+
 
     private RecyclerView recyclerView;
 
@@ -123,28 +137,98 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Stri
         };
     }
 
-    private void showJoinClassFragment(UserClass userClass){
-//        if(userClass.getOwnerEmail().equals(email)){
-//            Log.d("INTENT","ClassOwner");
-//            Log.d("INTENT",userClass.getOwnerEmail());
-//            Intent goClass = new  Intent(getApplicationContext(),
-//                    ClassActivity.class);
-//            goClass.putExtra("Class", userClass);
-//            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            getApplicationContext().startActivity(goClass);
-//        }else{
-//            Log.d("INTENT","Student");
-//            Log.d("INTENT",email);
-//            Log.d("INTENT",userClass.getOwnerEmail());
-//
-//            Intent goClass = new  Intent(getApplicationContext(),
-//                    StudentClassActivity.class);
-//            goClass.putExtra("Class", userClass);
-//            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            getApplicationContext().startActivity(goClass);
-//        }
+
+
+
+    private void showJoinClassFragment(final UserClass userClass) {
+        // custom dialog
+        final Dialog dialog = new Dialog(exploreFragment.getContext());
+        dialog.setContentView(R.layout.dialog_class_password);
+        dialog.setTitle("Title...");
+
+        TextView textTitle = (TextView) dialog.findViewById(R.id.text_title);
+        final TextView textViewClassPassword = (TextView) dialog.findViewById(R.id.class_passwort);
+        textTitle.setText(userClass.getClassName());
+
+        Button dialogButtonOk = (Button) dialog.findViewById(R.id.dialogButtonOK);
+        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.dialogButtonCANCEL);
+        // if button is clicked, close the custom dialog
+        dialogButtonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                String classPassword = String.valueOf(textViewClassPassword.getText());
+                String classId = userClass.getIdClass();
+                SharedPreferences session = PreferenceManager
+                        .getDefaultSharedPreferences(getApplicationContext());
+
+                String userId = session.getString("userId","");
+
+                RequestHandler requestHandler = new RequestHandler(URLs.URL_INSERT_STUDENT_CLASS, getInsertStudentParams(userId, classId, classPassword));
+
+                String serverResponse = "404";
+
+                try{
+                    serverResponse = requestHandler.execute().get();
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }catch(ExecutionException e){
+                    e.printStackTrace();
+                }
+                Log.d("RESPONSE", "" + serverResponse);
+
+                JSONObject object = null;
+                try {
+                    object = new JSONObject(serverResponse);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                boolean error = false;
+                String message = "";
+                try {
+                    error = object.getBoolean("error");
+                    message = object.getString("message");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if(error) {
+                    Toast.makeText(getApplicationContext(),message,
+                            Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(),"Sala adicionada a sua salas",
+                            Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+
+
+            }
+        });
+
+        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public HashMap<String, String> getInsertStudentParams(String userId, String classId, String classPassword) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idPerson", userId);
+        params.put("idClass", classId);
+        params.put("classPassword", classPassword);
+
+
+        return params;
 
     }
+
+
 
 
     public boolean isNetworkAvailable(Context context) {

@@ -51,7 +51,7 @@ public class ShowClassComponentsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
-        students = userClass.getStudents();
+//        students = userClass.getStudents();
 
 
 

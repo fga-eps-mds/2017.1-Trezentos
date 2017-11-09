@@ -14,7 +14,7 @@ import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 class ClassFragmentAdapter extends RecyclerView.Adapter implements View.OnClickListener {
-    private final ArrayList<UserClass> userClasses;
+    private ArrayList<UserClass> userClasses;
     private Context context;
     private ClassViewHolder.OnItemClickListener listener;
 
@@ -41,7 +41,7 @@ class ClassFragmentAdapter extends RecyclerView.Adapter implements View.OnClickL
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        UserClass userClass  = userClasses.get(position) ;
+        UserClass userClass  = userClasses.get(position);
         ClassViewHolder classViewHolder = (ClassViewHolder) holder;
 
         //Log.d("CLASSNAME", userClass.getClassName() + " " + position);

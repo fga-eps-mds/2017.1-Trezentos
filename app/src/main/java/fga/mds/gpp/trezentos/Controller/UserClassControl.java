@@ -16,13 +16,13 @@ import fga.mds.gpp.trezentos.DAO.SaveRatePost;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Evaluation;
-import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 import okhttp3.HttpUrl;
 
 import static fga.mds.gpp.trezentos.DAO.URLs.URL_ALL_CLASS_AVALIABLE;
 import static fga.mds.gpp.trezentos.DAO.URLs.URL_CLASS_FROM_PERSON;
+import static fga.mds.gpp.trezentos.DAO.URLs.URL_INSERT_STUDENT_CLASS;
 
 public class UserClassControl {
 
@@ -135,9 +135,6 @@ public class UserClassControl {
         userClasses = getArrayList(classArrayJson);
 
         Log.d("RESPONSE", String.valueOf(userClasses.size()));
-
-
-
 
         return userClasses;
     }
