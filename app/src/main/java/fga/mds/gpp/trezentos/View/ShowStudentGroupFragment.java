@@ -125,12 +125,12 @@ public class ShowStudentGroupFragment extends Fragment {
 
             HashMap<String, Double> firstGrades = groupController.getFirstGrades(userExam.getNameExam(),
                     userClass.getClassName(), userExam.getClassOwnerEmail());
-            HashMap<String, Integer> groups = groupController.getGroups(userExam.getNameExam(),
-                    userClass.getClassName(), userClass.getOwnerEmail());
+//            HashMap<String, Integer> groups = groupController.getGroups(userExam.getNameExam(),
+//                    userClass.getClassName(), userClass.getOwnerEmail());
 
-            ArrayList<Student> auxGroupsAndGrades =
-                    groupController.setSpecificGroupAndGrades
-                            (userEmail, firstGrades, groups);
+//            ArrayList<Student> auxGroupsAndGrades =
+//                    groupController.setSpecificGroupAndGrades
+//                            (userEmail, firstGrades, groups);
 
 //            //esse metodo bloco de codigo ordena os grupos por ordem de nota crescente
 //            Collections.sort(auxGroupsAndGrades, new Comparator<Student>() {
@@ -141,7 +141,7 @@ public class ShowStudentGroupFragment extends Fragment {
 //                }
 //            });
 
-            groupAndGrades = auxGroupsAndGrades;
+            //groupAndGrades = auxGroupsAndGrades;
 
             return null;
         }

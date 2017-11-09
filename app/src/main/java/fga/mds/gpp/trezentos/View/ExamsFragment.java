@@ -103,7 +103,7 @@ public class ExamsFragment extends Fragment{
         @Override
         protected String doInBackground(String... params) {
 
-            userExams = userExamControl.getExamsFromUser(userClass.getOwnerEmail(), userClass.getClassName());
+            //userExams = userExamControl.getExamsFromUser(userClass.getOwnerEmail(), userClass.getClassName());
             return null;
         }
 
@@ -168,30 +168,30 @@ public class ExamsFragment extends Fragment{
             int itemPosition = recyclerView.getChildLayoutPosition(v);
             Exam exam = exams.get(itemPosition);
 
-            if(userClass.getOwnerEmail().equals(userEmail)){
-                Log.d("INTENT1","ClassOwner");
-                Log.d("INTENT1",userClass.getOwnerEmail());
-                Intent goExam = new  Intent(context, ExamActivity.class);
-                Bundle extras = new Bundle();
-                extras.putSerializable("Exam", exam);
-                extras.putSerializable("Class", userClass);
-                goExam.putExtras(extras);
-                goExam.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(goExam);
-            }else{
-                Log.d("INTENT1",userClass.getOwnerEmail());
-                Log.d("INTENT1","Student");
-                Log.d("INTENT1",userEmail);
-
-                Intent goExam = new  Intent(context, StudentExamActivity.class);
-                Bundle extras = new Bundle();
-                extras.putSerializable("Exam", exam);
-                extras.putSerializable("Class", userClass);
-                goExam.putExtras(extras);
-                goExam.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(goExam);
-
-            }
+//            if(userClass.getOwnerEmail().equals(userEmail)){
+//                Log.d("INTENT1","ClassOwner");
+//                Log.d("INTENT1",userClass.getOwnerEmail());
+//                Intent goExam = new  Intent(context, ExamActivity.class);
+//                Bundle extras = new Bundle();
+//                extras.putSerializable("Exam", exam);
+//                extras.putSerializable("Class", userClass);
+//                goExam.putExtras(extras);
+//                goExam.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(goExam);
+//            }else{
+//                Log.d("INTENT1",userClass.getOwnerEmail());
+//                Log.d("INTENT1","Student");
+//                Log.d("INTENT1",userEmail);
+//
+//                Intent goExam = new  Intent(context, StudentExamActivity.class);
+//                Bundle extras = new Bundle();
+//                extras.putSerializable("Exam", exam);
+//                extras.putSerializable("Class", userClass);
+//                goExam.putExtras(extras);
+//                goExam.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(goExam);
+//
+//            }
         }
     }
 

@@ -32,18 +32,18 @@ public class ServerOperationExamsActivity extends AsyncTask<String, Void, String
     protected String doInBackground(String... params) {
         if(isInternetAvailable() ){ //If internet is ok
 
-            groups = GroupController.getGroups
-                    (exam.getNameExam(),
-                            userClass.getClassName(),
-                            userClass.getOwnerEmail());
-
-            grades = GroupController.getFirstGrades(exam.getNameExam(),
-                    userClass.getClassName(), userClass.getOwnerEmail());
-
-            for(Map.Entry <String, Integer> entry : groups.entrySet()) {
-                evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
-                        userClass.getClassName(), groups, grades, (double) userClass.getCutOff());
-            }
+//            groups = GroupController.getGroups
+//                    (exam.getNameExam(),
+//                            userClass.getClassName(),
+//                            userClass.getOwnerEmail());
+//
+//            grades = GroupController.getFirstGrades(exam.getNameExam(),
+//                    userClass.getClassName(), userClass.getOwnerEmail());
+//
+//            for(Map.Entry <String, Integer> entry : groups.entrySet()) {
+//                evaluationControl.sendEvaluation(exam.getNameExam(), entry.getKey(),
+//                        userClass.getClassName(), groups, grades, (double) userClass.getCutOff());
+//            }
 
             return "true";
 

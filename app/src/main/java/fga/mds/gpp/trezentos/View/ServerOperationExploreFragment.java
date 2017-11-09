@@ -2,16 +2,12 @@ package fga.mds.gpp.trezentos.View;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -21,13 +17,14 @@ import org.json.JSONException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class ServerOperationClassFragment extends AsyncTask<String, Void, String> {
+public class ServerOperationExploreFragment extends AsyncTask<String, Void, String> {
 
     public ArrayList<UserClass> userClasses = null;
     private  String userEmail;
@@ -38,25 +35,23 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
     private String email;
     private String userId;
     private Application application;
-    private ClassFragment classFragment;
+    private ExploreFragment exploreFragment;
 
     private RecyclerView recyclerView;
 
-    public ServerOperationClassFragment(Application application,
-                              ProgressBar progressBar,
-                              LinearLayout noInternetLayout,
-                              ClassFragment classFragment){
+    public ServerOperationExploreFragment(Application application,
+                                          ProgressBar progressBar,
+                                          LinearLayout noInternetLayout,
+                                          ExploreFragment exploreFragment){
         this.application = application;
         this.progressBar = progressBar;
         this.noInternetLayout = noInternetLayout;
 
-        this.classFragment = classFragment;
-
+        this.exploreFragment = exploreFragment;
     }
 
     @Override
     protected void onPreExecute() {
-
 
         userClassControl =
                 UserClassControl.getInstance(getApplicationContext());
@@ -75,11 +70,10 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
         if(isInternetAvailable() ) { //If internet is ok
 
             try {
-                userClasses = userClassControl.getClasses(userId);
+                userClasses = userClassControl.getExploreClasses();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
 
             return "true";
         }else{
@@ -93,16 +87,14 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
         progressBar.setVisibility(View.GONE);
 
         if(result.equals("true")){
-                if (classFragment.getActivity() != null) {
+                if (exploreFragment.getActivity() != null) {
 
-                    recyclerView = (RecyclerView) classFragment.getActivity().findViewById(R.id.recycler_class);
+                    recyclerView = (RecyclerView) exploreFragment.getActivity().findViewById(R.id.recycler_explore);
                     recyclerView.setVisibility(View.VISIBLE);
 
 
-                    classFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses,
-                                                                                    classFragment.getContext());
-
-                    classFragmentAdapter = classFragment.classFragmentAdapter;
+                    classFragmentAdapter = new ClassFragmentAdapter(userClasses,
+                            exploreFragment.getContext());
 
 
                     classFragmentAdapter.setOnItemClickListener(callJoinClass());
@@ -154,17 +146,6 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
 
     }
 
-    private ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){
-        ArrayList<UserClass> tempList = new ArrayList<UserClass>();
-//        for (UserClass userClass : userClasses) {
-//            if (userClass.getOwnerEmail().equals(email) ||
-//                    userClass.getStudents().contains(email)) {
-//                tempList.add(userClass);
-//                Log.d("PUT", userClass.getClassName());
-//            }
-//        }
-        return tempList;
-    }
 
     public boolean isNetworkAvailable(Context context) {
         final ConnectivityManager connectivityManager =

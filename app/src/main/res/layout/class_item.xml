@@ -76,6 +76,7 @@
                     android:layout_height="50dp"
                     android:orientation="vertical">
                         <TextView
+                            android:id="@+id/description"
                             android:layout_marginTop="5dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
@@ -117,7 +118,7 @@
                             android:textSize="12dp"
                             android:textColor="#A7A7A7"/>
                         <TextView
-
+                            android:id="@+id/owner_name"
                             android:layout_toRightOf="@id/text_view_teacher"
                             android:layout_marginLeft="5dp"
                             android:layout_centerVertical="true"
@@ -128,6 +129,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/date_creation"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:layout_marginBottom="5dp"

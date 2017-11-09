@@ -95,10 +95,10 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
         @Override
         protected String doInBackground(String... params) {
             if(isNetworkAvailable(getContext()) && isInternetAvailable()){ //If internet is ok
-                groupses = GroupController.getGroups(exam.getNameExam(),
-                        exam.getUserClassName(), exam.getClassOwnerEmail());
-                firstGrades = GroupController.getFirstGrades(exam.getNameExam(),
-                        userClass.getClassName(), userClass.getOwnerEmail());
+//                groupses = GroupController.getGroups(exam.getNameExam(),
+//                        exam.getUserClassName(), exam.getClassOwnerEmail());
+//                firstGrades = GroupController.getFirstGrades(exam.getNameExam(),
+//                        userClass.getClassName(), userClass.getOwnerEmail());
                 return "true";
 
             }else{

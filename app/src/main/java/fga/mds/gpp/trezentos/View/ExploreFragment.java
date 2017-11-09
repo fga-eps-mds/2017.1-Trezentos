@@ -22,7 +22,6 @@ public class ExploreFragment extends Fragment {
     private LinearLayout noInternetLayout;
     private ProgressBar progressBar = null;
 
-
     private ArrayList<UserClass> userClasses;
     public RecyclerView recyclerView;
     public ClassFragmentAdapter classFragmentAdapter;
@@ -37,14 +36,6 @@ public class ExploreFragment extends Fragment {
 
     public ExploreFragment() {
         // Required empty public constructor
-    }
-
-
-
-    public static ExploreFragment newInstance(String param1, String param2) {
-        ExploreFragment fragment = new ExploreFragment();
-
-        return fragment;
     }
 
     @Override
@@ -66,16 +57,13 @@ public class ExploreFragment extends Fragment {
         return view;
     }
 
-    public void initClasses(){
+    public void initClasses() {
         progressBar.setVisibility(View.VISIBLE);
-
-        new ServerOperationSearchFragment(getActivity().getApplication(), progressBar,
-                noInternetLayout,fragment, classFragmentAdapter, userClasses, recyclerView).execute();
+        new ServerOperationExploreFragment(getActivity().getApplication(),
+                progressBar, noInternetLayout,
+                fragment)
+                .execute();
     }
-
-
-
-
 
 
 
