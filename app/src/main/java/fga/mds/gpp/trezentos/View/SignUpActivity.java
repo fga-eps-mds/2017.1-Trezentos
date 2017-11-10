@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
@@ -94,6 +95,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 telephoneDDDEdit.getText().toString(),
                 telephoneNumberEdit.getText().toString());
 
+        Log.d("RETURN", String.valueOf(errorMessage));
         verifyMessage(errorMessage, userAccountControl);
     }
 
@@ -187,22 +189,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        /*
-        if (response.contains("\"code\":\"200\"")){
-            userAccountControl.logInUser();
-            Toast.makeText(getApplicationContext(),getString(R.string.msg_signup_success),
-                    Toast.LENGTH_SHORT).show();
-
-            Intent goToMain = new Intent(this, MainActivity.class);
-            startActivity(goToMain);
-        }else if (response.contains("\"code\":11000")){
-            Toast.makeText(getApplicationContext(), "Email inválido, tente novamente",
-                    Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(getApplicationContext(), "Ocorreu um erro",
-                    Toast.LENGTH_SHORT).show();
-        }
-        */
 
     }
 
