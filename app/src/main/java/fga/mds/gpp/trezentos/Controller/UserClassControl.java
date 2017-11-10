@@ -1,5 +1,6 @@
 package fga.mds.gpp.trezentos.Controller;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
@@ -7,17 +8,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.DAO.GetDao;
 import fga.mds.gpp.trezentos.DAO.PostDao;
 import fga.mds.gpp.trezentos.DAO.PutDao;
+import fga.mds.gpp.trezentos.DAO.RequestHandler;
 import fga.mds.gpp.trezentos.DAO.SaveRatePost;
+import fga.mds.gpp.trezentos.DAO.URLs;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Evaluation;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.CreateClassActivity;
 import okhttp3.HttpUrl;
 
 import static fga.mds.gpp.trezentos.DAO.URLs.URL_ALL_CLASS_AVALIABLE;
@@ -40,19 +46,51 @@ public class UserClassControl {
         return instance;
     }
 
-    public void validateCreateClass(String className, String institution,
-                                    Float cutOff, String password, Float addition,
-                                    Integer sizeGroups, String email) throws UserException {
-        try{
-            String url = "https://trezentos-api.herokuapp.com/api/class/register";
-            UserClass userClass = new UserClass(className, institution, cutOff, password, addition, sizeGroups);
-            String urlWithParameters = getClassUrl(url, userClass, email);
+    public HashMap<String, String> getCreateClassParams(UserClass userClass) {
 
-            PostDao postDao = new PostDao(urlWithParameters, null, "");
-            postDao.execute();
-        }catch(UserException userException){
-            userException.printStackTrace();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("className", userClass.getClassName());
+        params.put("classPassword", userClass.getPassword());
+        params.put("classInstitution", userClass.getInstitution());
+        params.put("classCutOff", String.valueOf(userClass.getCutOff()));
+        params.put("classDescription", userClass.getDescription());
+        params.put("classCreationDate", userClass.getCreationDate());
+        params.put("idClassCreator", userClass.getIdClassCreator());
+        params.put("classCreatorName", userClass.getCreatorName());
+
+        return params;
+
+    }
+
+    public UserClass validateCreateClass(String className, String classInstitution, Float classCutOff,
+                                    String classPassword, Float classAddition, Integer classSizeGroups,
+                                    String classDescription, String classCreationDate, String idClassCreator,
+                                    String classCreatorName) throws UserException {
+
+        UserClass userClass = new UserClass(className, classInstitution, classCutOff, classPassword,
+                    classAddition, classSizeGroups, classDescription,classCreationDate, idClassCreator, classCreatorName);
+
+        return userClass;
+    }
+
+    public String createClass(UserClass userClass) throws UserException {
+
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_CREATE_CLASS, getCreateClassParams(userClass));
+
+        String serverResponse = "404";
+
+        try{
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
         }
+        Log.d("RESPONSE", ""+serverResponse);
+        //dialog.dismiss();
+        return serverResponse;
+
     }
 
     public String validateInformation(String className, String institution,

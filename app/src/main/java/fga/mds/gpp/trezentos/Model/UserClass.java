@@ -21,6 +21,15 @@ public class UserClass implements Serializable {
     private int sizeGroups;
     private String creatorName;
     private String creationDate;
+    private String idClassCreator;
+
+    public String getIdClassCreator() {
+        return idClassCreator;
+    }
+
+    public void setIdClassCreator(String idClassCreator) {
+        this.idClassCreator = idClassCreator;
+    }
 
     private ArrayList<String> students;
 
@@ -69,6 +78,22 @@ public class UserClass implements Serializable {
         setPassword(password);
         setAddition(addition);
         setSizeGroups(sizeGroups);
+    }
+
+    public UserClass(String className, String classInstitution, Float classCutOff,
+                     String classPassword, Float classAddition, Integer classSizeGroups,
+                     String classDescription, String classCreationDate, String idClassCreator,
+                     String classCreatorName) throws UserException{
+        setClassName(className);
+        setInstitution(classInstitution);
+        setCutOff(classCutOff);
+        setPassword(classPassword);
+        setAddition(classAddition);
+        setSizeGroups(classSizeGroups);
+        setDescription(classDescription);
+        setCreationDate(classCreationDate);
+        setIdClassCreator(idClassCreator);
+        setCreatorName(classCreatorName);
     }
 
     public String getClassName(){
