@@ -21,10 +21,12 @@
 
 
         <LinearLayout
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="50dp"
             android:weightSum="2">
 
@@ -80,8 +82,10 @@
 
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center">
 
                 <EditText
@@ -101,8 +105,10 @@
 
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center">
 
                 <EditText
@@ -123,8 +129,10 @@
 
 
         <android.support.design.widget.TextInputLayout
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center">
 
                 <EditText
@@ -145,10 +153,12 @@
 
 
         <LinearLayout
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:weightSum="2">
 
 
@@ -177,6 +187,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_gravity="center"
                     android:layout_weight="0">
 
@@ -185,7 +196,7 @@
                             android:inputType="numberDecimal"
                             android:id="@+id/edit_text_telephone"
 
-                            android:layout_width="250dp"
+                            android:layout_width="280dp"
                             android:layout_height="40dp"
                             android:layout_marginBottom="10dp"
                             android:hint="@string/txt_telephone"
@@ -211,10 +222,10 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/rounded_register_button"
             android:id="@+id/sign_up_button"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp" />
+            android:layout_marginEnd="8dp" />
 
         <Button
                 android:background="@android:color/transparent"

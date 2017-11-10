@@ -14,19 +14,17 @@ import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
 class ClassFragmentAdapter extends RecyclerView.Adapter implements View.OnClickListener {
-    private final ArrayList<UserClass> userClasses;
+    private ArrayList<UserClass> userClasses;
     private Context context;
-    private  RecyclerView recyclerView;
     private ClassViewHolder.OnItemClickListener listener;
 
     public void setOnItemClickListener(ClassViewHolder.OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    ClassFragmentAdapter(ArrayList<UserClass> userClasses, Context context, RecyclerView recyclerView) {
+    ClassFragmentAdapter(ArrayList<UserClass> userClasses, Context context) {
         this.userClasses = userClasses;
         this.context = context;
-        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -43,13 +41,15 @@ class ClassFragmentAdapter extends RecyclerView.Adapter implements View.OnClickL
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        UserClass userClass  = userClasses.get(position) ;
+        UserClass userClass  = userClasses.get(position);
         ClassViewHolder classViewHolder = (ClassViewHolder) holder;
 
         //Log.d("CLASSNAME", userClass.getClassName() + " " + position);
         classViewHolder.name.setText(userClass.getClassName());
         classViewHolder.institution.setText(userClass.getInstitution());
-
+        classViewHolder.description.setText(userClass.getDescription());
+        classViewHolder.owner_name.setText(userClass.getCreatorName());
+        classViewHolder.date_creation.setText(userClass.getCreationDate());
     }
 
     @Override

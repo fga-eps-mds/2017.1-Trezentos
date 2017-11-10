@@ -11,12 +11,12 @@ public class FriendFilter extends Filter {
 
     private ArrayList<UserClass> tempList = null;
     private ArrayList<UserClass> userClasses;
-    private ExploreFragmentAdapter classAdapter;
+    //private ExploreFragmentAdapter classAdapter;
 
-    public FriendFilter(ArrayList<UserClass> userClasses, ExploreFragmentAdapter classAdapter){
-        this.userClasses = userClasses;
-        this.classAdapter = classAdapter;
-    }
+//    public FriendFilter(ArrayList<UserClass> userClasses, ExploreFragmentAdapter classAdapter){
+//        this.userClasses = userClasses;
+//        this.classAdapter = classAdapter;
+//    }
 
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
@@ -43,7 +43,7 @@ public class FriendFilter extends Filter {
     @SuppressWarnings("unchecked")
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
-        classAdapter.filteredClasses = (ArrayList<UserClass>) results.values;
-        classAdapter.notifyDataSetChanged();
+//        classAdapter.filteredClasses = (ArrayList<UserClass>) results.values;
+//        classAdapter.notifyDataSetChanged();
     }
 }

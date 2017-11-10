@@ -186,6 +186,7 @@ public class UserAccountControl {
         JSONObject userJson = object.getJSONObject("person");
 
         try {
+            userAccount.setId(userJson.getString("idPerson"));
             userAccount.setName(userJson.getString("PersonName"));
             userAccount.setEmail(userJson.getString("PersonEmail"));
             userAccount.setTelephoneDDI(userJson.getString("PersonTelephoneDDI"));
@@ -198,23 +199,13 @@ public class UserAccountControl {
             e.printStackTrace();
         }
 
-        Log.d("TESTE", userJson.getString("PersonTelephoneDDI"));
-        Log.d("TESTE", userAccount.getTelephoneDDI() + userAccount.getTelephoneDDD() + userAccount.getTelephoneNumber());
+        //Log.d("TESTE", userJson.getString("idPerson"));
+        //Log.d("TESTE", userAccount.getId() + userAccount.getTelephoneDDI() + userAccount.getTelephoneDDD() + userAccount.getTelephoneNumber());
         if(!object.getBoolean("error")){
             logInUser();
         }else{
             logOutUser();
         }
-
-
-        /*
-        if(PasswordUtil.decryptPass(hashedPassword, salt, password)){
-            logInUser();
-        }else{
-            logOutUser();
-            throw new UserException(context.getString(R.string.invalid_login));
-        }
-        */
 
     }
 
@@ -235,6 +226,7 @@ public class UserAccountControl {
 
         session.edit()
                 .putBoolean("IsUserLogged", true)
+                .putString("userId", userAccount.getId())
                 .putString("userEmail", userAccount.getEmail())
                 .putString("userName", userAccount.getName())
                 .putString("userTelephoneDDI", userAccount.getTelephoneDDI())

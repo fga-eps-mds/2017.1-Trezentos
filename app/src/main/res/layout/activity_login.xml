@@ -27,7 +27,9 @@
         <EditText
             android:inputType="textEmailAddress"
             android:id="@+id/edit_text_email"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_height="40dp"
 
             android:hint="@string/txt_email"
@@ -48,10 +50,12 @@
         <EditText
             android:inputType="textPassword"
             android:id="@+id/edit_text_password"
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"
             android:hint="@string/txt_password"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/textRegisterColor"
             android:textColorHint="@android:color/black"
             android:background="@drawable/rounded_edit_text"
@@ -64,10 +68,12 @@
     <Button
         android:layout_marginTop="10dp"
         android:id="@+id/button_login"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/rounded_register_button"
         android:text="@string/btn_login"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:textColor="#FFFFFF"
         android:layout_gravity="center" />
 
@@ -75,7 +81,7 @@
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:id="@+id/button_sign_in_facebook"
-        android:layout_width="360dp"
+        android:layout_width="335dp"
         android:layout_height="45dp"
         facebook:com_facebook_login_text="@string/btn_fb_login"
 

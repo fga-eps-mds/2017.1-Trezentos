@@ -143,19 +143,19 @@ public class ExamActivity extends AppCompatActivity {
                 EvaluationControl evaluationControl =
                         EvaluationControl.getInstance(getApplication());
 
-                HashMap<String, Integer> groups;
-                groups = GroupController.getGroups(exam.getNameExam(),
-                        userClass.getClassName(), userClass.getOwnerEmail());
+//                HashMap<String, Integer> groups;
+//                groups = GroupController.getGroups(exam.getNameExam(),
+//                        userClass.getClassName(), userClass.getOwnerEmail());
+//
+//                HashMap<String, Double> grades;
+//                grades = GroupController.getFirstGrades(exam.getNameExam(),
+//                        userClass.getClassName(), userClass.getOwnerEmail());
 
-                HashMap<String, Double> grades;
-                grades = GroupController.getFirstGrades(exam.getNameExam(),
-                        userClass.getClassName(), userClass.getOwnerEmail());
-
-                try {
-                    addEvaluationToUser(grades, groups, evaluationControl);
-                } catch (UserException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    addEvaluationToUser(grades, groups, evaluationControl);
+//                } catch (UserException e) {
+//                    e.printStackTrace();
+//                }
                 sendEvaluationNotification();
 
                 break;

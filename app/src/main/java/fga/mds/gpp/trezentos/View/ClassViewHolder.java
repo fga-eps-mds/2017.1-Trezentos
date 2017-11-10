@@ -15,6 +15,10 @@ public class ClassViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     public TextView name;
     public TextView institution;
+    public TextView description;
+    public TextView owner_name;
+    public TextView date_creation;
+
     // Define listener member variable
     private OnItemClickListener listener;
 
@@ -31,6 +35,9 @@ public class ClassViewHolder extends RecyclerView.ViewHolder implements View.OnC
         super(itemView);
         name = (TextView) itemView.findViewById(R.id.name);
         institution = (TextView) itemView.findViewById(R.id.institution);
+        description = (TextView) itemView.findViewById(R.id.description);
+        owner_name = (TextView) itemView.findViewById(R.id.owner_name);
+        date_creation = (TextView) itemView.findViewById(R.id.date_creation);
 
         itemView.setOnClickListener(this);
     }

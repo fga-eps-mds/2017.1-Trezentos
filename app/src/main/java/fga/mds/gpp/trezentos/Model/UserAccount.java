@@ -17,12 +17,16 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UserAccount{
+    private String id;
     private String email;
     private String name;
     private String password;
     private String passwordConfirmation;
     private Boolean isFromFacebook;
     private String telephoneDDI;
+
+
+
     private String telephoneDDD;
     private String telephoneNumber;
     private String salt;
@@ -128,6 +132,10 @@ public class UserAccount{
         this.isFromFacebook = isFromFacebook;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void authenticatePassword(String password) throws UserException{
         if(password != null && !password.isEmpty()){
             this.password = password;
@@ -166,6 +174,9 @@ public class UserAccount{
 
     public void setPasswordConfirmation(String passwordConfirmation){
         this.passwordConfirmation = passwordConfirmation;
+    }
+    public String getId() {
+        return id;
     }
 
     public String getName(){

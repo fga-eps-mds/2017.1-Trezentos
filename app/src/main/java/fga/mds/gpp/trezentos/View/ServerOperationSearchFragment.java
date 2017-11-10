@@ -58,7 +58,7 @@ public class ServerOperationSearchFragment extends AsyncTask<String, Void, Strin
 
         //userClasses = getFormatedClasses(userClasses);
 
-        exploreFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses, getApplicationContext(), recyclerView);
+        exploreFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses, getApplicationContext());
         classFragmentAdapter = exploreFragment.classFragmentAdapter;
         classFragmentAdapter.setOnItemClickListener(callJoinClass());
 
@@ -110,12 +110,12 @@ public class ServerOperationSearchFragment extends AsyncTask<String, Void, Strin
     public ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){
         ArrayList<UserClass> tempList = new ArrayList<UserClass>();
         for (UserClass userClass : userClasses) {
-            if (userClass.getOwnerEmail().equals(userEmail) ||
-                    userClass.getStudents().contains(userEmail)) {
-            }else{
-                tempList.add(userClass);
-                Log.d("PUT", userClass.getClassName());
-            }
+//            if (userClass.getOwnerEmail().equals(userEmail) ||
+//                    userClass.getStudents().contains(userEmail)) {
+//            }else{
+//                tempList.add(userClass);
+//                Log.d("PUT", userClass.getClassName());
+//            }
         }
         return tempList;
     }
@@ -123,7 +123,7 @@ public class ServerOperationSearchFragment extends AsyncTask<String, Void, Strin
     @Override
     protected String doInBackground(String... params) {
 
-        userClasses = userClassControl.getClasses();
+        //userClasses = userClassControl.getClasses("11");
 
         return null;
     }

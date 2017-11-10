@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import org.json.JSONException;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -27,13 +29,14 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ServerOperationClassFragment extends AsyncTask<String, Void, String> {
 
-    public ArrayList<UserClass> userClasses;
+    public ArrayList<UserClass> userClasses = null;
     private  String userEmail;
     private ClassFragmentAdapter classFragmentAdapter;
     public ProgressBar progressBar;
     public UserClassControl userClassControl;
     private LinearLayout noInternetLayout;
     private String email;
+    private String userId;
     private Application application;
     private ClassFragment classFragment;
 
@@ -60,6 +63,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
         SharedPreferences session = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         email = session.getString("userEmail","");
+        userId = session.getString("userId","");
     }
 
     @Override
@@ -68,18 +72,15 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
     @Override
     protected String doInBackground(String... params) {
 
-
         if(isInternetAvailable() ) { //If internet is ok
 
-            userClasses = new ArrayList<>();
-            ArrayList<UserClass> allClasses = userClassControl.getClasses();
-
-            for (UserClass userClass : allClasses) {
-                if (userClass.getOwnerEmail().equals(email) ||
-                        userClass.getStudents().contains(email)) {
-                    userClasses.add(userClass);
-                }
+            try {
+                userClasses = userClassControl.getClasses(userId);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
+
             return "true";
         }else{
             return null;
@@ -97,11 +98,9 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
                     recyclerView = (RecyclerView) classFragment.getActivity().findViewById(R.id.recycler_class);
                     recyclerView.setVisibility(View.VISIBLE);
 
-                    userClasses = getFormatedClasses(userClasses);
 
                     classFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses,
-                                                                                    classFragment.getContext(),
-                                                                                        recyclerView);
+                                                                                    classFragment.getContext());
 
                     classFragmentAdapter = classFragment.classFragmentAdapter;
 
@@ -133,37 +132,37 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
     }
 
     private void showJoinClassFragment(UserClass userClass){
-        if(userClass.getOwnerEmail().equals(email)){
-            Log.d("INTENT","ClassOwner");
-            Log.d("INTENT",userClass.getOwnerEmail());
-            Intent goClass = new  Intent(getApplicationContext(),
-                    ClassActivity.class);
-            goClass.putExtra("Class", userClass);
-            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getApplicationContext().startActivity(goClass);
-        }else{
-            Log.d("INTENT","Student");
-            Log.d("INTENT",email);
-            Log.d("INTENT",userClass.getOwnerEmail());
-
-            Intent goClass = new  Intent(getApplicationContext(),
-                    StudentClassActivity.class);
-            goClass.putExtra("Class", userClass);
-            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getApplicationContext().startActivity(goClass);
-        }
+//        if(userClass.getOwnerEmail().equals(email)){
+//            Log.d("INTENT","ClassOwner");
+//            Log.d("INTENT",userClass.getOwnerEmail());
+//            Intent goClass = new  Intent(getApplicationContext(),
+//                    ClassActivity.class);
+//            goClass.putExtra("Class", userClass);
+//            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            getApplicationContext().startActivity(goClass);
+//        }else{
+//            Log.d("INTENT","Student");
+//            Log.d("INTENT",email);
+//            Log.d("INTENT",userClass.getOwnerEmail());
+//
+//            Intent goClass = new  Intent(getApplicationContext(),
+//                    StudentClassActivity.class);
+//            goClass.putExtra("Class", userClass);
+//            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            getApplicationContext().startActivity(goClass);
+//        }
 
     }
 
     private ArrayList<UserClass> getFormatedClasses(ArrayList<UserClass> userClasses){
         ArrayList<UserClass> tempList = new ArrayList<UserClass>();
-        for (UserClass userClass : userClasses) {
-            if (userClass.getOwnerEmail().equals(email) ||
-                    userClass.getStudents().contains(email)) {
-                tempList.add(userClass);
-                Log.d("PUT", userClass.getClassName());
-            }
-        }
+//        for (UserClass userClass : userClasses) {
+//            if (userClass.getOwnerEmail().equals(email) ||
+//                    userClass.getStudents().contains(email)) {
+//                tempList.add(userClass);
+//                Log.d("PUT", userClass.getClassName());
+//            }
+//        }
         return tempList;
     }
 

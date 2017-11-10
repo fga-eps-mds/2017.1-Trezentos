@@ -11,14 +11,59 @@ import fga.mds.gpp.trezentos.Exception.UserException;
 
 public class UserClass implements Serializable {
 
+    private String idClass;
     private String className;
     private String institution;
+    private String description;
     private float cutOff;
     private String password;
     private float addition;
     private int sizeGroups;
+    private String creatorName;
+    private String creationDate;
+    private String idClassCreator;
+
+    public String getIdClassCreator() {
+        return idClassCreator;
+    }
+
+    public void setIdClassCreator(String idClassCreator) {
+        this.idClassCreator = idClassCreator;
+    }
+
     private ArrayList<String> students;
-    private String ownerEmail;
+
+    public String getIdClass() {
+        return idClass;
+    }
+
+    public void setIdClass(String idClass) {
+        this.idClass = idClass;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public UserClass(){
         //An empty constructor is needed to create a new instance of object,
@@ -33,6 +78,22 @@ public class UserClass implements Serializable {
         setPassword(password);
         setAddition(addition);
         setSizeGroups(sizeGroups);
+    }
+
+    public UserClass(String className, String classInstitution, Float classCutOff,
+                     String classPassword, Float classAddition, Integer classSizeGroups,
+                     String classDescription, String classCreationDate, String idClassCreator,
+                     String classCreatorName) throws UserException{
+        setClassName(className);
+        setInstitution(classInstitution);
+        setCutOff(classCutOff);
+        setPassword(classPassword);
+        setAddition(classAddition);
+        setSizeGroups(classSizeGroups);
+        setDescription(classDescription);
+        setCreationDate(classCreationDate);
+        setIdClassCreator(idClassCreator);
+        setCreatorName(classCreatorName);
     }
 
     public String getClassName(){
@@ -140,12 +201,6 @@ public class UserClass implements Serializable {
         this.students = students;
     }
 
-    public String getOwnerEmail(){
-        return ownerEmail;
-    }
 
-    public void setOwnerEmail(String ownerEmail){
-        this.ownerEmail = ownerEmail;
-    }
 
 }

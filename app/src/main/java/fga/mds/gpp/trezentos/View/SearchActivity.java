@@ -23,7 +23,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<UserClass> userClasses;
     public RecyclerView recyclerView;
-    public ExploreFragmentAdapter classAdapter;
+
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
     private ProgressBar progressBar;
@@ -94,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
             public boolean onQueryTextChange(String newText) {
                 // Adapter that will be filtered
-                classAdapter.getFilter().filter(newText);
+                //classAdapter.getFilter().filter(newText);
                 return true;
             }
 

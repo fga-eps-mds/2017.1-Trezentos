@@ -1,5 +1,6 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,13 +32,14 @@ import fga.mds.gpp.trezentos.R;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static fga.mds.gpp.trezentos.R.id.button_refresh;
 
-public class ClassFragment extends Fragment{
+public class ClassFragment extends Fragment {
 
     private FloatingActionButton floatingActionButton;
     public ProgressBar progressBar;
     public UserClassControl userClassControl;
     private static ClassFragment fragment;
     private LinearLayout noInternetLayout;
+    SwipeRefreshLayout swipeLayout;
 
     private Button buttonRefresh;
 
@@ -66,11 +69,21 @@ public class ClassFragment extends Fragment{
         super.onStart();
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.fragment_class, container, false);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
+        swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        });
+
 
         noInternetLayout = (LinearLayout) view.findViewById(R.id.no_internet_layout);
         buttonRefresh = (Button) view.findViewById(button_refresh);
@@ -107,4 +120,5 @@ public class ClassFragment extends Fragment{
             }
         });
     }
+
 }
