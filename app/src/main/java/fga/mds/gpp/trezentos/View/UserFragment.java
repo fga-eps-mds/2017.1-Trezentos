@@ -27,6 +27,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class UserFragment extends Fragment implements View.OnClickListener{
 
     private ImageView exitButton;
+    private Button changePasswordButton;
+
     private String userEmail;
     private String userId;
     private String userName;
@@ -65,6 +67,8 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
         exitButton = (ImageView) view.findViewById(R.id.exit_button);
 
+        changePasswordButton = (Button) view.findViewById(R.id.button_change_password);
+
         profileName = (TextView) view.findViewById(R.id.profile_name);
         profileEmail = (TextView) view.findViewById(R.id.profile_email);
         profileTelephoneDDI = (TextView) view.findViewById(R.id.profile_telephone_ddi);
@@ -72,6 +76,7 @@ public class UserFragment extends Fragment implements View.OnClickListener{
         profileTelephoneNumber = (TextView) view.findViewById(R.id.profile_telephone_number);
 
         exitButton.setOnClickListener(this);
+        changePasswordButton.setOnClickListener(this);
 
         initSharedPreference();
 
@@ -97,6 +102,9 @@ public class UserFragment extends Fragment implements View.OnClickListener{
 
                 break;
             }
+            case R.id.button_change_password: {
+                goChangePasswordScreen();
+            }
         }
     }
 
@@ -111,6 +119,15 @@ public class UserFragment extends Fragment implements View.OnClickListener{
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
+    private void goChangePasswordScreen() {
+        Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+//                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
 
     private void initSharedPreference(){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
