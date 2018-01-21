@@ -1,7 +1,7 @@
 <p align="center"><a href="http://metodo300.com/" target="_blank"><img width="300"src="https://cloud.githubusercontent.com/assets/8144779/24085533/e6950df4-0cdc-11e7-8770-1b8021d90f01.png"></a></p>
 
 <p align="center">
-  <a href="https://travis-ci.org/fga-gpp-mds/2017.1-Trezentos"><img src="https://travis-ci.org/fga-gpp-mds/2017.1-Trezentos.svg?branch=master" alt="Build Status"></a>
+  <a href="https://travis-ci.org/Projeto-Fragelli/Trezentos-App"><img src="https://travis-ci.org/Projeto-Fragelli/Trezentos-App.svg?branch=master" alt="Build Status"></a>
   <a href="#"><img src="https://img.shields.io/badge/version-1.1-brightgreen.svg" alt="Version"></a>
   <a href="d.android.com"><img src="https://img.shields.io/badge/Android%20SDK-15-blue.svg" alt="Android SDK Version"></a>
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/aur/license/yaourt.svg" alt="License: GPL"></a>
