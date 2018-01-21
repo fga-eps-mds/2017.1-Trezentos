@@ -71,11 +71,11 @@ public class UserClassTest {
         assertEquals(tempList, userClass.getStudents());
     }
 
-    public void shouldProperlySetOwnerEmail() {
-        UserClass userClass = new UserClass();
-        userClass.setOwnerEmail("teste@teste.com");
-        assertEquals("teste@teste.com", userClass.getOwnerEmail());
-    }
+//    public void shouldProperlySetOwnerEmail() {
+//        UserClass userClass = new UserClass();
+//        userClass.setOwnerEmail("teste@teste.com");
+//        assertEquals("teste@teste.com", userClass.getOwnerEmail());
+//    }
 
     @Test
     public void shouldValidateConstructor() throws UserException {

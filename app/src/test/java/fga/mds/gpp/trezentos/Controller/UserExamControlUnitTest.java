@@ -1,54 +1,54 @@
-package fga.mds.gpp.trezentos.Controller;
+//package fga.mds.gpp.trezentos.Controller;
+//
+//import android.content.Context;
+//import android.support.v4.media.MediaMetadataCompat;
+//
+//import org.json.JSONException;
+//import org.json.JSONObject;
+//import org.junit.Before;
+//import org.junit.Rule;
+//import org.junit.Test;
+//import org.junit.rules.ExpectedException;
+//import org.junit.runner.RunWith;
+//import org.robolectric.Robolectric;
+//import org.robolectric.RobolectricTestRunner;
+//import org.robolectric.annotation.Config;
+//
+//import fga.mds.gpp.trezentos.BuildConfig;
+//import fga.mds.gpp.trezentos.Exception.UserException;
+//import fga.mds.gpp.trezentos.R;
+//import fga.mds.gpp.trezentos.View.ClassActivity;
+//import fga.mds.gpp.trezentos.View.CreateExamActivity;
+//
+//import java.util.ArrayList;
+//import java.util.concurrent.ExecutionException;
+//
+//import dalvik.annotation.TestTargetClass;
+//import fga.mds.gpp.trezentos.BuildConfig;
+//import fga.mds.gpp.trezentos.Exception.UserClassException;
+//import fga.mds.gpp.trezentos.Exception.UserException;
+//import fga.mds.gpp.trezentos.Model.Exam;
+//import fga.mds.gpp.trezentos.Model.UserClass;
+//import fga.mds.gpp.trezentos.R;
+//import fga.mds.gpp.trezentos.View.ClassActivity;
+//
+//import static junit.framework.Assert.assertEquals;
+//import static junit.framework.Assert.assertFalse;
+//import static junit.framework.Assert.assertNotNull;
+//import static junit.framework.Assert.assertNotSame;
+//import static junit.framework.Assert.assertTrue;
+//
+//@RunWith(RobolectricTestRunner.class)
+//@Config(constants = BuildConfig.class)
+//public class UserExamControlUnitTest {
+//
+//    private UserExamControl testUser;
+//    private ClassActivity activity;
 
-import android.content.Context;
-import android.support.v4.media.MediaMetadataCompat;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
-import fga.mds.gpp.trezentos.BuildConfig;
-import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.ClassActivity;
-import fga.mds.gpp.trezentos.View.CreateExamActivity;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-
-import dalvik.annotation.TestTargetClass;
-import fga.mds.gpp.trezentos.BuildConfig;
-import fga.mds.gpp.trezentos.Exception.UserClassException;
-import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.Model.Exam;
-import fga.mds.gpp.trezentos.Model.UserClass;
-import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.ClassActivity;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNotSame;
-import static junit.framework.Assert.assertTrue;
-
-@RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class)
-public class UserExamControlUnitTest {
-
-    private UserExamControl testUser;
-    private ClassActivity activity;
-
-    @Before
-    public void setUp() {
-        activity = Robolectric.buildActivity(ClassActivity.class).get();
-    }
+//    @Before
+//    public void setUp() {
+//        activity = Robolectric.buildActivity(ClassActivity.class).get();
+//    }
 /*
     @Test
     public void ShouldValidateNullExamName() throws UserException{
@@ -186,4 +186,4 @@ public class UserExamControlUnitTest {
 
     */
 
-}
+//}
