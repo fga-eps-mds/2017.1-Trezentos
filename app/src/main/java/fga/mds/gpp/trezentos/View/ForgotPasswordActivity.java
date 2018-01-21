@@ -20,7 +20,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
     private EditText emailEdit;
     private Button sendRecovery;
-    private Button returnLogin;
+    private Button returnButton;
 
     private Toolbar toolbar = null;
 
@@ -34,10 +34,10 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
         emailEdit = (EditText) findViewById(R.id.forgot_pass_text_email);
         sendRecovery = (Button) findViewById(R.id.button_forgot_pass_email);
-        returnLogin = (Button) findViewById(R.id.button_return_login);
+        returnButton = (Button) findViewById(R.id.button_return);
 
         sendRecovery.setOnClickListener(this);
-        returnLogin.setOnClickListener(this);
+        returnButton.setOnClickListener(this);
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_forgot_password);
@@ -98,10 +98,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 break;
 
 
-            case R.id.button_return_login:
-                Intent returnToLogin = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
-                startActivity(returnToLogin);
-                finish();
+            case R.id.button_return:
+                onBackPressed();
                 break;
 
 

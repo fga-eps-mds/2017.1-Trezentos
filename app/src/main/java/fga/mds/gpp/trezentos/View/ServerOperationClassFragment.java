@@ -94,24 +94,30 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
 
         if(result.equals("true")){
                 if (classFragment.getActivity() != null) {
-
                     recyclerView = (RecyclerView) classFragment.getActivity().findViewById(R.id.recycler_class);
-                    recyclerView.setVisibility(View.VISIBLE);
+                    if (userClasses == null) {
+                        //TODO layout to create class
+                    }else {
+                        recyclerView.setVisibility(View.VISIBLE);
 
 
-                    classFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses,
-                                                                                    classFragment.getContext());
 
-                    classFragmentAdapter = classFragment.classFragmentAdapter;
+                        classFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses,
+                                classFragment.getContext());
+
+                        classFragmentAdapter = classFragment.classFragmentAdapter;
 
 
-                    classFragmentAdapter.setOnItemClickListener(callJoinClass());
+                        classFragmentAdapter.setOnItemClickListener(callJoinClass());
 
-                    RecyclerView.LayoutManager layout = new LinearLayoutManager
-                            (application, LinearLayoutManager.VERTICAL, false);
-                    recyclerView.setLayoutManager(layout);
+                        RecyclerView.LayoutManager layout = new LinearLayoutManager
+                                (application, LinearLayoutManager.VERTICAL, false);
+                        recyclerView.setLayoutManager(layout);
 
-                    recyclerView.setAdapter(classFragmentAdapter);
+                        recyclerView.setAdapter(classFragmentAdapter);
+                    }
+
+
                 }
 
         }else{

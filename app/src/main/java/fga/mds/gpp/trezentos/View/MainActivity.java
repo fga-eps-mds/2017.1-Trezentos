@@ -55,11 +55,6 @@ public class MainActivity extends AppCompatActivity{
         selectedFragment = null;
 
 
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if(AccessToken.getCurrentAccessToken() == null && !session.getBoolean("IsUserLogged", false)){
-            goLoginScreen();
-        }
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Salas");
         setSupportActionBar(toolbar);
@@ -106,12 +101,6 @@ public class MainActivity extends AppCompatActivity{
         transaction.commit();
     }
 
-    private void goLoginScreen() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
 
     private void goClassScreen() {
         startActivity(new Intent(getApplicationContext(), SearchActivity.class));

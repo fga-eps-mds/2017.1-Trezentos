@@ -1,6 +1,9 @@
 package fga.mds.gpp.trezentos.View;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+
+import com.facebook.AccessToken;
 
 import java.util.ArrayList;
 
@@ -52,6 +57,12 @@ public class ExploreFragment extends Fragment {
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         noInternetLayout = (LinearLayout) view.findViewById(R.id.no_internet_layout);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_explore);
+
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        if(AccessToken.getCurrentAccessToken() == null && !session.getBoolean("IsUserLogged", false)){
+            goLoginScreen(view);
+        }
+
         initClasses();
 
         return view;
@@ -65,6 +76,12 @@ public class ExploreFragment extends Fragment {
                 .execute();
     }
 
+    private void goLoginScreen(View view) {
+        Intent intent = new Intent(view.getContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
 
 }
