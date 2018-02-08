@@ -86,9 +86,11 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+
             android:layout_gravity="center">
 
                 <EditText
+
                     android:inputType="textPersonName"
                     android:id="@+id/edit_text_email_register"
                     android:layout_width="match_parent"
@@ -109,6 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center">
 
                 <EditText
@@ -117,6 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
 
+                    android:maxLength="16"
                     android:hint="@string/txt_password"
                     android:textColor="@color/textRegisterColor"
                     android:textColorHint="@android:color/black"
@@ -133,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center">
 
                 <EditText
@@ -145,7 +150,7 @@
                     android:textColor="@color/textRegisterColor"
                     android:textColorHint="@android:color/black"
                     android:background="@drawable/rounded_edit_text"
-
+                    android:maxLength="16"
                     android:paddingLeft="20dp"
 
                     />
@@ -159,6 +164,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:weightSum="2">
 
 
@@ -175,7 +181,7 @@
 
                             android:layout_width="60dp"
                             android:layout_height="40dp"
-
+                            android:maxLength="3"
                             android:hint="@string/txt_telephone_DDD"
                             android:textColor="@color/textRegisterColor"
                             android:textColorHint="@android:color/black"
@@ -196,6 +202,7 @@
                             android:inputType="numberDecimal"
                             android:id="@+id/edit_text_telephone"
 
+                            android:maxLength="9"
                             android:layout_width="280dp"
                             android:layout_height="40dp"
                             android:layout_marginBottom="10dp"

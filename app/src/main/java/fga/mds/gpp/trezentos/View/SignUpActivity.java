@@ -27,12 +27,11 @@ import fga.mds.gpp.trezentos.R;
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "SignUpActivity";
     private UserAccountControl userAccountControl;
-    private EditText nameEdit;
+    private EditText firstNameEdit;
     private EditText lastNameEdit;
     private EditText emailEdit;
     private EditText passwordEdit;
     private EditText passwordConfirmationEdit;
-    private EditText telephoneDDIEdit;
     private EditText telephoneDDDEdit;
     private EditText telephoneNumberEdit;
     private Button signUp;
@@ -51,24 +50,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         initButtons();
         initFields();
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar_signup);
-        setSupportActionBar(toolbar);
-        setTitle("Cadastrar");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        initToolbar();
 
         signUp.setOnClickListener(this);
         alreadySignUp.setOnClickListener(this);
-
-//        IntlPhoneInput phoneInputView = (IntlPhoneInput) findViewById(R.id.my_phone_input);
-//        String myInternationalNumber = null;
-//        if(phoneInputView.isValid()) {
-//            myInternationalNumber = phoneInputView.getNumber();
-//        }
-
-//        Toast.makeText(getApplicationContext(), myInternationalNumber, Toast.LENGTH_LONG).show();
 
     }
 
@@ -79,54 +64,61 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initButtons(){
-        signUp = (Button) findViewById(R.id.sign_up_button);
-        alreadySignUp = (Button) findViewById(R.id.already_sign_up);
+        signUp = findViewById(R.id.sign_up_button);
+        alreadySignUp = findViewById(R.id.already_sign_up);
     }
+
+    private void initToolbar(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar_signup);
+        setSupportActionBar(toolbar);
+        setTitle("Cadastrar");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void initFields(){
+        firstNameEdit= findViewById(R.id.edit_text_name_register);
+        lastNameEdit = findViewById(R.id.edit_text_last_name_register);
+        emailEdit = findViewById(R.id.edit_text_email_register);
+        passwordEdit = findViewById(R.id.edit_text_password_register);
+        passwordConfirmationEdit = findViewById(R.id.edit_text_password_confirmation);
+        telephoneDDDEdit = findViewById(R.id.edit_text_DDD_telephone);
+        telephoneNumberEdit = findViewById(R.id.edit_text_telephone);
+    }
+
 
     // Method for confirmation
     public void confirmInformation(){
 
         String errorMessage = userAccountControl.validateSignUp(
-                nameEdit.getText().toString() + " " + lastNameEdit.getText().toString(),
-                emailEdit.getText().toString(),
-                passwordEdit.getText().toString(),
-                passwordConfirmationEdit.getText().toString(),
-                "+55",
-                telephoneDDDEdit.getText().toString(),
-                telephoneNumberEdit.getText().toString());
-
-        Log.d("RETURN", String.valueOf(errorMessage));
-        verifyMessage(errorMessage, userAccountControl);
+                                            firstNameEdit.getText().toString(),
+                                            lastNameEdit.getText().toString(),
+                                            emailEdit.getText().toString(),
+                                            "+55",
+                                            telephoneDDDEdit.getText().toString(),
+                                            telephoneNumberEdit.getText().toString(),
+                                            passwordEdit.getText().toString(),
+                                            passwordConfirmationEdit.getText().toString());
+        verifyMessage(errorMessage);
     }
 
-    private void verifyMessage(String errorMessage, UserAccountControl userAccountControl){
+    private void verifyMessage(String errorMessage){
         if (errorMessage.equals("")){
             String serverResponse = userAccountControl.validateSignUpResponse();
-            goToMain(serverResponse);
+            validateServerResponse(serverResponse);
         }else{
-            signUpErrorMessage(nameEdit, emailEdit, passwordEdit,
-                    passwordConfirmationEdit, errorMessage);
+            Log.d("Erro Message", errorMessage);
+            showErrorMessage(errorMessage);
         }
     }
 
-    private void initFields(){
-        nameEdit = (EditText) findViewById(R.id.edit_text_name_register);
-        lastNameEdit = (EditText) findViewById(R.id.edit_text_last_name_register);
-        emailEdit = (EditText) findViewById(R.id.edit_text_email_register);
-        passwordEdit = (EditText) findViewById(R.id.edit_text_password_register);
-        passwordConfirmationEdit = (EditText) findViewById(R.id.edit_text_password_confirmation);
-        telephoneDDDEdit = (EditText) findViewById(R.id.edit_text_DDD_telephone);
-        telephoneNumberEdit = (EditText) findViewById(R.id.edit_text_telephone);
-    }
-
-    private void signUpErrorMessage(EditText nameEdit, EditText emailEdit, EditText passwordEdit,
-                                    EditText passwordConfirmationEdit, String errorMessage){
+    private void showErrorMessage( String errorMessage){
         if (errorMessage.equals(getString(R.string.msg_null_name_error_message))){
-            nameEdit.requestFocus();
-            nameEdit.setError(getString(R.string.msg_null_name_error_message));
+            firstNameEdit.requestFocus();
+            firstNameEdit.setError(getString(R.string.msg_null_name_error_message));
         }else if (errorMessage.equals(getString(R.string.msg_len_name_error_message))){
-            nameEdit.requestFocus();
-            nameEdit.setError(getString(R.string.msg_len_name_error_message));
+            firstNameEdit.requestFocus();
+            firstNameEdit.setError(getString(R.string.msg_len_name_error_message));
         }else if (errorMessage.equals(getString(R.string.msg_len_password_error_message))){
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_len_password_error_message));
@@ -151,8 +143,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void goToMain(String response){
-
+    private void validateServerResponse(String response){
         try {
             //converting response to json object
             JSONObject obj = new JSONObject(response);
@@ -161,35 +152,19 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             if (!obj.getBoolean("error")) {
                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                finish();
-                startActivity(new Intent(this, LoginActivity.class));
-                //getting the user from the response
-                //JSONObject userJson = obj.getJSONObject("user");
+                goToLogin();
 
-                //creating a new user object
-                /*
-                User user = new User(
-                        userJson.getInt("id"),
-                        userJson.getString("username"),
-                        userJson.getString("email"),
-                        userJson.getString("gender")
-                );
-                */
-
-
-                //storing the user in shared preferences
-                //SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-
-                //starting the profile activity
-                //finish();
-                //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             } else {
                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
+    public void goToLogin(){
+        finish();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     @Override
@@ -200,54 +175,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(returnToLogin);
             finish();
         }else if (i == R.id.sign_up_button){
-            //executing the async task
-
-
-
-
-            /*JSON Response transform
-
-            try {
-                //converting response to json object
-                JSONObject obj = new JSONObject(response);
-
-                //if no error in response
-                if (!obj.getBoolean("error")) {
-                    Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-                    //getting the user from the response
-                    JSONObject userJson = obj.getJSONObject("user");
-
-                    //creating a new user object
-
-                    User user = new User(
-                            userJson.getInt("id"),
-                            userJson.getString("username"),
-                            userJson.getString("email"),
-                            userJson.getString("gender")
-                    );
-
-
-                    //storing the user in shared preferences
-                    //SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-
-                    //starting the profile activity
-                    finish();
-                    //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-
             confirmInformation();
         }
     }
-
-
-
-
-
 
 }

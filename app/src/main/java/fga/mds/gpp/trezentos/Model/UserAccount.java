@@ -17,21 +17,21 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UserAccount{
+
     private String id;
     private String email;
-    private String name;
+    private String fisrtName;
+    private String lastName;
+
     private String password;
-    private String passwordConfirmation;
+
     private Boolean isFromFacebook;
+
     private String telephoneDDI;
-
-
-
     private String telephoneDDD;
     private String telephoneNumber;
-    private String salt;
 
-    private PasswordUtil passwordUtil;
+
 
     private Context context;
 
@@ -40,65 +40,65 @@ public class UserAccount{
         //in addition is create constructors with arguments.
     }
 
-    public UserAccount(String name){
-        this.name = name;
-    }
 
-    public UserAccount(String name, String email, String password,
-                       String passwordConfirmation, String telephoneDDI,
-                       String telephoneDDD, String telephoneNumber) throws UserException{
-        setName(name);
+
+    public UserAccount(String firstName,
+                       String lastName,
+                       String email,
+                       String telephoneDDI,
+                       String telephoneDDD,
+                       String telephoneNumber,
+                       String password,
+                       String passwordConfirmation) throws UserException{
+
+        setFirstName(firstName);
+        setLastName(lastName);
         setEmail(email);
-        setPasswordConfirmation(passwordConfirmation);
-        setPassword(password);
+
         setTelephoneDDI(telephoneDDI);
         setTelephoneDDD(telephoneDDD);
         setTelephoneNumber(telephoneNumber);
+
+        setPassword(password, passwordConfirmation);
+
     }
 
-    public void setSalt(String salt){
-        this.salt = salt;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setName(String name) throws UserException{
+    public void setFirstName(String fisrtName) throws UserException{
         final Integer MAX_NAME_LENGTH = 50;
         final Integer MIN_NAME_LENGTH = 3;
 
-        if (name != null && !name.isEmpty()){
-            if (name.length() < MIN_NAME_LENGTH
-                    || name.length() > MAX_NAME_LENGTH){
+        if (fisrtName != null && !fisrtName.isEmpty()){
+            if (fisrtName.length() < MIN_NAME_LENGTH
+                    || fisrtName.length() > MAX_NAME_LENGTH){
                 throw new UserException("O nome deve ter de 3 a 50 caracteres");
             } else {
-                this.name = name;
+                this.fisrtName = fisrtName;
             }
         } else {
             throw new UserException("O nome não pode estar vazio");
         }
     }
 
-    public void setTelephoneDDI(String telephoneDDI) throws UserException{
-        //if(telephoneDDI.length() == 3 ){
-            this.telephoneDDI = telephoneDDI;
-        //} else {
-            //throw new UserException("DDI inválido");
-        //}
+    public void setLastName(String lastName) throws UserException{
+        final Integer MAX_NAME_LENGTH = 50;
+        final Integer MIN_NAME_LENGTH = 3;
+
+        if (lastName != null && !lastName.isEmpty()){
+            if (lastName.length() < MIN_NAME_LENGTH
+                    || lastName.length() > MAX_NAME_LENGTH){
+                throw new UserException("O nome deve ter de 3 a 50 caracteres");
+            } else {
+                this.lastName = lastName;
+            }
+        } else {
+            throw new UserException("O nome não pode estar vazio");
+        }
     }
 
-    public void setTelephoneDDD(String telephoneDDD) throws UserException{
-        //if(telephoneDDD.length() == 3){
-            this.telephoneDDD = telephoneDDD;
-        //} else {
-            //throw new UserException("DDD inválido");
-        //}
-    }
-
-    public void setTelephoneNumber(String telephoneNumber) throws UserException{
-        //if(telephoneNumber.length() == 9){
-            this.telephoneNumber = telephoneNumber;
-        //} else {
-         //   throw new UserException("Número deve ter 9 dígitos");
-        //}
-    }
 
     public void setEmail(String email) throws UserException{
         if (email != null && !email.isEmpty()){
@@ -124,30 +124,37 @@ public class UserAccount{
         }
     }
 
-    public void setPassword(String password) throws UserException{
-        validatePassword(password);
+    public void setTelephoneDDI(String telephoneDDI) throws UserException{
+        if(telephoneDDI.length() < 3 || telephoneDDI.length() > 3 ){
+            throw new UserException("DDI inválido");
+        } else {
+            this.telephoneDDI = telephoneDDI;
+        }
+    }
+
+    public void setTelephoneDDD(String telephoneDDD) throws UserException{
+        if(telephoneDDD.length() < 3 || telephoneDDD.length() > 3 ) {
+            throw new UserException("DDD inválido");
+        }else{
+            this.telephoneDDD = telephoneDDD;
+        }
+    }
+
+    public void setTelephoneNumber(String telephoneNumber) throws UserException{
+        if(telephoneNumber.length() < 9 || telephoneNumber.length() > 9 ) {
+            throw new UserException("Número deve ter 9 dígitos");
+        }else{
+            this.telephoneNumber = telephoneNumber;
+        }
     }
 
     public void setIsFromFacebook(boolean isFromFacebook) throws UserException{
         this.isFromFacebook = isFromFacebook;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void authenticatePassword(String password) throws UserException{
-        if(password != null && !password.isEmpty()){
-            this.password = password;
-        }else{
-            throw new UserException("A senha não pode estar vazia");
-        }
-    }
-
-    public void validatePassword (String password) throws UserException{
+    private void validatePassword(String password, String passwordConfirmation) throws UserException{
         final Integer MIN_PASSWORD_LENGTH = 6;
         final Integer MAX_PASSWORD_LENGTH = 16;
-        String salt;
 
         if(password != null && !password.isEmpty()){
 
@@ -158,12 +165,6 @@ public class UserAccount{
                 if(!password.equals(passwordConfirmation)){
                     throw new UserException("Senhas não coincidem, tente novamente");
                 }else{
-                    salt = PasswordUtil.nextSalt();
-                    this.salt = salt;
-                    String toBeHashed = salt + password;
-                    String hashedPass = passwordUtil.stringToMD5(toBeHashed);
-                    //Log.d("TAG", salt);
-                    //this.password = hashedPass;
                     this.password = password;
                 }
             }
@@ -172,28 +173,31 @@ public class UserAccount{
         }
     }
 
-    public void setPasswordConfirmation(String passwordConfirmation){
-        this.passwordConfirmation = passwordConfirmation;
+    public void authenticatePassword(String password) throws UserException{
+        if(password != null && !password.isEmpty()){
+            this.password = password;
+        }else{
+            throw new UserException("A senha não pode estar vazia");
+        }
     }
+
+    private void setPassword(String password, String passwordConfirmation) throws UserException {
+        validatePassword(password, passwordConfirmation);
+    }
+
     public String getId() {
         return id;
     }
 
     public String getName(){
-        return name;
+        return fisrtName + " " + lastName;
     }
 
     public String getEmail(){
         return email;
     }
 
-    public String getPassword(){
-        return password;
-    }
-
-    public String getPasswordConfirmation(){
-        return passwordConfirmation;
-    }
+    public String getPassword(){ return password; }
 
     public String getTelephoneDDI() { return telephoneDDI; }
 
@@ -201,7 +205,11 @@ public class UserAccount{
 
     public String getTelephoneNumber() { return telephoneNumber; }
 
-    public String getSalt(){
-        return salt;
+    public String getFisrtName() {
+        return fisrtName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

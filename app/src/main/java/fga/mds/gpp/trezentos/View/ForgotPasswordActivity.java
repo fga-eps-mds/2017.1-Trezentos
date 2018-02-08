@@ -32,15 +32,15 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_forgot_password);
 
 
-        emailEdit = (EditText) findViewById(R.id.forgot_pass_text_email);
-        sendRecovery = (Button) findViewById(R.id.button_forgot_pass_email);
-        returnButton = (Button) findViewById(R.id.button_return);
+        emailEdit = findViewById(R.id.forgot_pass_text_email);
+        sendRecovery = findViewById(R.id.button_forgot_pass_email);
+        returnButton = findViewById(R.id.button_return);
 
         sendRecovery.setOnClickListener(this);
         returnButton.setOnClickListener(this);
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_forgot_password);
+        toolbar = findViewById(R.id.toolbar_forgot_password);
         setSupportActionBar(toolbar);
         setTitle("Esqueceu a senha?");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,7 +70,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 userAccountControl = UserAccountControl
                         .getInstance(getApplicationContext());
 
-                String serverResponse = userAccountControl.validateForgotPasswordResponse(recoverEmail);
+                String serverResponse = userAccountControl.validateResetPasswordResponse(recoverEmail);
 
 
                 JSONObject objectJson = null;

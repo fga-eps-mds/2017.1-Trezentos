@@ -76,15 +76,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String emailString = emailEditText.getText().toString();
                     String passwordString = passwordEditText.getText().toString();
 
-                    String errorMessage = userAccountControl.authenticateLogin(emailString,
-                            passwordString);
+                    String errorMessage = userAccountControl.authenticateSignIn(emailString, passwordString);
 
                     if(errorMessage.isEmpty()){
                         progressBar.setVisibility(View.VISIBLE);
                         String serverResponse = userAccountControl.validateSignInResponse();
 
                         try {
-                            validatePasswordAndLogsUser(serverResponse);
+                            validateServerResponse(serverResponse);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (UserException e) {
@@ -123,6 +122,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private void validateServerResponse(String serverResponse) throws JSONException, UserException {
+        JSONObject responseJson = new JSONObject(serverResponse);
+
+        if(!responseJson.getBoolean("error")) {
+            userAccountControl.createPerson(serverResponse);
+            userAccountControl.logInUser();
+            goToMain();
+        } else {
+            userAccountControl.logOutUser();
+            Toast.makeText(getApplicationContext(), responseJson.getString("message"), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
     private void facebookAPI(){
         callbackManager = CallbackManager.Factory.create();
         loginFacebook = (LoginButton) findViewById(R.id.button_sign_in_facebook);
@@ -132,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onSuccess(LoginResult loginResult){
                 facebookLogin(loginResult);
-                changeRouteToMain();
+                goToMain();
             }
 
             @Override
@@ -150,15 +164,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView(){
-        login = (Button) findViewById(R.id.button_login);
-        forgotPassword = (Button) findViewById(R.id.button_forgot_password);
-        register = (Button) findViewById(R.id.button_register);
-        about = (Button) findViewById(R.id.button_about);
+        login = findViewById(R.id.button_login);
+        forgotPassword = findViewById(R.id.button_forgot_password);
+        register = findViewById(R.id.button_register);
+        about = findViewById(R.id.button_about);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
-        emailEditText = (EditText) findViewById(R.id.edit_text_email);
-        passwordEditText = (EditText) findViewById(R.id.edit_text_password);
+        emailEditText = findViewById(R.id.edit_text_email);
+        passwordEditText = findViewById(R.id.edit_text_password);
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -166,16 +180,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         forgotPassword.setOnClickListener(this);
     }
 
-    private void validatePasswordAndLogsUser(String serverResponse) throws JSONException, UserException {
-        JSONObject responseJson = new JSONObject(serverResponse);
-
-        if(!responseJson.getBoolean("error")) {
-            userAccountControl.validatePerson(serverResponse);
-            changeRouteToMain();
-        } else {
-            Toast.makeText(getApplicationContext(), responseJson.getString("message"), Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void facebookLogin(LoginResult loginResult){
         GraphRequest request = GraphRequest.newMeRequest(
@@ -186,8 +190,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         JSONObject jsonObject = response.getJSONObject();
                         UserAccountControl userAccountControl = UserAccountControl
                                 .getInstance(getApplicationContext());
-                        userAccountControl.authenticateLoginFb(object);
-                        userAccountControl.logInUserFromFacebook(jsonObject);
+                        userAccountControl.authenticateSignInFb(object);
+                        userAccountControl.signInUserFromFacebook(jsonObject);
                     }
                 });
 
@@ -225,7 +229,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void changeRouteToMain() {
+    private void goToMain() {
         Intent intentGoMainActivity = new Intent(LoginActivity.this, MainActivity.class);
 
         intentGoMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |

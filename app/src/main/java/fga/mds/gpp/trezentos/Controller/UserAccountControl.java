@@ -27,7 +27,7 @@ public class UserAccountControl {
     final Context context;
     private UserAccount userAccount;
     private UserAccount fbUserAccount;
-    private static Logger LOGGER = Logger.getLogger("InfoLogging");
+
 
     private UserAccountControl(final Context context){
         this.context = context;
@@ -40,11 +40,19 @@ public class UserAccountControl {
         return instance;
     }
 
-    public String validateSignUp(String name, String email, String password,
-                                 String passwordConfirmation, String telephoneDDI,
-                                 String telephoneDDD, String telephoneNumber){
+    //Sign-up
+    public String validateSignUp(String firstName, String lastName, String email, String telephoneDDI,
+                                 String telephoneDDD, String telephoneNumber, String password, String passwordConfirmation){
+
         try{
-            userAccount = new UserAccount(name, email, password, passwordConfirmation, telephoneDDI, telephoneDDD, telephoneNumber);
+            userAccount = new UserAccount(  firstName,
+                                            lastName,
+                                            email,
+                                            telephoneDDI,
+                                            telephoneDDD,
+                                            telephoneNumber,
+                                            password,
+                                            passwordConfirmation);
         }catch(UserException userException){
             return userException.getMessage();
         }
@@ -54,7 +62,7 @@ public class UserAccountControl {
 
     public String validateSignUpResponse(){
 
-        RequestHandler requestHandler = new RequestHandler(URLs.URL_REGISTER, getRegisterParams(userAccount, false));
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_REGISTER, getSignUpParams( false));
 
         String serverResponse = "404";
 
@@ -65,42 +73,15 @@ public class UserAccountControl {
         }catch(ExecutionException e){
             e.printStackTrace();
         }
-        Log.d("RESPONSE", ""+serverResponse);
+        Log.d("RESPONSE", serverResponse);
         return serverResponse;
     }
 
-    public String validateForgotPasswordResponse(String recoverEmail){
-
-        RequestHandler requestHandler = new RequestHandler(URLs.URL_RESET_PASSWORD, getForgotPasswordParams(recoverEmail));
-
-        String serverResponse = "";
-
-        try{
-            serverResponse = requestHandler.execute().get();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }catch(ExecutionException e){
-            e.printStackTrace();
-        }
-        Log.d("RESPONSE", ""+serverResponse);
-        return serverResponse;
-    }
-
-
-    public HashMap<String, String>  getLoginParams(UserAccount userAccount, Boolean isFromFacebook) {
+    private HashMap<String, String>  getSignUpParams(Boolean isFromFacebook) {
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("PersonEmail", userAccount.getEmail());
-        params.put("PersonPassword", userAccount.getPassword());
-
-        return params;
-
-    }
-
-    public HashMap<String, String>  getRegisterParams(UserAccount userAccount, Boolean isFromFacebook) {
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("PersonName", userAccount.getName());
+        params.put("PersonFirstName", userAccount.getFisrtName());
+        params.put("PersonLastName", userAccount.getLastName());
         params.put("PersonEmail", userAccount.getEmail());
         params.put("PersonPassword", userAccount.getPassword());
         params.put("PersonIsFromFacebook", isFromFacebook.toString());
@@ -111,40 +92,16 @@ public class UserAccountControl {
         return params;
 
     }
-
-    public HashMap<String, String>  getForgotPasswordParams(String recoverEmail) {
-
-        HashMap<String, String> params = new HashMap<>();
-
-        params.put("PersonEmail", recoverEmail);
-
-        return params;
-
-    }
+    //End Sign-up
 
 
-    public void authenticateLoginFb(JSONObject object){
-        try{
-            String name = object.getString("PersonName");
-            String fEmail = object.getString("PersonEmail");
-            UserAccount fbUserAccount = new UserAccount();
-            fbUserAccount.setEmail(fEmail);
-            fbUserAccount.setName(name);
 
-            //String urlWithParameters = getUserUrl(fbUserAccount, true);
-            //PostDao postDao = new PostDao(urlWithParameters, null, "");
-
-            //postDao.execute();
-        }catch(JSONException | UserException e){
-            e.printStackTrace();
-        }
-    }
-
-    public String authenticateLogin(String email, String password){
+    //Sign-in
+    public String authenticateSignIn(String email, String password){
         try{
             userAccount = new UserAccount();
             userAccount.setEmail(email);
-            userAccount.authenticatePassword(password); //Set password
+            userAccount.authenticatePassword(password);
         }catch(UserException userException){
             return userException.getMessage();
         }
@@ -153,8 +110,89 @@ public class UserAccountControl {
     }
 
     public String validateSignInResponse(){
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_LOGIN, getSignInParams(false));
+        String serverResponse = "404";
 
-        RequestHandler requestHandler = new RequestHandler(URLs.URL_LOGIN, getLoginParams(userAccount, false));
+        try{
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
+        }
+        Log.d("RESPONSE", serverResponse);
+        return serverResponse;
+    }
+
+    private HashMap<String, String>  getSignInParams(Boolean isFromFacebook) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("PersonEmail", userAccount.getEmail());
+        params.put("PersonPassword", userAccount.getPassword());
+
+        return params;
+
+    }
+
+    public void createPerson(String serverResponse) throws UserException, JSONException {
+        JSONObject object = getObjectFromServerResponse(serverResponse);
+        JSONObject userJson = object.getJSONObject("person");
+
+        try {
+            userAccount.setId(userJson.getString("idPerson"));
+            userAccount.setFirstName(userJson.getString("PersonFirstName"));
+            userAccount.setLastName(userJson.getString("PersonLastName"));
+            userAccount.setEmail(userJson.getString("PersonEmail"));
+            userAccount.setTelephoneDDI(userJson.getString("PersonTelephoneDDI"));
+            userAccount.setTelephoneDDD(userJson.getString("PersonTelephoneDDD"));
+            userAccount.setTelephoneNumber(userJson.getString("PersonTelephoneNumber"));
+            userAccount.setIsFromFacebook(userJson.getBoolean("PersonIsFromFacebook"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    //End Sign-in
+
+
+
+    //Sign-in Facebook TODO
+    public void authenticateSignInFb(JSONObject object){
+        try{
+            String name = object.getString("PersonFirstName");
+            String fEmail = object.getString("PersonEmail");
+            UserAccount fbUserAccount = new UserAccount();
+            fbUserAccount.setEmail(fEmail);
+            //fbUserAccount.setName(name);
+
+
+        }catch(JSONException | UserException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void signInUserFromFacebook(JSONObject object){
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+        String nome = null, email = null;
+
+        try {
+            nome = object.getString("name");
+            email = object.getString("email");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        session.edit()
+                .putBoolean("IsUserLogged", true)
+                .putString("userEmail", email)
+                .putString("userName", nome)
+                .apply();
+    }
+    //End Sign-in Facebook
+
+
+    //Reset Password
+    public String validateResetPasswordResponse(String recoverEmail){
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_RESET_PASSWORD, getResetPasswordParams(recoverEmail));
 
         String serverResponse = "";
 
@@ -165,50 +203,23 @@ public class UserAccountControl {
         }catch(ExecutionException e){
             e.printStackTrace();
         }
-
+        Log.d("RESPONSE", ""+serverResponse);
         return serverResponse;
     }
 
-    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
-    private String getSignInUrl(UserAccount userAccount){
-        String url = "metodo300.com/android/api/user/login.php";
+    public HashMap<String, String>  getResetPasswordParams(String recoverEmail) {
 
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-        builder.addQueryParameter("PersonEmail", userAccount.getEmail());
-        builder.addQueryParameter("PersonPassword", userAccount.getPassword());
+        HashMap<String, String> params = new HashMap<>();
 
-        return builder.build().toString();
-    }
+        params.put("PersonEmail", recoverEmail);
 
-
-    public void validatePerson(String serverResponse) throws UserException, JSONException {
-        JSONObject object = getObjectFromServerResponse(serverResponse);
-        JSONObject userJson = object.getJSONObject("person");
-
-        try {
-            userAccount.setId(userJson.getString("idPerson"));
-            userAccount.setName(userJson.getString("PersonName"));
-            userAccount.setEmail(userJson.getString("PersonEmail"));
-            userAccount.setTelephoneDDI(userJson.getString("PersonTelephoneDDI"));
-            userAccount.setTelephoneDDD(userJson.getString("PersonTelephoneDDD"));
-            userAccount.setTelephoneNumber(userJson.getString("PersonTelephoneNumber"));
-            userAccount.setIsFromFacebook(userJson.getBoolean("PersonIsFromFacebook"));
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //Log.d("TESTE", userJson.getString("idPerson"));
-        //Log.d("TESTE", userAccount.getId() + userAccount.getTelephoneDDI() + userAccount.getTelephoneDDD() + userAccount.getTelephoneNumber());
-        if(!object.getBoolean("error")){
-            logInUser();
-        }else{
-            logOutUser();
-        }
+        return params;
 
     }
+    //End Reset Password
 
+
+    //Common
     private JSONObject getObjectFromServerResponse(String serverResponse){
         JSONObject object = null;
 
@@ -228,14 +239,12 @@ public class UserAccountControl {
                 .putBoolean("IsUserLogged", true)
                 .putString("userId", userAccount.getId())
                 .putString("userEmail", userAccount.getEmail())
-                .putString("userName", userAccount.getName())
+                .putString("userFirstName", userAccount.getFisrtName())
+                .putString("userLastName", userAccount.getLastName())
                 .putString("userTelephoneDDI", userAccount.getTelephoneDDI())
                 .putString("userTelephoneDDD", userAccount.getTelephoneDDD())
                 .putString("userTelephoneNumber", userAccount.getTelephoneNumber())
                 .apply();
-
-
-
 
     }
 
@@ -247,24 +256,6 @@ public class UserAccountControl {
                 .putString("userName", "")
                 .apply();
     }
-
-
-
-    public void logInUserFromFacebook(JSONObject object){
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
-        String nome = null, email = null;
-
-        try {
-            nome = object.getString("name");
-            email = object.getString("email");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        session.edit()
-                .putBoolean("IsUserLogged", true)
-                .putString("userEmail", email)
-                .putString("userName", nome)
-                .apply();
-    }
+    //End Common
 
 }
