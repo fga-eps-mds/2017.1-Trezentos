@@ -1,6 +1,5 @@
 package fga.mds.gpp.trezentos.View.View.View;
 
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -14,8 +13,7 @@ import org.junit.runners.JUnit4;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.AreYouSureFragment;
-import fga.mds.gpp.trezentos.View.MainActivity;
+import fga.mds.gpp.trezentos.View.Activity.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;

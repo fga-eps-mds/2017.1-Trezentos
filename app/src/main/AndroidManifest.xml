@@ -21,30 +21,30 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".View.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.LoginActivity" />
+        <activity android:name=".View.Activity.SignInActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".View.SignUpActivity" />
+        <activity android:name=".View.Activity.SignUpActivity" />
         <activity android:name=".View.AboutOnLogin" />
-        <activity android:name=".View.ClassActivity" />
-        <activity android:name=".View.EditClassActivity" />
-        <activity android:name=".View.CreateClassActivity" />
-        <activity android:name=".View.CreateExamActivity" />
-        <activity android:name=".View.SearchActivity" />
-        <activity android:name=".View.ExamActivity" />
-        <activity android:name=".View.StudentClassActivity"></activity>
-        <activity android:name=".View.StudentExamActivity"></activity>
-        <activity android:name=".View.ForgotPasswordActivity"></activity>
+        <activity android:name=".View.Activity.ClassActivity" />
+        <activity android:name=".View.Activity.EditClassActivity" />
+        <activity android:name=".View.Activity.CreateClassActivity" />
+        <activity android:name=".View.Activity.CreateExamActivity" />
+        <activity android:name=".View.Activity.SearchActivity" />
+        <activity android:name=".View.Activity.ExamActivity" />
+        <activity android:name=".View.Activity.StudentClassActivity"></activity>
+        <activity android:name=".View.Activity.StudentExamActivity"></activity>
+        <activity android:name=".View.Activity.ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>

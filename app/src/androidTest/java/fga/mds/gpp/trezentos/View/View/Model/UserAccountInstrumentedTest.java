@@ -3,9 +3,6 @@ package fga.mds.gpp.trezentos.View.View.Model;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 
-import junit.framework.Assert;
-
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,7 +12,7 @@ import org.junit.runners.JUnit4;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.LoginActivity;
+import fga.mds.gpp.trezentos.View.Activity.SignInActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
@@ -33,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 public class UserAccountInstrumentedTest {
 
     @Rule
-    public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<SignInActivity> rule = new ActivityTestRule<>(SignInActivity.class);
 
 
     @Before

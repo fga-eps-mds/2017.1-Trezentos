@@ -1,27 +1,18 @@
 package fga.mds.gpp.trezentos.View.View.View;
 
-import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
-import android.widget.Toast;
 
-import junit.framework.Assert;
-
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.Random;
-
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Util.PasswordUtil;
 import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.LoginActivity;
-import fga.mds.gpp.trezentos.View.MainActivity;
-import fga.mds.gpp.trezentos.View.SignUpActivity;
+import fga.mds.gpp.trezentos.View.Activity.SignUpActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
@@ -30,9 +21,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;

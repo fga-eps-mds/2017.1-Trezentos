@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.ExploreFragment">
+    tools:context="fga.mds.gpp.trezentos.View.Fragment.ExploreFragment">
 
     <LinearLayout
         android:id="@+id/no_internet_layout"

@@ -12,7 +12,7 @@
 //import fga.mds.gpp.trezentos.BuildConfig;
 //import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 //import fga.mds.gpp.trezentos.Exception.UserException;
-//import fga.mds.gpp.trezentos.View.LoginActivity;
+//import fga.mds.gpp.trezentos.View.SignInActivity;
 //
 //import static junit.framework.Assert.assertNotSame;
 //import static junit.framework.TestCase.assertEquals;
@@ -23,11 +23,11 @@
 //public class    UserAccountControlTest {
 //
 //    UserAccountControl testUser;
-//    private LoginActivity activity;
+//    private SignInActivity activity;
 //
 //    @Before
 //    public void setUp() {
-//        activity = Robolectric.buildActivity(LoginActivity.class).get();
+//        activity = Robolectric.buildActivity(SignInActivity.class).get();
 //    }
 ///*
 //    @Test

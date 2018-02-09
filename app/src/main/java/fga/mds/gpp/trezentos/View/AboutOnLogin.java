@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.Fragment.AboutFragment;
 
 public class AboutOnLogin extends AppCompatActivity{
 

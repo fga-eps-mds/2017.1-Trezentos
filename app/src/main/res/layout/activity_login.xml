@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.LoginActivity"
+    tools:context="fga.mds.gpp.trezentos.View.Activity.SignInActivity"
     android:background="#ffbd19"
     android:orientation="vertical">
 

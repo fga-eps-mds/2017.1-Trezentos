@@ -2,15 +2,8 @@ package fga.mds.gpp.trezentos.Model;
 
 
 import java.io.Serializable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.R;
-import java.util.HashMap;
-
-import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.View.StudentsFragment;
 
 public class Exam implements Serializable {
     private String nameExam;
