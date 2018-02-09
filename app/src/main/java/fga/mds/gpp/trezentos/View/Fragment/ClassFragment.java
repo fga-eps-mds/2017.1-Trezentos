@@ -49,8 +49,7 @@ public class ClassFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        //new ServerOperationClassFragment(getActivity().getApplication(),
-          //      progressBar, noInternetLayout, fragment).execute();
+        initClasses();
     }
 
     @Override
@@ -69,8 +68,14 @@ public class ClassFragment extends Fragment {
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                new ServerOperationClassFragment(getActivity().getApplication(),
+                        progressBar, noInternetLayout,
+                        fragment)
+                        .execute();
+                swipeLayout.setRefreshing(false);
             }
+
+
         });
 
 
@@ -87,7 +92,7 @@ public class ClassFragment extends Fragment {
         });
 
         initFloatingActionButton(view);
-        initClasses();
+
 
         return view;
     }
@@ -101,11 +106,12 @@ public class ClassFragment extends Fragment {
     }
 
     public void initFloatingActionButton(View view){
-        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.class_image_button);
+        floatingActionButton = view.findViewById(R.id.class_image_button);
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener(){
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), CreateClassActivity.class));
+
             }
         });
     }

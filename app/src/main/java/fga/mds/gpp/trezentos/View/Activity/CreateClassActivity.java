@@ -179,7 +179,7 @@ public class CreateClassActivity extends AppCompatActivity {
     private void initSharedPreferences(){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(
                 CreateClassActivity.this.getApplicationContext());
-        userName = session.getString("userFirstName", "") + session.getString("userLastName", "");
+        userName = session.getString("userFirstName", "") + " " + session.getString("userLastName", "");
         userId = session.getString("userId", "");
 
     }

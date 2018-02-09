@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Activity.SignInActivity;
+import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationClassFragment;
 import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationExploreFragment;
 
 
@@ -33,6 +35,8 @@ public class ExploreFragment extends Fragment {
     private ArrayList<UserClass> userClasses;
     public RecyclerView recyclerView;
     public ClassFragmentAdapter classFragmentAdapter;
+
+    SwipeRefreshLayout swipeLayout;
 
 
     public static ExploreFragment getInstance() {
@@ -57,9 +61,23 @@ public class ExploreFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        noInternetLayout = (LinearLayout) view.findViewById(R.id.no_internet_layout);
+        progressBar = view.findViewById(R.id.progressBar);
+        noInternetLayout = view.findViewById(R.id.no_internet_layout);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_explore);
+
+        swipeLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new ServerOperationExploreFragment(getActivity().getApplication(),
+                        progressBar, noInternetLayout,
+                        fragment)
+                        .execute();
+                swipeLayout.setRefreshing(false);
+            }
+
+
+        });
 
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         if(AccessToken.getCurrentAccessToken() == null && !session.getBoolean("IsUserLogged", false)){
