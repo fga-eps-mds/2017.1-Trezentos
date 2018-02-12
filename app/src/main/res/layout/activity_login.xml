@@ -66,16 +66,16 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:layout_marginTop="10dp"
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded_register_button"
         android:text="@string/btn_login"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:layout_gravity="center" />
+        android:textColor="#FFFFFF" />
 
     <com.facebook.login.widget.LoginButton
         android:layout_marginTop="15dp"

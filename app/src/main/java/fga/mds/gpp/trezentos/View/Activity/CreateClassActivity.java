@@ -31,7 +31,6 @@ public class CreateClassActivity extends AppCompatActivity {
 
 
 
-
     private EditText classNameField;
     private EditText institutionField;
     private EditText passwordField;
