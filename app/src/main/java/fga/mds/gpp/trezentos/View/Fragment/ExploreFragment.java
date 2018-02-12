@@ -63,7 +63,7 @@ public class ExploreFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
         noInternetLayout = view.findViewById(R.id.no_internet_layout);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_explore);
+        recyclerView = view.findViewById(R.id.recycler_explore);
 
         swipeLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

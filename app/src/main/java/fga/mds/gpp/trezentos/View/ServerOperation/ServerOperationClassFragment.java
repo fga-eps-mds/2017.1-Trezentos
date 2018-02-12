@@ -2,12 +2,14 @@ package fga.mds.gpp.trezentos.View.ServerOperation;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,6 +20,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.View.Activity.ClassActivity;
+import fga.mds.gpp.trezentos.View.Activity.StudentClassActivity;
 import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
@@ -94,7 +98,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
 
         if(result.equals("true")){
                 if (classFragment.getActivity() != null) {
-                    recyclerView = (RecyclerView) classFragment.getActivity().findViewById(R.id.recycler_class);
+                    recyclerView = classFragment.getActivity().findViewById(R.id.recycler_class);
                     if (userClasses == null) {
                         //TODO layout to create class
                     }else {
@@ -116,8 +120,6 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
 
                         recyclerView.setAdapter(classFragmentAdapter);
                     }
-
-
                 }
 
         }else{
@@ -138,25 +140,21 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
     }
 
     private void showJoinClassFragment(UserClass userClass){
-//        if(userClass.getOwnerEmail().equals(email)){
-//            Log.d("INTENT","ClassOwner");
-//            Log.d("INTENT",userClass.getOwnerEmail());
-//            Intent goClass = new  Intent(getApplicationContext(),
-//                    ClassActivity.class);
-//            goClass.putExtra("Class", userClass);
-//            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            getApplicationContext().startActivity(goClass);
-//        }else{
-//            Log.d("INTENT","Student");
-//            Log.d("INTENT",email);
-//            Log.d("INTENT",userClass.getOwnerEmail());
-//
-//            Intent goClass = new  Intent(getApplicationContext(),
-//                    StudentClassActivity.class);
-//            goClass.putExtra("Class", userClass);
-//            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            getApplicationContext().startActivity(goClass);
-//        }
+
+        if(userClass.getIdClassCreator().equals(userId)){
+            Log.d("INTENT","ClassOwner");
+            Intent goClass = new  Intent(getApplicationContext(), ClassActivity.class);
+            goClass.putExtra("Class", userClass);
+            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(goClass);
+        }else{
+            Log.d("INTENT","Student");
+
+            Intent goClass = new  Intent(getApplicationContext(), StudentClassActivity.class);
+            goClass.putExtra("Class", userClass);
+            goClass.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(goClass);
+        }
 
     }
 

@@ -26,7 +26,7 @@ public class StudentClassActivity extends AppCompatActivity {
 
         initToolbar();
         initViewPager();
-        initTabLayout();
+
         initRecover();
 
 
@@ -47,10 +47,6 @@ public class StudentClassActivity extends AppCompatActivity {
         setupViewPager(viewPager);
     }
 
-    public void initTabLayout() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(viewPager);
-    }
 
     public void initRecover() {
         Intent intent = getIntent();
