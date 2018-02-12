@@ -93,7 +93,6 @@ public class ClassFragment extends Fragment {
 
         initFloatingActionButton(view);
 
-
         return view;
     }
 

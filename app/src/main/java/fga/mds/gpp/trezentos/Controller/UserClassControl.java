@@ -204,6 +204,7 @@ public class UserClassControl {
 
         try{
             userClass.setIdClass(jsonObject.getString("idClass"));
+            userClass.setIdClassCreator(jsonObject.getString("idClassCreator"));
             userClass.setClassName(jsonObject.getString("className"));
             userClass.setInstitution(jsonObject.getString("classInstitution"));
             userClass.setDescription(jsonObject.getString("classDescription"));

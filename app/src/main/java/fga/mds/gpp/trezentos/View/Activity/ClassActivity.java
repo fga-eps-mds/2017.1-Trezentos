@@ -33,7 +33,6 @@ public class ClassActivity extends AppCompatActivity {
         initToolbar();
         initViewPager();
         initTabLayout();
-        initFloatingButton();
         initRecover();
 
         if (userClass != null) {
@@ -55,23 +54,8 @@ public class ClassActivity extends AppCompatActivity {
     }
 
     public void initTabLayout() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    public void initFloatingButton() {
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_btn);
-        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent goCreateExam = new Intent(getApplicationContext(), CreateExamActivity.class);
-                UserClass userClassCalled = userClass;
-                goCreateExam.putExtra("Class", userClassCalled);
-                startActivity(goCreateExam);
-            }
-        });
-
     }
 
     public void initRecover() {
@@ -112,8 +96,11 @@ public class ClassActivity extends AppCompatActivity {
             Log.d("MAP", "editclass");
             startActivity(intentEditClass);
             return true;
-        }else{
-            //Does nothing
+        }else if (id == R.id.create_exam_button){
+            Intent goCreateExam = new Intent(getApplicationContext(), CreateExamActivity.class);
+            UserClass userClassCalled = userClass;
+            goCreateExam.putExtra("Class", userClassCalled);
+            startActivity(goCreateExam);
         }
         return super.onOptionsItemSelected(item);
     }

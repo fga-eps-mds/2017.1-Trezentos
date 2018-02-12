@@ -150,7 +150,7 @@ public class CreateClassActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Criação de Salas");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
