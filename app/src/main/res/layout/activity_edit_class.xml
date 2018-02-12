@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fga.mds.gpp.trezentos.View.Activity.CreateClassActivity"
+    android:background="#ffbd19"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -14,26 +15,25 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
         <android.support.v7.widget.Toolbar
+            android:background="#262626"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <android.support.v7.widget.CardView
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="540dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"/>
-
 
             <!--Inputs-->
             <LinearLayout
@@ -46,15 +46,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="230dp"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="40dp"
-
-                        />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -69,7 +62,8 @@
                             android:hint="Nome da Sala:"
                             android:layout_marginLeft="20dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/colorPrimaryDark" />
 
                         <TextView
                             android:id="@+id/text_view_class_name_x"
@@ -81,7 +75,8 @@
                             android:textSize="18dp"
                             android:hint="nome da sala X"
                             android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:ellipsize="end"
+                            android:textColor="#000"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -91,11 +86,6 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="15dp">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="40dp"
-                        />
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -109,7 +99,8 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/colorPrimaryDark"/>
 
                         <TextView
                             android:id="@+id/text_view_institution_x"
@@ -121,7 +112,8 @@
                             android:textSize="18dp"
                             android:hint="instituição x"
                             android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:ellipsize="end"
+                            android:textColor="#000"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -130,13 +122,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="15dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="40dp"
-
-                        />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -151,7 +136,8 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/colorPrimaryDark"/>
 
                         <TextView
                             android:id="@+id/text_view_class_password_x"
@@ -160,10 +146,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="18dp"
-                            android:hint="senha Sala x"
+                            android:hint="******"
                             android:textStyle="bold"
                             android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:ellipsize="end"
+                            android:textColorHint="#000"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -172,13 +159,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="15dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="40dp"
-
-                        />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -193,7 +173,8 @@
                             android:textSize="20dp"
                             android:textStyle="bold"
                             android:hint="Nota de Corte:"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/colorPrimaryDark"/>
 
                         <TextView
                             android:id="@+id/text_view_cut_grade_x"
@@ -205,7 +186,8 @@
                             android:hint="Nota de Corte:"
                             android:textStyle="bold"
                             android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:ellipsize="end"
+                            android:textColor="#000"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -214,13 +196,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="15dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="40dp"
-
-                        />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -235,7 +210,8 @@
                             android:layout_marginLeft="20dp"
                             android:textStyle="bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/colorPrimaryDark"/>
 
                         <TextView
                             android:id="@+id/text_view_size_groups_x"
@@ -247,7 +223,8 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:ellipsize="end"
+                            android:textColor="#000"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -256,13 +233,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="15dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="40dp"
-
-                        />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -277,7 +247,8 @@
                             android:hint="Acréscimo:"
                             android:layout_marginLeft="20dp"
                             android:textStyle="bold"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:textColorHint="@color/colorPrimaryDark"/>
 
                         <TextView
                             android:id="@+id/text_view_addition_x"
@@ -287,21 +258,14 @@
                             android:layout_marginLeft="20dp"
                             android:hint="Acréscimo:"
                             android:textStyle="bold"
-                            android:textSize="18dp" />
+                            android:textSize="18dp"
+                            android:textColor="#000"/>
                     </LinearLayout>
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/button_save"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:background="@drawable/shape_item"
-                    android:text="Voltar"
-                    android:textColor="@color/white"/>
+
             </LinearLayout>
         </RelativeLayout>
-    </ScrollView>
+    </android.support.v7.widget.CardView>
 </LinearLayout>
+

@@ -55,8 +55,6 @@ public class EditClassActivity extends AppCompatActivity implements View.OnClick
         cutGrade = (TextView) findViewById(R.id.text_view_cut_grade_x);
         groupsSize = (TextView) findViewById(R.id.text_view_size_groups_x);
         addition = (TextView) findViewById(R.id.text_view_addition_x);
-        backButton = (Button) findViewById(R.id.button_save);
-        backButton.setOnClickListener(this);
     }
 
     private void initFillFields(){
