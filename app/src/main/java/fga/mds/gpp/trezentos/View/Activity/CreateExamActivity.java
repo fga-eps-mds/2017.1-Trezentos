@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,7 @@ import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 
-public class CreateExamActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateExamActivity extends AppCompatActivity {
 
     public UserClass userClass;
     public UserAccount userAccount;
@@ -42,17 +43,16 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
         recoverSharedPreferences();
 
         userClassName = userClass.getClassName();
-        final Button buttonOk = (Button) findViewById(R.id.ok_create_button);
-        final Button buttonReturn = (Button) findViewById(R.id.return_exam_button);
+
 
         examNameField = (EditText) findViewById(R.id.exam_name);
 
-        buttonOk.setOnClickListener(this);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_class, menu);
+        getMenuInflater().inflate(R.menu.menu_create_exam, menu);
         return true;
 
     }
@@ -62,18 +62,36 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
         int id = item.getItemId();
         // Noinspection SimplifiableIfStatement
         if(id == R.id.save_button){
+            UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
+            try {
+                if (confirmInformation(userExamControl,
+                        examNameField, userClassName, classOwnnerEmail)) {
+                    String examName = examNameField.getText().toString();
+                    userExamControl.validateCreateExam(examName, userClassName, classOwnnerEmail);
+                    onBackPressed();
+                }
+            } catch (UserException e) {
+                e.printStackTrace();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_exam);
         setSupportActionBar(toolbar);
-        setTitle("Criação de Salas");
+        setTitle("Criação de Teste");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
     /*
     Purpose: Recover the last intent initiated before this class.
@@ -101,30 +119,6 @@ public class CreateExamActivity extends AppCompatActivity implements View.OnClic
     @params: View where button pressed exists.
      */
 
-    @Override
-    public void onClick(View v) {
-        UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
-        switch (v.getId()) {
-            case R.id.return_exam_button: {
-                Intent returnToClass = new Intent(CreateExamActivity.this, ClassActivity.class);
-                startActivity(returnToClass);
-                finish();
-                break;
-            }
-            case R.id.ok_create_button: {
-                try {
-                    if (confirmInformation(userExamControl,
-                            examNameField, userClassName, classOwnnerEmail)) {
-                        String examName = examNameField.getText().toString();
-                        userExamControl.validateCreateExam(examName, userClassName, classOwnnerEmail);
-                        onBackPressed();
-                    }
-                } catch (UserException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
     /*
     Purpose: Method to validate information about Exam params
