@@ -7,8 +7,9 @@ import fga.mds.gpp.trezentos.Exception.UserException;
 
 public class Exam implements Serializable {
     private String nameExam;
-    private String userClassName;
-    private String classOwnerEmail;
+    private String idClassCreator;
+    private String idPerson;
+    private String idClass;
     private String firstGrades;
     private String secondGrades;
 
@@ -17,11 +18,13 @@ public class Exam implements Serializable {
         //in addition is create constructors with arguments.
     }
 
-    public Exam(String nameExam, String userClassName, String classOwnerEmail)
+    public Exam(String nameExam, String idPerson, String idClassCreator, String idClass)
             throws UserException {
         setNameExam(nameExam);
-        setUserClassName(userClassName);
-        setClassOwnerEmail(classOwnerEmail);
+        setIdPerson(idPerson);
+        setIdClassCreator(idClassCreator);
+        setIdClass(idClass);
+
     }
 
     public void setNameExam(String nameExam)throws UserException{
@@ -31,8 +34,7 @@ public class Exam implements Serializable {
         if(nameExam != null && !nameExam.isEmpty()){
             if(nameExam.length() < MIN_NAME_EXAM_LENGTH
                     || nameExam.length() > MAX_NAME_EXAM_LENGTH){
-                throw new UserException("O nome da prova " +
-                        "deve ter entre 2 e 15 caracteres.");
+                throw new UserException("O nome da prova deve ter entre 2 e 15 caracteres.");
             }else{
                 this.nameExam = nameExam;
             }
@@ -45,31 +47,28 @@ public class Exam implements Serializable {
         return nameExam;
     }
 
-    public void setUserClassName(String userClassName) throws UserException{
-
-        if(userClassName != null && !userClassName.isEmpty()){
-            this.userClassName = userClassName;
-
-        }else{
-            throw new UserException("O nome não pode ser vazio");
-        }
-
+    public String getIdClassCreator() {
+        return idClassCreator;
     }
 
-    public String getUserClassName() {
-        return userClassName;
+    public void setIdClassCreator(String idClassCreator) {
+        this.idClassCreator = idClassCreator;
     }
 
-    public void setClassOwnerEmail(String classOwnerEmail)throws UserException {
-        if (classOwnerEmail != null && !classOwnerEmail.isEmpty()){
-            this.classOwnerEmail = classOwnerEmail;
-        }else{
-            throw new UserException("O email não pode estar vazio");
-        }
+    public String getIdPerson() {
+        return idPerson;
     }
 
-    public String getClassOwnerEmail() {
-        return classOwnerEmail;
+    public void setIdPerson(String idPerson) {
+        this.idPerson = idPerson;
+    }
+
+    public String getIdClass() {
+        return idClass;
+    }
+
+    public void setIdClass(String idClass) {
+        this.idClass = idClass;
     }
 
     public void setFirstGrades(String firstGrades) {

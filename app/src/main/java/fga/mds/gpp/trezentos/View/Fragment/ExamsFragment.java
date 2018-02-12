@@ -91,7 +91,7 @@ public class ExamsFragment extends Fragment{
         @Override
         protected String doInBackground(String... params) {
 
-            userExams = userExamControl.getExamsFromUser("arthurbdiniz@gmail.com", userClass.getClassName());
+            //userExams = userExamControl.getExamsFromUser("arthurbdiniz@gmail.com", userClass.getClassName());
             return null;
         }
 
@@ -142,7 +142,8 @@ public class ExamsFragment extends Fragment{
 
         @Override
         public int getItemCount() {
-            return exams.size();
+            return 0;
+//            return exams.size();
         }
 
         @Override

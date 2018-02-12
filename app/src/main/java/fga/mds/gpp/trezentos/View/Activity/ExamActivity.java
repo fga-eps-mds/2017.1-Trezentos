@@ -104,12 +104,12 @@ public class ExamActivity extends AppCompatActivity {
                 UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
                 recoverLastIntent();
-                try {
-                    userExamControl.validateAddsGrades(userClass, exam, "first_grades");
-                }catch(UserClassException | ExecutionException | InterruptedException e){
-
-                    e.printStackTrace();
-                }
+//                try {
+//                    userExamControl.validateAddsGrades(userClass, exam, "first_grades");
+//                }catch(UserClassException | ExecutionException | InterruptedException e){
+//
+//                    e.printStackTrace();
+//                }
 
                 break;
             }
@@ -118,11 +118,11 @@ public class ExamActivity extends AppCompatActivity {
                 UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
                 recoverLastIntent();
-                try {
-                    userExamControl.validateAddsGrades(userClass, exam, "second_grades");
-                }catch(InterruptedException | ExecutionException | UserClassException e){
-                    e.printStackTrace();
-                }
+//                try {
+//                    userExamControl.validateAddsGrades(userClass, exam, "second_grades");
+//                }catch(InterruptedException | ExecutionException | UserClassException e){
+//                    e.printStackTrace();
+//                }
 
                 break;
             }

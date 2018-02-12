@@ -109,8 +109,8 @@ public class ShowStudentGroupFragment extends Fragment {
         @Override
         protected String doInBackground(String... params){
 
-            HashMap<String, Double> firstGrades = groupController.getFirstGrades(userExam.getNameExam(),
-                    userClass.getClassName(), userExam.getClassOwnerEmail());
+            //HashMap<String, Double> firstGrades = groupController.getFirstGrades(userExam.getNameExam(),
+                    //userClass.getClassName(), userExam.getClassOwnerEmail());
 //            HashMap<String, Integer> groups = groupController.getGroups(userExam.getNameExam(),
 //                    userClass.getClassName(), userClass.getOwnerEmail());
 
