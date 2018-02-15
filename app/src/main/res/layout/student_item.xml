@@ -27,7 +27,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="#000"
                 android:textSize="20sp"
-                android:text="Nome Sobrenome"
+                android:hint="Nome Sobrenome"
                 android:textStyle="bold"
                 android:layout_marginLeft="20dp"/>
             <TextView
@@ -78,12 +78,14 @@
                         android:id="@+id/text_view_grade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0.00"
+                        android:textColorHint="@color/colorPrimaryDark"
+                        android:hint="0.00"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:textColor="#000"
                         android:textSize="30dp"
                         android:inputType="numberDecimal"
                         android:textStyle="bold"
+                        android:maxLength="4"
                         />
                 </LinearLayout>
 
@@ -116,12 +118,14 @@
                         android:id="@+id/text_view_second_grade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0.00"
+                        android:hint="0.00"
+                        android:textColorHint="@color/colorPrimaryDark"
                         android:inputType="numberDecimal"
                         android:layout_gravity="center_horizontal"
                         android:textColor="#000"
                         android:textSize="30dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:maxLength="4"/>
                 </LinearLayout>
 
 

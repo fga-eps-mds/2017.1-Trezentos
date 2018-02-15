@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
     private RecyclerView mRecyclerView;
     private GroupController groupController;
     private Map<String, Double> firstGrades;
-    private Map<String, Integer> groupses;
+    private Map<String, Integer> groupses = new HashMap<>();
     private Exam exam;
     private ProgressBar progressBar;
     private UserClass userClass;
@@ -44,9 +45,9 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
     @Override
     public void onResume() {
         super.onResume();
-        if(userClass.getStudents() != null) {
-            new ServerOperation().execute();
-        }
+//        if(userClass.getStudents() != null) {
+//            new ServerOperation().execute();
+//        }
     }
 
     @Override
@@ -56,11 +57,24 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
         Intent intent = getActivity().getIntent();
         exam = (Exam) intent.getSerializableExtra("Exam");
         userClass = (UserClass) intent.getSerializableExtra("Class");
+        groupses.put("asdasd", 2);
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBarGroups);
-        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setVisibility(View.VISIBLE);
 
         groupWarning = (TextView) view.findViewById(R.id.not_defined_groups);
+
+
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_groups);
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerView.setAdapter(new GroupsFragment.Adapter(groupses,
+                getActivity().getApplicationContext(), userClass,
+                recyclerView, firstGrades));
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
         //checkGroups();
 
@@ -85,72 +99,72 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
         }
     }
 
-    private class ServerOperation extends AsyncTask<String, Void, String> {
-
-        ServerOperation(){
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            if(isNetworkAvailable(getContext()) && isInternetAvailable()){ //If internet is ok
-//                groupses = GroupController.getGroups(exam.getNameExam(),
-//                        exam.getUserClassName(), exam.getClassOwnerEmail());
-//                firstGrades = GroupController.getFirstGrades(exam.getNameExam(),
-//                        userClass.getClassName(), userClass.getOwnerEmail());
-                return "true";
-
-            }else{
-                return null;
-
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (getActivity() != null) {
-                progressBar.setVisibility(View.GONE);
-                checkGroups();
-
-                RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_groups);
-                recyclerView.setVisibility(View.VISIBLE);
-                recyclerView.setAdapter(new GroupsFragment.Adapter(groupses,
-                        getActivity().getApplicationContext(), userClass,
-                        recyclerView, firstGrades));
-
-                final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(layoutManager);
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
-
-        public boolean isNetworkAvailable(Context context) {
-            if (context == null){return false;}
-
-            final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-            return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
-        }
-
-        public boolean isInternetAvailable() {
-            try {
-                final InetAddress address = InetAddress.getByName("www.google.com");
-                if(!address.equals("")){
-                    return true;
-                }
-
-            } catch (UnknownHostException e) {
-
-            }
-            return false;
-        }
-    }
+//    private class ServerOperation extends AsyncTask<String, Void, String> {
+//
+//        ServerOperation(){
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            if(isNetworkAvailable(getContext()) && isInternetAvailable()){ //If internet is ok
+////                groupses = GroupController.getGroups(exam.getNameExam(),
+////                        exam.getUserClassName(), exam.getClassOwnerEmail());
+////                firstGrades = GroupController.getFirstGrades(exam.getNameExam(),
+////                        userClass.getClassName(), userClass.getOwnerEmail());
+//                return "true";
+//
+//            }else{
+//                return null;
+//
+//            }
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            if (getActivity() != null) {
+//                progressBar.setVisibility(View.GONE);
+//                checkGroups();
+//
+//                RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_groups);
+//                recyclerView.setVisibility(View.VISIBLE);
+//                recyclerView.setAdapter(new GroupsFragment.Adapter(groupses,
+//                        getActivity().getApplicationContext(), userClass,
+//                        recyclerView, firstGrades));
+//
+//                final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+//                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//                recyclerView.setLayoutManager(layoutManager);
+//            }
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Void... values) {}
+//
+//        public boolean isNetworkAvailable(Context context) {
+//            if (context == null){return false;}
+//
+//            final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+//            return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+//        }
+//
+//        public boolean isInternetAvailable() {
+//            try {
+//                final InetAddress address = InetAddress.getByName("www.google.com");
+//                if(!address.equals("")){
+//                    return true;
+//                }
+//
+//            } catch (UnknownHostException e) {
+//
+//            }
+//            return false;
+//        }
+//    }
 
     private class Adapter extends RecyclerView.Adapter implements View.OnClickListener {
 
@@ -208,9 +222,14 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
 
         @Override
         public int getItemCount() {
-            if (groupses == null) return 0;
+            if (groupses == null){
+                return 0;
+            }else{
+                return groupses.size();
+            }
 
-            return groupses.size()/userClass.getSizeGroups();
+//            return groupses.size()/userClass.getSizeGroups();
+
         }
 
         @Override
@@ -234,8 +253,8 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
         ViewHolder(View view) {
             super(view);
             groupTitle = (TextView) view.findViewById(R.id.group_number);
-            helpers = (TextView) view.findViewById(R.id.helpers_content);
-            helped = (TextView) view.findViewById(R.id.helped_content);
+            helpers = (TextView) view.findViewById(R.id.helpers1);
+            helped = (TextView) view.findViewById(R.id.helped1);
         }
     }
 
