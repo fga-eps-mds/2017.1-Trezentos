@@ -1,7 +1,6 @@
 package fga.mds.gpp.trezentos.View.Activity;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Fragment.ExamsFragment;
-import fga.mds.gpp.trezentos.View.Fragment.ShowClassComponentsFragment;
+import fga.mds.gpp.trezentos.View.Fragment.InfoClassFragment;
 import fga.mds.gpp.trezentos.View.Adapters.ViewPagerAdapter;
 
 public class StudentClassActivity extends AppCompatActivity {
@@ -57,7 +56,7 @@ public class StudentClassActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new ExamsFragment(), "EXAMS");
-        adapter.addFragment(new ShowClassComponentsFragment(), "STUDENTS");
+        adapter.addFragment(new InfoClassFragment(), "STUDENTS");
         viewPager.setAdapter(adapter);
     }
 

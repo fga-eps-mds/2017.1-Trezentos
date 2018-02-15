@@ -56,9 +56,9 @@ public class ShowStudentGroupFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if(userClass.getStudents().size() > 1) {
-            new ServerOperation().execute();
-        }
+//        if(userClass.getStudents().size() > 1) {
+//            new ServerOperation().execute();
+//        }
     }
 
     private void loadRecover() {
@@ -91,11 +91,11 @@ public class ShowStudentGroupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_show_student_group, container, false);
         loadRecover();
-
-        if(userClass.getStudents().size() > 1) {
+//
+//        if(userClass.getStudents().size() > 1) {
             progressBar = (ProgressBar) view.findViewById(R.id.progress_bar_student_group);
-            progressBar.setVisibility(View.VISIBLE);
-        }
+//            progressBar.setVisibility(View.VISIBLE);
+//        }
 
         return view;
     }
@@ -109,8 +109,8 @@ public class ShowStudentGroupFragment extends Fragment {
         @Override
         protected String doInBackground(String... params){
 
-            HashMap<String, Double> firstGrades = groupController.getFirstGrades(userExam.getNameExam(),
-                    userClass.getClassName(), userExam.getClassOwnerEmail());
+            //HashMap<String, Double> firstGrades = groupController.getFirstGrades(userExam.getNameExam(),
+                    //userClass.getClassName(), userExam.getClassOwnerEmail());
 //            HashMap<String, Integer> groups = groupController.getGroups(userExam.getNameExam(),
 //                    userClass.getClassName(), userClass.getOwnerEmail());
 

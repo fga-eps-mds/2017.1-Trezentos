@@ -15,5 +15,9 @@ public class URLs {
     public static final String  URL_INSERT_STUDENT_CLASS = ROOT_URL + "class/enter_class.php"; //POST
     public static final String  URL_CREATE_CLASS = ROOT_URL + "class/create_class.php"; //POST
 
+    public static final String  URL_CREATE_EXAM = ROOT_URL + "exam/create_exam.php"; //POST
+    public static final String  URL_GET_EXAMS_FROM_USER = ROOT_URL + "exam/show_exam.php"; //POST
+
+
 
 }

@@ -55,13 +55,14 @@ public class StudentsFragment extends Fragment {
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
         userExam = (Exam) intent.getSerializableExtra("Exam");
-
-        students = userClass.getStudents();
-        populateMapValues(students); //clear map and populates it
-        arrangeMap(students);//creates a new array of students that are enrolled at this class
+        //ArrayList<String> array = null;
+        //students.add("arthurbdiniz");
+        //students = array; // userClass.getStudents();
+        //populateMapValues(students); //clear map and populates it
+        //arrangeMap(students);//creates a new array of students that are enrolled at this class
 
         View view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerStudents);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerStudents);
         recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -119,7 +120,8 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return userAccounts.size();
+            return 0;
+            //userAccounts.size()
         }
 
         @Override

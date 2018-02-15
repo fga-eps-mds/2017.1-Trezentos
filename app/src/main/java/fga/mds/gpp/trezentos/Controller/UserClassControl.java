@@ -168,7 +168,6 @@ public class UserClassControl {
         ArrayList<UserClass> userClasses = null;
         userClasses = getArrayList(classArrayJson);
 
-        Log.d("RESPONSE", String.valueOf(userClasses.size()));
 
         return userClasses;
     }

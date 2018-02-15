@@ -12,6 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,8 +33,7 @@ public class CreateExamActivity extends AppCompatActivity {
     public UserClass userClass;
     public UserAccount userAccount;
     public EditText examNameField;
-    public String userClassName;
-    public String classOwnnerEmail;
+    private String userId;
     private Toolbar toolbar;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +41,11 @@ public class CreateExamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_exam);
 
         initToolbar();
-
         recoverIntent();
         recoverSharedPreferences();
 
-        userClassName = userClass.getClassName();
 
-
-        examNameField = (EditText) findViewById(R.id.exam_name);
+        examNameField = findViewById(R.id.exam_name);
 
 
     }
@@ -64,14 +64,33 @@ public class CreateExamActivity extends AppCompatActivity {
         if(id == R.id.save_button){
             UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
+            String examName = examNameField.getText().toString();
             try {
-                if (confirmInformation(userExamControl,
-                        examNameField, userClassName, classOwnnerEmail)) {
-                    String examName = examNameField.getText().toString();
-                    userExamControl.validateCreateExam(examName, userClassName, classOwnnerEmail);
-                    onBackPressed();
+                String erroMessage = userExamControl.validateCreateExam( examName,
+                                                    userId,
+                                                    userClass.getIdClassCreator(),
+                                                    userClass.getIdClass());
+                if(erroMessage.equals("")){
+                    String response = userExamControl.createExam();
+                    JSONObject obj = new JSONObject(response);
+
+                    if (!obj.getBoolean("error")) {
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                        finish();
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    verifyValidMessage(erroMessage);
                 }
+
+
+
             } catch (UserException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -79,7 +98,7 @@ public class CreateExamActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_exam);
+        toolbar = findViewById(R.id.toolbar_exam);
         setSupportActionBar(toolbar);
         setTitle("Criação de Teste");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -111,40 +130,24 @@ public class CreateExamActivity extends AppCompatActivity {
     private void recoverSharedPreferences(){
         SharedPreferences session = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
-        classOwnnerEmail = session.getString("userEmail","");
+        userId = session.getString("userId", "");
+
     }
 
     /*
     Purpose: Overriding method onClick to improve AMLOC metric.
     @params: View where button pressed exists.
      */
-
-
-    /*
-    Purpose: Method to validate information about Exam params
-    @params: Controller of Exam, field of exam name and Strings about the class
-    where a exam will be created and the owner email.
-    @return: boolean to confirm all fields of parameters.
-     */
-
-    public boolean confirmInformation(UserExamControl userExamControl,
-                EditText examNameField, String userClassName,
-                    String classOwnnerEmail) throws UserException {
-        String examName = examNameField.getText().toString();
-
-        return verifyValidMessage(userExamControl
-                .validateInformation(examName,userClassName, classOwnnerEmail));
-    }
-
     private boolean verifyValidMessage(String errorMessage){
         switch (errorMessage) {
-            case "Preencha todos os campos!":
-                examNameField.setError("Preencha todos os campos!"); break;
-            case "O nome da prova " +
-                    "deve ter entre 2 e 15 caracteres.":
+            case "O nome não pode ser vazio.":
                 examNameField.requestFocus();
-                examNameField.setError("O nome da prova " +
-                        "deve ter entre 2 e 15 caracteres."); break;
+                examNameField.setError("O nome não pode ser vazio.");
+                break;
+            case "O nome da prova deve ter entre 2 e 15 caracteres.":
+                examNameField.requestFocus();
+                examNameField.setError("O nome da prova deve ter entre 2 e 15 caracteres.");
+                break;
             case "Sucesso":
                 return true;
         }

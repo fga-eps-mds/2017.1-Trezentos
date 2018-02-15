@@ -10,12 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Fragment.ExamsFragment;
-import fga.mds.gpp.trezentos.View.Fragment.ShowClassComponentsFragment;
+import fga.mds.gpp.trezentos.View.Fragment.InfoClassFragment;
 import fga.mds.gpp.trezentos.View.Adapters.ViewPagerAdapter;
 
 public class ClassActivity extends AppCompatActivity {
@@ -66,8 +65,8 @@ public class ClassActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new ExamsFragment(), "EXAMS");
-        adapter.addFragment(new ShowClassComponentsFragment(), "STUDENTS");
+        adapter.addFragment(new ExamsFragment(), "PROVAS");
+        adapter.addFragment(new InfoClassFragment(), "INFO SALA");
         viewPager.setAdapter(adapter);
     }
 
@@ -86,20 +85,13 @@ public class ClassActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
 
         if (id == R.id.action_class_information) {
-            Intent intentEditClass = new Intent(getApplicationContext(), EditClassActivity.class);
-            UserClass userClassCalled = userClass;
-            intentEditClass.putExtra("Class", userClassCalled);
-            Log.d("MAP", "editclass");
-            startActivity(intentEditClass);
             return true;
         }else if (id == R.id.create_exam_button){
             Intent goCreateExam = new Intent(getApplicationContext(), CreateExamActivity.class);
-            UserClass userClassCalled = userClass;
-            goCreateExam.putExtra("Class", userClassCalled);
+            goCreateExam.putExtra("Class", userClass);
             startActivity(goCreateExam);
         }
         return super.onOptionsItemSelected(item);
