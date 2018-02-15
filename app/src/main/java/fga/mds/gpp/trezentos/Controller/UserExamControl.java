@@ -18,6 +18,7 @@ import fga.mds.gpp.trezentos.DAO.RequestHandler;
 import fga.mds.gpp.trezentos.DAO.URLs;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.Evaluation;
 import fga.mds.gpp.trezentos.Model.Exam;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import okhttp3.HttpUrl;
@@ -66,7 +67,6 @@ public class UserExamControl{
 
     }
 
-    //Create Exam
     private HashMap<String, String> getCreateExamParams() {
 
         HashMap<String, String> params = new HashMap<>();
@@ -78,6 +78,71 @@ public class UserExamControl{
         return params;
 
     }
+
+    public ArrayList<Exam> getExamsFromUser(String idPerson, String idClass) throws JSONException {
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_GET_EXAMS_FROM_USER, getExamsFromUserParams(idPerson, idClass));
+
+        String serverResponse = "404";
+
+        try{
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
+        }
+        Log.d("RESPONSE", serverResponse);
+
+        JSONObject object = new JSONObject(serverResponse);
+        String erro = object.getString("error");
+        String message = object.getString("message");
+        JSONArray classArrayJson = object.getJSONArray("exames");
+
+        ArrayList<Exam> userExams = null;
+        userExams = getExamArrayList(classArrayJson);
+
+        return userExams;
+
+    }
+
+    //Create Exam
+    private HashMap<String, String> getExamsFromUserParams(String idPerson,String idClass) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idClass", idClass);
+        params.put("idPerson", idPerson);
+
+        return params;
+
+    }
+
+    public ArrayList<Exam> getExamArrayList(JSONArray array) throws JSONException{
+
+
+        ArrayList<Exam> exams = new ArrayList<>();
+        for(int i = 0; i < array.length(); i++){
+            Exam userExam = getUserClassFromJson(array.getJSONObject(i));
+            exams.add(userExam);
+        }
+
+        return exams;
+    }
+
+    private Exam getUserClassFromJson(JSONObject jsonObject) {
+        Exam exam = new Exam();
+
+        try{
+            exam.setNameExam(jsonObject.getString("examDescription"));
+
+        }catch(UserException e){
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return exam;
+    }
+
 
 
 //
@@ -94,33 +159,31 @@ public class UserExamControl{
 //        return new PutDao(url + gradeType, json, body).execute().get();
 //    }
 
-    // Get from api
+//    // Get exams
 //    public ArrayList<Exam> getExamsFromUser(String email, String userClassName){
-//        String url = "https://trezentos-api.herokuapp.com/api/exam/class/user/find";
+//        String returnAllClassesUrlWithParameters = getClassesFromUserUrl(userId);
 //
 //        String serverResponse = "404";
-//        serverResponse = new GetDao(getExamAvaiableUrl
-//                (email, userClassName, url)).get();
+//        serverResponse = new GetDao(returnAllClassesUrlWithParameters).get();
 //
-//        ArrayList<Exam> userExams = new ArrayList<Exam>();
+//        Log.d("RESPONSE", serverResponse);
 //
-//        try{
-//            userExams = getArrayList(serverResponse);
-//        }catch(JSONException e){
-//            e.printStackTrace();
-//        }
 //
-//        return userExams;
+//        JSONObject object = new JSONObject(serverResponse);
+//        String erro = object.getString("error");
+//        String message = object.getString("message");
+//        JSONArray classArrayJson = object.getJSONArray("classes");
+//
+//
+//        ArrayList<UserClass> userClasses = null;
+//        userClasses = getArrayList(classArrayJson);
+//
+//        Log.d("RESPONSE", String.valueOf(userClasses.size()));
+//
+//        return userClasses;
 //    }
 
-    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
-    private String getExamAvaiableUrl(String email, String userClassName, String url){
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
-        builder.addQueryParameter("email", email);
-        builder.addQueryParameter("userClassName", userClassName);
-        return builder.build().toString();
-    }
 
 //    private ArrayList<Exam> getArrayList(String serverResponse) throws JSONException{
 //        JSONArray array = null;

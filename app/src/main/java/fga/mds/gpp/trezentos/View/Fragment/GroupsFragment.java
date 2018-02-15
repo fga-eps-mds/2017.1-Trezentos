@@ -62,7 +62,7 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
 
         groupWarning = (TextView) view.findViewById(R.id.not_defined_groups);
 
-        checkGroups();
+        //checkGroups();
 
         return view;
     }

@@ -14,6 +14,14 @@ public class Student extends UserAccount{
         //in addition is create constructors with arguments.
     }
 
+    public Student(String email){
+        setStudentEmail(email);
+        //An empty constructor is needed to create a new instance of object,
+        //in addition is create constructors with arguments.
+    }
+
+
+
     @Override
     public String toString(){
         return "Aluno";
