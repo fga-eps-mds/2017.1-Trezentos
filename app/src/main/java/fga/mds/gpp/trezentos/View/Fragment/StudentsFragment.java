@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -177,6 +181,7 @@ public class StudentsFragment extends Fragment {
             imageButtonMore.setOnClickListener(this);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -193,8 +198,14 @@ public class StudentsFragment extends Fragment {
 //                    break;
             }
         }
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         public void showPopup(View v) {
-            PopupMenu popup = new PopupMenu(getContext(), v);
+
+            ContextThemeWrapper contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.PopupMenuOverlapAnchor);
+//            PopupMenu popupMenu = new PopupMenu(contextThemeWrapper, this);
+
+            PopupMenu popup = new PopupMenu(contextThemeWrapper, getView(), Gravity.RIGHT);
+
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.menu_student, popup.getMenu());
             popup.show();

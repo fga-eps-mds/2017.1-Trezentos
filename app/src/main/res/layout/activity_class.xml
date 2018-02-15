@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:background="#424242"
             app:tabSelectedTextColor="#fff"
-            app:tabIndicatorColor="#bababa"
+            app:tabIndicatorColor="#fff"
 
             >
 

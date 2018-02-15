@@ -16,23 +16,11 @@
         app:showAsAction="always"
         android:title="" />
 
-    <item
-        android:id="@+id/profile_image"
-        android:icon="@drawable/avatar"
-        app:showAsAction="always"
-        android:title="" />
-
-
 
     <item
         android:id="@+id/search_classes"
         android:title="Explore" />
 
-    <item android:title="2" />
-
-    <item android:title="3" />
-
-    <item android:title="4" />
 
     <item android:title="Sair" />
 

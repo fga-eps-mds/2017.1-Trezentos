@@ -4,10 +4,10 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="3dp"
     android:layout_width="match_parent"
+    card_view:cardUseCompatPadding="true"
     card_view:cardBackgroundColor="@android:color/white"
     android:layout_height="wrap_content">
 
@@ -33,33 +33,37 @@
                 android:textStyle="bold"/>
 
             <LinearLayout
-                android:weightSum="3"
+
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:background="#424242">
 
-                <View
-                    android:background="#50ff35"
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content" />
 
-                <TextView
-                    android:layout_weight="2"
-                    android:layout_gravity="center"
-                    android:layout_width="170dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:padding="15dp"
-                    android:text="@string/helpers"
-                    android:textStyle="bold"
-                    android:textColor="#fff"/>
+
+                    <View
+                        android:background="#50ff35"
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center"
+                        android:text="@string/helpers"
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
+
+
+
 
                 <LinearLayout
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="140dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:background="#424242">
 
@@ -68,14 +72,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+
                         android:text="Nota"
                         android:textColor="#fff"
                         android:textStyle="bold" />
 
                     <View
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="1dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_height="20dp"
                         android:background="#ccc3c1"/>
 
@@ -84,6 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
                         android:layout_gravity="center"
                         android:text="300"
                         android:textColor="#fff"
@@ -92,6 +99,7 @@
                     <View
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_width="1dp"
                         android:layout_height="20dp"
                         android:background="#ccc3c1"/>
@@ -109,27 +117,27 @@
             </LinearLayout>
 
             <LinearLayout
-                android:weightSum="3"
+                android:weightSum="5"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers1"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 1"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
+                    <TextView
+                        android:layout_weight="4"
+                        android:id="@+id/helpers1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="30dp"
+                        android:text="Ajudante 1"
+                        android:maxLength="30"
+                        android:textColor="#262626"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        />
+
 
 
                 <LinearLayout
@@ -137,70 +145,86 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:visibility="visible"
-                    android:padding="10dp"
+                    android:gravity="center"
                     android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/grade1"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="10.0"
-                    android:textColor="#262626"
-                    android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/grade1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
 
-                <View
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:background="#000"/>
+                        <View
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:background="#000"/>
 
-                <TextView
-                    android:id="@+id/grade_t1"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:text="10.0"
-                    android:textColor="#262626"
-                    android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/grade_t1"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
 
-                <View
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:background="#000"/>
+                        <View
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:background="#000"/>
 
-                <TextView
-                    android:id="@+id/grade_last1"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center"
-                    android:text="10.0"
-                    android:textColor="#262626"
-                    android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/grade_last1"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
+
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:background="#ccc3c1" />
+
             <LinearLayout
-                android:weightSum="3"
+                android:weightSum="5"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
+
                 <TextView
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:id="@+id/helpers2"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
+                    android:layout_marginLeft="30dp"
                     android:text="Ajudante 2"
                     android:maxLength="30"
                     android:textColor="#262626"
@@ -208,691 +232,71 @@
                     android:singleLine="true"
                     android:maxLines="1"
                     />
-
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:visibility="visible"
-                    android:padding="10dp"
+                    android:gravity="center"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/grade2"
-                        android:layout_width="30dp"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/grade2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
 
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
+                        <View
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:background="#000"/>
 
-                    <TextView
-                        android:id="@+id/grade_t2"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/grade_t2"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
 
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
+                        <View
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:background="#000"/>
 
-                    <TextView
-                        android:id="@+id/grade_last2"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/grade_last2"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
 
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers3"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 3"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/grade3"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_t3"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_last3"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers4"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 4"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/grade4"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_t4"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_last4"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers5"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 5"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/grade5"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_t5"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_last5"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers6"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 6"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/grade6"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_t6"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_last6"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers7"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 7"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/grade7"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_t7"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_last7"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers8"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 8"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/grade8"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_t8"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_last8"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers9"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 9"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/grade9"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_t9"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_last9"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helpers10"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudante 10"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/grade10"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_t10"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_last10"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.00"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:weightSum="3"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
@@ -904,21 +308,20 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_weight="2"
-                    android:layout_gravity="center"
-                    android:layout_width="170dp"
-                    android:layout_height="match_parent"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:padding="15dp"
+                    android:layout_gravity="center"
                     android:text="@string/helped"
-                    android:textStyle="bold"
-                    android:textColor="#fff"/>
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="142dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:background="#424242">
 
@@ -933,8 +336,9 @@
 
                     <View
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="1dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_height="20dp"
                         android:background="#ccc3c1"/>
 
@@ -943,6 +347,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
                         android:layout_gravity="center"
                         android:text="300"
                         android:textColor="#fff"
@@ -951,6 +356,7 @@
                     <View
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_width="1dp"
                         android:layout_height="20dp"
                         android:background="#ccc3c1"/>
@@ -968,20 +374,18 @@
             </LinearLayout>
 
             <LinearLayout
-                android:weightSum="3"
+                android:weightSum="5"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
                 <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped1"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
+                    android:layout_marginLeft="30dp"
                     android:text="Ajudado 1"
                     android:maxLength="30"
                     android:textColor="#262626"
@@ -991,75 +395,89 @@
                     />
 
 
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:visibility="visible"
-                    android:padding="10dp"
+                    android:gravity="center"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/note1"
-                        android:layout_width="30dp"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="10.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
 
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
+                        <View
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:background="#000"/>
 
-                    <TextView
-                        android:id="@+id/grade_301"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="10.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
 
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
+                        <View
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:background="#000"/>
 
-                    <TextView
-                        android:id="@+id/grade_end1"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="10.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
+
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:background="#ccc3c1" />
+
             <LinearLayout
-                android:weightSum="3"
+                android:weightSum="5"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
+
                 <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped2"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
+                    android:layout_marginLeft="30dp"
                     android:text="Ajudado 2"
                     android:maxLength="30"
                     android:textColor="#262626"
@@ -1067,684 +485,67 @@
                     android:singleLine="true"
                     android:maxLines="1"
                     />
-
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:visibility="visible"
-                    android:padding="10dp"
+                    android:gravity="center"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/note2"
-                        android:layout_width="30dp"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
 
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
+                        <View
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:background="#000"/>
 
-                    <TextView
-                        android:id="@+id/grade_302"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
 
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
+                        <View
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:background="#000"/>
 
-                    <TextView
-                        android:id="@+id/grade_end2"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0.00"
+                            android:textColor="#262626"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
+
             </LinearLayout>
 
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
 
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped3"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudado 3"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/note3"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_303"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_end3"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped4"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudado 4"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/note4"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_304"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_end4"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped5"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudado 5"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/note5"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_305"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_end5"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped6"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudado 6"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/note6"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_306"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_end6"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped7"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudado 7"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/note7"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_307"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_end7"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped8"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudado 8"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/note8"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_308"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_end8"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped9"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudado 9"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/note9"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_309"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_end9"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:weightSum="3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_weight="2"
-                    android:id="@+id/helped10"
-                    android:layout_width="180dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:padding="15dp"
-                    android:text="Ajudado 10"
-                    android:maxLength="30"
-                    android:textColor="#262626"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    android:padding="10dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/note10"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_310"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#000"/>
-
-                    <TextView
-                        android:id="@+id/grade_end10"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center"
-                        android:text="0.0"
-                        android:textColor="#262626"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

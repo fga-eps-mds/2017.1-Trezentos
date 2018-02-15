@@ -69,11 +69,10 @@
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
 
-
         android:contentDescription="@string/criar_sala"
         android:onClick="onClickCreate"
         android:src="@drawable/ic_add_black"
-        />
+        app:backgroundTint="#262626"        />
 
     <ProgressBar
         android:id="@+id/progressBar"

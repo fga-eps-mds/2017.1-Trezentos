@@ -31,7 +31,7 @@
             android:id="@+id/tab_layout"
             android:background="#424242"
             app:tabSelectedTextColor="#fff"
-            app:tabIndicatorColor="#bababa"
+            app:tabIndicatorColor="#fff"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
             <android.support.design.widget.TabItem

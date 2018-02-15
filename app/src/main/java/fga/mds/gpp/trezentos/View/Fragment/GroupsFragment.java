@@ -254,7 +254,7 @@ public class GroupsFragment  extends Fragment implements RecyclerViewOnClickList
             super(view);
             groupTitle = (TextView) view.findViewById(R.id.group_number);
             helpers = (TextView) view.findViewById(R.id.helpers1);
-            helped = (TextView) view.findViewById(R.id.helped1);
+            //helped = (TextView) view.findViewById(R.id.helped1);
         }
     }
 
