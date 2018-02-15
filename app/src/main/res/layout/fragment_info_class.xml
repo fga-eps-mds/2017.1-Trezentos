@@ -38,7 +38,7 @@
 
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:orientation="horizontal">
@@ -52,12 +52,13 @@
                                     android:id="@+id/text_view_class_name"
                                     android:textStyle="bold"
                                     android:layout_marginTop="10dp"
-                                    android:textSize="20dp"
-                                    android:hint="Nome da Sala:"
+                                    android:textSize="17dp"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:text="NOME DA SALA"
                                     android:layout_marginLeft="20dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textColorHint="@color/colorPrimaryDark" />
+                                     />
 
                                 <TextView
                                     android:id="@+id/text_view_class_name_x"
@@ -66,8 +67,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textStyle="bold"
-                                    android:textSize="18dp"
-                                    android:hint="nome da sala X"
+                                    android:textSize="15dp"
+                                    android:text="nome da sala"
                                     android:maxLines="1"
                                     android:ellipsize="end"
                                     android:textColor="#000"/>
@@ -75,7 +76,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="15dp">
@@ -88,8 +89,8 @@
                                 <TextView
                                     android:id="@+id/text_view_institution"
                                     android:textStyle="bold"
-                                    android:textSize="20dp"
-                                    android:hint="Instituição:"
+                                    android:textSize="17dp"
+                                    android:text="INSTITUIÇÃO"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginLeft="20dp"
                                     android:layout_width="match_parent"
@@ -103,8 +104,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textStyle="bold"
-                                    android:textSize="18dp"
-                                    android:hint="instituição x"
+                                    android:textSize="15dp"
+                                    android:text="instituição"
                                     android:maxLines="1"
                                     android:ellipsize="end"
                                     android:textColor="#000"/>
@@ -112,7 +113,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="15dp">
@@ -125,8 +126,8 @@
                                 <TextView
                                     android:id="@+id/text_view_class_password"
                                     android:textStyle="bold"
-                                    android:textSize="20dp"
-                                    android:hint="Senha Sala:"
+                                    android:textSize="17dp"
+                                    android:text="SENHA"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginLeft="20dp"
                                     android:layout_width="match_parent"
@@ -139,17 +140,18 @@
                                     android:layout_marginLeft="20dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textSize="18dp"
-                                    android:hint="******"
+                                    android:textSize="15dp"
+                                    android:text="******"
                                     android:textStyle="bold"
                                     android:maxLines="1"
                                     android:ellipsize="end"
-                                    android:textColorHint="#000"/>
+                                    android:textColor="#000"/>
+
                             </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="15dp">
@@ -164,11 +166,11 @@
                                     android:layout_marginTop="10dp"
                                     android:layout_marginLeft="20dp"
                                     android:layout_width="match_parent"
-                                    android:textSize="20dp"
+                                    android:textSize="17dp"
                                     android:textStyle="bold"
-                                    android:hint="Nota de Corte:"
+                                    android:text="NOTA DE CORTE"
                                     android:layout_height="wrap_content"
-                                    android:textColorHint="@color/colorPrimaryDark"/>
+                                    android:textColor="@color/colorPrimaryDark"/>
 
                                 <TextView
                                     android:id="@+id/text_view_cut_grade_x"
@@ -176,8 +178,8 @@
                                     android:layout_marginLeft="20dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textSize="18dp"
-                                    android:hint="Nota de Corte:"
+                                    android:textSize="15dp"
+                                    android:text="nota de corte"
                                     android:textStyle="bold"
                                     android:maxLines="1"
                                     android:ellipsize="end"
@@ -186,7 +188,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="15dp">
@@ -199,19 +201,19 @@
                                 <TextView
                                     android:id="@+id/text_view_size_groups"
                                     android:layout_marginTop="10dp"
-                                    android:textSize="20dp"
-                                    android:hint="Tamanho dos Grupos:"
+                                    android:textSize="17dp"
+                                    android:text="TAMANHO DOS GRUPOS"
                                     android:layout_marginLeft="20dp"
                                     android:textStyle="bold"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textColorHint="@color/colorPrimaryDark"/>
+                                    android:textColor="@color/colorPrimaryDark"/>
 
                                 <TextView
                                     android:id="@+id/text_view_size_groups_x"
                                     android:layout_marginTop="10dp"
-                                    android:textSize="18dp"
-                                    android:hint="tamanho dos grupos x"
+                                    android:textSize="15dp"
+                                    android:text="tamanho dos grupos"
                                     android:layout_marginLeft="20dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -223,7 +225,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="15dp">
@@ -238,11 +240,11 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:hint="Acréscimo:"
+                                    android:text="ACRÉCIMO"
                                     android:layout_marginLeft="20dp"
                                     android:textStyle="bold"
-                                    android:textSize="20dp"
-                                    android:textColorHint="@color/colorPrimaryDark"/>
+                                    android:textSize="17dp"
+                                    android:textColor="@color/colorPrimaryDark"/>
 
                                 <TextView
                                     android:id="@+id/text_view_addition_x"
@@ -250,9 +252,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginLeft="20dp"
-                                    android:hint="Acréscimo:"
+                                    android:text="acréscimo"
                                     android:textStyle="bold"
-                                    android:textSize="18dp"
+                                    android:textSize="15dp"
                                     android:textColor="#000"/>
                             </LinearLayout>
                         </LinearLayout>

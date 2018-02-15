@@ -11,12 +11,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,6 +41,9 @@ public class StudentsFragment extends Fragment {
     public ArrayList<String> students = new ArrayList<>();
     private UserClass userClass;
     private Exam userExam;
+
+    public View view;
+
     private static HashMap<String, Double> mapEmailAndGrade = new HashMap<>();
 
     public StudentsFragment() {
@@ -56,6 +62,8 @@ public class StudentsFragment extends Fragment {
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
 
+
+
         //ArrayList<String> array = null;
         students.add("arthurbdiniz@gmail.com");
         students.add("arthurbdiniz@gmail.com");
@@ -65,7 +73,9 @@ public class StudentsFragment extends Fragment {
         //populateMapValues(students); //clear map and populates it
         //arrangeMap(students);//creates a new array of students that are enrolled at this class
 
-        View view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
+
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerStudents);
         recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext()));
 
@@ -148,6 +158,9 @@ public class StudentsFragment extends Fragment {
         final LinearLayout gradeLayout;
         final LinearLayout secondGradeLayout;
 
+        final ImageButton imageButtonMore;
+
+
         public ViewHolder(View view) {
             super(view);
             userAccountName = view.findViewById(student_name);
@@ -157,14 +170,20 @@ public class StudentsFragment extends Fragment {
             gradeTextView = view.findViewById(R.id.text_view_grade);
             secondGradeTextView = view.findViewById(R.id.text_view_second_grade);
 
+            imageButtonMore = view.findViewById(R.id.more_options);
+
             gradeLayout.setOnClickListener(this);
             secondGradeLayout.setOnClickListener(this);
+            imageButtonMore.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-//            switch (v.getId()) {
-//
+            switch (v.getId()) {
+                case R.id.more_options:
+                    showPopup(view);
+                    break;
+
 //                case R.id.gradeLayout:
 //                    showGradePicker(1);
 //                    break;
@@ -172,7 +191,13 @@ public class StudentsFragment extends Fragment {
 //                case R.id.second_grade_layout:
 //                    showGradePicker(2);
 //                    break;
-//            }
+            }
+        }
+        public void showPopup(View v) {
+            PopupMenu popup = new PopupMenu(getContext(), v);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.menu_student, popup.getMenu());
+            popup.show();
         }
 
         @Override
