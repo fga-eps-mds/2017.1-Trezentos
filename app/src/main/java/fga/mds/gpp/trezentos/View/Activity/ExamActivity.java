@@ -80,8 +80,8 @@ public class ExamActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new StudentsFragment(), "STUDENTS");
-        adapter.addFragment(new GroupsFragment(), "GROUPS");
+        adapter.addFragment(new StudentsFragment(), "ESTUDANTES");
+        adapter.addFragment(new GroupsFragment(), "GRUPOS");
         viewPager.setAdapter(adapter);
     }
 

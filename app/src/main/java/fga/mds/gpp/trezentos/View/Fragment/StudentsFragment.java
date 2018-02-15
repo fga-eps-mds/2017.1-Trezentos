@@ -28,13 +28,14 @@ import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Activity.ExamActivity;
 
 import static fga.mds.gpp.trezentos.R.id.gradeLayout;
+import static fga.mds.gpp.trezentos.R.id.student_email;
 import static fga.mds.gpp.trezentos.R.id.student_name;
 import static fga.mds.gpp.trezentos.R.id.text_view_grade;
 
 
 public class StudentsFragment extends Fragment {
 
-    private ArrayList<String> students;
+    public ArrayList<String> students = new ArrayList<>();
     private UserClass userClass;
     private Exam userExam;
     private static HashMap<String, Double> mapEmailAndGrade = new HashMap<>();
@@ -54,16 +55,19 @@ public class StudentsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
-        userExam = (Exam) intent.getSerializableExtra("Exam");
+
         //ArrayList<String> array = null;
-        //students.add("arthurbdiniz");
+        students.add("arthurbdiniz@gmail.com");
+        students.add("arthurbdiniz@gmail.com");
+        students.add("arthurbdiniz@gmail.com");
+
         //students = array; // userClass.getStudents();
         //populateMapValues(students); //clear map and populates it
         //arrangeMap(students);//creates a new array of students that are enrolled at this class
 
         View view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
         RecyclerView recyclerView = view.findViewById(R.id.recyclerStudents);
-        recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext(), recyclerView));
+        recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext()));
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -73,37 +77,35 @@ public class StudentsFragment extends Fragment {
     }
 
     private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
-        private final ArrayList<String> userAccounts;
+        public  ArrayList<String> userAccounts;
         private Context context;
-        private RecyclerView recyclerView;
         private StudentsFragment.ViewHolder holder;
 
 
-        public AdapterStudents(ArrayList<String> userAccounts, Context context, RecyclerView recyclerView) {
+        public AdapterStudents(ArrayList<String> userAccounts, Context context) {
             this.userAccounts = userAccounts;
             this.context = context;
-            this.recyclerView = recyclerView;
+
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            Exam exam = new Exam();
-
-            exam.getFirstGrades();
+//            Exam exam = new Exam();
+//
+//            exam.getFirstGrades();
 
             View view = LayoutInflater.from(context)
                     .inflate(R.layout.student_item, parent, false);
 
-            if(!(getActivity() instanceof ExamActivity)){
-
-                view.findViewById(gradeLayout).setVisibility(View.GONE);
-                view.findViewById(text_view_grade).setVisibility(View.GONE);
-            }else{
-                // do nothing
-            }
-            StudentsFragment.ViewHolder holder =
-                    new StudentsFragment.ViewHolder(view);
+//            if(!(getActivity() instanceof ExamActivity)){
+//
+//                view.findViewById(gradeLayout).setVisibility(View.GONE);
+//                view.findViewById(text_view_grade).setVisibility(View.GONE);
+//            }else{
+//                // do nothing
+//            }
+            StudentsFragment.ViewHolder holder = new StudentsFragment.ViewHolder(view);
             view.setOnClickListener(this);
 
             return holder;
@@ -115,13 +117,13 @@ public class StudentsFragment extends Fragment {
             holder = (StudentsFragment.ViewHolder) viewHolder;
 
             String userAccount = userAccounts.get(position);
-            holder.userAccountName.setText(userAccount);
+            holder.userAccountEmail.setText(userAccount);
         }
 
         @Override
         public int getItemCount() {
-            return 0;
-            //userAccounts.size()
+            return userAccounts.size();
+
         }
 
         @Override
@@ -140,6 +142,7 @@ public class StudentsFragment extends Fragment {
             implements View.OnClickListener, NumberPicker.OnValueChangeListener {
 
         final TextView userAccountName;
+        final TextView userAccountEmail;
         final TextView gradeTextView;
         final TextView secondGradeTextView;
         final LinearLayout gradeLayout;
@@ -147,13 +150,12 @@ public class StudentsFragment extends Fragment {
 
         public ViewHolder(View view) {
             super(view);
-            userAccountName = (TextView) view.findViewById(student_name);
-            gradeLayout = (LinearLayout) view.findViewById(R.id.gradeLayout);
-            secondGradeLayout = (LinearLayout) view
-                    .findViewById(R.id.second_grade_layout);
-            gradeTextView = (TextView) view.findViewById(R.id.text_view_grade);
-            secondGradeTextView = (TextView) view
-                    .findViewById(R.id.text_view_second_grade);
+            userAccountName = view.findViewById(student_name);
+            userAccountEmail = view.findViewById(student_email);
+            gradeLayout = view.findViewById(R.id.gradeLayout);
+            secondGradeLayout = view.findViewById(R.id.second_grade_layout);
+            gradeTextView = view.findViewById(R.id.text_view_grade);
+            secondGradeTextView = view.findViewById(R.id.text_view_second_grade);
 
             gradeLayout.setOnClickListener(this);
             secondGradeLayout.setOnClickListener(this);
@@ -161,16 +163,16 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-
-                case R.id.gradeLayout:
-                    showGradePicker(1);
-                    break;
-
-                case R.id.second_grade_layout:
-                    showGradePicker(2);
-                    break;
-            }
+//            switch (v.getId()) {
+//
+//                case R.id.gradeLayout:
+//                    showGradePicker(1);
+//                    break;
+//
+//                case R.id.second_grade_layout:
+//                    showGradePicker(2);
+//                    break;
+//            }
         }
 
         @Override
@@ -183,12 +185,12 @@ public class StudentsFragment extends Fragment {
             d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             d.setContentView(R.layout.dialog);
 
-            final NumberPicker np1 = (NumberPicker) d.findViewById(R.id.numberPicker1);
-            final NumberPicker np2 = (NumberPicker) d.findViewById(R.id.numberPicker2);
+            final NumberPicker np1 = d.findViewById(R.id.numberPicker1);
+            final NumberPicker np2 = d.findViewById(R.id.numberPicker2);
 
-            Button b1 = (Button) d.findViewById(R.id.button1);
-            Button b2 = (Button) d.findViewById(R.id.button2);
-            Button buttonOK300 = (Button) d.findViewById(R.id.button1);
+            Button b1 = d.findViewById(R.id.button1);
+            Button b2 = d.findViewById(R.id.button2);
+            Button buttonOK300 = d.findViewById(R.id.button1);
 
             np1.setMinValue(0);  // min value 0
             np1.setMaxValue(10); // max value 100

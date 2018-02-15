@@ -28,16 +28,16 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
+            android:background="#424242"
+            app:tabSelectedTextColor="#fff"
+            app:tabIndicatorColor="#bababa"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
             <android.support.design.widget.TabItem
-
-                android:icon="@drawable/ic_tests"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"/>
 
             <android.support.design.widget.TabItem
-                android:icon="@drawable/ic_students"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"/>
 

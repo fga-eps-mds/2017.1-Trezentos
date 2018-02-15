@@ -55,8 +55,11 @@ public class ExamAdapter extends RecyclerView.Adapter implements View.OnClickLis
 
     @Override
     public int getItemCount() {
-        //return 0;
-        return exams.size();
+        if (exams == null){
+            return 0;
+        }else{
+            return exams.size();
+        }
     }
 
     @Override
