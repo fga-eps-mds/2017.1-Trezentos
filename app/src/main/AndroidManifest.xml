@@ -37,7 +37,6 @@
         <activity android:name=".View.Activity.SignUpActivity" />
         <activity android:name=".View.AboutOnLogin" />
         <activity android:name=".View.Activity.ClassActivity" />
-        <activity android:name=".View.Activity.EditClassActivity" />
         <activity android:name=".View.Activity.CreateClassActivity" />
         <activity android:name=".View.Activity.CreateExamActivity" />
         <activity android:name=".View.Activity.SearchActivity" />
