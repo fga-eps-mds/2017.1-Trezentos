@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,6 +50,7 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Stri
     private String userId;
     private Application application;
     private ExploreFragment exploreFragment;
+    private SwipeRefreshLayout swipeLayout;
 
 
     private RecyclerView recyclerView;
@@ -56,13 +58,15 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Stri
     public ServerOperationExploreFragment(Application application,
                                           ProgressBar progressBar,
                                           LinearLayout noInternetLayout,
-                                          ExploreFragment exploreFragment){
+                                          ExploreFragment exploreFragment,
+                                          SwipeRefreshLayout swipeLayout){
         this.application = application;
         this.progressBar = progressBar;
         this.noInternetLayout = noInternetLayout;
-
+        this.swipeLayout = swipeLayout;
         this.exploreFragment = exploreFragment;
     }
+
 
     @Override
     protected void onPreExecute() {
@@ -99,7 +103,7 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Stri
     @Override
     protected void onPostExecute(String result) {
         progressBar.setVisibility(View.GONE);
-
+        swipeLayout.setRefreshing(false);
         if(result.equals("true")){
                 if (exploreFragment.getActivity() != null) {
 

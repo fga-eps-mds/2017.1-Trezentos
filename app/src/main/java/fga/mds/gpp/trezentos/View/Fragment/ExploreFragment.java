@@ -70,10 +70,12 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onRefresh() {
                 new ServerOperationExploreFragment(getActivity().getApplication(),
-                        progressBar, noInternetLayout,
-                        fragment)
-                        .execute();
-                swipeLayout.setRefreshing(false);
+                                                    progressBar,
+                                                    noInternetLayout,
+                                                    fragment,
+                                                    swipeLayout)
+                                                    .execute();
+
             }
 
 
@@ -92,9 +94,11 @@ public class ExploreFragment extends Fragment {
     public void initClasses() {
         progressBar.setVisibility(View.VISIBLE);
         new ServerOperationExploreFragment(getActivity().getApplication(),
-                progressBar, noInternetLayout,
-                fragment)
-                .execute();
+                                            progressBar,
+                                            noInternetLayout,
+                                            fragment,
+                                            swipeLayout)
+                                            .execute();
     }
 
     private void goLoginScreen(View view) {

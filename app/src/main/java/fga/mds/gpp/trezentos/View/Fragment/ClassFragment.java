@@ -69,10 +69,10 @@ public class ClassFragment extends Fragment {
             @Override
             public void onRefresh() {
                 new ServerOperationClassFragment(getActivity().getApplication(),
-                        progressBar, noInternetLayout,
-                        fragment)
-                        .execute();
-                swipeLayout.setRefreshing(false);
+                                                    progressBar, noInternetLayout,
+                                                    fragment,
+                                                    swipeLayout)
+                                                    .execute();
             }
 
 
@@ -99,9 +99,10 @@ public class ClassFragment extends Fragment {
     public void initClasses(){
         progressBar.setVisibility(View.VISIBLE);
         new ServerOperationClassFragment(getActivity().getApplication(),
-                progressBar, noInternetLayout,
-                fragment)
-                .execute();
+                                            progressBar, noInternetLayout,
+                                            fragment,
+                                            swipeLayout)
+                                            .execute();
     }
 
     public void initFloatingActionButton(View view){
