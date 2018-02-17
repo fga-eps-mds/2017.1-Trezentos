@@ -48,28 +48,28 @@ public class GroupControllerUnitTest {
         return map;
     }
 
-    @Test
-    public void shouldGetGroups(){
-        HashMap<String, Integer> groups;
-        String classOwnerEmail = "teste@gmail.com";
-        String examName = "P1";
-        String userClassName = "testeteste";
-
-        groups = GroupController.getGroups(examName, userClassName, classOwnerEmail);
-
-        boolean isValid = false;
-
-        if(groups.containsKey("teste@email.com") ||
-                groups.containsKey("testandosedamerda@email.com") ||
-                groups.containsKey("agora@da.com") ||
-                groups.containsKey("gui.988@hotmail.com")){
-
-            isValid = true;
-        }
-
-        Assert.assertEquals(isValid, true);
-
-    }
+//    @Test
+//    public void shouldGetGroups(){
+//        HashMap<String, Integer> groups;
+//        String classOwnerEmail = "teste@gmail.com";
+//        String examName = "P1";
+//        String userClassName = "testeteste";
+//
+//        groups = GroupController.getGroups(examName, userClassName, classOwnerEmail);
+//
+//        boolean isValid = false;
+//
+//        if(groups.containsKey("teste@email.com") ||
+//                groups.containsKey("testandosedamerda@email.com") ||
+//                groups.containsKey("agora@da.com") ||
+//                groups.containsKey("gui.988@hotmail.com")){
+//
+//            isValid = true;
+//        }
+//
+//        Assert.assertEquals(isValid, true);
+//
+//    }
 
     @Test
     public void shouldGetFirstGrades(){
