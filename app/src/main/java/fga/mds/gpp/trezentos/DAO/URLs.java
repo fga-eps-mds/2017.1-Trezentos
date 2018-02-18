@@ -13,7 +13,11 @@ public class URLs {
     public static final String  URL_CLASS_FROM_PERSON = ROOT_URL + "class/class_from_person.php"; //GET
     public static final String  URL_ALL_CLASS_AVALIABLE = ROOT_URL + "class/all_class.php"; //GET
     public static final String  URL_INSERT_STUDENT_CLASS = ROOT_URL + "class/enter_class.php"; //POST
-    public static final String  URL_CREATE_CLASS = ROOT_URL + "class/insert_class.php"; //POST
+    public static final String  URL_CREATE_CLASS = ROOT_URL + "class/create_class.php"; //POST
+
+    public static final String  URL_CREATE_EXAM = ROOT_URL + "exam/create_exam.php"; //POST
+    public static final String  URL_GET_EXAMS_FROM_USER = ROOT_URL + "exam/show_exam.php"; //POST
+
 
 
 }

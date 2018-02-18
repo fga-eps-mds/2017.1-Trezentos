@@ -1,86 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.CreateClassActivity"
-    android:id="@+id/relativeLayout">
+    android:background="#ffbd19"
+    tools:context="fga.mds.gpp.trezentos.View.Activity.CreateClassActivity">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_exam"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#262626"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:subtitleTextColor="#FFF"
+        app:titleTextColor="#FFF">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <ImageView
+    </android.support.v7.widget.Toolbar>
+            <!-- Grade -->
+            <android.support.v7.widget.CardView
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"/>
-
-            <!--Inputs-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="400dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="300dp"
-                    android:gravity="center">
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="true"/>
 
-                    <EditText
-                        android:id="@+id/exam_name"
-                        android:textSize="25dp"
-                        android:hint="Nome do teste"
-                        android:inputType="text"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <!-- Exam Name -->
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="15dp"/>
+                        android:layout_gravity="center"
+                        android:layout_marginTop="100dp">
+
+                        <EditText
+
+                            android:id="@+id/exam_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Nome do teste"
+
+                            android:inputType="text"
+                            android:paddingLeft="10dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:layout_marginTop="3dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_sobre"/>
+
+                        <TextView
+                            android:layout_marginTop="30dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=" Este campo é voltado para informar o nome da prova/teste.  "/>
+
+
+                    </RelativeLayout>
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center">
+            </android.support.v7.widget.CardView>
 
-                    <Button
-                        android:id="@+id/ok_create_button"
-                        android:background="@drawable/shape_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:text="@string/save_exam"
-                        android:textColor="@color/cardview_light_background" />
-                    <Button
-                        android:id="@+id/return_exam_button"
-                        android:background="@drawable/shape_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:text="@string/return_exam"
-                        android:textColor="@color/cardview_light_background" />
-                </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+
+
+
 </RelativeLayout>

@@ -24,7 +24,7 @@
 //import fga.mds.gpp.trezentos.Exception.UserException;
 //import fga.mds.gpp.trezentos.Model.UserClass;
 //import fga.mds.gpp.trezentos.View.ClassActivity;
-//import fga.mds.gpp.trezentos.View.LoginActivity;
+//import fga.mds.gpp.trezentos.View.SignInActivity;
 //import fga.mds.gpp.trezentos.View.MainActivity;
 //
 //import static junit.framework.Assert.assertEquals;

@@ -96,7 +96,7 @@
     <string name="about_site">Site</string>
     <string name="about_metodo_trezentos">Método Trezentos</string>
     <string name="about_trezentos">Trezentos</string>
-    <string name="about_tedx">TEDx Universidade de Brasilia</string>
+    <string name="about_tedx">TEDx Universidade de Brasília</string>
     <string name="about_metodologia">Metodologia Trezentos</string>
     <string name="about_entenda_metodo">Entenda o método em 3 minutos</string>
     <string name="about_para_professores">Trezentos para professores</string>
@@ -129,8 +129,8 @@
     <string name="msg_null_name_userClass_error_message">O nome não pode ser vazio</string>
     <string name="msg_null_classOwnerEmail_error_message">O email não pode estar vazio</string>
     <string name="msg_len_name_exam_error">O nome da prova deve ter entre 2 e 15 caracteres.</string>
-    <string name="helpers">Ajudantes:</string>
-    <string name="helped">Ajudados:</string>
+    <string name="helpers">Ajudantes</string>
+    <string name="helped">Ajudados</string>
     <string name="exit_text">Sair</string>
     <string name="profile_email">Profile Email</string>
     <string name="profile_name">Profile Name</string>

@@ -6,10 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.ClassActivity"
+    android:background="#ffbd19"
+    tools:context="fga.mds.gpp.trezentos.View.Activity.ClassActivity"
     android:orientation="vertical">
-
-
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,10 +19,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="#262626"
 
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
@@ -35,18 +36,21 @@
             android:id="@+id/tab_layout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:background="@drawable/tab_selector"
+            android:background="#424242"
+            app:tabSelectedTextColor="#fff"
+            app:tabIndicatorColor="#fff"
+
             >
 
             <android.support.design.widget.TabItem
                 android:id="@+id/class_exam"
-                android:icon="@drawable/ic_tests"
+
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"/>
 
             <android.support.design.widget.TabItem
                 android:id="@+id/student_exam"
-                android:icon="@drawable/ic_students"
+
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"/>
 
@@ -55,20 +59,6 @@
 
     </android.support.v4.view.ViewPager>
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floating_btn"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-
-
-        android:contentDescription="@string/criar_sala"
-        android:onClick="onClickCreate"
-        android:src="@drawable/ic_add_black"
-       />
 
 
 

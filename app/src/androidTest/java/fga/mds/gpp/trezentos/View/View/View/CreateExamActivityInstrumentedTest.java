@@ -1,13 +1,7 @@
 package fga.mds.gpp.trezentos.View.View.View;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.test.rule.ActivityTestRule;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.ListView;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,11 +11,9 @@ import org.junit.runners.JUnit4;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
-import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
-import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.MainActivity;
+import fga.mds.gpp.trezentos.View.Activity.MainActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
@@ -32,7 +24,6 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static fga.mds.gpp.trezentos.R.id.floating_btn;
-import static fga.mds.gpp.trezentos.R.id.frame;
 import static junit.framework.Assert.assertNull;
 import static org.hamcrest.Matchers.anything;
 import static org.junit.Assert.assertNotNull;

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.ShowStudentGroupFragment"
+    tools:context="fga.mds.gpp.trezentos.View.Fragment.ShowStudentGroupFragment"
     android:background="#ffbd19">
 
     <ProgressBar

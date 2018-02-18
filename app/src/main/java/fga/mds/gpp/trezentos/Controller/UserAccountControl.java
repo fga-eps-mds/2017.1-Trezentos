@@ -253,8 +253,18 @@ public class UserAccountControl {
 
         session.edit()
                 .putBoolean("IsUserLogged", false)
-                .putString("userName", "")
+                .putString("userFirstName", "")
+                .putString("userLastName", "")
+                .putString("userEmail", "")
+                .putString("userTelephoneDDI", "")
+                .putString("userTelephoneDDD", "")
+                .putString("userTelephoneNumber", "")
                 .apply();
+    }
+
+    public boolean isLoggedUser(){
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+        return session.getBoolean("IsUserLogged", true);
     }
     //End Common
 

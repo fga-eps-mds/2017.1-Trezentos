@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fga.mds.gpp.trezentos.View.ExploreFragment">
+    tools:context="fga.mds.gpp.trezentos.View.Fragment.ExploreFragment">
 
     <LinearLayout
         android:id="@+id/no_internet_layout"
@@ -40,16 +40,20 @@
 
     </LinearLayout>
 
-
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_explore"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:visibility="gone"
-        />
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_explore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:clickable="true"
+            android:visibility="gone"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"

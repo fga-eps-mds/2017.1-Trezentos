@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffbd19"
-    tools:context="fga.mds.gpp.trezentos.View.MainActivity">
+    tools:context="fga.mds.gpp.trezentos.View.Activity.MainActivity">
 
 
 
