@@ -28,19 +28,21 @@ import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Fragment.ClassFragment;
+import fga.mds.gpp.trezentos.View.Fragment.ExploreFragment;
 import fga.mds.gpp.trezentos.View.ViewHolder.ClassViewHolder;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class ServerOperationClassFragment extends AsyncTask<String, Void, String> {
+public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayList<UserClass>> {
 
     public ArrayList<UserClass> userClasses = null;
-    private  String userEmail;
     private ClassFragmentAdapter classFragmentAdapter;
     public ProgressBar progressBar;
     public UserClassControl userClassControl;
     private LinearLayout noInternetLayout;
-    private String email;
+    private boolean isInit;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private String userId;
     private Application application;
     private ClassFragment classFragment;
@@ -48,17 +50,20 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
 
     private RecyclerView recyclerView;
 
-    public ServerOperationClassFragment(Application application,
+    public ServerOperationClassFragment(boolean isInit,
+                                        SwipeRefreshLayout swipeRefreshLayout,
                                         ProgressBar progressBar,
-                                        LinearLayout noInternetLayout,
+                                        RecyclerView recyclerView,
                                         ClassFragment classFragment,
-                                        SwipeRefreshLayout swipeLayout){
-        this.application = application;
-        this.progressBar = progressBar;
-        this.noInternetLayout = noInternetLayout;
-        this.swipeLayout = swipeLayout;
+                                        LinearLayout noInternetLayout){
 
+
+        this.noInternetLayout = noInternetLayout;
+        this.isInit = isInit;
+        this.swipeRefreshLayout = swipeRefreshLayout;
+        this.progressBar = progressBar;
         this.classFragment = classFragment;
+        this.recyclerView = recyclerView;
 
     }
 
@@ -70,68 +75,71 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, String
                 UserClassControl.getInstance(getApplicationContext());
         SharedPreferences session = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
-        email = session.getString("userEmail","");
         userId = session.getString("userId","");
+
+        if(isInit){
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
-    protected void onProgressUpdate(Void... values) {}
-
-    @Override
-    protected String doInBackground(String... params) {
+    protected ArrayList<UserClass> doInBackground(String... params) {
 
         if(isInternetAvailable() ) { //If internet is ok
 
             try {
-                userClasses = userClassControl.getClasses(userId);
+                return userClassControl.getClasses(userId);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-
-            return "true";
-        }else{
-            return null;
         }
+        return null;
 
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        progressBar.setVisibility(View.GONE);
-        swipeLayout.setRefreshing(false);
+    protected void onPostExecute(ArrayList<UserClass> result) {
+        classFragment.setUserClasses(result);
+        userClasses = result;
 
-        if(result.equals("true")){
-                if (classFragment.getActivity() != null) {
-                    recyclerView = classFragment.getActivity().findViewById(R.id.recycler_class);
-                    if (userClasses == null) {
-                        //TODO layout to create class
-                    }else {
-                        recyclerView.setVisibility(View.VISIBLE);
-
-
-
-                        classFragment.classFragmentAdapter = new ClassFragmentAdapter(userClasses,
-                                classFragment.getContext());
-
-                        classFragmentAdapter = classFragment.classFragmentAdapter;
-
-
-                        classFragmentAdapter.setOnItemClickListener(callJoinClass());
-
-                        RecyclerView.LayoutManager layout = new LinearLayoutManager
-                                (application, LinearLayoutManager.VERTICAL, false);
-                        recyclerView.setLayoutManager(layout);
-
-                        recyclerView.setAdapter(classFragmentAdapter);
-                    }
-                }
-
+        if(isInit){
+            progressBar.setVisibility(View.GONE);
         }else{
-
-            noInternetLayout.setVisibility(View.VISIBLE);
-
+            swipeRefreshLayout.setRefreshing(false);
         }
+        recyclerView.setVisibility(View.VISIBLE);
+
+        classFragmentAdapter = new ClassFragmentAdapter(result, classFragment.getContext());
+
+
+        classFragmentAdapter.setOnItemClickListener(callJoinClass());
+
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(classFragment.getContext(),
+                LinearLayoutManager.VERTICAL,
+                false);
+        recyclerView.setLayoutManager(layout);
+        recyclerView.setAdapter(classFragmentAdapter);
+
+
+//        noInternetLayout.setVisibility(View.VISIBLE);
+        super.onPostExecute(result);
+
+
+    }
+
+    public void setLayout(){
+        recyclerView.setVisibility(View.VISIBLE);
+        userClasses = classFragment.getUserClasses();
+        classFragmentAdapter = new ClassFragmentAdapter(classFragment.getUserClasses(), classFragment.getContext());
+
+        classFragmentAdapter.setOnItemClickListener(callJoinClass());
+
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(classFragment.getContext(),
+                LinearLayoutManager.VERTICAL,
+                false);
+        recyclerView.setLayoutManager(layout);
+        recyclerView.setAdapter(classFragmentAdapter);
     }
 
     private ClassViewHolder.OnItemClickListener callJoinClass() {
