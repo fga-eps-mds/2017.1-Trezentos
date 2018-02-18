@@ -133,8 +133,9 @@ public class UserClassControl {
         String serverResponse = "404";
         serverResponse = new GetDao(returnAllClassesUrlWithParameters).get();
 
-        Log.d("RESPONSE", serverResponse);
+        Log.d("RESPONSE EXPLORE", serverResponse);
 
+        //serverResponse = serverOperationExploreFragment.execute().get();
 
         JSONObject object = new JSONObject(serverResponse);
         String erro = object.getString("error");
@@ -144,8 +145,6 @@ public class UserClassControl {
 
         ArrayList<UserClass> userClasses = null;
         userClasses = getArrayList(classArrayJson);
-
-        Log.d("RESPONSE", String.valueOf(userClasses.size()));
 
         return userClasses;
     }

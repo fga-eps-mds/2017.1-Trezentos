@@ -2,6 +2,7 @@ package fga.mds.gpp.trezentos.View.ServerOperation;
 
 import android.app.Application;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -38,97 +40,120 @@ import fga.mds.gpp.trezentos.View.ViewHolder.ClassViewHolder;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class ServerOperationExploreFragment extends AsyncTask<String, Void, String> {
+public class ServerOperationExploreFragment extends AsyncTask<String, Void, ArrayList<UserClass>> {
 
-    public ArrayList<UserClass> userClasses = null;
-    private  String userEmail;
-    private ClassFragmentAdapter classFragmentAdapter;
-    public ProgressBar progressBar;
+
     public UserClassControl userClassControl;
-    private LinearLayout noInternetLayout;
-    private String email;
-    private String userId;
-    private Application application;
-    private ExploreFragment exploreFragment;
-    private SwipeRefreshLayout swipeLayout;
+    public ArrayList<UserClass> userClasses;
 
-
+    private boolean isInit;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ClassFragmentAdapter classFragmentAdapter;
     private RecyclerView recyclerView;
+    private ExploreFragment exploreFragment;
 
-    public ServerOperationExploreFragment(Application application,
+    public ServerOperationExploreFragment(boolean isInit,
+                                          SwipeRefreshLayout swipeRefreshLayout,
                                           ProgressBar progressBar,
-                                          LinearLayout noInternetLayout,
-                                          ExploreFragment exploreFragment,
-                                          SwipeRefreshLayout swipeLayout){
-        this.application = application;
+                                          RecyclerView recyclerView,
+                                          ExploreFragment exploreFragment){
+        this.isInit = isInit;
+        this.swipeRefreshLayout = swipeRefreshLayout;
         this.progressBar = progressBar;
-        this.noInternetLayout = noInternetLayout;
-        this.swipeLayout = swipeLayout;
         this.exploreFragment = exploreFragment;
-    }
+        this.recyclerView = recyclerView;
 
+        userClassControl = UserClassControl.getInstance(getApplicationContext());
+
+    }
 
     @Override
     protected void onPreExecute() {
 
-        userClassControl =
-                UserClassControl.getInstance(getApplicationContext());
-        SharedPreferences session = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        email = session.getString("userEmail","");
-        userId = session.getString("userId","");
+        if(isInit){
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        super.onPreExecute();
     }
 
     @Override
-    protected void onProgressUpdate(Void... values) {}
-
-    @Override
-    protected String doInBackground(String... params) {
+    protected ArrayList<UserClass> doInBackground(String... strings) {
 
         if(isInternetAvailable() ) { //If internet is ok
 
             try {
-                userClasses = userClassControl.getExploreClasses();
+                return userClassControl.getExploreClasses();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            return "true";
         }else{
             return null;
         }
+        return null;
 
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        progressBar.setVisibility(View.GONE);
-        swipeLayout.setRefreshing(false);
-        if(result.equals("true")){
-                if (exploreFragment.getActivity() != null) {
+    protected void onPostExecute(ArrayList<UserClass> result) {
 
-                    recyclerView = (RecyclerView) exploreFragment.getActivity().findViewById(R.id.recycler_explore);
-                    recyclerView.setVisibility(View.VISIBLE);
+        exploreFragment.setUserClasses(result);
+        userClasses = result;
 
-
-                    classFragmentAdapter = new ClassFragmentAdapter(userClasses,
-                            exploreFragment.getContext());
-
-
-                    classFragmentAdapter.setOnItemClickListener(callJoinClass());
-
-                    RecyclerView.LayoutManager layout = new LinearLayoutManager
-                            (application, LinearLayoutManager.VERTICAL, false);
-                    recyclerView.setLayoutManager(layout);
-
-                    recyclerView.setAdapter(classFragmentAdapter);
-                }
-
+        if(isInit){
+            progressBar.setVisibility(View.GONE);
         }else{
-
-            noInternetLayout.setVisibility(View.VISIBLE);
-
+            swipeRefreshLayout.setRefreshing(false);
         }
+        recyclerView.setVisibility(View.VISIBLE);
+
+        classFragmentAdapter = new ClassFragmentAdapter(result, exploreFragment.getContext());
+
+
+        classFragmentAdapter.setOnItemClickListener(callJoinClass());
+
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(exploreFragment.getContext(),
+                                                                    LinearLayoutManager.VERTICAL,
+                                                                    false);
+        recyclerView.setLayoutManager(layout);
+        recyclerView.setAdapter(classFragmentAdapter);
+
+        super.onPostExecute(result);
+    }
+
+    public void setLayout(){
+        recyclerView.setVisibility(View.VISIBLE);
+        userClasses = exploreFragment.getUserClasses();
+        classFragmentAdapter = new ClassFragmentAdapter(exploreFragment.getUserClasses(), exploreFragment.getContext());
+
+        classFragmentAdapter.setOnItemClickListener(callJoinClass());
+
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(exploreFragment.getContext(),
+                LinearLayoutManager.VERTICAL,
+                false);
+        recyclerView.setLayoutManager(layout);
+        recyclerView.setAdapter(classFragmentAdapter);
+    }
+
+    public boolean isNetworkAvailable(Context context) {
+        final ConnectivityManager connectivityManager =
+            ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+
+        return connectivityManager.getActiveNetworkInfo() != null &&
+                connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    private boolean isInternetAvailable() {
+        try {
+            final InetAddress address = InetAddress.getByName("www.google.com");
+            if(!address.equals("")){
+                return true;
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private ClassViewHolder.OnItemClickListener callJoinClass() {
@@ -141,27 +166,22 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Stri
         };
     }
 
-
-
-
     private void showJoinClassFragment(final UserClass userClass) {
         // custom dialog
         final Dialog dialog = new Dialog(exploreFragment.getContext());
         dialog.setContentView(R.layout.dialog_class_password);
         dialog.setTitle("Title...");
 
-        TextView textTitle = (TextView) dialog.findViewById(R.id.text_title);
-        final TextView textViewClassPassword = (TextView) dialog.findViewById(R.id.class_passwort);
+        TextView textTitle = dialog.findViewById(R.id.text_title);
+        final TextView textViewClassPassword = dialog.findViewById(R.id.class_passwort);
         textTitle.setText(userClass.getClassName());
 
-        Button dialogButtonOk = (Button) dialog.findViewById(R.id.dialogButtonOK);
-        Button dialogButtonCancel = (Button) dialog.findViewById(R.id.dialogButtonCANCEL);
+        Button dialogButtonOk = dialog.findViewById(R.id.dialogButtonOK);
+        Button dialogButtonCancel = dialog.findViewById(R.id.dialogButtonCANCEL);
         // if button is clicked, close the custom dialog
         dialogButtonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 String classPassword = String.valueOf(textViewClassPassword.getText());
                 String classId = userClass.getIdClass();
                 SharedPreferences session = PreferenceManager
@@ -220,7 +240,7 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Stri
         dialog.show();
     }
 
-    public HashMap<String, String> getInsertStudentParams(String userId, String classId, String classPassword) {
+    private HashMap<String, String> getInsertStudentParams(String userId, String classId, String classPassword) {
 
         HashMap<String, String> params = new HashMap<>();
         params.put("idPerson", userId);
@@ -232,27 +252,5 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Stri
 
     }
 
-
-
-
-    public boolean isNetworkAvailable(Context context) {
-        final ConnectivityManager connectivityManager =
-            ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-
-        return connectivityManager.getActiveNetworkInfo() != null &&
-                connectivityManager.getActiveNetworkInfo().isConnected();
-    }
-
-    private boolean isInternetAvailable() {
-        try {
-            final InetAddress address = InetAddress.getByName("www.google.com");
-            if(!address.equals("")){
-                return true;
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
 }
