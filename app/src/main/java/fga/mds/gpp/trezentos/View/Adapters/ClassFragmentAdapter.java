@@ -51,8 +51,6 @@ public class ClassFragmentAdapter extends RecyclerView.Adapter implements View.O
         classViewHolder.date_creation.setText(userClass.getCreationDate());
     }
 
-
-
     @Override
     public long getItemId(int position) {
         return super.getItemId(position);

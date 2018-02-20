@@ -1,6 +1,7 @@
 package fga.mds.gpp.trezentos.View.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,84 +15,54 @@ import java.util.ArrayList;
 
 import fga.mds.gpp.trezentos.Model.About;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.ViewHolder.AboutViewHolder;
+import fga.mds.gpp.trezentos.View.ViewHolder.ClassViewHolder;
 
-public class AboutAdapter extends ArrayAdapter{
-    private int lastPosition = -1;
+public class AboutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
     Context mContext;
     ArrayList<About> dataSet;
-
-    private static class ViewHolder{
-        TextView title;
-        TextView subTitle;
-    }
+    private AboutViewHolder.OnItemClickListener listener;
 
     public AboutAdapter(ArrayList<About> data, Context context){
-        super(context, R.layout.about_item, data);
-
         this.dataSet = data;
         this.mContext = context;
     }
 
+    public void setOnItemClickListener(AboutViewHolder.OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
-        // PostDao the data item for this position
-        About about = (About) getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder;
-        // View lookup cache stored in tag
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.about_item, parent, false);
+        AboutViewHolder aboutViewHolder = new AboutViewHolder(view);
+        aboutViewHolder.setOnItemClickListener(listener);
 
-        View result;
+        return aboutViewHolder;
+    }
 
-        if(convertView == null){
-            viewHolder = new ViewHolder();
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        About about =  dataSet.get(position);
+        AboutViewHolder aboutViewHolder = (AboutViewHolder) holder;
 
-            convertView = inflateConvertView(parent);
-            viewHolder = initNewViewHolder(viewHolder, convertView);
+        aboutViewHolder.title.setText(about.getTitle());
+        aboutViewHolder.subTitle.setText(about.getSubTitle());
+        aboutViewHolder.image.setImageResource(about.getShowImage(position));
+    }
 
-            result = convertView;
-            convertView.setTag(viewHolder);
+    @Override
+    public int getItemCount() {
+        if(dataSet == null){
+            return 0;
         }else{
-            viewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
+            return dataSet.size();
         }
-
-        initAnimation(position, result);
-        setViewHolderInformation(viewHolder, about);
-
-        ImageView item_about = (ImageView) convertView.findViewById(R.id.item_about);
-        item_about.setImageResource(about.getShowImage(position));
-        // Return the completed view to render on screen
-        return convertView;
     }
 
-    public View inflateConvertView(ViewGroup parent){
+    @Override
+    public void onClick(View v) {
 
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View convertView = inflater.inflate(R.layout.about_item, parent, false);
-
-        return convertView;
-    }
-
-    private ViewHolder initNewViewHolder(ViewHolder viewHolder, View convertView){
-
-        viewHolder.title = (TextView) convertView.findViewById(R.id.title_about);
-        viewHolder.subTitle = (TextView) convertView.findViewById(R.id.description);
-
-        return viewHolder;
-    }
-
-    private ViewHolder setViewHolderInformation(ViewHolder viewHolder, About about){
-        viewHolder.title.setText(about.getTitle());
-        viewHolder.subTitle.setText(about.getSubTitle());
-
-        return viewHolder;
-    }
-
-    private void initAnimation(int position, View result){
-        int ordenation = (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top;
-        Animation animation = AnimationUtils.loadAnimation(mContext, ordenation);
-        result.startAnimation(animation);
-        lastPosition = position;
     }
 
 }

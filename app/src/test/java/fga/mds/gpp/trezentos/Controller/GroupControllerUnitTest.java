@@ -71,26 +71,26 @@ public class GroupControllerUnitTest {
 //
 //    }
 
-    @Test
-    public void shouldGetFirstGrades(){
-        HashMap<String, Double> grades;
-        String classOwnerEmail = "teste@gmail.com";
-        String examName = "P1";
-        String userClassName = "testeteste";
-
-        boolean isValid = false;
-
-        grades = GroupController.getFirstGrades(examName, userClassName, classOwnerEmail);
-
-        if(grades.containsKey("teste@email.com") ||
-                grades.containsKey("testandosedamerda@email.com") ||
-                grades.containsKey("agora@da.com") ||
-                grades.containsKey("gui.988@hotmail.com")){
-
-            isValid = true;
-        }
-
-        Assert.assertEquals(isValid, true);
-    }
+//    @Test
+//    public void shouldGetFirstGrades(){
+//        HashMap<String, Double> grades;
+//        String classOwnerEmail = "teste@gmail.com";
+//        String examName = "P1";
+//        String userClassName = "testeteste";
+//
+//        boolean isValid = false;
+//
+//        grades = GroupController.getFirstGrades(examName, userClassName, classOwnerEmail);
+//
+//        if(grades.containsKey("teste@email.com") ||
+//                grades.containsKey("testandosedamerda@email.com") ||
+//                grades.containsKey("agora@da.com") ||
+//                grades.containsKey("gui.988@hotmail.com")){
+//
+//            isValid = true;
+//        }
+//
+//        Assert.assertEquals(isValid, true);
+//    }
 
 }
