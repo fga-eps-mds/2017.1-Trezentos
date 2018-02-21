@@ -30,6 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.Activity.SignUpActivity" />
+        <activity android:name=".View.Activity.SignInActivity" />
         <activity android:name=".View.AboutOnLogin" />
         <activity android:name=".View.Activity.ClassActivity" />
         <activity android:name=".View.Activity.CreateClassActivity" />
