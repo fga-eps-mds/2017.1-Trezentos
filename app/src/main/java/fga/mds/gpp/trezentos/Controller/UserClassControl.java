@@ -23,6 +23,7 @@ import okhttp3.HttpUrl;
 
 import static fga.mds.gpp.trezentos.DAO.URLs.URL_ALL_CLASS_AVALIABLE;
 import static fga.mds.gpp.trezentos.DAO.URLs.URL_CLASS_FROM_PERSON;
+import static fga.mds.gpp.trezentos.DAO.URLs.URL_CLASS_WITHOUT_PERSON;
 
 public class UserClassControl {
 
@@ -126,16 +127,13 @@ public class UserClassControl {
         return builder.build().toString();
     }
 
-    public ArrayList<UserClass> getExploreClasses() throws JSONException {
-        //String url = "https://trezentos-api.herokuapp.com/api/class/find";
-        String returnAllClassesUrlWithParameters = getAllClassesAvaliableUrl();
+    public ArrayList<UserClass> getExploreClasses(String userId) throws JSONException {
+        String returnAllClassesUrlWithParameters = getClassesWithoutUserUrl(userId);
 
         String serverResponse = "404";
         serverResponse = new GetDao(returnAllClassesUrlWithParameters).get();
 
         Log.d("RESPONSE EXPLORE", serverResponse);
-
-        //serverResponse = serverOperationExploreFragment.execute().get();
 
         JSONObject object = new JSONObject(serverResponse);
         String erro = object.getString("error");
@@ -180,6 +178,14 @@ public class UserClassControl {
     // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
     private String getClassesFromUserUrl(String userId) {
         HttpUrl.Builder builder = HttpUrl.parse(URL_CLASS_FROM_PERSON).newBuilder();
+        builder.addQueryParameter("idPerson", userId);
+
+        return builder.build().toString();
+    }
+
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    private String getClassesWithoutUserUrl(String userId) {
+        HttpUrl.Builder builder = HttpUrl.parse(URL_CLASS_WITHOUT_PERSON).newBuilder();
         builder.addQueryParameter("idPerson", userId);
 
         return builder.build().toString();

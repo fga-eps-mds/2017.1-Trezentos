@@ -52,6 +52,7 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
     private ClassFragmentAdapter classFragmentAdapter;
     private RecyclerView recyclerView;
     private ExploreFragment exploreFragment;
+    private String userId;
 
     public ServerOperationExploreFragment(boolean isInit,
                                           SwipeRefreshLayout swipeRefreshLayout,
@@ -64,12 +65,16 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
         this.exploreFragment = exploreFragment;
         this.recyclerView = recyclerView;
 
-        userClassControl = UserClassControl.getInstance(getApplicationContext());
-
     }
 
     @Override
     protected void onPreExecute() {
+
+        userClassControl =
+                UserClassControl.getInstance(getApplicationContext());
+        SharedPreferences session = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        userId = session.getString("userId", "");
 
         if(isInit){
             progressBar.setVisibility(View.VISIBLE);
@@ -83,7 +88,7 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
         if(isInternetAvailable() ) { //If internet is ok
 
             try {
-                return userClassControl.getExploreClasses();
+                return userClassControl.getExploreClasses(userId);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -100,6 +105,10 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
 
         exploreFragment.setUserClasses(result);
         userClasses = result;
+
+        for(UserClass u: userClasses){
+            Log.d("TESTESTES", u.getClassName());
+        }
 
         if(isInit){
             progressBar.setVisibility(View.GONE);

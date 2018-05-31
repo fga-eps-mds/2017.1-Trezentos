@@ -70,6 +70,9 @@ public class ExploreFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_explore);
         swipeLayout = view.findViewById(R.id.swipeRefreshLayout);
 
+
+
+
         if(userClasses != null){
             new ServerOperationExploreFragment(true, swipeLayout, progressBar, recyclerView, fragment).setLayout();
 
