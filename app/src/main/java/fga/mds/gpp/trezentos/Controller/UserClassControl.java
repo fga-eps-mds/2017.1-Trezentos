@@ -17,8 +17,12 @@ import fga.mds.gpp.trezentos.DAO.URLs;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Evaluation;
+import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.Student;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.Activity.StudentExamActivity;
 import okhttp3.HttpUrl;
 
 import static fga.mds.gpp.trezentos.DAO.URLs.URL_ALL_CLASS_AVALIABLE;
@@ -269,5 +273,61 @@ public class UserClassControl {
         }
 
         return serverResponse;
+    }
+
+    public ArrayList<UserAccount> getUsersFromClass(String idClass, String idExam) throws JSONException {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idClass", idClass);
+        params.put("idExam", idExam);
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_STUDENTS_FROM_CLASS, params);
+
+        String serverResponse = "404";
+
+        try{
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
+        }
+
+        JSONObject object = new JSONObject(serverResponse);
+        String erro = object.getString("error");
+        String message = object.getString("message");
+        JSONArray classArrayJson = object.getJSONArray("users");
+        Log.d("STUDENTS", classArrayJson.toString());
+
+        ArrayList<UserAccount> userClass = null;
+        userClass = getUserArrayList(classArrayJson);
+
+        return userClass;
+    }
+
+    public ArrayList<UserAccount> getUserArrayList(JSONArray array) throws JSONException{
+
+
+        ArrayList<UserAccount> users = new ArrayList<>();
+        for(int i = 0; i < array.length(); i++){
+            UserAccount userClass = getUsersFromJson(array.getJSONObject(i));
+            users.add(userClass);
+        }
+
+        return users;
+    }
+
+    private UserAccount getUsersFromJson(JSONObject jsonObject) {
+        UserAccount user = new UserAccount();
+
+        try{
+            user.setId(jsonObject.getString("idPerson"));
+            user.setFirstName(jsonObject.getString("personFirstName"));
+            user.setLastName(jsonObject.getString("personLastName"));
+            user.setEmail(jsonObject.getString("personEmail"));
+        }catch(JSONException | UserException e){
+            e.printStackTrace();
+        }
+
+        return user;
     }
 }

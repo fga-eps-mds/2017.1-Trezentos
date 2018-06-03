@@ -26,10 +26,16 @@ import android.widget.NumberPicker;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fga.mds.gpp.trezentos.Controller.UserClassControl;
+import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.Student;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Activity.ExamActivity;
@@ -45,6 +51,9 @@ public class StudentsFragment extends Fragment {
     public ArrayList<String> students = new ArrayList<>();
     private UserClass userClass;
     private Exam userExam;
+    public UserClassControl userClassControl;
+    public ArrayList<UserAccount> userFromClass;
+
 
     public View view;
 
@@ -66,22 +75,28 @@ public class StudentsFragment extends Fragment {
         userClass = (UserClass) intent.getSerializableExtra("Class");
         userExam = (Exam) intent.getSerializableExtra("Exam");
 
-
-
-        //ArrayList<String> array = null;
-        students.add("arthurbdiniz@gmail.com");
-        students.add("arthurbdiniz@gmail.com");
-        students.add("arthurbdiniz@gmail.com");
-
         //students = array; // userClass.getStudents();
         //populateMapValues(students); //clear map and populates it
         //arrangeMap(students);//creates a new array of students that are enrolled at this class
 
         view = inflater.inflate(R.layout.fragment_students, container, false); // Inflate the layout for this fragment
 
+        userClassControl = UserClassControl.getInstance(getActivity());
+
+        try {
+            userFromClass = userClassControl.getUsersFromClass(userClass.getIdClass(), userExam.getId());
+//            Log.d("PARAMS", userId + "  " + userClass.getIdClass());
+//            Log.d("EXAM", String.valueOf(userExams.size()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for (UserAccount u: userFromClass) {
+            students.add(u.getEmail());
+        }
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerStudents);
-        recyclerView.setAdapter(new StudentsFragment.AdapterStudents(students, getActivity().getApplicationContext()));
+        recyclerView.setAdapter(new StudentsFragment.AdapterStudents(userFromClass, getActivity().getApplicationContext()));
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -91,12 +106,12 @@ public class StudentsFragment extends Fragment {
     }
 
     private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
-        public  ArrayList<String> userAccounts;
+        public  ArrayList<UserAccount> userAccounts;
         private Context context;
         private StudentsFragment.ViewHolder holder;
 
 
-        public AdapterStudents(ArrayList<String> userAccounts, Context context) {
+        public AdapterStudents(ArrayList<UserAccount> userAccounts, Context context) {
             this.userAccounts = userAccounts;
             this.context = context;
 
@@ -130,8 +145,9 @@ public class StudentsFragment extends Fragment {
 
             holder = (StudentsFragment.ViewHolder) viewHolder;
 
-            String userAccount = userAccounts.get(position);
-            holder.userAccountEmail.setText(userAccount);
+            UserAccount userAccount = userAccounts.get(position);
+            holder.userAccountName.setText(userAccount.getFisrtName() + " " + userAccount.getLastName());
+            holder.userAccountEmail.setText(userAccount.getEmail());
         }
 
         @Override

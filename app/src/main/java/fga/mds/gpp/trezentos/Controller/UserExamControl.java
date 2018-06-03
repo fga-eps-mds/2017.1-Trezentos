@@ -132,6 +132,7 @@ public class UserExamControl{
         Exam exam = new Exam();
 
         try{
+            exam.setId(jsonObject.getString("idExam"));
             exam.setNameExam(jsonObject.getString("examDescription"));
 
         }catch(UserException e){
