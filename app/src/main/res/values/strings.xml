@@ -80,7 +80,7 @@
 
     <!--Menu-->
     <string name="configuracoes">Configuracoes</string>
-    <string name="class_information">Informações da Sala</string>
+    <string name="delete_classs">Excluir Sala</string>
     <string name="sort_groups">Ordenar Grupos</string>
 
     <!--Tab-->

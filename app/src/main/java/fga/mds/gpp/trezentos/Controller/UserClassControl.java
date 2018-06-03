@@ -76,7 +76,6 @@ public class UserClassControl {
 
     public String createClass() throws UserException {
 
-
         RequestHandler requestHandler = new RequestHandler(URLs.URL_CREATE_CLASS, getCreateClassParams());
 
         String serverResponse = "404";
@@ -94,6 +93,32 @@ public class UserClassControl {
 
     }
     //End Create Class
+
+    public String deleteClass(String classId, String userId) throws UserException {
+        HashMap<String, String> params = new HashMap<>();
+        Log.d("DELETE", classId);
+        Log.d("DELETE", userId);
+
+
+        params.put("classID", classId);
+        params.put("userID", userId);
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_DELETE_CLASS, params);
+
+        String serverResponse = "404";
+
+        try{
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
+        }
+        Log.d("RESPONSE", ""+serverResponse);
+        //dialog.dismiss();
+        return serverResponse;
+
+    }
 
 
 
