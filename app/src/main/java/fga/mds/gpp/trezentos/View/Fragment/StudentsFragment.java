@@ -30,6 +30,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
@@ -52,7 +53,7 @@ public class StudentsFragment extends Fragment {
     private UserClass userClass;
     private Exam userExam;
     public UserClassControl userClassControl;
-    public ArrayList<UserAccount> userFromClass;
+    public ArrayList<Student> userFromClass;
 
 
     public View view;
@@ -106,12 +107,12 @@ public class StudentsFragment extends Fragment {
     }
 
     private class AdapterStudents extends RecyclerView.Adapter implements View.OnClickListener {
-        public  ArrayList<UserAccount> userAccounts;
+        public  ArrayList<Student> userAccounts;
         private Context context;
         private StudentsFragment.ViewHolder holder;
 
 
-        public AdapterStudents(ArrayList<UserAccount> userAccounts, Context context) {
+        public AdapterStudents(ArrayList<Student> userAccounts, Context context) {
             this.userAccounts = userAccounts;
             this.context = context;
 
@@ -140,14 +141,17 @@ public class StudentsFragment extends Fragment {
             return holder;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
             holder = (StudentsFragment.ViewHolder) viewHolder;
 
-            UserAccount userAccount = userAccounts.get(position);
+            Student userAccount = userAccounts.get(position);
             holder.userAccountName.setText(userAccount.getFisrtName() + " " + userAccount.getLastName());
             holder.userAccountEmail.setText(userAccount.getEmail());
+            holder.gradeTextView.setText(userAccount.getFirstGrade().toString());
+            holder.secondGradeTextView.setText(userAccount.getSecondGrade().toString());
         }
 
         @Override

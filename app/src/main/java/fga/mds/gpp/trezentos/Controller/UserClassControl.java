@@ -275,7 +275,7 @@ public class UserClassControl {
         return serverResponse;
     }
 
-    public ArrayList<UserAccount> getUsersFromClass(String idClass, String idExam) throws JSONException {
+    public ArrayList<Student> getUsersFromClass(String idClass, String idExam) throws JSONException {
         HashMap<String, String> params = new HashMap<>();
         params.put("idClass", idClass);
         params.put("idExam", idExam);
@@ -296,34 +296,43 @@ public class UserClassControl {
         String erro = object.getString("error");
         String message = object.getString("message");
         JSONArray classArrayJson = object.getJSONArray("users");
-        Log.d("STUDENTS", classArrayJson.toString());
 
-        ArrayList<UserAccount> userClass = null;
-        userClass = getUserArrayList(classArrayJson);
+        ArrayList<Student> userClass = null;
+        userClass = getUserArrayList(classArrayJson, idExam);
 
         return userClass;
     }
 
-    public ArrayList<UserAccount> getUserArrayList(JSONArray array) throws JSONException{
+    public ArrayList<Student> getUserArrayList(JSONArray array, String idExam) throws JSONException{
 
 
-        ArrayList<UserAccount> users = new ArrayList<>();
+        ArrayList<Student> users = new ArrayList<>();
         for(int i = 0; i < array.length(); i++){
-            UserAccount userClass = getUsersFromJson(array.getJSONObject(i));
+            Student userClass = getUsersFromJson(array.getJSONObject(i), idExam);
             users.add(userClass);
         }
 
         return users;
     }
 
-    private UserAccount getUsersFromJson(JSONObject jsonObject) {
-        UserAccount user = new UserAccount();
+    private Student getUsersFromJson(JSONObject jsonObject, String idExam) throws JSONException {
+        Student user = new Student();
+        JSONArray gradesArrayJson = jsonObject.getJSONArray("grades");
 
         try{
             user.setId(jsonObject.getString("idPerson"));
             user.setFirstName(jsonObject.getString("personFirstName"));
             user.setLastName(jsonObject.getString("personLastName"));
             user.setEmail(jsonObject.getString("personEmail"));
+            for(int i = 0; i < gradesArrayJson.length(); i++) {
+                if(gradesArrayJson.getJSONObject(i).getString("gradeType").equals("1")) {
+                    user.setFirstGrade(Double.parseDouble(gradesArrayJson.getJSONObject(i).getString("grade")));
+                } else {
+                    user.setSecondGrade(Double.parseDouble(gradesArrayJson.getJSONObject(i).getString("grade")));
+                }
+            }
+
+
         }catch(JSONException | UserException e){
             e.printStackTrace();
         }

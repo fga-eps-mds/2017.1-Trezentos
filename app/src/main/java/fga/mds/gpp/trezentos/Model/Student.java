@@ -10,8 +10,8 @@ public class Student extends UserAccount{
 
 
     public Student(){
-        //An empty constructor is needed to create a new instance of object,
-        //in addition is create constructors with arguments.
+        firstGrade = 0.0;
+        secondGrade = 0.0;
     }
 
     public Student(String email){

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import fga.mds.gpp.trezentos.Exception.UserException;
 
 public class Exam implements Serializable {
+    private String id;
     private String nameExam;
     private String idClassCreator;
     private String idPerson;
@@ -53,6 +54,14 @@ public class Exam implements Serializable {
 
     public void setIdClassCreator(String idClassCreator) {
         this.idClassCreator = idClassCreator;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getIdPerson() {

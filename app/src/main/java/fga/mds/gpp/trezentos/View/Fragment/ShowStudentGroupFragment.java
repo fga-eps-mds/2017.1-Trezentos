@@ -181,7 +181,7 @@ public class ShowStudentGroupFragment extends Fragment {
 
             Student student = groupAndGrades.get(position);
             holder.studentEmail.setText(student.getEmail());
-            holder.studentFirstGrade.setText(student.getFirstGrade().toString());
+//            holder.studentFirstGrade.setText(student.getFirstGrade().toString());
             holder.studentSecondGrade.setText(" - ");
         }
 
