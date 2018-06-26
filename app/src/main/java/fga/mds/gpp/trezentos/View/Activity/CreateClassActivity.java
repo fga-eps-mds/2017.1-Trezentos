@@ -175,7 +175,7 @@ public class CreateClassActivity extends AppCompatActivity {
     }
 
 
-    private boolean showErrorMessage(String errorMessage){
+    private boolean showErrorMessage(String errorMessage) {
         boolean isValid = false;
 
         if (errorMessage.equals("Preencha todos os campos!")) {
@@ -183,14 +183,20 @@ public class CreateClassActivity extends AppCompatActivity {
             classNameField.setError("Preencha todos os campos!");
         } else if (errorMessage.equals("O tamanho do grupo não pode estar vazio!")) {
             sizeGroupsField.requestFocus();
-            sizeGroupsField.setError("O tamanho do grupo não pode estar vazio!");
+            sizeGroupsField.setError("Preencha todos os campos!");
         } else if (errorMessage.equals("Preencha o valor da nota de corte.")) {
             cutOffField.requestFocus();
-            cutOffField.setError("Preencha o valor da nota de corte.");
-        } else if (errorMessage.equals("Preencha o valor do acréscimo.")){
+            cutOffField.setError("Preencha todos os campos!");
+        } else if (errorMessage.equals("Preencha o valor do acréscimo.")) {
             additionField.requestFocus();
-            additionField.setError("Preencha o valor do acréscimo.");
-        } else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
+            additionField.setError("Preencha todos os campos!");
+        } else if (errorMessage.equals("Descricao vazia")) {
+            descriptionField.requestFocus();
+            descriptionField.setError("Preencha todos os campos!");
+        } else if (errorMessage.equals("Instituicao vazia")) {
+            institutionField.requestFocus();
+            institutionField.setError("Preencha todos os campos!");
+        }else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
             classNameField.requestFocus();
             classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
         } else if (errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {

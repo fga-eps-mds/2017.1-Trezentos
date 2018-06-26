@@ -41,15 +41,6 @@ public class UserClass implements Serializable {
         this.idClass = idClass;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-
-    }
-
     public String getCreatorName() {
         return creatorName;
     }
@@ -117,6 +108,18 @@ public class UserClass implements Serializable {
         }
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) throws UserException{
+        if (description == null || description.isEmpty()) {
+            throw new UserException("Descricao vazia");
+        } else {
+            this.description = description;
+        }
+    }
+
     public int getSizeGroups(){
         return sizeGroups;
     }
@@ -133,15 +136,17 @@ public class UserClass implements Serializable {
         return institution;
     }
 
-    public void setInstitution(String institution)throws UserException{
+    public void setInstitution(String institution)throws UserException {
         final int MIN_INSTITUTION_LENGTH = 3;
         final int MAX_INSTITUTION_LENGTH = 20;
 
-        if((institution != null && !institution.isEmpty()) &&
+        if ((institution != null && !institution.isEmpty()) &&
                 (institution.length() < MIN_INSTITUTION_LENGTH
-                        || institution.length() > MAX_INSTITUTION_LENGTH)){
+                        || institution.length() > MAX_INSTITUTION_LENGTH)) {
 
             throw new UserException("O nome da instituicao deve ter de 3 a 20 caracteres.");
+        }else if (institution == null || institution.isEmpty()){
+            throw new UserException("Instituicao vazia");
         }else{
             this.institution = institution;
         }
