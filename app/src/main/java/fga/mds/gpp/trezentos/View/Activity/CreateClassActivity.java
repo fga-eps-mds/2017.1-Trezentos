@@ -29,8 +29,6 @@ public class CreateClassActivity extends AppCompatActivity {
 
     private UserClassControl userClassControl;
 
-
-
     private EditText classNameField;
     private EditText institutionField;
     private EditText passwordField;
@@ -80,7 +78,7 @@ public class CreateClassActivity extends AppCompatActivity {
                                                     Float.valueOf(cutOffField.getText().toString()),
                                                     passwordField.getText().toString(),
                                                     Float.valueOf(additionField.getText().toString()),
-                                                    Integer.valueOf(sizeGroupsField.getText().toString()),
+                                                    sizeGroupsField.getText().toString(),
                                                     descriptionField.getText().toString(),
                                                     dateCreation,
                                                     userId,
@@ -97,8 +95,6 @@ public class CreateClassActivity extends AppCompatActivity {
 
     private void verifyMessage(String errorMessage){
         if (errorMessage.equals("")){
-
-
             try {
 
                 dialog = ProgressDialog.show(this, "Criando sua Sala",
@@ -183,7 +179,11 @@ public class CreateClassActivity extends AppCompatActivity {
         boolean isValid = false;
 
         if (errorMessage.equals("Preencha todos os campos!")) {
+            classNameField.requestFocus();
             classNameField.setError("Preencha todos os campos!");
+        } else if (errorMessage.equals("O tamanho do grupo não pode estar vazio!")){
+            sizeGroupsField.requestFocus();
+            sizeGroupsField.setError("O tamanho do grupo não pode estar vazio!");
         } else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
             classNameField.requestFocus();
             classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");

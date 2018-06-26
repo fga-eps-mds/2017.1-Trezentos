@@ -47,6 +47,7 @@ public class UserClass implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+
     }
 
     public String getCreatorName() {

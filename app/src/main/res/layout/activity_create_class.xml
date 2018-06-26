@@ -205,7 +205,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Nota de Corte"
-                            android:maxLength="2"
+                            android:maxLength="5"
 
                             android:inputType="numberDecimal"
                             android:paddingLeft="10dp" />
