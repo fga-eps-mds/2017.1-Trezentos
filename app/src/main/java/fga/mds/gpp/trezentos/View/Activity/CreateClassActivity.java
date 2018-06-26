@@ -75,9 +75,9 @@ public class CreateClassActivity extends AppCompatActivity {
             try {
                 errorMessage = userClassControl.validateCreateClass(classNameField.getText().toString(),
                                                     institutionField.getText().toString(),
-                                                    Float.valueOf(cutOffField.getText().toString()),
+                                                    cutOffField.getText().toString(),
                                                     passwordField.getText().toString(),
-                                                    Float.valueOf(additionField.getText().toString()),
+                                                    additionField.getText().toString(),
                                                     sizeGroupsField.getText().toString(),
                                                     descriptionField.getText().toString(),
                                                     dateCreation,
@@ -181,9 +181,15 @@ public class CreateClassActivity extends AppCompatActivity {
         if (errorMessage.equals("Preencha todos os campos!")) {
             classNameField.requestFocus();
             classNameField.setError("Preencha todos os campos!");
-        } else if (errorMessage.equals("O tamanho do grupo não pode estar vazio!")){
+        } else if (errorMessage.equals("O tamanho do grupo não pode estar vazio!")) {
             sizeGroupsField.requestFocus();
             sizeGroupsField.setError("O tamanho do grupo não pode estar vazio!");
+        } else if (errorMessage.equals("Preencha o valor da nota de corte.")) {
+            cutOffField.requestFocus();
+            cutOffField.setError("Preencha o valor da nota de corte.");
+        } else if (errorMessage.equals("Preencha o valor do acréscimo.")){
+            additionField.requestFocus();
+            additionField.setError("Preencha o valor do acréscimo.");
         } else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
             classNameField.requestFocus();
             classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
