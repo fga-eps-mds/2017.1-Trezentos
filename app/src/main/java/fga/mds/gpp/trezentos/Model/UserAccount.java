@@ -101,47 +101,43 @@ public class UserAccount{
 
 
     public void setEmail(String email) throws UserException{
-        if (email != null && !email.isEmpty()){
-            final Integer MAX_EMAIL_LENGTH = 50;
-            final Integer MIN_EMAIL_LENGTH = 5;
+        if (email != null && !email.isEmpty()) {
 
-            if(email.length() < MIN_EMAIL_LENGTH
-                    || email.length() > MAX_EMAIL_LENGTH){
+            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(email);
 
-            }else{
-                String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-                Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-                Matcher matcher = pattern.matcher(email);
-
-                if(matcher.matches()){
-                    email.toLowerCase();
-                    this.email = email;
-                } else
-                    throw new UserException("Email com caracteres inválidos. Tente novamente");
+            if (matcher.matches()) {
+                email.toLowerCase();
+                this.email = email;
+            } else {
+                throw new UserException("Email com caracteres inválidos. Tente novamente");
             }
-        }else{
+
+        } else {
             throw new UserException("O email não pode estar vazio");
         }
     }
 
     public void setTelephoneDDI(String telephoneDDI) throws UserException{
-        if(telephoneDDI.length() < 3 || telephoneDDI.length() > 3 ){
-            throw new UserException("DDI inválido");
+        if(telephoneDDI.length() != 3 ){
+            throw new UserException("DDI deve estar no formato +XX");
         } else {
             this.telephoneDDI = telephoneDDI;
         }
     }
 
     public void setTelephoneDDD(String telephoneDDD) throws UserException{
-        if(telephoneDDD.length() < 3 || telephoneDDD.length() > 3 ) {
-            throw new UserException("DDD inválido");
+        if(telephoneDDD.length() != 2 ) {
+            throw new UserException("DDD deve ter 2 números");
         }else{
             this.telephoneDDD = telephoneDDD;
         }
+
     }
 
     public void setTelephoneNumber(String telephoneNumber) throws UserException{
-        if(telephoneNumber.length() < 9 || telephoneNumber.length() > 9 ) {
+        if(telephoneNumber.length() != 9 ) {
             throw new UserException("Número deve ter 9 dígitos");
         }else{
             this.telephoneNumber = telephoneNumber;
