@@ -168,7 +168,7 @@ public class UserClass implements Serializable {
 
         }
         else if(password == null || password.isEmpty()){
-            throw new UserException("Preencha todos os campos!");
+            throw new UserException("Senha vazia");
 
         }else{
             this.password = password;

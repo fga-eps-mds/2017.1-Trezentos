@@ -196,6 +196,9 @@ public class CreateClassActivity extends AppCompatActivity {
         } else if (errorMessage.equals("Instituicao vazia")) {
             institutionField.requestFocus();
             institutionField.setError("Preencha todos os campos!");
+        }else if (errorMessage.equals("Senha vazia")) {
+            passwordField.requestFocus();
+            passwordField.setError("Preencha todos os campos!");
         }else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
             classNameField.requestFocus();
             classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
