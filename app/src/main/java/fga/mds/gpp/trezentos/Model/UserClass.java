@@ -179,8 +179,10 @@ public class UserClass implements Serializable {
         return addition;
     }
 
-    public void setAddition(float addition) throws UserException{
-        if(addition != 0.0f){
+    public void setAddition(float addition) throws UserException {
+        if (addition > 10){
+            throw new UserException("Acrescimo maior que 10.");
+        }else if(addition != 0.0f){
             this.addition = addition;
         }else{
             throw new UserException("O acrescimo nao pode ser zero.");
@@ -191,8 +193,10 @@ public class UserClass implements Serializable {
         return cutOff;
     }
 
-    public void setCutOff(float cutOff) throws UserException{
-        if(cutOff != 0.0f){
+    public void setCutOff(float cutOff) throws UserException {
+        if (cutOff > 10){
+            throw new UserException("Nota de corte maior do que 10");
+        } else if (cutOff != 0.0f) {
             this.cutOff = cutOff;
         }else{
             throw new UserException("A nota de corte nao pode ser zero.");
