@@ -11,14 +11,59 @@ import fga.mds.gpp.trezentos.Exception.UserException;
 
 public class UserClass implements Serializable {
 
+    private String idClass;
     private String className;
     private String institution;
+    private String description;
     private float cutOff;
     private String password;
     private float addition;
     private int sizeGroups;
+    private String creatorName;
+    private String creationDate;
+    private String idClassCreator;
+
+    public String getIdClassCreator() {
+        return idClassCreator;
+    }
+
+    public void setIdClassCreator(String idClassCreator) {
+        this.idClassCreator = idClassCreator;
+    }
+
     private ArrayList<String> students;
-    private String ownerEmail;
+
+    public String getIdClass() {
+        return idClass;
+    }
+
+    public void setIdClass(String idClass) {
+        this.idClass = idClass;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public UserClass(){
         //An empty constructor is needed to create a new instance of object,
@@ -26,13 +71,29 @@ public class UserClass implements Serializable {
     }
 
     public UserClass(String className, String institution, float cutOff, String password,
-                     float addition, Integer sizeGroups) throws UserException{
+                     String passwordConfirm, float addition, Integer sizeGroups) throws UserException{
         setClassName(className);
         setInstitution(institution);
         setCutOff(cutOff);
-        setPassword(password);
+        setPassword(password, passwordConfirm);
         setAddition(addition);
         setSizeGroups(sizeGroups);
+    }
+
+    public UserClass(String className, String classInstitution, Float classCutOff,
+                     String classPassword,String classpasswordConfirm, Float classAddition, Integer classSizeGroups,
+                     String classDescription, String classCreationDate, String idClassCreator,
+                     String classCreatorName) throws UserException{
+        setClassName(className);
+        setInstitution(classInstitution);
+        setCutOff(classCutOff);
+        setPassword(classPassword, classpasswordConfirm);
+        setAddition(classAddition);
+        setSizeGroups(classSizeGroups);
+        setDescription(classDescription);
+        setCreationDate(classCreationDate);
+        setIdClassCreator(idClassCreator);
+        setCreatorName(classCreatorName);
     }
 
     public String getClassName(){
@@ -89,7 +150,7 @@ public class UserClass implements Serializable {
         return password;
     }
 
-    public void setPassword(String password) throws UserException{
+    public void setPassword(String password, String passwordConfirm) throws UserException{
         final int MIN_PASSWORD_LENGTH = 6;
         final int MAX_PASSWORD_LENGTH = 16;
 
@@ -99,11 +160,13 @@ public class UserClass implements Serializable {
 
             throw new UserException("A senha deve ter entre 6 e 16 caracteres");
 
+        }else if(!password.equals(passwordConfirm)){
+            throw new UserException("As senhas devem ser iguais");
         }
         else if(password == null || password.isEmpty()){
             throw new UserException("Preencha todos os campos!");
 
-        }else{
+        }else {
             this.password = password;
         }
     }
@@ -140,12 +203,6 @@ public class UserClass implements Serializable {
         this.students = students;
     }
 
-    public String getOwnerEmail(){
-        return ownerEmail;
-    }
 
-    public void setOwnerEmail(String ownerEmail){
-        this.ownerEmail = ownerEmail;
-    }
 
 }

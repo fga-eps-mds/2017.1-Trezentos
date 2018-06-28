@@ -2,55 +2,82 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
-    android:layout_width="match_parent"
+    android:layout_width="180dp"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="4dp"
-    card_view:cardCornerRadius="10dp"
-    card_view:cardBackgroundColor="@color/transparent">
+    card_view:cardElevation="4dp"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="3dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:background="@drawable/shape_item"
-        android:layout_margin="3dp">
+        android:layout_height="205dp"
+        android:orientation="vertical">
 
         <ImageView
+            android:layout_marginTop="5dp"
             android:id="@+id/item_about"
-            android:layout_width="70dp"
+            android:layout_width="match_parent"
             android:layout_gravity="center|start"
-            android:layout_height="90dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_height="90dp" />
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/title_about"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:text="Marshmallow"
-                android:textColor="#FFF"
-                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5sp"
+                android:text="title"
+                android:textColor="#000"
+                android:textSize="12sp"
                 android:maxLines="1"/>
 
-            <TextView
-                android:id="@+id/description"
+            <com.codesgood.views.JustifiedTextView
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:text="Android 6.0"
-                android:textColor="#FFF"
-                android:textSize="18sp"
-                android:maxLines="1"/>
+                android:layout_height="52dp"
+                android:id="@+id/description"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="description"
+                android:textColor="#444444"
+                android:textSize="10sp"
+
+               />
+
+
+            <!-- Owner -->
+            <RelativeLayout
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+
+                    android:id="@+id/date_creation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+
+
+                    android:text="Criado em 15/09/2017"
+                    android:textColor="#A7A7A7"
+                    android:textSize="8sp"
+                    android:maxLines="1"/>
+
+            </RelativeLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

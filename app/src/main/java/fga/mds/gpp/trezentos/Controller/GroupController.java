@@ -186,7 +186,7 @@ public class GroupController {
 
             for (Map.Entry<String, Double> entry : firstGrades.entrySet()){
                 if (studentGroup.getStudentEmail().equals(entry.getKey())){
-                    studentGroup.setFirstGrade(entry.getValue());
+//                    studentGroup.setFirstGrade(entry.getValue());
                     groupAndGrades.set(it, studentGroup);
                     it++;
                 }

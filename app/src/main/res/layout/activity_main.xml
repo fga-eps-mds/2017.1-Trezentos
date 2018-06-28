@@ -5,24 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundtrezentos"
-    tools:context="fga.mds.gpp.trezentos.View.MainActivity">
+    android:background="#ffbd19"
+    tools:context="fga.mds.gpp.trezentos.View.Activity.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            />
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:background="#262626"
+        app:titleTextColor="#FFF"
+        app:subtitleTextColor="#FFF">
 
 
+    </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+
 
 
     <FrameLayout

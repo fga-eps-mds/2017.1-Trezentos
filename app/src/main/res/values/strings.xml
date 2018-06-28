@@ -23,6 +23,11 @@
     <string name="msg_len_email_error_message">"O email deve ter entre 5 e 50 caracteres válidos"</string>
     <string name="msg_special_characters_email_error_message">"Email com caracteres inválidos. Tente novamente"</string>
 
+    <!-- Telephones -->
+    <string name="telehphone_dd1_error_message">"DDI inválido"</string>
+    <string name="telehphone_ddd_error_message">"DDD inválido"</string>
+    <string name="telehphone_number_error_message">"Número deve ter 9 dígitos"</string>
+
     <!-- Create class -->
     <string name="classname">Nome da sala</string>
     <string name="institution">Instituiçao (opcional)</string>
@@ -54,6 +59,7 @@
     <string name="btn_already_signed_up"> <u> Já sou cadastrado </u></string>
     <string name="btn_login_to_sign_up">Cadastrar</string>
     <string name="btn_login">Login</string>
+    <string name="btn_forgot_password">Esqueceu a senha?</string>
     <string name="btn_fb_login">CONTINUAR COM FACEBOOK</string>
     <string name="btn_signup">Cadastrar</string>
     <string name="btn_about">Sobre</string>
@@ -64,6 +70,8 @@
 
     <!-- Register -->
     <string name="txt_password">Senha</string>
+    <string name="txt_telephone_DDD">DDD</string>
+    <string name="txt_telephone">Telefone</string>
 
     <!-- Forgot Password -->
     <string name="txt_email">E-mail</string>
@@ -72,7 +80,7 @@
 
     <!--Menu-->
     <string name="configuracoes">Configuracoes</string>
-    <string name="class_information">Informações da Sala</string>
+    <string name="delete_classs">Excluir Sala</string>
     <string name="sort_groups">Ordenar Grupos</string>
 
     <!--Tab-->
@@ -86,9 +94,9 @@
 
     <!--About-->
     <string name="about_site">Site</string>
-    <string name="about_metodo_trezentos">Método Trezentos</string>
+    <string name="about_metodo_trezentos">Método Trezentos.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit</string>
     <string name="about_trezentos">Trezentos</string>
-    <string name="about_tedx">TEDx Universidade de Brasilia</string>
+    <string name="about_tedx">TEDx Universidade de Brasília</string>
     <string name="about_metodologia">Metodologia Trezentos</string>
     <string name="about_entenda_metodo">Entenda o método em 3 minutos</string>
     <string name="about_para_professores">Trezentos para professores</string>
@@ -121,8 +129,8 @@
     <string name="msg_null_name_userClass_error_message">O nome não pode ser vazio</string>
     <string name="msg_null_classOwnerEmail_error_message">O email não pode estar vazio</string>
     <string name="msg_len_name_exam_error">O nome da prova deve ter entre 2 e 15 caracteres.</string>
-    <string name="helpers">Ajudantes:</string>
-    <string name="helped">Ajudados:</string>
+    <string name="helpers">Ajudantes</string>
+    <string name="helped">Ajudados</string>
     <string name="exit_text">Sair</string>
     <string name="profile_email">Profile Email</string>
     <string name="profile_name">Profile Name</string>

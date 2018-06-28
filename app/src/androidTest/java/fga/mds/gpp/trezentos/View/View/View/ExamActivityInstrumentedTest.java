@@ -12,7 +12,7 @@ import org.junit.runners.JUnit4;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.MainActivity;
+import fga.mds.gpp.trezentos.View.Activity.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

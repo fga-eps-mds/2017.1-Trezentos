@@ -2,9 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="fga.mds.gpp.trezentos.View.ExamsFragment"
-    android:background="@drawable/backgroundtrezentos">
+    tools:context="fga.mds.gpp.trezentos.View.Fragment.ExamsFragment"
+    android:background="#ffbd19">
 
     <ProgressBar
         android:id="@+id/progressBarExam"
@@ -15,7 +14,6 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerExam"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"

@@ -1,15 +1,17 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="fga.mds.gpp.trezentos.View.ClassFragment"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fga.mds.gpp.trezentos.View.Fragment.ClassFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffbd19"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/about_list_view"
-        android:background="@color/text_list_color"/>
+        />
 
 </FrameLayout>

@@ -1,81 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="110dp"
-    card_view:cardBackgroundColor="@color/transparent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
-    android:layout_margin="4dp"
-    android:weightSum="1"
-    card_view:cardCornerRadius="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="4dp"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/shape_item"
             >
 
-            <TextView
-                android:id="@+id/student_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="#FFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/student_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="#262626"
+                        android:textSize="15sp"
+                        android:text="Nome Sobrenome"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"/>
+                    <TextView
+                        android:id="@+id/student_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="#969696"
+                        android:textSize="10sp"
+                        android:text="Email"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"/>
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/more_options"
+                    android:layout_marginLeft="180dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/ic_more"
+                    android:layout_gravity="center"/>
+
+        </LinearLayout>
 
             <View
                 android:background="#4000"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_height="2dp">
             </View>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginLeft="0dp"
+                android:weightSum="2"
                 android:layout_gravity="center">
 
-                <View
-                    android:background="#4000"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent">
-                </View>
-
                 <LinearLayout
+                    android:layout_weight="1"
                     android:id="@+id/gradeLayout"
-                    android:layout_width="115dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nota"
-                        android:layout_gravity="center"
-                        android:textColor="#FFF"
-                        android:textSize="15dp"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#262626"
+                        android:textSize="15sp"
                         android:textStyle="bold"/>
 
-                    <TextView
+
+                    <EditText
                         android:id="@+id/text_view_grade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:textColor="#FFF"
-                        android:textSize="30dp"
+                        android:textColorHint="@color/colorPrimaryDark"
+                        android:hint="0.00"
+                        android:layout_gravity="center"
+                        android:textColor="#000"
+                        android:textSize="25sp"
+                        android:inputType="numberDecimal"
                         android:textStyle="bold"
+                        android:maxLength="4"
                         />
                 </LinearLayout>
 
@@ -87,41 +121,43 @@
                     android:layout_height="match_parent">
                 </View>
 
-                    <LinearLayout
-                        android:id="@+id/second_grade_layout"
-                        android:layout_width="115dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/second_grade_layout"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Nota 300"
-                            android:textColor="#FFF"
-                            android:textSize="15dp"
-                            android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Nota 300"
+                        android:textColor="#262626"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="15dp"
+                        android:textStyle="bold"/>
 
-                        <TextView
-                            android:id="@+id/text_view_second_grade"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="#FFF"
-                            android:textSize="30dp"
-                            android:textStyle="bold"
-                            />
-                    </LinearLayout>
-
-                    <View
-                        android:background="#4000"
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent">
-                    </View>
+                    <EditText
+                        android:id="@+id/text_view_second_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="0.00"
+                        android:textColorHint="@color/colorPrimaryDark"
+                        android:inputType="numberDecimal"
+                        android:layout_gravity="center"
+                        android:textColor="#000"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:maxLength="4"/>
+                </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
+
     </LinearLayout>
 
 
