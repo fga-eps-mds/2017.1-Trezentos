@@ -64,12 +64,12 @@ public class UserClassControl {
     }
 
     public String validateCreateClass(String className, String classInstitution, Float classCutOff,
-                                    String classPassword, Float classAddition, Integer classSizeGroups,
+                                    String classPassword,String classPasswordConfirm, Float classAddition, Integer classSizeGroups,
                                     String classDescription, String classCreationDate, String idClassCreator,
                                     String classCreatorName) throws UserException {
         try {
 
-            userClass = new UserClass(className, classInstitution, classCutOff, classPassword,
+            userClass = new UserClass(className, classInstitution, classCutOff, classPassword, classPasswordConfirm,
                     classAddition, classSizeGroups, classDescription,classCreationDate, idClassCreator, classCreatorName);
         }catch (UserException e){
             return e.getMessage();

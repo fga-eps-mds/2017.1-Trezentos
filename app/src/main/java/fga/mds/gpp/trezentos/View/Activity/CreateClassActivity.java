@@ -34,6 +34,7 @@ public class CreateClassActivity extends AppCompatActivity {
     private EditText classNameField;
     private EditText institutionField;
     private EditText passwordField;
+    private EditText passwordFieldConfirmation;
     private EditText sizeGroupsField;
     private EditText additionField;
     private EditText cutOffField;
@@ -75,10 +76,12 @@ public class CreateClassActivity extends AppCompatActivity {
 
             String errorMessage = "";
             try {
-                errorMessage = userClassControl.validateCreateClass(classNameField.getText().toString(),
+                errorMessage = userClassControl.validateCreateClass(
+                                                    classNameField.getText().toString(),
                                                     institutionField.getText().toString(),
                                                     Float.valueOf(cutOffField.getText().toString()),
                                                     passwordField.getText().toString(),
+                                                    passwordFieldConfirmation.getText().toString(),
                                                     Float.valueOf(additionField.getText().toString()),
                                                     Integer.valueOf(sizeGroupsField.getText().toString()),
                                                     descriptionField.getText().toString(),
@@ -164,8 +167,8 @@ public class CreateClassActivity extends AppCompatActivity {
         cutOffField = (EditText) findViewById(R.id.edit_text_cut_grade);
         additionField = (EditText) findViewById(R.id.edit_text_addition);
         passwordField = (EditText) findViewById(R.id.edit_text_class_password);
+        passwordFieldConfirmation = (EditText) findViewById(R.id.edit_text_class_password_confirmation);
         descriptionField = (EditText) findViewById(R.id.edit_text_description);
-
     }
 
 
@@ -181,6 +184,7 @@ public class CreateClassActivity extends AppCompatActivity {
 
     private boolean showErrorMessage(String errorMessage){
         boolean isValid = false;
+
 
         if (errorMessage.equals("Preencha todos os campos!")) {
             classNameField.setError("Preencha todos os campos!");
@@ -204,6 +208,9 @@ public class CreateClassActivity extends AppCompatActivity {
             institutionField.setError("O nome da instituicao deve ter de 3 a 20 caracteres.");
         } else if (errorMessage.equals("Sucesso")) {
             isValid = true;
+        }else if(errorMessage.equals("As senhas devem ser iguais")){
+            passwordFieldConfirmation.requestFocus();
+            passwordFieldConfirmation.setError("As senhas devem ser iguais");
         }
 
         return isValid;
