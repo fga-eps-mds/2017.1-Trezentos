@@ -253,6 +253,7 @@ public class UserAccountControl {
 
         session.edit()
                 .putBoolean("IsUserLogged", false)
+                .putString("userId", "")
                 .putString("userFirstName", "")
                 .putString("userLastName", "")
                 .putString("userEmail", "")
