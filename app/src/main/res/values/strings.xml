@@ -24,9 +24,9 @@
     <string name="msg_special_characters_email_error_message">"Email com caracteres inválidos. Tente novamente"</string>
 
     <!-- Telephones -->
-    <string name="telehphone_dd1_error_message">"DDI inválido"</string>
-    <string name="telehphone_ddd_error_message">"DDD inválido"</string>
-    <string name="telehphone_number_error_message">"Número deve ter 9 dígitos"</string>
+    <string name="telephone_ddi_error_message">"DDI deve estar no formato +XX"</string>
+    <string name="telephone_ddd_error_message">"DDD deve ter 2 números"</string>
+    <string name="telephone_number_error_message">"Número deve ter 9 dígitos"</string>
 
     <!-- Create class -->
     <string name="classname">Nome da sala</string>
