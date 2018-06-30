@@ -7,22 +7,25 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Activity.SignInActivity;
 import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationExploreFragment;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ExploreFragment extends Fragment {
 
@@ -70,27 +73,19 @@ public class ExploreFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_explore);
         swipeLayout = view.findViewById(R.id.swipeRefreshLayout);
 
-
-
-
-        if(userClasses != null){
-            new ServerOperationExploreFragment(true, swipeLayout, progressBar, recyclerView, fragment).setLayout();
-
-        }else {
-            new ServerOperationExploreFragment(true, swipeLayout, progressBar, recyclerView, fragment).execute();
-        }
-
-        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new ServerOperationExploreFragment(false, swipeLayout, progressBar, recyclerView, fragment).execute();
-            }
-        });
+        callServerOperation(true);
 
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         if(AccessToken.getCurrentAccessToken() == null && !session.getBoolean("IsUserLogged", false)){
             goLoginScreen(view);
         }
+
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                callServerOperation(false);
+            }
+        });
 
         return view;
     }
@@ -100,6 +95,27 @@ public class ExploreFragment extends Fragment {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    private void callServerOperation(Boolean isInit){
+
+        UserAccountControl userAccountControl =
+                UserAccountControl.getInstance(getApplicationContext());
+
+        if(!userAccountControl.isNetworkAvailable()) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Verifique sua conexão com a internet e tente novamente",
+                    Toast.LENGTH_LONG
+            ).show();
+            swipeLayout.setRefreshing(false);
+        } else if(userClasses == null || !isInit){
+            new ServerOperationExploreFragment(isInit, swipeLayout, progressBar, recyclerView, fragment).execute();
+        } else {
+            new ServerOperationExploreFragment(isInit, swipeLayout, progressBar, recyclerView, fragment).setLayout();
+
+        }
+
     }
 
 }

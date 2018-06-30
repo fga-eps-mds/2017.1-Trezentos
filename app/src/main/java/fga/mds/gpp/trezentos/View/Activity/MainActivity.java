@@ -51,14 +51,13 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
-        if(userAccountControl.isLoggedUser()){
 
-        }else{
+        if(!userAccountControl.isLoggedUser()){
             userAccountControl.logOutUser();
             goSignInScreen();
         }
-        selectedFragment = null;
 
+        selectedFragment = null;
         initToolbar();
 
         bottomNavigationView = findViewById(R.id.bottom_nav);

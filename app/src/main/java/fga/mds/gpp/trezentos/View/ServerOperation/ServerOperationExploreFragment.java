@@ -1,8 +1,6 @@
 package fga.mds.gpp.trezentos.View.ServerOperation;
-
-import android.app.Application;
+import android.widget.Toast;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -13,12 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.DAO.RequestHandler;
@@ -85,17 +81,12 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
     @Override
     protected ArrayList<UserClass> doInBackground(String... strings) {
 
-        if(isInternetAvailable() ) { //If internet is ok
-
-            try {
-                return userClassControl.getExploreClasses(userId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }else{
-            return null;
+        try {
+            return userClassControl.getExploreClasses(userId);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
         return null;
 
     }
@@ -151,18 +142,6 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
 
         return connectivityManager.getActiveNetworkInfo() != null &&
                 connectivityManager.getActiveNetworkInfo().isConnected();
-    }
-
-    private boolean isInternetAvailable() {
-        try {
-            final InetAddress address = InetAddress.getByName("www.google.com");
-            if(!address.equals("")){
-                return true;
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     private ClassViewHolder.OnItemClickListener callJoinClass() {
