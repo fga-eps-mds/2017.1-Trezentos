@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
-import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Activity.CreateClassActivity;
@@ -37,7 +37,6 @@ public class ClassFragment extends Fragment {
     private ArrayList<UserClass> userClasses = null;
     private RecyclerView recyclerView;
     private Button buttonRefresh;
-    public ClassFragmentAdapter classFragmentAdapter;
 
     public static ClassFragment getInstance() {
         if(fragment == null){
@@ -130,7 +129,7 @@ public class ClassFragment extends Fragment {
             floatingActionButton.setVisibility(View.VISIBLE);
             noInternetLayout.setVisibility(View.GONE);
             new ServerOperationClassFragment(
-                    isInit,
+                    true,
                     swipeLayout,
                     progressBar,
                     recyclerView,

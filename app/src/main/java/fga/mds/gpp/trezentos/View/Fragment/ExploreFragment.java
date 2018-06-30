@@ -125,7 +125,7 @@ public class ExploreFragment extends Fragment {
         } else {
             noInternetLayout.setVisibility(View.GONE);
             new ServerOperationExploreFragment(
-                    isInit,
+                    true,
                     swipeLayout,
                     progressBar,
                     recyclerView,

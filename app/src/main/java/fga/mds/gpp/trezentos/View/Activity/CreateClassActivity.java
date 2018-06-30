@@ -1,6 +1,7 @@
 package fga.mds.gpp.trezentos.View.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,9 +22,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CreateClassActivity extends AppCompatActivity {
 
@@ -57,38 +61,51 @@ public class CreateClassActivity extends AppCompatActivity {
         int id = item.getItemId();
         // Noinspection SimplifiableIfStatement
         if(id == R.id.create_button){
-            UserClassControl userClassControl = UserClassControl.getInstance(CreateClassActivity.this);
 
-            //Date Creates
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  HH:mm");
-            SimpleDateFormat dateFormat_hora = new SimpleDateFormat("HH:mm:ss");
-            Date data = new Date();
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(data);
+            UserAccountControl userAccountControl =
+                    UserAccountControl.getInstance(getApplicationContext());
+            if(userAccountControl.isNetworkAvailable()) {
+                UserClassControl userClassControl = UserClassControl.getInstance(CreateClassActivity.this);
 
-            Date data_atual = cal.getTime();
-            String dateCreation = dateFormat.format(data_atual);
-            String hora_atual = dateFormat_hora.format(data_atual);
+                //Date Creates
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  HH:mm");
+                SimpleDateFormat dateFormat_hora = new SimpleDateFormat("HH:mm:ss");
+                Date data = new Date();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(data);
+
+                Date data_atual = cal.getTime();
+                String dateCreation = dateFormat.format(data_atual);
+                String hora_atual = dateFormat_hora.format(data_atual);
 
 
-            String errorMessage = "";
-            try {
-                errorMessage = userClassControl.validateCreateClass(classNameField.getText().toString(),
-                                                    institutionField.getText().toString(),
-                                                    cutOffField.getText().toString(),
-                                                    passwordField.getText().toString(),
-                                                    additionField.getText().toString(),
-                                                    sizeGroupsField.getText().toString(),
-                                                    descriptionField.getText().toString(),
-                                                    dateCreation,
-                                                    userId,
-                                                    userName);
-            } catch (UserException e) {
-                e.printStackTrace();
+                String errorMessage = "";
+                try {
+                    errorMessage = userClassControl.validateCreateClass(classNameField.getText().toString(),
+                            institutionField.getText().toString(),
+                            cutOffField.getText().toString(),
+                            passwordField.getText().toString(),
+                            additionField.getText().toString(),
+                            sizeGroupsField.getText().toString(),
+                            descriptionField.getText().toString(),
+                            dateCreation,
+                            userId,
+                            userName);
+                } catch (UserException e) {
+                    e.printStackTrace();
+                }
+                verifyMessage(errorMessage);
+
+                return true;
+            } else {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Verifique a conexão com a internet e tente novamente!",
+                        Toast.LENGTH_LONG
+                ).show();
+                return false;
             }
-            verifyMessage(errorMessage);
 
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
