@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
@@ -24,6 +26,7 @@ import fga.mds.gpp.trezentos.View.Activity.CreateClassActivity;
 import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationClassFragment;
 import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationExploreFragment;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static fga.mds.gpp.trezentos.R.id.button_refresh;
 
 public class ClassFragment extends Fragment {
@@ -71,8 +74,11 @@ public class ClassFragment extends Fragment {
         swipeLayout = view.findViewById(R.id.swipeRefreshLayout);
         noInternetLayout = view.findViewById(R.id.no_internet_layout);
         recyclerView = view.findViewById(R.id.recycler_class);
-
         buttonRefresh = view.findViewById(button_refresh);
+
+        callServerOperation(true);
+        initFloatingActionButton(view);
+
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,21 +88,12 @@ public class ClassFragment extends Fragment {
             }
         });
 
-        if(userClasses != null){
-            new ServerOperationClassFragment(true, swipeLayout, progressBar, recyclerView, fragment, noInternetLayout).setLayout();
-
-        }else {
-            new ServerOperationClassFragment(true, swipeLayout, progressBar, recyclerView, fragment, noInternetLayout).execute();
-        }
-
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ServerOperationClassFragment(false, swipeLayout, progressBar, recyclerView, fragment, noInternetLayout).execute();
+                callServerOperation(false);
             }
         });
-
-        initFloatingActionButton(view);
 
         return view;
     }
@@ -111,6 +108,41 @@ public class ClassFragment extends Fragment {
 
             }
         });
+    }
+
+    private void callServerOperation(Boolean isInit){
+
+        UserAccountControl userAccountControl =
+                UserAccountControl.getInstance(getApplicationContext());
+
+        if(!userAccountControl.isNetworkAvailable()) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Verifique sua conexão com a internet e tente novamente",
+                    Toast.LENGTH_LONG
+            ).show();
+            swipeLayout.setRefreshing(false);
+        } else if(userClasses == null || !isInit){
+            new ServerOperationClassFragment(
+                    isInit,
+                    swipeLayout,
+                    progressBar,
+                    recyclerView,
+                    fragment,
+                    noInternetLayout
+            ).execute();
+        } else {
+            new ServerOperationClassFragment(
+                    isInit,
+                    swipeLayout,
+                    progressBar,
+                    recyclerView,
+                    fragment,
+                    noInternetLayout
+            ).setLayout();
+
+        }
+
     }
 
 }

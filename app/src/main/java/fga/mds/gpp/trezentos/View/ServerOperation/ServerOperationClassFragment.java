@@ -70,7 +70,6 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
     @Override
     protected void onPreExecute() {
 
-
         userClassControl =
                 UserClassControl.getInstance(getApplicationContext());
         SharedPreferences session = PreferenceManager
@@ -85,17 +84,13 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
     @Override
     protected ArrayList<UserClass> doInBackground(String... params) {
 
-        if(isInternetAvailable() ) { //If internet is ok
-
-            try {
-                return userClassControl.getClasses(userId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            return userClassControl.getClasses(userId);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        return null;
 
+        return null;
     }
 
     @Override
@@ -183,24 +178,5 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
         return tempList;
     }
 
-    public boolean isNetworkAvailable(Context context) {
-        final ConnectivityManager connectivityManager =
-            ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-
-        return connectivityManager.getActiveNetworkInfo() != null &&
-                connectivityManager.getActiveNetworkInfo().isConnected();
-    }
-
-    private boolean isInternetAvailable() {
-        try {
-            final InetAddress address = InetAddress.getByName("www.google.com");
-            if(!address.equals("")){
-                return true;
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
 }
