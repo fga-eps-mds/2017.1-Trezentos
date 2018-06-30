@@ -71,8 +71,8 @@ public class ClassFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_class);
         buttonRefresh = view.findViewById(R.id.class_refresh);
 
-        callServerOperation(true);
         initFloatingActionButton(view);
+        callServerOperation(true);
 
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,13 +109,14 @@ public class ClassFragment extends Fragment {
                 UserAccountControl.getInstance(getApplicationContext());
 
         if(!userAccountControl.isNetworkAvailable()) {
+            floatingActionButton.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
             noInternetLayout.setVisibility(View.VISIBLE);
             swipeLayout.setRefreshing(false);
 
         } else if(userClasses == null || !isInit){
+            floatingActionButton.setVisibility(View.VISIBLE);
             noInternetLayout.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
             new ServerOperationClassFragment(
                     isInit,
                     swipeLayout,
@@ -126,8 +127,8 @@ public class ClassFragment extends Fragment {
             ).execute();
 
         } else {
+            floatingActionButton.setVisibility(View.VISIBLE);
             noInternetLayout.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
             new ServerOperationClassFragment(
                     isInit,
                     swipeLayout,

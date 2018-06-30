@@ -115,7 +115,6 @@ public class ExploreFragment extends Fragment {
             noInternetLayout.setVisibility(View.VISIBLE);
         } else if(userClasses == null || !isInit){
             noInternetLayout.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
             new ServerOperationExploreFragment(
                     isInit,
                     swipeLayout,
@@ -125,7 +124,6 @@ public class ExploreFragment extends Fragment {
             ).execute();
         } else {
             noInternetLayout.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
             new ServerOperationExploreFragment(
                     isInit,
                     swipeLayout,
