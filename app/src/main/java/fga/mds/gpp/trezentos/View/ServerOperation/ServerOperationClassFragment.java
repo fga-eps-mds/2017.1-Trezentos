@@ -114,10 +114,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
         recyclerView.setLayoutManager(layout);
         recyclerView.setAdapter(classFragmentAdapter);
 
-
-//        noInternetLayout.setVisibility(View.VISIBLE);
         super.onPostExecute(result);
-
 
     }
 

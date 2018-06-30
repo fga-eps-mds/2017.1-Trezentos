@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,10 +23,8 @@ import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Activity.CreateClassActivity;
 import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationClassFragment;
-import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationExploreFragment;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-import static fga.mds.gpp.trezentos.R.id.button_refresh;
 
 public class ClassFragment extends Fragment {
 
@@ -39,9 +36,7 @@ public class ClassFragment extends Fragment {
     SwipeRefreshLayout swipeLayout;
     private ArrayList<UserClass> userClasses = null;
     private RecyclerView recyclerView;
-
     private Button buttonRefresh;
-
     public ClassFragmentAdapter classFragmentAdapter;
 
     public static ClassFragment getInstance() {
@@ -72,9 +67,9 @@ public class ClassFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
         swipeLayout = view.findViewById(R.id.swipeRefreshLayout);
-        noInternetLayout = view.findViewById(R.id.no_internet_layout);
+        noInternetLayout = view.findViewById(R.id.no_internet_class);
         recyclerView = view.findViewById(R.id.recycler_class);
-        buttonRefresh = view.findViewById(button_refresh);
+        buttonRefresh = view.findViewById(R.id.class_refresh);
 
         callServerOperation(true);
         initFloatingActionButton(view);
@@ -82,9 +77,7 @@ public class ClassFragment extends Fragment {
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                noInternetLayout.setVisibility(View.GONE);
-
+                callServerOperation(true);
             }
         });
 
@@ -116,13 +109,13 @@ public class ClassFragment extends Fragment {
                 UserAccountControl.getInstance(getApplicationContext());
 
         if(!userAccountControl.isNetworkAvailable()) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Verifique sua conexão com a internet e tente novamente",
-                    Toast.LENGTH_LONG
-            ).show();
+            recyclerView.setVisibility(View.GONE);
+            noInternetLayout.setVisibility(View.VISIBLE);
             swipeLayout.setRefreshing(false);
+
         } else if(userClasses == null || !isInit){
+            noInternetLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             new ServerOperationClassFragment(
                     isInit,
                     swipeLayout,
@@ -131,7 +124,10 @@ public class ClassFragment extends Fragment {
                     fragment,
                     noInternetLayout
             ).execute();
+
         } else {
+            noInternetLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             new ServerOperationClassFragment(
                     isInit,
                     swipeLayout,

@@ -10,9 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 
@@ -32,11 +32,11 @@ public class ExploreFragment extends Fragment {
     private static ExploreFragment fragment;
     private LinearLayout noInternetLayout;
     private ProgressBar progressBar = null;
-
     private ArrayList<UserClass> userClasses = null;
     public RecyclerView recyclerView;
     public ClassFragmentAdapter classFragmentAdapter;
     SwipeRefreshLayout swipeLayout;
+    private Button buttonRefresh;
 
     public ArrayList<UserClass> getUserClasses() {
         return userClasses;
@@ -69,9 +69,10 @@ public class ExploreFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_explore, container, false);
 
         progressBar = view.findViewById(R.id.progressBar);
-        noInternetLayout = view.findViewById(R.id.no_internet_layout);
+        noInternetLayout = view.findViewById(R.id.no_internet_explore);
         recyclerView = view.findViewById(R.id.recycler_explore);
         swipeLayout = view.findViewById(R.id.swipeRefreshLayout);
+        buttonRefresh = view.findViewById(R.id.explore_refresh);
 
         callServerOperation(true);
 
@@ -84,6 +85,13 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onRefresh() {
                 callServerOperation(false);
+            }
+        });
+
+        buttonRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callServerOperation(true);
             }
         });
 
@@ -103,16 +111,28 @@ public class ExploreFragment extends Fragment {
                 UserAccountControl.getInstance(getApplicationContext());
 
         if(!userAccountControl.isNetworkAvailable()) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Verifique sua conexão com a internet e tente novamente",
-                    Toast.LENGTH_LONG
-            ).show();
-            swipeLayout.setRefreshing(false);
+            recyclerView.setVisibility(View.GONE);
+            noInternetLayout.setVisibility(View.VISIBLE);
         } else if(userClasses == null || !isInit){
-            new ServerOperationExploreFragment(isInit, swipeLayout, progressBar, recyclerView, fragment).execute();
+            noInternetLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            new ServerOperationExploreFragment(
+                    isInit,
+                    swipeLayout,
+                    progressBar,
+                    recyclerView,
+                    fragment
+            ).execute();
         } else {
-            new ServerOperationExploreFragment(isInit, swipeLayout, progressBar, recyclerView, fragment).setLayout();
+            noInternetLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            new ServerOperationExploreFragment(
+                    isInit,
+                    swipeLayout,
+                    progressBar,
+                    recyclerView,
+                    fragment
+            ).setLayout();
 
         }
 
