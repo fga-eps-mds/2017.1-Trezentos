@@ -1,9 +1,7 @@
 package fga.mds.gpp.trezentos.View.ServerOperation;
 import android.widget.Toast;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.DAO.RequestHandler;
@@ -134,14 +131,6 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
                 false);
         recyclerView.setLayoutManager(layout);
         recyclerView.setAdapter(classFragmentAdapter);
-    }
-
-    public boolean isNetworkAvailable(Context context) {
-        final ConnectivityManager connectivityManager =
-            ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-
-        return connectivityManager.getActiveNetworkInfo() != null &&
-                connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     private ClassViewHolder.OnItemClickListener callJoinClass() {
