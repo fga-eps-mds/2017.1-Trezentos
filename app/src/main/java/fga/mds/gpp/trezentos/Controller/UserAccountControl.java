@@ -2,6 +2,8 @@ package fga.mds.gpp.trezentos.Controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import org.json.JSONException;
@@ -269,4 +271,11 @@ public class UserAccountControl {
     }
     //End Common
 
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        return netInfo != null && netInfo.isConnected();
+    }
 }
