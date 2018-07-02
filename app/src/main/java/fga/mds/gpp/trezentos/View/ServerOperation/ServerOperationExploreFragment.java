@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.DAO.RequestHandler;
@@ -159,50 +160,61 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
         dialogButtonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String classPassword = String.valueOf(textViewClassPassword.getText());
-                String classId = userClass.getIdClass();
-                SharedPreferences session = PreferenceManager
-                        .getDefaultSharedPreferences(getApplicationContext());
 
-                String userId = session.getString("userId","");
+                UserAccountControl userAccountControl =
+                        UserAccountControl.getInstance(getApplicationContext());
 
-                RequestHandler requestHandler = new RequestHandler(URLs.URL_INSERT_STUDENT_CLASS, getInsertStudentParams(userId, classId, classPassword));
+                if(userAccountControl.isNetworkAvailable()) {
+                    String classPassword = String.valueOf(textViewClassPassword.getText());
+                    String classId = userClass.getIdClass();
+                    SharedPreferences session = PreferenceManager
+                            .getDefaultSharedPreferences(getApplicationContext());
 
-                String serverResponse = "404";
+                    String userId = session.getString("userId","");
 
-                try{
-                    serverResponse = requestHandler.execute().get();
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }catch(ExecutionException e){
-                    e.printStackTrace();
+                    RequestHandler requestHandler = new RequestHandler(URLs.URL_INSERT_STUDENT_CLASS, getInsertStudentParams(userId, classId, classPassword));
+
+                    String serverResponse = "404";
+
+                    try{
+                        serverResponse = requestHandler.execute().get();
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }catch(ExecutionException e){
+                        e.printStackTrace();
+                    }
+                    Log.d("RESPONSE", "" + serverResponse);
+
+                    JSONObject object = null;
+                    try {
+                        object = new JSONObject(serverResponse);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    boolean error = false;
+                    String message = "";
+                    try {
+                        error = object.getBoolean("error");
+                        message = object.getString("message");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(error) {
+                        Toast.makeText(getApplicationContext(),message,
+                                Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"Sala adicionada a sua salas",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Verifique a conexão com a internet e tente novamente!",
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
-                Log.d("RESPONSE", "" + serverResponse);
-
-                JSONObject object = null;
-                try {
-                    object = new JSONObject(serverResponse);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                boolean error = false;
-                String message = "";
-                try {
-                    error = object.getBoolean("error");
-                    message = object.getString("message");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                if(error) {
-                    Toast.makeText(getApplicationContext(),message,
-                            Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(),"Sala adicionada a sua salas",
-                            Toast.LENGTH_SHORT).show();
-                }
-                dialog.dismiss();
-
 
             }
         });
