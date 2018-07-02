@@ -41,14 +41,6 @@ public class UserClass implements Serializable {
         this.idClass = idClass;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getCreatorName() {
         return creatorName;
     }
@@ -116,6 +108,18 @@ public class UserClass implements Serializable {
         }
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) throws UserException{
+        if (description == null || description.isEmpty()) {
+            throw new UserException("Descricao vazia");
+        } else {
+            this.description = description;
+        }
+    }
+
     public int getSizeGroups(){
         return sizeGroups;
     }
@@ -132,15 +136,17 @@ public class UserClass implements Serializable {
         return institution;
     }
 
-    public void setInstitution(String institution)throws UserException{
+    public void setInstitution(String institution)throws UserException {
         final int MIN_INSTITUTION_LENGTH = 3;
         final int MAX_INSTITUTION_LENGTH = 20;
 
-        if((institution != null && !institution.isEmpty()) &&
+        if ((institution != null && !institution.isEmpty()) &&
                 (institution.length() < MIN_INSTITUTION_LENGTH
-                        || institution.length() > MAX_INSTITUTION_LENGTH)){
+                        || institution.length() > MAX_INSTITUTION_LENGTH)) {
 
             throw new UserException("O nome da instituicao deve ter de 3 a 20 caracteres.");
+        }else if (institution == null || institution.isEmpty()){
+            throw new UserException("Instituicao vazia");
         }else{
             this.institution = institution;
         }
@@ -164,7 +170,7 @@ public class UserClass implements Serializable {
             throw new UserException("As senhas devem ser iguais");
         }
         else if(password == null || password.isEmpty()){
-            throw new UserException("Preencha todos os campos!");
+            throw new UserException("Senha vazia");
 
         }else {
             this.password = password;
@@ -175,8 +181,10 @@ public class UserClass implements Serializable {
         return addition;
     }
 
-    public void setAddition(float addition) throws UserException{
-        if(addition != 0.0f){
+    public void setAddition(float addition) throws UserException {
+        if (addition > 10){
+            throw new UserException("Acrescimo maior que 10.");
+        }else if(addition != 0.0f){
             this.addition = addition;
         }else{
             throw new UserException("O acrescimo nao pode ser zero.");
@@ -187,8 +195,10 @@ public class UserClass implements Serializable {
         return cutOff;
     }
 
-    public void setCutOff(float cutOff) throws UserException{
-        if(cutOff != 0.0f){
+    public void setCutOff(float cutOff) throws UserException {
+        if (cutOff > 10){
+            throw new UserException("Nota de corte maior do que 10");
+        } else if (cutOff != 0.0f) {
             this.cutOff = cutOff;
         }else{
             throw new UserException("A nota de corte nao pode ser zero.");

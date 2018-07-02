@@ -29,8 +29,6 @@ public class CreateClassActivity extends AppCompatActivity {
 
     private UserClassControl userClassControl;
 
-
-
     private EditText classNameField;
     private EditText institutionField;
     private EditText passwordField;
@@ -79,11 +77,11 @@ public class CreateClassActivity extends AppCompatActivity {
                 errorMessage = userClassControl.validateCreateClass(
                                                     classNameField.getText().toString(),
                                                     institutionField.getText().toString(),
-                                                    Float.valueOf(cutOffField.getText().toString()),
+                                                    cutOffField.getText().toString(),
                                                     passwordField.getText().toString(),
                                                     passwordFieldConfirmation.getText().toString(),
-                                                    Float.valueOf(additionField.getText().toString()),
-                                                    Integer.valueOf(sizeGroupsField.getText().toString()),
+                                                    additionField.getText().toString(),
+                                                    sizeGroupsField.getText().toString(),
                                                     descriptionField.getText().toString(),
                                                     dateCreation,
                                                     userId,
@@ -100,8 +98,6 @@ public class CreateClassActivity extends AppCompatActivity {
 
     private void verifyMessage(String errorMessage){
         if (errorMessage.equals("")){
-
-
             try {
 
                 dialog = ProgressDialog.show(this, "Criando sua Sala",
@@ -181,36 +177,76 @@ public class CreateClassActivity extends AppCompatActivity {
 
     }
 
-
-    private boolean showErrorMessage(String errorMessage){
+    private boolean showErrorMessage(String errorMessage) {
         boolean isValid = false;
 
-
-        if (errorMessage.equals("Preencha todos os campos!")) {
-            classNameField.setError("Preencha todos os campos!");
-        } else if (errorMessage.equals("O nome da sala deve ter de 3 a 20 caracteres.")) {
-            classNameField.requestFocus();
-            classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
-        } else if (errorMessage.equals("A senha deve ter entre 6 e 16 caracteres")) {
-            passwordField.requestFocus();
-            passwordField.setError("A senha deve ter entre 6 e 16 caracteres");
-        } else if (errorMessage.equals("O tamanho do grupo nao pode ser zero.")) {
-            sizeGroupsField.requestFocus();
-            sizeGroupsField.setError("O tamanho do grupo nao pode ser zero.");
-        } else if (errorMessage.equals("O acrescimo nao pode ser zero.")) {
-            additionField.requestFocus();
-            additionField.setError("O acrescimo nao pode ser zero.");
-        } else if (errorMessage.equals("A nota de corte nao pode ser zero.")) {
-            cutOffField.requestFocus();
-            cutOffField.setError("A nota de corte nao pode ser zero.");
-        } else if (errorMessage.equals("O nome da instituicao deve ter de 3 a 20 caracteres.")) {
-            institutionField.requestFocus();
-            institutionField.setError("O nome da instituicao deve ter de 3 a 20 caracteres.");
-        } else if (errorMessage.equals("Sucesso")) {
-            isValid = true;
-        }else if(errorMessage.equals("As senhas devem ser iguais")){
-            passwordFieldConfirmation.requestFocus();
-            passwordFieldConfirmation.setError("As senhas devem ser iguais");
+        switch (errorMessage) {
+            case "Preencha todos os campos!":
+                classNameField.requestFocus();
+                classNameField.setError("Preencha todos os campos!");
+                break;
+            case "O nome da sala deve ter de 3 a 20 caracteres.":
+                classNameField.requestFocus();
+                classNameField.setError("O nome da sala deve ter de 3 a 20 caracteres.");
+                break;
+            case "Instituicao vazia":
+                institutionField.requestFocus();
+                institutionField.setError("Preencha todos os campos!");
+                break;
+            case "O nome da instituicao deve ter de 3 a 20 caracteres.":
+                institutionField.requestFocus();
+                institutionField.setError("O nome da instituição deve ter de 3 a 20 caracteres.");
+                break;
+            case "Descricao vazia":
+                descriptionField.requestFocus();
+                descriptionField.setError("Preencha todos os campos!");
+                break;
+            case "O tamanho do grupo não pode estar vazio!":
+                sizeGroupsField.requestFocus();
+                sizeGroupsField.setError("Preencha todos os campos!");
+                break;
+            case "O tamanho do grupo nao pode ser zero.":
+                sizeGroupsField.requestFocus();
+                sizeGroupsField.setError("O tamanho do grupo não pode ser zero.");
+                break;
+            case "Preencha o valor da nota de corte.":
+                cutOffField.requestFocus();
+                cutOffField.setError("Preencha todos os campos!");
+                break;
+            case "Nota de corte maior do que 10":
+                cutOffField.requestFocus();
+                cutOffField.setError("A nota de corte não pode ser maior do que 10.");
+                break;
+            case "A nota de corte nao pode ser zero.":
+                cutOffField.requestFocus();
+                cutOffField.setError("A nota de corte não pode ser zero.");
+                break;
+            case "Preencha o valor do acréscimo.":
+                additionField.requestFocus();
+                additionField.setError("Preencha todos os campos!");
+                break;
+            case "O acrescimo nao pode ser zero.":
+                additionField.requestFocus();
+                additionField.setError("O acréscimo não pode ser zero.");
+                break;
+            case "Acrescimo maior que 10.":
+                additionField.requestFocus();
+                additionField.setError("O acréscimo não pode ser maior do que 10");
+                break;
+            case "Senha vazia":
+                passwordField.requestFocus();
+                passwordField.setError("Preencha todos os campos!");
+                break;
+            case "A senha deve ter entre 6 e 16 caracteres":
+                passwordField.requestFocus();
+                passwordField.setError("A senha deve ter entre 6 e 16 caracteres");
+                break;
+            case "Sucesso":
+                isValid = true;
+                break;
+            case "As senhas devem ser iguais":
+                passwordFieldConfirmation.requestFocus();
+                passwordFieldConfirmation.setError("As senhas devem ser iguais");
         }
 
         return isValid;

@@ -135,6 +135,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }else if (errorMessage.equals(getString(R.string.msg_null_password_error_message))){
             passwordEdit.requestFocus();
             passwordEdit.setError(getString(R.string.msg_null_password_error_message));
+        }else if (errorMessage.equals(getString(R.string.telephone_ddd_error_message))){
+            telephoneDDDEdit.requestFocus();
+            telephoneDDDEdit.setError(getString(R.string.telephone_ddd_error_message));
+        }else if(errorMessage.equals(getString(R.string.telephone_number_error_message))){
+            telephoneNumberEdit.requestFocus();
+            telephoneNumberEdit.setError(getString(R.string.telephone_number_error_message));
         }
     }
 
