@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.DAO.RequestHandler;
 import fga.mds.gpp.trezentos.DAO.URLs;
@@ -131,15 +132,27 @@ public class ClassActivity extends AppCompatActivity {
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        try {
-                            SharedPreferences session = PreferenceManager
-                                    .getDefaultSharedPreferences(getApplicationContext());
-                            String serverResponse = userClassControl.deleteClass(userClass.getIdClass(), session.getString("userId",""));
-                            validateServerResponse(serverResponse);
-                        } catch (UserException e) {
-                            e.printStackTrace();
+                        UserAccountControl userAccountControl =
+                                UserAccountControl.getInstance(getApplicationContext());
+
+                        if(userAccountControl.isNetworkAvailable()) {
+                            try {
+                                SharedPreferences session = PreferenceManager
+                                        .getDefaultSharedPreferences(getApplicationContext());
+                                String serverResponse = userClassControl.deleteClass(userClass.getIdClass(), session.getString("userId",""));
+                                validateServerResponse(serverResponse);
+                            } catch (UserException e) {
+                                e.printStackTrace();
+                            }
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Verifique a conexão com a internet e tente novamente!",
+                                    Toast.LENGTH_LONG
+                            ).show();
                         }
-                        dialog.dismiss();
+
                     }
 
                 })

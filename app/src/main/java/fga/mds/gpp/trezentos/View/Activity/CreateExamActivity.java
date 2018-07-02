@@ -21,12 +21,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.Controller.UserExamControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CreateExamActivity extends AppCompatActivity {
 
@@ -62,37 +65,50 @@ public class CreateExamActivity extends AppCompatActivity {
         int id = item.getItemId();
         // Noinspection SimplifiableIfStatement
         if(id == R.id.save_button){
-            UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-            String examName = examNameField.getText().toString();
-            try {
-                String erroMessage = userExamControl.validateCreateExam( examName,
-                                                    userId,
-                                                    userClass.getIdClassCreator(),
-                                                    userClass.getIdClass());
-                if(erroMessage.equals("")){
-                    String response = userExamControl.createExam();
-                    JSONObject obj = new JSONObject(response);
+            UserAccountControl userAccountControl =
+                    UserAccountControl.getInstance(getApplicationContext());
 
-                    if (!obj.getBoolean("error")) {
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+            if(userAccountControl.isNetworkAvailable()) {
+                UserExamControl userExamControl = UserExamControl.getInstance(getApplicationContext());
 
-                        finish();
+                String examName = examNameField.getText().toString();
+                try {
+                    String erroMessage = userExamControl.validateCreateExam( examName,
+                            userId,
+                            userClass.getIdClassCreator(),
+                            userClass.getIdClass());
+                    if(erroMessage.equals("")){
+                        String response = userExamControl.createExam();
+                        JSONObject obj = new JSONObject(response);
 
-                    } else {
-                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        if (!obj.getBoolean("error")) {
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                            finish();
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        verifyValidMessage(erroMessage);
                     }
-                }else{
-                    verifyValidMessage(erroMessage);
+
+
+
+                } catch (UserException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-
-
-            } catch (UserException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } else {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Verifique a conexão com a internet e tente novamente!",
+                        Toast.LENGTH_LONG
+                ).show();
             }
+
         }
         return super.onOptionsItemSelected(item);
     }
