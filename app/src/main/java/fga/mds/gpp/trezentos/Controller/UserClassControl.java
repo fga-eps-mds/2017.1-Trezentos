@@ -64,7 +64,7 @@ public class UserClassControl {
     }
 
     public String validateCreateClass(String className, String classInstitution, String classCutOff,
-                                    String classPassword, String classAddition, String classSizeGroups,
+                                    String classPassword,String classPasswordConfirm, String classAddition, String classSizeGroups,
                                     String classDescription, String classCreationDate, String idClassCreator,
                                     String classCreatorName) throws UserException {
 
@@ -78,7 +78,7 @@ public class UserClassControl {
                 throw new UserException("Preencha o valor do acréscimo.");
             }
 
-            userClass = new UserClass(className, classInstitution, Float.valueOf(classCutOff), classPassword,
+            userClass = new UserClass(className, classInstitution, Float.valueOf(classCutOff), classPassword, classPasswordConfirm,
                     Float.valueOf(classAddition), Integer.valueOf(classSizeGroups), classDescription,classCreationDate, idClassCreator, classCreatorName);
         }catch (UserException e){
             return e.getMessage();
@@ -132,8 +132,6 @@ public class UserClassControl {
         return serverResponse;
 
     }
-
-
 
 
     public String validateJoinClass(UserClass userClass, String password, String studentEmail) throws UserClassException, ExecutionException, InterruptedException {

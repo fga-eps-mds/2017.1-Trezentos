@@ -63,23 +63,23 @@ public class UserClass implements Serializable {
     }
 
     public UserClass(String className, String institution, float cutOff, String password,
-                     float addition, Integer sizeGroups) throws UserException{
+                     String passwordConfirm, float addition, Integer sizeGroups) throws UserException{
         setClassName(className);
         setInstitution(institution);
         setCutOff(cutOff);
-        setPassword(password);
+        setPassword(password, passwordConfirm);
         setAddition(addition);
         setSizeGroups(sizeGroups);
     }
 
     public UserClass(String className, String classInstitution, Float classCutOff,
-                     String classPassword, Float classAddition, Integer classSizeGroups,
+                     String classPassword,String classpasswordConfirm, Float classAddition, Integer classSizeGroups,
                      String classDescription, String classCreationDate, String idClassCreator,
                      String classCreatorName) throws UserException{
         setClassName(className);
         setInstitution(classInstitution);
         setCutOff(classCutOff);
-        setPassword(classPassword);
+        setPassword(classPassword, classpasswordConfirm);
         setAddition(classAddition);
         setSizeGroups(classSizeGroups);
         setDescription(classDescription);
@@ -156,7 +156,7 @@ public class UserClass implements Serializable {
         return password;
     }
 
-    public void setPassword(String password) throws UserException{
+    public void setPassword(String password, String passwordConfirm) throws UserException{
         final int MIN_PASSWORD_LENGTH = 6;
         final int MAX_PASSWORD_LENGTH = 16;
 
@@ -166,11 +166,13 @@ public class UserClass implements Serializable {
 
             throw new UserException("A senha deve ter entre 6 e 16 caracteres");
 
+        }else if(!password.equals(passwordConfirm)){
+            throw new UserException("As senhas devem ser iguais");
         }
         else if(password == null || password.isEmpty()){
             throw new UserException("Senha vazia");
 
-        }else{
+        }else {
             this.password = password;
         }
     }
