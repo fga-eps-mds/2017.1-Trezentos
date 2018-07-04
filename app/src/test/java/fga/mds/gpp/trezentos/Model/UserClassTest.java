@@ -40,7 +40,7 @@ public class UserClassTest {
     @Test
     public void shouldValidatePassword () throws UserException {
         UserClass userClass = new UserClass();
-        userClass.setPassword("password");
+        userClass.setPassword("password", "password");
         assertEquals("password",userClass.getPassword());
     }
 
@@ -79,7 +79,7 @@ public class UserClassTest {
 
     @Test
     public void shouldValidateConstructor() throws UserException {
-        UserClass userClass = new UserClass("Name", "Institution", 10.0f, "password", 10.0f, 5);
+        UserClass userClass = new UserClass("Name", "Institution", 10.0f, "password", "password", 10.0f, 5);
         assertEquals("Name", userClass.getClassName());
         assertEquals("Institution", userClass.getInstitution());
         assertEquals(10.0f, userClass.getCutOff(), 0.1f);

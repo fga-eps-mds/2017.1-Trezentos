@@ -36,6 +36,7 @@ public class CreateClassActivity extends AppCompatActivity {
     private EditText classNameField;
     private EditText institutionField;
     private EditText passwordField;
+    private EditText passwordFieldConfirmation;
     private EditText sizeGroupsField;
     private EditText additionField;
     private EditText cutOffField;
@@ -85,6 +86,7 @@ public class CreateClassActivity extends AppCompatActivity {
                             institutionField.getText().toString(),
                             cutOffField.getText().toString(),
                             passwordField.getText().toString(),
+                            passwordFieldConfirmation.getText().toString(),
                             additionField.getText().toString(),
                             sizeGroupsField.getText().toString(),
                             descriptionField.getText().toString(),
@@ -177,8 +179,8 @@ public class CreateClassActivity extends AppCompatActivity {
         cutOffField = (EditText) findViewById(R.id.edit_text_cut_grade);
         additionField = (EditText) findViewById(R.id.edit_text_addition);
         passwordField = (EditText) findViewById(R.id.edit_text_class_password);
+        passwordFieldConfirmation = (EditText) findViewById(R.id.edit_text_class_password_confirmation);
         descriptionField = (EditText) findViewById(R.id.edit_text_description);
-
     }
 
 
@@ -258,6 +260,9 @@ public class CreateClassActivity extends AppCompatActivity {
             case "Sucesso":
                 isValid = true;
                 break;
+            case "As senhas devem ser iguais":
+                passwordFieldConfirmation.requestFocus();
+                passwordFieldConfirmation.setError("As senhas devem ser iguais");
         }
 
         return isValid;
