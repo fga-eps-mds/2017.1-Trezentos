@@ -13,18 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Model.UserClass;
-import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.Activity.CreateClassActivity;
 import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationClassFragment;
-import fga.mds.gpp.trezentos.View.ServerOperation.ServerOperationExploreFragment;
 
-import static fga.mds.gpp.trezentos.R.id.button_refresh;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ClassFragment extends Fragment {
 
@@ -36,10 +36,7 @@ public class ClassFragment extends Fragment {
     SwipeRefreshLayout swipeLayout;
     private ArrayList<UserClass> userClasses = null;
     private RecyclerView recyclerView;
-
     private Button buttonRefresh;
-
-    public ClassFragmentAdapter classFragmentAdapter;
 
     public static ClassFragment getInstance() {
         if(fragment == null){
@@ -69,34 +66,26 @@ public class ClassFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressBar);
         swipeLayout = view.findViewById(R.id.swipeRefreshLayout);
-        noInternetLayout = view.findViewById(R.id.no_internet_layout);
+        noInternetLayout = view.findViewById(R.id.no_internet_class);
         recyclerView = view.findViewById(R.id.recycler_class);
+        buttonRefresh = view.findViewById(R.id.class_refresh);
 
-        buttonRefresh = view.findViewById(button_refresh);
+        initFloatingActionButton(view);
+        callServerOperation(true);
+
         buttonRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                noInternetLayout.setVisibility(View.GONE);
-
+                callServerOperation(true);
             }
         });
-
-        if(userClasses != null){
-            new ServerOperationClassFragment(true, swipeLayout, progressBar, recyclerView, fragment, noInternetLayout).setLayout();
-
-        }else {
-            new ServerOperationClassFragment(true, swipeLayout, progressBar, recyclerView, fragment, noInternetLayout).execute();
-        }
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ServerOperationClassFragment(false, swipeLayout, progressBar, recyclerView, fragment, noInternetLayout).execute();
+                callServerOperation(false);
             }
         });
-
-        initFloatingActionButton(view);
 
         return view;
     }
@@ -111,6 +100,45 @@ public class ClassFragment extends Fragment {
 
             }
         });
+    }
+
+    private void callServerOperation(Boolean isInit){
+
+        UserAccountControl userAccountControl =
+                UserAccountControl.getInstance(getApplicationContext());
+
+        if(!userAccountControl.isNetworkAvailable()) {
+            floatingActionButton.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+            noInternetLayout.setVisibility(View.VISIBLE);
+            swipeLayout.setRefreshing(false);
+
+        } else if(userClasses == null || !isInit){
+            floatingActionButton.setVisibility(View.VISIBLE);
+            noInternetLayout.setVisibility(View.GONE);
+            new ServerOperationClassFragment(
+                    isInit,
+                    swipeLayout,
+                    progressBar,
+                    recyclerView,
+                    fragment,
+                    noInternetLayout
+            ).execute();
+
+        } else {
+            floatingActionButton.setVisibility(View.VISIBLE);
+            noInternetLayout.setVisibility(View.GONE);
+            new ServerOperationClassFragment(
+                    true,
+                    swipeLayout,
+                    progressBar,
+                    recyclerView,
+                    fragment,
+                    noInternetLayout
+            ).setLayout();
+
+        }
+
     }
 
 }

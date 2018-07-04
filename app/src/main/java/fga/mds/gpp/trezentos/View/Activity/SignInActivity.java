@@ -63,10 +63,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.button_login:
 
-                if(isNetworkAvailable(getApplicationContext()) && isOnline()){
+                userAccountControl = UserAccountControl.getInstance(getApplicationContext());
 
-
-                    userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+                if(userAccountControl.isNetworkAvailable()){
 
                     String emailString = emailEditText.getText().toString();
                     String passwordString = passwordEditText.getText().toString();
@@ -91,7 +90,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     }
 
                 }else{
-                    Toast.makeText(this, "Verifique sua conexão com a internet e tente novamente", Toast.LENGTH_LONG).show();
+                    Toast.makeText(
+                            this,
+                            "Verifique sua conexão com a internet e tente novamente",
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
 
 
@@ -237,34 +240,4 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    public boolean isNetworkAvailable(Context context) {
-        final ConnectivityManager connectivityManager =
-                ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-
-        return connectivityManager.getActiveNetworkInfo() != null &&
-                connectivityManager.getActiveNetworkInfo().isConnected();
-    }
-
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
-    /*
-    private boolean isInternetAvailable() {
-        try {
-            final InetAddress address = InetAddress.getByName("www.google.com");
-            if(!address.equals("")){
-                return true;
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    */
-
-    /* TEST IT IN REAL DEVISE */
 }

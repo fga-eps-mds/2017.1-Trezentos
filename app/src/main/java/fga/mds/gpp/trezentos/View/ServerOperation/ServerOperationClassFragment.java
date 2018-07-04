@@ -1,10 +1,8 @@
 package fga.mds.gpp.trezentos.View.ServerOperation;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -70,7 +68,6 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
     @Override
     protected void onPreExecute() {
 
-
         userClassControl =
                 UserClassControl.getInstance(getApplicationContext());
         SharedPreferences session = PreferenceManager
@@ -85,17 +82,13 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
     @Override
     protected ArrayList<UserClass> doInBackground(String... params) {
 
-        if(isInternetAvailable() ) { //If internet is ok
-
-            try {
-                return userClassControl.getClasses(userId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            return userClassControl.getClasses(userId);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        return null;
 
+        return null;
     }
 
     @Override
@@ -121,10 +114,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
         recyclerView.setLayoutManager(layout);
         recyclerView.setAdapter(classFragmentAdapter);
 
-
-//        noInternetLayout.setVisibility(View.VISIBLE);
         super.onPostExecute(result);
-
 
     }
 
@@ -183,24 +173,5 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
         return tempList;
     }
 
-    public boolean isNetworkAvailable(Context context) {
-        final ConnectivityManager connectivityManager =
-            ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-
-        return connectivityManager.getActiveNetworkInfo() != null &&
-                connectivityManager.getActiveNetworkInfo().isConnected();
-    }
-
-    private boolean isInternetAvailable() {
-        try {
-            final InetAddress address = InetAddress.getByName("www.google.com");
-            if(!address.equals("")){
-                return true;
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
 }

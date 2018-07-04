@@ -8,41 +8,6 @@
     tools:context="fga.mds.gpp.trezentos.View.Fragment.ClassFragment"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
-        android:id="@+id/no_internet_layout"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_gravity="center_horizontal|center_vertical">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_report"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:layout_marginLeft="10dp"
-                android:text="Não há nenhuma conexão de rede agora"/>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="Repetir"/>
-
-    </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -57,7 +22,7 @@
             android:focusable="true"
             android:clickable="true"
             android:visibility="gone"
-            />
+        />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -70,7 +35,6 @@
         android:layout_marginRight="20dp"
 
         android:contentDescription="@string/criar_sala"
-        android:onClick="onClickCreate"
         android:src="@drawable/ic_add_black"
         app:backgroundTint="#262626"        />
 
@@ -80,5 +44,32 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/no_internet_class"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal|center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_report"
+            android:text="Não há nenhuma conexão de rede agora"/>
+
+
+        <Button
+            android:id="@+id/class_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="Repetir"/>
+
+    </LinearLayout>
 
 </FrameLayout>
