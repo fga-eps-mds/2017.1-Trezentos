@@ -108,6 +108,10 @@
     <string name="about_unbtv">UnBTV</string>
     <string name="invalid_login">Email ou senha inválidos</string>
 
+    <!-- Class Fragment -->
+    <string name="no_user_class">Você não possui nenhuma turma.</string>
+    <string name="no_internet">Não há nenhuma conexão de rede agora</string>
+
     <!--Join Class-->
     <string name="join_class_wrong_password_error">Senha errada. Por favor, digite novamente</string>
     <string name="join_class_null_password_error">A senha não pode ser vazia</string>
