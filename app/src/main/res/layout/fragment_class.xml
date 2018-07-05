@@ -46,6 +46,25 @@
         android:visibility="gone" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_user_class"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/no_user_class"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/no_internet_class"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -59,7 +78,7 @@
             android:textSize="20sp"
             android:layout_marginLeft="10dp"
             android:drawableLeft="@drawable/ic_report"
-            android:text="Não há nenhuma conexão de rede agora"/>
+            android:text="@string/no_internet"/>
 
 
         <Button
@@ -68,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="Repetir"/>
+            android:text="@string/repeat"/>
 
     </LinearLayout>
 

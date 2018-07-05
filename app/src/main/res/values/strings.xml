@@ -111,6 +111,7 @@
     <!-- Class Fragment -->
     <string name="no_user_class">Você não possui nenhuma turma.</string>
     <string name="no_internet">Não há nenhuma conexão de rede agora</string>
+    <string name="repeat">Repetir</string>
 
     <!--Join Class-->
     <string name="join_class_wrong_password_error">Senha errada. Por favor, digite novamente</string>

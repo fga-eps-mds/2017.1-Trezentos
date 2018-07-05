@@ -37,6 +37,7 @@ public class ClassFragment extends Fragment {
     private ArrayList<UserClass> userClasses = null;
     private RecyclerView recyclerView;
     private Button buttonRefresh;
+    private LinearLayout noClassUserLayout;
 
     public static ClassFragment getInstance() {
         if(fragment == null){
@@ -69,6 +70,7 @@ public class ClassFragment extends Fragment {
         noInternetLayout = view.findViewById(R.id.no_internet_class);
         recyclerView = view.findViewById(R.id.recycler_class);
         buttonRefresh = view.findViewById(R.id.class_refresh);
+        noClassUserLayout = view.findViewById(R.id.no_user_class);
 
         initFloatingActionButton(view);
         callServerOperation(true);
@@ -90,7 +92,6 @@ public class ClassFragment extends Fragment {
         return view;
     }
 
-
     public void initFloatingActionButton(View view){
         floatingActionButton = view.findViewById(R.id.class_image_button);
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener(){
@@ -106,6 +107,12 @@ public class ClassFragment extends Fragment {
 
         UserAccountControl userAccountControl =
                 UserAccountControl.getInstance(getApplicationContext());
+
+        if (userClasses == null){
+            noClassUserLayout.setVisibility(View.VISIBLE);
+        } else {
+            noClassUserLayout.setVisibility(View.GONE);
+        }
 
         if(!userAccountControl.isNetworkAvailable()) {
             floatingActionButton.setVisibility(View.GONE);
