@@ -109,7 +109,7 @@
     <string name="invalid_login">Email ou senha inválidos</string>
 
     <!-- Class Fragment -->
-    <string name="no_user_class">Você não possui nenhuma turma.</string>
+    <string name="no_user_class">Você não entrou em nenhuma sala</string>
     <string name="no_internet">Não há nenhuma conexão de rede agora</string>
     <string name="repeat">Repetir</string>
 

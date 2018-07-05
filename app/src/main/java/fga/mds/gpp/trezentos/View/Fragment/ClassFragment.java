@@ -89,6 +89,12 @@ public class ClassFragment extends Fragment {
             }
         });
 
+        if (userClasses == null){
+            noClassUserLayout.setVisibility(View.VISIBLE);
+        } else {
+            noClassUserLayout.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -108,12 +114,6 @@ public class ClassFragment extends Fragment {
         UserAccountControl userAccountControl =
                 UserAccountControl.getInstance(getApplicationContext());
 
-        if (userClasses == null){
-            noClassUserLayout.setVisibility(View.VISIBLE);
-        } else {
-            noClassUserLayout.setVisibility(View.GONE);
-        }
-
         if(!userAccountControl.isNetworkAvailable()) {
             floatingActionButton.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
@@ -129,7 +129,8 @@ public class ClassFragment extends Fragment {
                     progressBar,
                     recyclerView,
                     fragment,
-                    noInternetLayout
+                    noInternetLayout,
+                    noClassUserLayout
             ).execute();
 
         } else {
@@ -141,10 +142,13 @@ public class ClassFragment extends Fragment {
                     progressBar,
                     recyclerView,
                     fragment,
-                    noInternetLayout
+                    noInternetLayout,
+                    noClassUserLayout
             ).setLayout();
 
         }
+
+
 
     }
 

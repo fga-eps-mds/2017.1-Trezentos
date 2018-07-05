@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/no_user_class"
         android:orientation="vertical"
+        android:layout_marginTop="20dp"
         android:visibility="gone">
 
         <TextView
@@ -57,9 +58,6 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:text="@string/no_user_class"/>
 
     </LinearLayout>
