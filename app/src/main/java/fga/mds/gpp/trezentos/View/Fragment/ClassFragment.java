@@ -89,12 +89,6 @@ public class ClassFragment extends Fragment {
             }
         });
 
-        if (userClasses == null){
-            noClassUserLayout.setVisibility(View.VISIBLE);
-        } else {
-            noClassUserLayout.setVisibility(View.GONE);
-        }
-
         return view;
     }
 
