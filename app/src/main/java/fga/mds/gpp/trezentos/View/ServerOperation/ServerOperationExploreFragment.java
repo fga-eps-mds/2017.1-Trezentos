@@ -120,20 +120,6 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
         super.onPostExecute(result);
     }
 
-    public void setLayout(){
-        recyclerView.setVisibility(View.VISIBLE);
-        userClasses = exploreFragment.getUserClasses();
-        classFragmentAdapter = new ClassFragmentAdapter(exploreFragment.getUserClasses(), exploreFragment.getContext());
-
-        classFragmentAdapter.setOnItemClickListener(callJoinClass());
-
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(exploreFragment.getContext(),
-                LinearLayoutManager.VERTICAL,
-                false);
-        recyclerView.setLayoutManager(layout);
-        recyclerView.setAdapter(classFragmentAdapter);
-    }
-
     private ClassViewHolder.OnItemClickListener callJoinClass() {
         return new ClassViewHolder.OnItemClickListener() {
             @Override
