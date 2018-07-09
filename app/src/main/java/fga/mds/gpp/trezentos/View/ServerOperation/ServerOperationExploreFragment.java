@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
+import fga.mds.gpp.trezentos.View.Activity.MainActivity;
 import fga.mds.gpp.trezentos.View.Adapters.ClassFragmentAdapter;
 import fga.mds.gpp.trezentos.Controller.UserClassControl;
 import fga.mds.gpp.trezentos.DAO.RequestHandler;
@@ -192,6 +193,10 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
                     }else {
                         Toast.makeText(getApplicationContext(),"Sala adicionada a sua salas",
                                 Toast.LENGTH_SHORT).show();
+
+                        if(exploreFragment.getActivity()!=null){
+                            ((MainActivity)exploreFragment.getActivity()).showClassFragment();
+                        }
                     }
                     dialog.dismiss();
                 } else {
