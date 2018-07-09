@@ -37,7 +37,6 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
     private ClassFragmentAdapter classFragmentAdapter;
     public ProgressBar progressBar;
     public UserClassControl userClassControl;
-    private LinearLayout noInternetLayout;
     private LinearLayout noUserClass;
     private boolean isInit;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -54,10 +53,9 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
                                         ProgressBar progressBar,
                                         RecyclerView recyclerView,
                                         ClassFragment classFragment,
-                                        LinearLayout noInternetLayout, LinearLayout noUserClass){
+                                        LinearLayout noUserClass){
 
 
-        this.noInternetLayout = noInternetLayout;
         this.isInit = isInit;
         this.swipeRefreshLayout = swipeRefreshLayout;
         this.progressBar = progressBar;
@@ -123,20 +121,6 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
 
         super.onPostExecute(result);
 
-    }
-
-    public void setLayout(){
-        recyclerView.setVisibility(View.VISIBLE);
-        userClasses = classFragment.getUserClasses();
-        classFragmentAdapter = new ClassFragmentAdapter(classFragment.getUserClasses(), classFragment.getContext());
-
-        classFragmentAdapter.setOnItemClickListener(callJoinClass());
-
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(classFragment.getContext(),
-                LinearLayoutManager.VERTICAL,
-                false);
-        recyclerView.setLayoutManager(layout);
-        recyclerView.setAdapter(classFragmentAdapter);
     }
 
     private ClassViewHolder.OnItemClickListener callJoinClass() {

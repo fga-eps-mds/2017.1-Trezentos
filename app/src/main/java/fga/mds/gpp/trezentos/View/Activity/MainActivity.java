@@ -94,11 +94,18 @@ public class MainActivity extends AppCompatActivity{
 
         });
 
-        //Manually displaying the first fragment - one time only
+        showClassFragment();
+
+    }
+
+    public void showClassFragment(){
+        toolbar.setTitle("Salas");
+        bottomNavigationView.setSelectedItemId(R.id.salas_item);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame, ClassFragment.getInstance());
         transaction.commit();
     }
+
 
     private void initToolbar(){
         toolbar = findViewById(R.id.toolbar);

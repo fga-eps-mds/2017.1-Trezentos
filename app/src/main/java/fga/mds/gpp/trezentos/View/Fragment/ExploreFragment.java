@@ -113,7 +113,7 @@ public class ExploreFragment extends Fragment {
         if(!userAccountControl.isNetworkAvailable()) {
             recyclerView.setVisibility(View.GONE);
             noInternetLayout.setVisibility(View.VISIBLE);
-        } else if(userClasses == null || !isInit){
+        } else {
             noInternetLayout.setVisibility(View.GONE);
             new ServerOperationExploreFragment(
                     isInit,
@@ -122,18 +122,15 @@ public class ExploreFragment extends Fragment {
                     recyclerView,
                     fragment
             ).execute();
-        } else {
-            noInternetLayout.setVisibility(View.GONE);
-            new ServerOperationExploreFragment(
-                    true,
-                    swipeLayout,
-                    progressBar,
-                    recyclerView,
-                    fragment
-            ).setLayout();
-
         }
 
     }
+
+    @Override
+    public void onResume() {
+        callServerOperation(true);
+        super.onResume();
+    }
+
 
 }
