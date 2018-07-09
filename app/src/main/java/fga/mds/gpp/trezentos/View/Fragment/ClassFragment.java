@@ -114,7 +114,7 @@ public class ClassFragment extends Fragment {
             noInternetLayout.setVisibility(View.VISIBLE);
             swipeLayout.setRefreshing(false);
 
-        } else if(userClasses == null || !isInit){
+        } else {
             floatingActionButton.setVisibility(View.VISIBLE);
             noInternetLayout.setVisibility(View.GONE);
             new ServerOperationClassFragment(
@@ -123,27 +123,17 @@ public class ClassFragment extends Fragment {
                     progressBar,
                     recyclerView,
                     fragment,
-                    noInternetLayout,
                     noClassUserLayout
             ).execute();
 
-        } else {
-            floatingActionButton.setVisibility(View.VISIBLE);
-            noInternetLayout.setVisibility(View.GONE);
-            new ServerOperationClassFragment(
-                    true,
-                    swipeLayout,
-                    progressBar,
-                    recyclerView,
-                    fragment,
-                    noInternetLayout,
-                    noClassUserLayout
-            ).setLayout();
-
         }
 
+    }
 
-
+    @Override
+    public void onResume() {
+        callServerOperation(true);
+        super.onResume();
     }
 
 }
