@@ -37,6 +37,7 @@ public class ClassFragment extends Fragment {
     private ArrayList<UserClass> userClasses = null;
     private RecyclerView recyclerView;
     private Button buttonRefresh;
+    private LinearLayout noClassUserLayout;
 
     public static ClassFragment getInstance() {
         if(fragment == null){
@@ -69,6 +70,7 @@ public class ClassFragment extends Fragment {
         noInternetLayout = view.findViewById(R.id.no_internet_class);
         recyclerView = view.findViewById(R.id.recycler_class);
         buttonRefresh = view.findViewById(R.id.class_refresh);
+        noClassUserLayout = view.findViewById(R.id.no_user_class);
 
         initFloatingActionButton(view);
         callServerOperation(true);
@@ -89,7 +91,6 @@ public class ClassFragment extends Fragment {
 
         return view;
     }
-
 
     public void initFloatingActionButton(View view){
         floatingActionButton = view.findViewById(R.id.class_image_button);
@@ -122,7 +123,8 @@ public class ClassFragment extends Fragment {
                     progressBar,
                     recyclerView,
                     fragment,
-                    noInternetLayout
+                    noInternetLayout,
+                    noClassUserLayout
             ).execute();
 
         } else {
@@ -134,10 +136,13 @@ public class ClassFragment extends Fragment {
                     progressBar,
                     recyclerView,
                     fragment,
-                    noInternetLayout
+                    noInternetLayout,
+                    noClassUserLayout
             ).setLayout();
 
         }
+
+
 
     }
 

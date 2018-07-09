@@ -38,6 +38,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
     public ProgressBar progressBar;
     public UserClassControl userClassControl;
     private LinearLayout noInternetLayout;
+    private LinearLayout noUserClass;
     private boolean isInit;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -53,7 +54,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
                                         ProgressBar progressBar,
                                         RecyclerView recyclerView,
                                         ClassFragment classFragment,
-                                        LinearLayout noInternetLayout){
+                                        LinearLayout noInternetLayout, LinearLayout noUserClass){
 
 
         this.noInternetLayout = noInternetLayout;
@@ -62,6 +63,7 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
         this.progressBar = progressBar;
         this.classFragment = classFragment;
         this.recyclerView = recyclerView;
+        this.noUserClass = noUserClass;
 
     }
 
@@ -105,7 +107,6 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
 
         classFragmentAdapter = new ClassFragmentAdapter(result, classFragment.getContext());
 
-
         classFragmentAdapter.setOnItemClickListener(callJoinClass());
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(classFragment.getContext(),
@@ -113,6 +114,12 @@ public class ServerOperationClassFragment extends AsyncTask<String, Void, ArrayL
                 false);
         recyclerView.setLayoutManager(layout);
         recyclerView.setAdapter(classFragmentAdapter);
+
+        if(result == null){
+            noUserClass.setVisibility(View.VISIBLE);
+        } else {
+            noUserClass.setVisibility(View.GONE);
+        }
 
         super.onPostExecute(result);
 
