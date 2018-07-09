@@ -77,20 +77,6 @@ public class ExamsFragment extends Fragment{
         return view;
     }
 
-    private void loadRecover(){
-
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        userId = session.getString("userId","");
-
-        Intent intent = getActivity().getIntent();
-        userClass = (UserClass) intent.getSerializableExtra("Class");
-
-        userExamControl = UserExamControl.getInstance(getActivity());
-
-        //ArrayList <HashMap<String, Double>> aluno = new ArrayList<HashMap<String, Double>>();
-
-    }
-
     private void initExams(){
 
         UserAccountControl userAccountControl =
@@ -131,7 +117,26 @@ public class ExamsFragment extends Fragment{
             });
         }
 
+    }
 
+    private void loadRecover(){
+
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        userId = session.getString("userId","");
+
+        Intent intent = getActivity().getIntent();
+        userClass = (UserClass) intent.getSerializableExtra("Class");
+
+        userExamControl = UserExamControl.getInstance(getActivity());
+
+        //ArrayList <HashMap<String, Double>> aluno = new ArrayList<HashMap<String, Double>>();
+
+    }
+
+    @Override
+    public void onResume() {
+        initExams();
+        super.onResume();
     }
 
 
