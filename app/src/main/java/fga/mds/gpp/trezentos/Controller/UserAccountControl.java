@@ -160,12 +160,13 @@ public class UserAccountControl {
     //Sign-in Facebook TODO
     public void authenticateSignInFb(JSONObject object){
         try{
-            String name = object.getString("PersonFirstName");
+            String fFirstName = object.getString("PersonFirstName");
+            String fLastName = object.getString("PersonLastName");
             String fEmail = object.getString("PersonEmail");
             UserAccount fbUserAccount = new UserAccount();
             fbUserAccount.setEmail(fEmail);
-            //fbUserAccount.setName(name);
-
+            fbUserAccount.setFirstName(fFirstName);
+            fbUserAccount.setLastName(fLastName);
 
         }catch(JSONException | UserException e){
             e.printStackTrace();
@@ -174,18 +175,21 @@ public class UserAccountControl {
 
     public void signInUserFromFacebook(JSONObject object){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
-        String nome = null, email = null;
+        String fName = null, email = null, lName = null;
 
         try {
-            nome = object.getString("name");
+            fName = object.getString("first_name");
+            lName = object.getString("last_name");
             email = object.getString("email");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
         session.edit()
                 .putBoolean("IsUserLogged", true)
                 .putString("userEmail", email)
-                .putString("userName", nome)
+                .putString("userFirstName", fName)
+                .putString("userLastName", lName)
                 .apply();
     }
     //End Sign-in Facebook

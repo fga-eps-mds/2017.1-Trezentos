@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -194,7 +195,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 });
 
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,gender");
+        parameters.putString("fields", "id,first_name,last_name,email,gender");
         request.setParameters(parameters);
         request.executeAsync();
 
@@ -228,7 +229,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void goToMain() {
-        Intent intentGoMainActivity = new Intent(SignInActivity.this, MainActivity.class);
+        Intent intentGoMainActivity = new Intent(getApplicationContext(), MainActivity.class);
 
         intentGoMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
