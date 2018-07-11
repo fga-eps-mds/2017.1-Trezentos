@@ -43,7 +43,7 @@
     <string name="msg_signup_success">Usuário cadastrado com sucesso!</string>
     <string name="msg_class_success">Sucesso</string>
     <!-- Login -->
-    <string name="facebook_app_id">1840540606200745</string>
+    <string name="facebook_app_id">2113304315624784</string>
     <string name="sign_up_text">Cadastrar</string>
     <string name="already_sign_up"> <u> Já sou cadastrado </u></string>
     <string name="error_login">Ocorreu um erro ao entrar</string>
