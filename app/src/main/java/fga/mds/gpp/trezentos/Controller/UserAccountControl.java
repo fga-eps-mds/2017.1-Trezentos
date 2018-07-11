@@ -6,6 +6,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,11 +36,12 @@ public class UserAccountControl {
     final Context context;
     private UserAccount userAccount;
     private UserAccount fbUserAccount;
-    private Boolean isFromFacebook = false;
+    private SharedPreferences session;
 
 
     private UserAccountControl(final Context context){
         this.context = context;
+        session = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static UserAccountControl getInstance(final Context context){
@@ -98,7 +106,6 @@ public class UserAccountControl {
     //End Sign-up
 
 
-
     //Sign-in
     public String authenticateSignIn(String email, String password){
         try{
@@ -157,7 +164,6 @@ public class UserAccountControl {
     //End Sign-in
 
 
-
     //Sign-in Facebook
     public void authenticateSignInFb(JSONObject object){
         try{
@@ -175,7 +181,7 @@ public class UserAccountControl {
     }
 
     public void signInUserFromFacebook(JSONObject object){
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+        session = PreferenceManager.getDefaultSharedPreferences(context);
         String fName = null, email = null, lName = null;
 
         try {
@@ -193,9 +199,35 @@ public class UserAccountControl {
                 .putString("userLastName", lName)
                 .apply();
 
-        isFromFacebook = true;
+    }
+
+    public void changeUserToLogged(){
+        session = PreferenceManager.getDefaultSharedPreferences(context);
+        session.edit()
+                .putBoolean("IsUserLogged", true)
+                .apply();
     }
     //End Sign-in Facebook
+
+
+    //Log out Facebook
+    public void disconnectFromFacebook() {
+
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
+    }
+    //End log out Facebook
 
 
     //Reset Password
@@ -273,8 +305,7 @@ public class UserAccountControl {
     }
 
     public boolean isLoggedUser(){
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
-        return (session.getBoolean("IsUserLogged", false) || isFromFacebook);
+        return (session.getBoolean("IsUserLogged", false));
     }
     //End Common
 

@@ -89,10 +89,10 @@ public class UserFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view){
         switch (view.getId()){
             case R.id.exit_button: {
-                //LoginManager.getInstance().logOut();
 
                 UserAccountControl userAccountControl = UserAccountControl.getInstance(getApplicationContext());
                 userAccountControl.logOutUser();
+                userAccountControl.disconnectFromFacebook();
 
                 goLoginScreen();
 

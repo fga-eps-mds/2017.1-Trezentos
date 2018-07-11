@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity{
         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
     }
     private void goSignInScreen() {
-        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
