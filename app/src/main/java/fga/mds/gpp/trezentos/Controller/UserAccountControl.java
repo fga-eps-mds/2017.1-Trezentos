@@ -29,6 +29,7 @@ public class UserAccountControl {
     final Context context;
     private UserAccount userAccount;
     private UserAccount fbUserAccount;
+    private Boolean isFromFacebook = false;
 
 
     private UserAccountControl(final Context context){
@@ -157,7 +158,7 @@ public class UserAccountControl {
 
 
 
-    //Sign-in Facebook TODO
+    //Sign-in Facebook
     public void authenticateSignInFb(JSONObject object){
         try{
             String fFirstName = object.getString("PersonFirstName");
@@ -191,6 +192,8 @@ public class UserAccountControl {
                 .putString("userFirstName", fName)
                 .putString("userLastName", lName)
                 .apply();
+
+        isFromFacebook = true;
     }
     //End Sign-in Facebook
 
@@ -271,7 +274,7 @@ public class UserAccountControl {
 
     public boolean isLoggedUser(){
         SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
-        return session.getBoolean("IsUserLogged", false);
+        return (session.getBoolean("IsUserLogged", false) || isFromFacebook);
     }
     //End Common
 
