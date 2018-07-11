@@ -96,8 +96,10 @@ public class ServerOperationExploreFragment extends AsyncTask<String, Void, Arra
         exploreFragment.setUserClasses(result);
         userClasses = result;
 
-        for(UserClass u: userClasses){
-            Log.d("TESTESTES", u.getClassName());
+        if (userClasses != null){
+            for(UserClass u: userClasses){
+                Log.d("TESTESTES", u.getClassName());
+            }
         }
 
         if(isInit){

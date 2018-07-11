@@ -92,9 +92,12 @@ public class StudentsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        for (UserAccount u: userFromClass) {
-            students.add(u.getEmail());
+        if (userFromClass != null){
+            for (UserAccount u: userFromClass) {
+                students.add(u.getEmail());
+            }
         }
+
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerStudents);
         recyclerView.setAdapter(new StudentsFragment.AdapterStudents(userFromClass, getActivity().getApplicationContext()));
@@ -156,8 +159,11 @@ public class StudentsFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return userAccounts.size();
-
+            if (userAccounts == null){
+                return 0;
+            } else {
+                return userAccounts.size();
+            }
         }
 
         @Override
