@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.R;
 import fga.mds.gpp.trezentos.View.AboutOnLogin;
 
@@ -133,9 +135,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
-
     private void facebookAPI(){
+        userAccountControl = UserAccountControl.getInstance(getApplicationContext());
+
         callbackManager = CallbackManager.Factory.create();
         loginFacebook = findViewById(R.id.button_sign_in_facebook);
         loginFacebook.setReadPermissions(Arrays.asList("email", "public_profile"));
@@ -144,6 +146,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onSuccess(LoginResult loginResult){
                 facebookLogin(loginResult);
+                userAccountControl.changeUserToLogged();
                 goToMain();
             }
 
@@ -192,9 +195,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         userAccountControl.signInUserFromFacebook(jsonObject);
                     }
                 });
-
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,gender");
+        parameters.putString("fields", "id,first_name,last_name,email,gender");
         request.setParameters(parameters);
         request.executeAsync();
 
@@ -228,7 +230,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void goToMain() {
-        Intent intentGoMainActivity = new Intent(SignInActivity.this, MainActivity.class);
+        Intent intentGoMainActivity = new Intent(getApplicationContext(), MainActivity.class);
 
         intentGoMainActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
