@@ -6,6 +6,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,10 +36,12 @@ public class UserAccountControl {
     final Context context;
     private UserAccount userAccount;
     private UserAccount fbUserAccount;
+    private SharedPreferences session;
 
 
     private UserAccountControl(final Context context){
         this.context = context;
+        session = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static UserAccountControl getInstance(final Context context){
@@ -97,7 +106,6 @@ public class UserAccountControl {
     //End Sign-up
 
 
-
     //Sign-in
     public String authenticateSignIn(String email, String password){
         try{
@@ -156,16 +164,16 @@ public class UserAccountControl {
     //End Sign-in
 
 
-
-    //Sign-in Facebook TODO
+    //Sign-in Facebook
     public void authenticateSignInFb(JSONObject object){
         try{
-            String name = object.getString("PersonFirstName");
+            String fFirstName = object.getString("PersonFirstName");
+            String fLastName = object.getString("PersonLastName");
             String fEmail = object.getString("PersonEmail");
             UserAccount fbUserAccount = new UserAccount();
             fbUserAccount.setEmail(fEmail);
-            //fbUserAccount.setName(name);
-
+            fbUserAccount.setFirstName(fFirstName);
+            fbUserAccount.setLastName(fLastName);
 
         }catch(JSONException | UserException e){
             e.printStackTrace();
@@ -173,22 +181,53 @@ public class UserAccountControl {
     }
 
     public void signInUserFromFacebook(JSONObject object){
-        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
-        String nome = null, email = null;
+        session = PreferenceManager.getDefaultSharedPreferences(context);
+        String fName = null, email = null, lName = null;
 
         try {
-            nome = object.getString("name");
+            fName = object.getString("first_name");
+            lName = object.getString("last_name");
             email = object.getString("email");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
         session.edit()
                 .putBoolean("IsUserLogged", true)
                 .putString("userEmail", email)
-                .putString("userName", nome)
+                .putString("userFirstName", fName)
+                .putString("userLastName", lName)
+                .apply();
+
+    }
+
+    public void changeUserToLogged(){
+        session = PreferenceManager.getDefaultSharedPreferences(context);
+        session.edit()
+                .putBoolean("IsUserLogged", true)
                 .apply();
     }
     //End Sign-in Facebook
+
+
+    //Log out Facebook
+    public void disconnectFromFacebook() {
+
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
+    }
+    //End log out Facebook
 
 
     //Reset Password
