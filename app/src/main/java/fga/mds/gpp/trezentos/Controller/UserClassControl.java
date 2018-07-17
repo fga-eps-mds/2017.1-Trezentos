@@ -48,12 +48,16 @@ public class UserClassControl {
 
     //Create Class
     private HashMap<String, String> getCreateClassParams() {
+        Log.d("AQUIII", String.valueOf(userClass.getSizeGroups()));
+        Log.d("AQUIII", String.valueOf(userClass.getAddition()));
 
         HashMap<String, String> params = new HashMap<>();
         params.put("className", userClass.getClassName());
         params.put("classPassword", userClass.getPassword());
         params.put("classInstitution", userClass.getInstitution());
         params.put("classCutOff", String.valueOf(userClass.getCutOff()));
+        params.put("classSizeOfGroup", String.valueOf(userClass.getSizeGroups()));
+        params.put("classAddition", String.valueOf(userClass.getAddition()));
         params.put("classDescription", userClass.getDescription());
         params.put("classCreationDate", userClass.getCreationDate());
         params.put("idClassCreator", userClass.getIdClassCreator());
@@ -246,6 +250,9 @@ public class UserClassControl {
             userClass.setIdClass(jsonObject.getString("idClass"));
             userClass.setIdClassCreator(jsonObject.getString("idClassCreator"));
             userClass.setClassName(jsonObject.getString("className"));
+            userClass.setCutOff(Float.parseFloat(jsonObject.getString("classCutOff")));
+            userClass.setSizeGroups(Integer.parseInt(jsonObject.getString("classSizeOfGroup")));
+            userClass.setAddition(Float.parseFloat(jsonObject.getString("classAddition")));
             userClass.setInstitution(jsonObject.getString("classInstitution"));
             userClass.setDescription(jsonObject.getString("classDescription"));
             userClass.setCreatorName(jsonObject.getString("classCreatorName"));
