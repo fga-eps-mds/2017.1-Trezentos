@@ -7,23 +7,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import fga.mds.gpp.trezentos.DAO.GetDao;
-import fga.mds.gpp.trezentos.DAO.PostDao;
 import fga.mds.gpp.trezentos.DAO.PutDao;
-import fga.mds.gpp.trezentos.DAO.SaveRatePost;
+import fga.mds.gpp.trezentos.DAO.RequestHandler;
+import fga.mds.gpp.trezentos.DAO.URLs;
 import fga.mds.gpp.trezentos.Exception.UserClassException;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.Model.Evaluation;
+import fga.mds.gpp.trezentos.Model.Exam;
+import fga.mds.gpp.trezentos.Model.Student;
+import fga.mds.gpp.trezentos.Model.UserAccount;
 import fga.mds.gpp.trezentos.Model.UserClass;
 import fga.mds.gpp.trezentos.R;
+import fga.mds.gpp.trezentos.View.Activity.StudentExamActivity;
 import okhttp3.HttpUrl;
+
+import static fga.mds.gpp.trezentos.DAO.URLs.URL_ALL_CLASS_AVALIABLE;
+import static fga.mds.gpp.trezentos.DAO.URLs.URL_CLASS_FROM_PERSON;
+import static fga.mds.gpp.trezentos.DAO.URLs.URL_CLASS_WITHOUT_PERSON;
 
 public class UserClassControl {
 
     private static UserClassControl instance;
     final Context context;
+    private UserClass userClass;
 
     private UserClassControl(final Context context) {
         this.context = context;
@@ -36,51 +46,97 @@ public class UserClassControl {
         return instance;
     }
 
-    public void validateCreateClass(String className, String institution,
-                                    Float cutOff, String password, Float addition,
-                                    Integer sizeGroups, String email) throws UserException {
-        try{
-            String url = "https://trezentos-api.herokuapp.com/api/class/register";
-            UserClass userClass = new UserClass(className, institution, cutOff, password, addition, sizeGroups);
-            String urlWithParameters = getClassUrl(url, userClass, email);
+    //Create Class
+    private HashMap<String, String> getCreateClassParams() {
+        Log.d("AQUIII", String.valueOf(userClass.getSizeGroups()));
+        Log.d("AQUIII", String.valueOf(userClass.getAddition()));
 
-            PostDao postDao = new PostDao(urlWithParameters, null, "");
-            postDao.execute();
-        }catch(UserException userException){
-            userException.printStackTrace();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("className", userClass.getClassName());
+        params.put("classPassword", userClass.getPassword());
+        params.put("classInstitution", userClass.getInstitution());
+        params.put("classCutOff", String.valueOf(userClass.getCutOff()));
+        params.put("classSizeOfGroup", String.valueOf(userClass.getSizeGroups()));
+        params.put("classAddition", String.valueOf(userClass.getAddition()));
+        params.put("classDescription", userClass.getDescription());
+        params.put("classCreationDate", userClass.getCreationDate());
+        params.put("idClassCreator", userClass.getIdClassCreator());
+        params.put("classCreatorName", userClass.getCreatorName());
+
+        return params;
+
+    }
+
+    public String validateCreateClass(String className, String classInstitution, String classCutOff,
+                                    String classPassword,String classPasswordConfirm, String classAddition, String classSizeGroups,
+                                    String classDescription, String classCreationDate, String idClassCreator,
+                                    String classCreatorName) throws UserException {
+
+        try {
+
+            if (classSizeGroups == null || classSizeGroups.isEmpty()){
+                throw new UserException("O tamanho do grupo não pode estar vazio!");
+            }else if (classCutOff == null || classCutOff.isEmpty()){
+                throw new UserException("Preencha o valor da nota de corte.");
+            }else if (classAddition == null || classAddition.isEmpty()){
+                throw new UserException("Preencha o valor do acréscimo.");
+            }
+
+            userClass = new UserClass(className, classInstitution, Float.valueOf(classCutOff), classPassword, classPasswordConfirm,
+                    Float.valueOf(classAddition), Integer.valueOf(classSizeGroups), classDescription,classCreationDate, idClassCreator, classCreatorName);
+        }catch (UserException e){
+            return e.getMessage();
         }
+
+        return "";
     }
 
-    public String validateInformation(String className, String institution,
-                                      String cutOff, String password,
-                                      String addition, String sizeGroups) throws UserException {
+    public String createClass() throws UserException {
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_CREATE_CLASS, getCreateClassParams());
+
+        String serverResponse = "404";
+
         try{
-            UserClass userClass = new UserClass(className, institution,
-                    Float.parseFloat(cutOff), password, Float.parseFloat(addition),
-                    Integer.parseInt(sizeGroups));
-            //Just to pass on Sonar
-            System.out.println(userClass.getClassName());
-            return "Sucesso";
-        }catch(UserException userException){
-            return userException.getMessage();
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
         }
+        Log.d("RESPONSE", ""+serverResponse);
+        //dialog.dismiss();
+        return serverResponse;
+
+    }
+    //End Create Class
+
+    public String deleteClass(String classId, String userId) throws UserException {
+        HashMap<String, String> params = new HashMap<>();
+        Log.d("DELETE", classId);
+        Log.d("DELETE", userId);
+
+
+        params.put("classID", classId);
+        params.put("userID", userId);
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_DELETE_CLASS, params);
+
+        String serverResponse = "404";
+
+        try{
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
+        }
+        Log.d("RESPONSE", ""+serverResponse);
+        //dialog.dismiss();
+        return serverResponse;
+
     }
 
-    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
-    // Creates json
-    private String getClassUrl(String url, UserClass userClass, String ownerEmail){
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
-
-        builder.addQueryParameter("ownerEmail", ownerEmail);
-        builder.addQueryParameter("name", userClass.getClassName());
-        builder.addQueryParameter("institution", userClass.getInstitution());
-        builder.addQueryParameter("passingScore", String.valueOf(userClass.getCutOff()));
-        builder.addQueryParameter("additionScore", String.valueOf(userClass.getAddition()));
-        builder.addQueryParameter("password", userClass.getPassword());
-        builder.addQueryParameter("numberOfStudentsPerGroup", String.valueOf(userClass.getSizeGroups()));
-
-        return builder.build().toString();
-    }
 
     public String validateJoinClass(UserClass userClass, String password, String studentEmail) throws UserClassException, ExecutionException, InterruptedException {
         String serverResponse;
@@ -104,44 +160,79 @@ public class UserClassControl {
         String url = "https://trezentos-api.herokuapp.com/api/class/user/student";
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
 
-        builder.addQueryParameter("email", userClass.getOwnerEmail());
+        //builder.addQueryParameter("email", userClass.getOwnerEmail());
         builder.addQueryParameter("name", userClass.getClassName());
         builder.addQueryParameter("student", studentEmail);
 
         return builder.build().toString();
     }
 
-    public ArrayList<UserClass> getClasses() {
-        String url = "https://trezentos-api.herokuapp.com/api/class/find";
-        String returnAllClassesUrlWithParameters = getAllClassesAviableUrl(url);
+    public ArrayList<UserClass> getExploreClasses(String userId) throws JSONException {
+        String returnAllClassesUrlWithParameters = getClassesWithoutUserUrl(userId);
 
         String serverResponse = "404";
         serverResponse = new GetDao(returnAllClassesUrlWithParameters).get();
 
-        ArrayList<UserClass> userClasses = new ArrayList<>();
-        try{
-            userClasses = getArrayList(serverResponse);
-        }catch(JSONException e){
-            e.printStackTrace();
-        }
+        Log.d("RESPONSE EXPLORE", serverResponse);
+
+        JSONObject object = new JSONObject(serverResponse);
+        String erro = object.getString("error");
+        String message = object.getString("message");
+        JSONArray classArrayJson = object.getJSONArray("classes");
+
+
+        ArrayList<UserClass> userClasses = null;
+        userClasses = getArrayList(classArrayJson);
+
+        return userClasses;
+    }
+
+    public ArrayList<UserClass> getClasses(String userId) throws JSONException {
+        String returnAllClassesUrlWithParameters = getClassesFromUserUrl(userId);
+
+        String serverResponse = "404";
+        serverResponse = new GetDao(returnAllClassesUrlWithParameters).get();
+
+        Log.d("RESPONSE", serverResponse);
+
+
+        JSONObject object = new JSONObject(serverResponse);
+        String erro = object.getString("error");
+        String message = object.getString("message");
+        JSONArray classArrayJson = object.getJSONArray("classes");
+
+
+        ArrayList<UserClass> userClasses = null;
+        userClasses = getArrayList(classArrayJson);
+
 
         return userClasses;
     }
 
     // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
-    private String getAllClassesAviableUrl(String url) {
-        HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder();
+    private String getAllClassesAvaliableUrl() {
+        HttpUrl.Builder builder = HttpUrl.parse(URL_ALL_CLASS_AVALIABLE).newBuilder();
         return builder.build().toString();
     }
 
-    private ArrayList<UserClass> getArrayList(String serverResponse) throws JSONException{
-        JSONArray array = null;
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    private String getClassesFromUserUrl(String userId) {
+        HttpUrl.Builder builder = HttpUrl.parse(URL_CLASS_FROM_PERSON).newBuilder();
+        builder.addQueryParameter("idPerson", userId);
 
-        try{
-            array = new JSONArray(serverResponse);
-        }catch(JSONException e){
-            e.printStackTrace();
-        }
+        return builder.build().toString();
+    }
+
+    // Method that creates a url with parameters and sends it to api, it returns a response if it worked or not
+    private String getClassesWithoutUserUrl(String userId) {
+        HttpUrl.Builder builder = HttpUrl.parse(URL_CLASS_WITHOUT_PERSON).newBuilder();
+        builder.addQueryParameter("idPerson", userId);
+
+        return builder.build().toString();
+    }
+
+    private ArrayList<UserClass> getArrayList(JSONArray array) throws JSONException{
+
 
         ArrayList<UserClass> userClasses = new ArrayList<>();
         for(int i = 0; i < array.length(); i++){
@@ -156,14 +247,16 @@ public class UserClassControl {
         UserClass userClass = new UserClass();
 
         try{
-            userClass.setClassName(jsonObject.getString("name"));
-            userClass.setInstitution(jsonObject.getString("institution"));
-            userClass.setCutOff(Float.parseFloat(jsonObject.getString("passingScore")));
-            userClass.setAddition(Float.parseFloat(jsonObject.getString("additionScore")));
-            userClass.setPassword(jsonObject.getString("password"));
-            userClass.setSizeGroups(Integer.valueOf(jsonObject.getString("numberOfStudentsPerGroup")));
-            userClass.setOwnerEmail(jsonObject.getString("ownerEmail"));
-            userClass.setStudents(getStudentsFromJson(jsonObject.getJSONArray("students")));
+            userClass.setIdClass(jsonObject.getString("idClass"));
+            userClass.setIdClassCreator(jsonObject.getString("idClassCreator"));
+            userClass.setClassName(jsonObject.getString("className"));
+            userClass.setCutOff(Float.parseFloat(jsonObject.getString("classCutOff")));
+            userClass.setSizeGroups(Integer.parseInt(jsonObject.getString("classSizeOfGroup")));
+            userClass.setAddition(Float.parseFloat(jsonObject.getString("classAddition")));
+            userClass.setInstitution(jsonObject.getString("classInstitution"));
+            userClass.setDescription(jsonObject.getString("classDescription"));
+            userClass.setCreatorName(jsonObject.getString("classCreatorName"));
+            userClass.setCreationDate(jsonObject.getString("classCreationDate"));
         }catch(JSONException | UserException e){
             e.printStackTrace();
         }
@@ -185,14 +278,79 @@ public class UserClassControl {
     }
 
     public String validateRate(Evaluation evaluation) throws UserClassException, ExecutionException, InterruptedException {
-        String serverResponse;
+        String serverResponse = "";
         if (!evaluation.getStudentEmail().isEmpty()){
-                SaveRatePost saveRatePost = new SaveRatePost(evaluation);
-                serverResponse = saveRatePost.execute().get();
+                //SaveRatePost saveRatePost = new SaveRatePost(evaluation);
+                //serverResponse = saveRatePost.execute().get();
         } else {
             throw new UserClassException(context.getString(R.string.join_class_null_password_error));
         }
 
         return serverResponse;
+    }
+
+    public ArrayList<Student> getUsersFromClass(String idClass, String idExam) throws JSONException {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("idClass", idClass);
+        params.put("idExam", idExam);
+
+        RequestHandler requestHandler = new RequestHandler(URLs.URL_STUDENTS_FROM_CLASS, params);
+
+        String serverResponse = "404";
+
+        try{
+            serverResponse = requestHandler.execute().get();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch(ExecutionException e){
+            e.printStackTrace();
+        }
+
+        JSONObject object = new JSONObject(serverResponse);
+        String erro = object.getString("error");
+        String message = object.getString("message");
+        JSONArray classArrayJson = object.getJSONArray("users");
+
+        ArrayList<Student> userClass = null;
+        userClass = getUserArrayList(classArrayJson, idExam);
+
+        return userClass;
+    }
+
+    public ArrayList<Student> getUserArrayList(JSONArray array, String idExam) throws JSONException{
+
+
+        ArrayList<Student> users = new ArrayList<>();
+        for(int i = 0; i < array.length(); i++){
+            Student userClass = getUsersFromJson(array.getJSONObject(i), idExam);
+            users.add(userClass);
+        }
+
+        return users;
+    }
+
+    private Student getUsersFromJson(JSONObject jsonObject, String idExam) throws JSONException {
+        Student user = new Student();
+        JSONArray gradesArrayJson = jsonObject.getJSONArray("grades");
+
+        try{
+            user.setId(jsonObject.getString("idPerson"));
+            user.setFirstName(jsonObject.getString("personFirstName"));
+            user.setLastName(jsonObject.getString("personLastName"));
+            user.setEmail(jsonObject.getString("personEmail"));
+            for(int i = 0; i < gradesArrayJson.length(); i++) {
+                if(gradesArrayJson.getJSONObject(i).getString("gradeType").equals("1")) {
+                    user.setFirstGrade(Double.parseDouble(gradesArrayJson.getJSONObject(i).getString("grade")));
+                } else {
+                    user.setSecondGrade(Double.parseDouble(gradesArrayJson.getJSONObject(i).getString("grade")));
+                }
+            }
+
+
+        }catch(JSONException | UserException e){
+            e.printStackTrace();
+        }
+
+        return user;
     }
 }

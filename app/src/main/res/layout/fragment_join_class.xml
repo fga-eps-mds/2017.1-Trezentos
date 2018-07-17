@@ -33,7 +33,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/lock"/>
+            />
         <EditText
             android:id="@+id/join_password_editText"
             android:layout_width="match_parent"

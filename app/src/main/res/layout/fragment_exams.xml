@@ -2,9 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="fga.mds.gpp.trezentos.View.ExamsFragment"
-    android:background="@drawable/backgroundtrezentos">
+    tools:context="fga.mds.gpp.trezentos.View.Fragment.ExamsFragment"
+    android:background="#ffbd19">
 
     <ProgressBar
         android:id="@+id/progressBarExam"
@@ -15,9 +14,35 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerExam"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         />
+
+    <LinearLayout
+        android:id="@+id/no_internet_exam"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal|center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/ic_report"
+            android:text="Não há nenhuma conexão de rede agora"/>
+
+
+        <Button
+            android:id="@+id/exam_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="Repetir"/>
+
+    </LinearLayout>
 </FrameLayout>

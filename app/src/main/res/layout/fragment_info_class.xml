@@ -1,0 +1,269 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context="fga.mds.gpp.trezentos.View.Fragment.InfoClassFragment"
+    android:background="#ffbd19">
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                card_view:cardUseCompatPadding="true"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="500dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!--Inputs-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/text_view_class_name"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="10dp"
+                                    android:textSize="17dp"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:text="NOME DA SALA"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                     />
+
+                                <TextView
+                                    android:id="@+id/text_view_class_name_x"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:textSize="15dp"
+                                    android:text="nome da sala"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:textColor="#000"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="15dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/text_view_institution"
+                                    android:textStyle="bold"
+                                    android:textSize="17dp"
+                                    android:text="INSTITUIÇÃO"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColorHint="@color/colorPrimaryDark"/>
+
+                                <TextView
+                                    android:id="@+id/text_view_institution_x"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:textSize="15dp"
+                                    android:text="instituição"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:textColor="#000"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="15dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/text_view_class_password"
+                                    android:textStyle="bold"
+                                    android:textSize="17dp"
+                                    android:text="SENHA"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColorHint="@color/colorPrimaryDark"/>
+
+                                <TextView
+                                    android:id="@+id/text_view_class_password_x"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15dp"
+                                    android:text="******"
+                                    android:textStyle="bold"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:textColor="#000"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="15dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/text_view_cut_grade"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold"
+                                    android:text="NOTA DE CORTE"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorPrimaryDark"/>
+
+                                <TextView
+                                    android:id="@+id/text_view_cut_grade_x"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15dp"
+                                    android:text="nota de corte"
+                                    android:textStyle="bold"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:textColor="#000"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="15dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/text_view_size_groups"
+                                    android:layout_marginTop="10dp"
+                                    android:textSize="17dp"
+                                    android:text="TAMANHO DOS GRUPOS"
+                                    android:layout_marginLeft="20dp"
+                                    android:textStyle="bold"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorPrimaryDark"/>
+
+                                <TextView
+                                    android:id="@+id/text_view_size_groups_x"
+                                    android:layout_marginTop="10dp"
+                                    android:textSize="15dp"
+                                    android:text="tamanho dos grupos"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:textColor="#000"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="15dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/text_view_addition"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="ACRÉCIMO"
+                                    android:layout_marginLeft="20dp"
+                                    android:textStyle="bold"
+                                    android:textSize="17dp"
+                                    android:textColor="@color/colorPrimaryDark"/>
+
+                                <TextView
+                                    android:id="@+id/text_view_addition_x"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="acréscimo"
+                                    android:textStyle="bold"
+                                    android:textSize="15dp"
+                                    android:textColor="#000"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</FrameLayout>

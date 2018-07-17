@@ -1,17 +1,11 @@
 package fga.mds.gpp.trezentos.View.View.View;
 
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v7.widget.RecyclerView;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,14 +14,11 @@ import org.junit.runners.JUnit4;
 
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.ClassFragment;
-import fga.mds.gpp.trezentos.View.MainActivity;
+import fga.mds.gpp.trezentos.View.Fragment.ClassFragment;
+import fga.mds.gpp.trezentos.View.Activity.MainActivity;
 
-import static android.support.test.espresso.Espresso.closeSoftKeyboard;
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static fga.mds.gpp.trezentos.R.id.frame;

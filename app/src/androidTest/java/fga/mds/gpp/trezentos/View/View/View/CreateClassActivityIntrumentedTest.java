@@ -2,9 +2,6 @@ package fga.mds.gpp.trezentos.View.View.View;
 
 import android.support.test.rule.ActivityTestRule;
 
-import junit.framework.Assert;
-
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,8 +11,7 @@ import org.junit.runners.JUnit4;
 import fga.mds.gpp.trezentos.Controller.UserAccountControl;
 import fga.mds.gpp.trezentos.Exception.UserException;
 import fga.mds.gpp.trezentos.R;
-import fga.mds.gpp.trezentos.View.CreateClassActivity;
-import fga.mds.gpp.trezentos.View.LoginActivity;
+import fga.mds.gpp.trezentos.View.Activity.CreateClassActivity;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
@@ -25,8 +21,6 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static fga.mds.gpp.trezentos.R.id.edit_text_class_name;
-import static fga.mds.gpp.trezentos.R.id.frame;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
