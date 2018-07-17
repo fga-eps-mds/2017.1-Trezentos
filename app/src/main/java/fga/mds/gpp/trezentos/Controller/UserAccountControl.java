@@ -304,8 +304,15 @@ public class UserAccountControl {
                 .apply();
     }
 
-    public boolean isLoggedUser(){
-        return (session.getBoolean("IsUserLogged", false));
+    public boolean isLoggedUser() {
+        SharedPreferences session = PreferenceManager.getDefaultSharedPreferences(context);
+
+        if (session.getString("userId", "").equals("")) {
+            return false;
+        } else {
+            return session.getBoolean("IsUserLogged", false);
+        }
+
     }
     //End Common
 
